@@ -1,6 +1,6 @@
 {
  "id": "airlie-beach",
- "generated": "2026-10-31T19:44:55Z",
+ "generated": "2026-10-31T23:01:44Z",
  "sources": [
   {
    "source": "bom",
@@ -20,7 +20,7 @@
     {
      "date": "2026-11-02",
      "tmax": 30,
-     "tmin": 22,
+     "tmin": 21,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
@@ -62,9 +62,9 @@
      "tmax": 31,
      "tmin": 22,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
      "text": null
     },
     {
@@ -72,9 +72,9 @@
      "tmax": 31,
      "tmin": 22,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
      "text": null
     },
     {
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-10-31T19:44:30Z"
+   "fetched": "2026-10-31T23:01:18Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-10-31T19:44:32Z"
+   "fetched": "2026-10-31T23:01:21Z"
   },
   {
    "source": "elders",
@@ -176,11 +176,11 @@
     {
      "date": "2026-11-01",
      "tmax": 28,
-     "tmin": 23,
+     "tmin": 22,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 5,
+     "chance": 3,
      "text": "Mostly cloudy"
     },
     {
@@ -190,7 +190,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 6,
+     "chance": 4,
      "text": "Partly cloudy"
     },
     {
@@ -205,7 +205,7 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 30,
+     "tmax": 29,
      "tmin": 23,
      "rain_min": 0,
      "rain_max": 5,
@@ -220,8 +220,8 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Mostly cloudy"
+     "chance": 4,
+     "text": "Fair"
     },
     {
      "date": "2026-11-06",
@@ -230,7 +230,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 6,
+     "chance": 5,
      "text": "Fair"
     },
     {
@@ -240,11 +240,11 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 8,
-     "text": "Mostly cloudy"
+     "chance": 6,
+     "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-10-31T19:44:36Z"
+   "fetched": "2026-10-31T23:01:24Z"
   },
   {
    "source": "weatherzone",
@@ -254,7 +254,7 @@
     {
      "date": "2026-11-01",
      "tmax": 28.2,
-     "tmin": 23.4,
+     "tmin": 23.3,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -263,23 +263,23 @@
     },
     {
      "date": "2026-11-02",
-     "tmax": 29,
+     "tmax": 28.9,
      "tmin": 23.6,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 5,
-     "text": "Mostly sunny"
+     "text": "Sunny"
     },
     {
      "date": "2026-11-03",
-     "tmax": 28.9,
+     "tmax": 29,
      "tmin": 23.7,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 10,
-     "text": "Mostly sunny"
+     "text": "Sunny"
     },
     {
      "date": "2026-11-04",
@@ -293,8 +293,8 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 29.4,
-     "tmin": 24.4,
+     "tmax": 29.5,
+     "tmin": 24.3,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -303,7 +303,7 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 29.4,
+     "tmax": 29.5,
      "tmin": 24.4,
      "rain_min": 0,
      "rain_max": 1,
@@ -314,16 +314,16 @@
     {
      "date": "2026-11-07",
      "tmax": 29.4,
-     "tmin": 24.5,
+     "tmin": 24.6,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 40,
-     "text": "Mostly sunny"
+     "text": "Possible shower"
     }
    ],
    "point": "Hamilton Island",
-   "fetched": "2026-10-31T19:44:48Z"
+   "fetched": "2026-10-31T23:01:37Z"
   },
   {
    "source": "wunderground",
@@ -332,13 +332,13 @@
    "days": [
     {
      "date": "2026-11-01",
-     "tmax": 28.9,
+     "tmax": 28.3,
      "tmin": 22.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Partly Cloudy"
+     "text": "AM Clouds/PM Sun"
     },
     {
      "date": "2026-11-02",
@@ -412,7 +412,7 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 28.9,
+     "tmax": 29.4,
      "tmin": 23.9,
      "rain_min": 0,
      "rain_max": 0,
@@ -432,7 +432,7 @@
     }
    ],
    "point": "Cannonvale",
-   "fetched": "2026-10-31T19:44:48Z"
+   "fetched": "2026-10-31T23:01:38Z"
   },
   {
    "source": "windy",
@@ -448,8 +448,8 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 13,
-     "gust_max": 28,
+     "wind_max": 12,
+     "gust_max": 27,
      "wind_dir": "NNE"
     },
     {
@@ -461,8 +461,8 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 14,
-     "gust_max": 28,
+     "wind_max": 13,
+     "gust_max": 27,
      "wind_dir": "N"
     },
     {
@@ -474,8 +474,8 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 19,
-     "gust_max": 34,
+     "wind_max": 17,
+     "gust_max": 33,
      "wind_dir": "N"
     },
     {
@@ -488,27 +488,27 @@
      "chance": null,
      "text": null,
      "wind_max": 21,
-     "gust_max": 37,
+     "gust_max": 38,
      "wind_dir": "NNW"
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-10-31T19:44:55Z"
+   "fetched": "2026-10-31T23:01:44Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hamilton Island",
   "distance_km": 27.1,
-  "time": "2026-11-01T05:40:00+10:00",
-  "temp": 23.7,
-  "feels_like": 25.4,
-  "humidity": 81,
-  "wind_dir": "NNE",
-  "wind_kmh": 11,
-  "gust_kmh": 15,
+  "time": "2026-11-01T08:50:00+10:00",
+  "temp": 25.8,
+  "feels_like": 29,
+  "humidity": 76,
+  "wind_dir": "SSE",
+  "wind_kmh": 6,
+  "gust_kmh": 7,
   "rain_since_9am": 0,
-  "fetched": "2026-10-31T19:44:22Z"
+  "fetched": "2026-10-31T23:01:10Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -670,29 +670,29 @@
     },
     "windy": {
      "2026-11-01": {
-      "wind_max": 13,
-      "gust_max": 28,
+      "wind_max": 12,
+      "gust_max": 27,
       "wind_dir": "NNE"
      },
      "2026-11-02": {
-      "wind_max": 14,
-      "gust_max": 28,
+      "wind_max": 13,
+      "gust_max": 27,
       "wind_dir": "N"
      },
      "2026-11-03": {
-      "wind_max": 19,
-      "gust_max": 34,
+      "wind_max": 17,
+      "gust_max": 33,
       "wind_dir": "N"
      },
      "2026-11-04": {
       "wind_max": 21,
-      "gust_max": 37,
+      "gust_max": 38,
       "wind_dir": "NNW"
      }
     }
    }
   ],
-  "fetched": "2026-10-31T19:44:30Z"
+  "fetched": "2026-10-31T23:01:18Z"
  },
  "errors": {}
 }
