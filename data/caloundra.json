@@ -1,6 +1,6 @@
 {
  "id": "caloundra",
- "generated": "2026-11-01T09:11:13Z",
+ "generated": "2026-11-01T16:18:50Z",
  "sources": [
   {
    "source": "bom",
@@ -8,49 +8,39 @@
    "url": "https://www.bom.gov.au/",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 27,
-     "tmin": null,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5 mm",
-     "chance": 60,
-     "text": "Possible shower or storm."
-    },
-    {
      "date": "2026-11-02",
      "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
      "text": "Partly cloudy."
     },
     {
      "date": "2026-11-03",
      "tmax": 29,
-     "tmin": 20,
-     "rain_min": 6,
+     "tmin": 21,
+     "rain_min": 5,
      "rain_max": 15,
-     "rain_text": "6-15 mm",
-     "chance": 80,
+     "rain_text": "5-15 mm",
+     "chance": 90,
      "text": "Showers. Storm developing."
     },
     {
      "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 19,
+     "tmax": 33,
+     "tmin": 20,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
      "text": "Possible early storm."
     },
     {
      "date": "2026-11-05",
      "tmax": 33,
-     "tmin": 18,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
@@ -64,27 +54,27 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "0-1 mm",
-     "chance": 40,
-     "text": "Possible shower."
+     "chance": 30,
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-07",
-     "tmax": 28,
+     "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
-     "rain_max": 6,
-     "rain_text": "0-6 mm",
-     "chance": 50,
+     "rain_max": 4,
+     "rain_text": "0-4 mm",
+     "chance": 60,
      "text": "Shower or two."
     },
     {
      "date": "2026-11-08",
-     "tmax": 27,
+     "tmax": 26,
      "tmin": 20,
      "rain_min": 1,
-     "rain_max": 10,
-     "rain_text": "1-10 mm",
-     "chance": 60,
+     "rain_max": 7,
+     "rain_text": "1-7 mm",
+     "chance": 70,
      "text": "Shower or two."
     },
     {
@@ -98,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-01T09:10:41Z"
+   "fetched": "2026-11-01T16:18:28Z"
   },
   {
    "source": "willyweather",
@@ -106,29 +96,19 @@
    "url": "https://www.willyweather.com.au/qld/sunshine-coast/caloundra.html",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 27,
-     "tmin": 17,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1–5 mm",
-     "chance": 65,
-     "text": "Possible shower or storm"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 30,
+     "chance": 20,
      "text": "Partly cloudy"
     },
     {
      "date": "2026-11-03",
      "tmax": 29,
-     "tmin": 20,
+     "tmin": 21,
      "rain_min": 5,
      "rain_max": 15,
      "rain_text": "5–15 mm",
@@ -137,22 +117,22 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 19,
+     "tmax": 33,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 25,
+     "chance": 15,
      "text": "Possible early storm"
     },
     {
      "date": "2026-11-05",
      "tmax": 33,
-     "tmin": 18,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 15,
+     "chance": 10,
      "text": "Sunny"
     },
     {
@@ -162,21 +142,31 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 35,
-     "text": "Possible shower"
+     "chance": 30,
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-07",
-     "tmax": 28,
+     "tmax": 29,
      "tmin": 19,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1–5 mm",
      "chance": 55,
      "text": "Shower or two"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 1,
+     "rain_max": 5,
+     "rain_text": "1–5 mm",
+     "chance": 65,
+     "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-01T09:10:44Z"
+   "fetched": "2026-11-01T16:18:30Z"
   },
   {
    "source": "elders",
@@ -184,93 +174,83 @@
    "url": "https://eldersweather.com.au/forecast/qld/caloundra",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 26,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 21,
-     "text": "Clear skies"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 27,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 16,
+     "chance": 17,
      "text": "Clear skies"
     },
     {
      "date": "2026-11-03",
      "tmax": 27,
      "tmin": 21,
-     "rain_min": 15,
-     "rain_max": 20,
-     "rain_text": "15 - 20 mm",
-     "chance": 25,
-     "text": "Partly cloudy"
+     "rain_min": 20,
+     "rain_max": 25,
+     "rain_text": "20 - 25 mm",
+     "chance": 30,
+     "text": "Mostly cloudy"
     },
     {
      "date": "2026-11-04",
-     "tmax": 28,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 14,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 30,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 6,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 25,
+     "tmax": 29,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 30,
+     "chance": 7,
+     "text": "Thunderstorms"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 30,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 1,
+     "text": "Fair"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 24,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 18,
      "text": "Clear skies"
     },
     {
      "date": "2026-11-07",
      "tmax": 26,
-     "tmin": 21,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 33,
+     "chance": 22,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 25,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 31,
      "text": "Mostly cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:10:48Z"
+   "fetched": "2026-11-01T16:18:33Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/southeast-coast/caloundra",
    "days": [
-    {
-     "date": "2026-11-01",
-     "tmax": 27,
-     "tmin": 17,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 80,
-     "text": "Possible thunderstorm"
-    },
     {
      "date": "2026-11-02",
      "tmax": 29,
@@ -284,7 +264,7 @@
     {
      "date": "2026-11-03",
      "tmax": 29,
-     "tmin": 20,
+     "tmin": 21,
      "rain_min": 10,
      "rain_max": 20,
      "rain_text": "10-20mm",
@@ -293,8 +273,8 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 19,
+     "tmax": 33,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -304,7 +284,7 @@
     {
      "date": "2026-11-05",
      "tmax": 33,
-     "tmin": 18,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -323,16 +303,26 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 28,
+     "tmax": 29,
      "tmin": 19,
      "rain_min": 5,
      "rain_max": 10,
      "rain_text": "5-10mm",
      "chance": 90,
      "text": "Possible thunderstorm"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 80,
+     "text": "Possible thunderstorm"
     }
    ],
-   "fetched": "2026-11-01T09:11:06Z"
+   "fetched": "2026-11-01T16:18:43Z"
   },
   {
    "source": "wunderground",
@@ -340,39 +330,29 @@
    "url": "https://www.wunderground.com/forecast/au/caloundra/-26.803,153.133",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 28,
-     "tmin": 20,
-     "rain_min": 0.17,
-     "rain_max": 0.17,
-     "rain_text": "0.17 mm",
-     "chance": null,
-     "text": "Showers Early"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 28,
-     "tmin": 21,
+     "tmax": 27.8,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Partly Cloudy"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-03",
-     "tmax": 27,
+     "tmax": 26.7,
      "tmin": 20,
-     "rain_min": 12.37,
-     "rain_max": 12.37,
-     "rain_text": "12.37 mm",
+     "rain_min": 15.7,
+     "rain_max": 15.7,
+     "rain_text": "15.7 mm",
      "chance": null,
-     "text": "PM Thunderstorms"
+     "text": "Scattered Thunderstorms"
     },
     {
      "date": "2026-11-04",
      "tmax": 30,
-     "tmin": 20,
+     "tmin": 19.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -381,7 +361,7 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 31,
+     "tmax": 31.1,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
@@ -401,28 +381,28 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 26,
+     "tmax": 26.1,
      "tmin": 20,
-     "rain_min": 1.1,
-     "rain_max": 1.1,
-     "rain_text": "1.1 mm",
+     "rain_min": 2.8,
+     "rain_max": 2.8,
+     "rain_text": "2.8 mm",
      "chance": null,
      "text": "PM Showers"
     },
     {
      "date": "2026-11-08",
      "tmax": 25,
-     "tmin": 18,
-     "rain_min": 2.63,
-     "rain_max": 2.63,
-     "rain_text": "2.63 mm",
+     "tmin": 17.8,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
      "chance": null,
-     "text": "PM Showers"
+     "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-09",
-     "tmax": 23,
-     "tmin": 19,
+     "tmax": 23.3,
+     "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -431,16 +411,26 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 24,
-     "tmin": 20,
+     "tmax": 23.9,
+     "tmin": 19.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 25.6,
+     "tmin": 20,
+     "rain_min": 0.5,
+     "rain_max": 0.5,
+     "rain_text": "0.5 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:11:06Z"
+   "fetched": "2026-11-01T16:18:43Z"
   },
   {
    "source": "windy",
@@ -448,61 +438,48 @@
    "url": "https://www.windy.com/-26.803/153.133",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 25.7,
-     "tmin": 16.7,
-     "rain_min": 0.2,
-     "rain_max": 0.2,
-     "rain_text": "0.2 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 17,
-     "gust_max": 23,
-     "wind_dir": "N"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 27.8,
-     "tmin": 19,
+     "tmax": 28.3,
+     "tmin": 19.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
      "wind_max": 15,
-     "gust_max": 21,
+     "gust_max": 22,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-03",
-     "tmax": 27,
-     "tmin": 20.6,
+     "tmax": 28.1,
+     "tmin": 20.7,
      "rain_min": 24.6,
      "rain_max": 24.6,
      "rain_text": "24.6 mm",
      "chance": null,
      "text": null,
-     "wind_max": 23,
-     "gust_max": 34,
+     "wind_max": 20,
+     "gust_max": 33,
      "wind_dir": "N"
     },
     {
      "date": "2026-11-04",
-     "tmax": 31.8,
-     "tmin": 19.7,
+     "tmax": 32.6,
+     "tmin": 20.1,
      "rain_min": 1.8,
      "rain_max": 1.8,
      "rain_text": "1.8 mm",
      "chance": null,
      "text": null,
-     "wind_max": 19,
-     "gust_max": 44,
-     "wind_dir": "NNW"
+     "wind_max": 22,
+     "gust_max": 41,
+     "wind_dir": "NW"
     },
     {
      "date": "2026-11-05",
-     "tmax": 32.9,
-     "tmin": 19.4,
+     "tmax": 32.6,
+     "tmin": 19.6,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -514,22 +491,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-01T09:11:13Z"
+   "fetched": "2026-11-01T16:18:50Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 23.1,
-  "time": "2026-11-01T19:00:00+10:00",
-  "temp": 22.9,
-  "feels_like": 23.4,
-  "humidity": 84,
-  "wind_dir": "NNE",
-  "wind_kmh": 17,
-  "gust_kmh": 28,
+  "time": "2026-11-02T02:10:00+10:00",
+  "temp": 19.3,
+  "feels_like": 20.8,
+  "humidity": 92,
+  "wind_dir": "N",
+  "wind_kmh": 7,
+  "gust_kmh": 11,
   "rain_since_9am": 0,
-  "fetched": "2026-11-01T09:10:24Z"
+  "fetched": "2026-11-01T16:18:11Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -539,28 +516,6 @@
     "kind": "passage",
     "spot": "Golden Beach Boat Ramp (Short Street)",
     "tides": {
-     "2026-11-01": [
-      {
-       "type": "high",
-       "time": "12:27 am",
-       "height_m": 1.02
-      },
-      {
-       "type": "low",
-       "time": "6:22 am",
-       "height_m": 0.38
-      },
-      {
-       "type": "high",
-       "time": "1:35 pm",
-       "height_m": 1.71
-      },
-      {
-       "type": "low",
-       "time": "8:55 pm",
-       "height_m": 0.56
-      }
-     ],
      "2026-11-02": [
       {
        "type": "high",
@@ -687,28 +642,45 @@
        "time": "6:47 pm",
        "height_m": 1.54
       }
+     ],
+     "2026-11-08": [
+      {
+       "type": "low",
+       "time": "1:14 am",
+       "height_m": 0.21
+      },
+      {
+       "type": "high",
+       "time": "7:32 am",
+       "height_m": 1.76
+      },
+      {
+       "type": "low",
+       "time": "1:53 pm",
+       "height_m": 0.47
+      },
+      {
+       "type": "high",
+       "time": "7:23 pm",
+       "height_m": 1.48
+      }
      ]
     },
     "windy": {
-     "2026-11-01": {
-      "wind_max": 17,
-      "gust_max": 23,
-      "wind_dir": "N"
-     },
      "2026-11-02": {
       "wind_max": 15,
-      "gust_max": 21,
+      "gust_max": 22,
       "wind_dir": "NNW"
      },
      "2026-11-03": {
-      "wind_max": 23,
-      "gust_max": 34,
+      "wind_max": 20,
+      "gust_max": 33,
       "wind_dir": "N"
      },
      "2026-11-04": {
-      "wind_max": 19,
-      "gust_max": 44,
-      "wind_dir": "NNW"
+      "wind_max": 22,
+      "gust_max": 41,
+      "wind_dir": "NW"
      },
      "2026-11-05": {
       "wind_max": 16,
@@ -722,28 +694,6 @@
     "kind": "ocean",
     "spot": "Kings Beach",
     "tides": {
-     "2026-11-01": [
-      {
-       "type": "high",
-       "time": "12:19 am",
-       "height_m": 1.02
-      },
-      {
-       "type": "low",
-       "time": "6:05 am",
-       "height_m": 0.38
-      },
-      {
-       "type": "high",
-       "time": "1:27 pm",
-       "height_m": 1.71
-      },
-      {
-       "type": "low",
-       "time": "8:38 pm",
-       "height_m": 0.56
-      }
-     ],
      "2026-11-02": [
       {
        "type": "high",
@@ -870,70 +820,87 @@
        "time": "6:39 pm",
        "height_m": 1.54
       }
+     ],
+     "2026-11-08": [
+      {
+       "type": "low",
+       "time": "12:57 am",
+       "height_m": 0.21
+      },
+      {
+       "type": "high",
+       "time": "7:24 am",
+       "height_m": 1.76
+      },
+      {
+       "type": "low",
+       "time": "1:36 pm",
+       "height_m": 0.47
+      },
+      {
+       "type": "high",
+       "time": "7:15 pm",
+       "height_m": 1.48
+      }
      ]
     },
     "swell": {
-     "2026-11-01": {
-      "max_m": 1.1,
-      "dir": "NNE",
-      "period_s": 4
-     },
      "2026-11-02": {
-      "max_m": 1.4,
-      "dir": "NNE",
+      "max_m": 1.2,
+      "dir": "N",
       "period_s": 5
      },
      "2026-11-03": {
-      "max_m": 1,
+      "max_m": 1.1,
       "dir": "NNE",
       "period_s": 4
      },
      "2026-11-04": {
-      "max_m": 1.7,
-      "dir": "N",
+      "max_m": 2,
+      "dir": "NNE",
       "period_s": 6
      },
      "2026-11-05": {
-      "max_m": 1.1,
+      "max_m": 1.2,
       "dir": "NNE",
       "period_s": 5
      },
      "2026-11-06": {
-      "max_m": 2.3,
+      "max_m": 1.8,
       "dir": "SSE",
-      "period_s": 7
+      "period_s": 6
      },
      "2026-11-07": {
-      "max_m": 1.4,
-      "dir": "SE",
+      "max_m": 1.3,
+      "dir": "ESE",
       "period_s": 8
      },
      "2026-11-08": {
-      "max_m": 1,
-      "dir": "ESE",
-      "period_s": 9
+      "max_m": 1.5,
+      "dir": "N",
+      "period_s": 5
+     },
+     "2026-11-09": {
+      "max_m": 1.9,
+      "dir": "N",
+      "period_s": 6
      }
     },
     "windy": {
-     "2026-11-01": {
-      "wind_max": 17,
-      "gust_max": 23,
-      "wind_dir": "N"
-     },
      "2026-11-02": {
       "wind_max": 15,
-      "gust_max": 21,
+      "gust_max": 22,
       "wind_dir": "NNW"
      },
      "2026-11-03": {
-      "wind_max": 23,
-      "gust_max": 34,
+      "wind_max": 20,
+      "gust_max": 33,
       "wind_dir": "N"
      },
      "2026-11-04": {
-      "wind_max": 19,
-      "gust_max": 44,
-      "wind_dir": "NNW"
+      "wind_max": 22,
+      "gust_max": 41,
+      "wind_dir": "NW"
      },
      "2026-11-05": {
       "wind_max": 16,
@@ -943,7 +910,7 @@
     }
    }
   ],
-  "fetched": "2026-11-01T09:10:41Z"
+  "fetched": "2026-11-01T16:18:27Z"
  },
  "errors": {}
 }

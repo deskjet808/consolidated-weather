@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-01T09:26:00Z",
+ "generated": "2026-11-01T16:31:35Z",
  "sources": [
   {
    "source": "bom",
@@ -8,22 +8,12 @@
    "url": "https://www.bom.gov.au/",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 29,
-     "tmin": null,
-     "rain_min": 0,
-     "rain_max": 3,
-     "rain_text": "0-3 mm",
-     "chance": 50,
-     "text": "Partly cloudy."
-    },
-    {
      "date": "2026-11-02",
      "tmax": 31,
      "tmin": 19,
      "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "0-2 mm",
+     "rain_max": 1,
+     "rain_text": "0-1 mm",
      "chance": 40,
      "text": "Possible shower."
     },
@@ -39,13 +29,13 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 31,
+     "tmax": 32,
      "tmin": 18,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
-     "chance": 10,
-     "text": "Mostly sunny."
+     "chance": 20,
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-05",
@@ -55,16 +45,16 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 10,
-     "text": "Mostly sunny."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-06",
-     "tmax": 31,
+     "tmax": 32,
      "tmin": 18,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 10,
      "text": "Partly cloudy."
     },
     {
@@ -72,25 +62,25 @@
      "tmax": 31,
      "tmin": 19,
      "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Mostly sunny."
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 31,
+     "tmin": 19,
+     "rain_min": 0,
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 30,
      "text": "Partly cloudy."
     },
     {
-     "date": "2026-11-08",
-     "tmax": 31,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
-     "text": "Possible shower."
-    },
-    {
      "date": "2026-11-09",
      "tmax": null,
-     "tmin": 20,
+     "tmin": 19,
      "rain_min": null,
      "rain_max": null,
      "rain_text": null,
@@ -98,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-01T09:25:31Z"
+   "fetched": "2026-11-01T16:31:10Z"
   },
   {
    "source": "willyweather",
@@ -106,23 +96,13 @@
    "url": "https://www.willyweather.com.au/qld/far-north/lake-tinaroo.html",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 29,
-     "tmin": 19,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1–5 mm",
-     "chance": 50,
-     "text": "Partly cloudy"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 31,
      "tmin": 19,
      "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "< 2 mm",
-     "chance": 45,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 40,
      "text": "Possible shower"
     },
     {
@@ -137,13 +117,13 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 32,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 15,
-     "text": "Mostly sunny"
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-05",
@@ -152,17 +132,17 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 10,
-     "text": "Mostly sunny"
+     "chance": 15,
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-06",
-     "tmax": 31,
+     "tmax": 32,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 25,
+     "chance": 15,
      "text": "Partly cloudy"
     },
     {
@@ -172,11 +152,21 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 30,
+     "chance": 20,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 31,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 25,
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:25:34Z"
+   "fetched": "2026-11-01T16:31:12Z"
   },
   {
    "source": "elders",
@@ -184,34 +174,24 @@
    "url": "https://eldersweather.com.au/forecast/qld/lake-tinaroo",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 28,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Mist"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 29,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 9,
+     "chance": 10,
      "text": "Mist"
     },
     {
      "date": "2026-11-03",
      "tmax": 30,
-     "tmin": 20,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Partly cloudy"
+     "chance": 3,
+     "text": "Mist"
     },
     {
      "date": "2026-11-04",
@@ -230,7 +210,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 1,
+     "chance": 0,
      "text": "Fair"
     },
     {
@@ -241,36 +221,36 @@
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
      "chance": 3,
-     "text": "Partly cloudy"
+     "text": "Mostly cloudy"
     },
     {
      "date": "2026-11-07",
+     "tmax": 29,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 6,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-08",
      "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 7,
-     "text": "Partly cloudy"
+     "chance": 18,
+     "text": "Mostly cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:25:37Z"
+   "fetched": "2026-11-01T16:31:14Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/north-coast-and-tableland/lake-tinaroo",
    "days": [
-    {
-     "date": "2026-11-01",
-     "tmax": 29,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 30,
-     "text": "Mostly sunny"
-    },
     {
      "date": "2026-11-02",
      "tmax": 31,
@@ -293,8 +273,8 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 32,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -313,7 +293,7 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 31,
+     "tmax": 32,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
@@ -330,10 +310,20 @@
      "rain_text": "< 1mm",
      "chance": 5,
      "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 31,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 30,
+     "text": "Mostly sunny"
     }
    ],
    "point": "Atherton",
-   "fetched": "2026-11-01T09:25:53Z"
+   "fetched": "2026-11-01T16:31:27Z"
   },
   {
    "source": "wunderground",
@@ -341,29 +331,9 @@
    "url": "https://www.wunderground.com/forecast/au/lake-tinaroo/-17.2,145.56",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 31,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Cloudy"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 30,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Sunny"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 31.1,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -371,9 +341,19 @@
      "text": "Partly Cloudy"
     },
     {
+     "date": "2026-11-03",
+     "tmax": 31.1,
+     "tmin": 17.8,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly Sunny"
+    },
+    {
      "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 18,
+     "tmax": 32.2,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -382,18 +362,18 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 32,
-     "tmin": 18,
+     "tmax": 32.2,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Mostly Sunny"
+     "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-06",
-     "tmax": 32,
-     "tmin": 18,
+     "tmax": 32.2,
+     "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -402,8 +382,8 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 31.1,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -412,8 +392,8 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 31.1,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -423,7 +403,7 @@
     {
      "date": "2026-11-09",
      "tmax": 30,
-     "tmin": 18,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -432,8 +412,18 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 29,
-     "tmin": 18,
+     "tmax": 28.9,
+     "tmin": 18.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 28.9,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -441,26 +431,13 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:25:53Z"
+   "fetched": "2026-11-01T16:31:28Z"
   },
   {
    "source": "windy",
    "name": "Windy",
    "url": "https://www.windy.com/-17.2/145.56",
    "days": [
-    {
-     "date": "2026-11-01",
-     "tmax": 30.5,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 14,
-     "gust_max": 33,
-     "wind_dir": "E"
-    },
     {
      "date": "2026-11-02",
      "tmax": 30.7,
@@ -470,9 +447,9 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 12,
-     "gust_max": 28,
-     "wind_dir": "E"
+     "wind_max": 10,
+     "gust_max": 27,
+     "wind_dir": "ENE"
     },
     {
      "date": "2026-11-03",
@@ -496,9 +473,9 @@
      "rain_text": "0.3 mm",
      "chance": null,
      "text": null,
-     "wind_max": 8,
-     "gust_max": 21,
-     "wind_dir": "NE"
+     "wind_max": 10,
+     "gust_max": 22,
+     "wind_dir": "ENE"
     },
     {
      "date": "2026-11-05",
@@ -515,22 +492,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-01T09:26:00Z"
+   "fetched": "2026-11-01T16:31:35Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-01T19:20:00+10:00",
-  "temp": 24,
-  "feels_like": 27.2,
-  "humidity": 85,
-  "wind_dir": "N",
-  "wind_kmh": 6,
-  "gust_kmh": 9,
+  "time": "2026-11-02T02:20:00+10:00",
+  "temp": 21.5,
+  "feels_like": 24.2,
+  "humidity": 99,
+  "wind_dir": "SSE",
+  "wind_kmh": 9,
+  "gust_kmh": 11,
   "rain_since_9am": 0,
-  "fetched": "2026-11-01T09:25:24Z"
+  "fetched": "2026-11-01T16:31:03Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -540,15 +517,10 @@
     "kind": "lake",
     "spot": "open water",
     "windy": {
-     "2026-11-01": {
-      "wind_max": 14,
-      "gust_max": 33,
-      "wind_dir": "E"
-     },
      "2026-11-02": {
-      "wind_max": 12,
-      "gust_max": 28,
-      "wind_dir": "E"
+      "wind_max": 10,
+      "gust_max": 27,
+      "wind_dir": "ENE"
      },
      "2026-11-03": {
       "wind_max": 13,
@@ -556,9 +528,9 @@
       "wind_dir": "ENE"
      },
      "2026-11-04": {
-      "wind_max": 8,
-      "gust_max": 21,
-      "wind_dir": "NE"
+      "wind_max": 10,
+      "gust_max": 22,
+      "wind_dir": "ENE"
      },
      "2026-11-05": {
       "wind_max": 7,
@@ -568,7 +540,7 @@
     }
    }
   ],
-  "fetched": "2026-11-01T09:25:30Z"
+  "fetched": "2026-11-01T16:31:10Z"
  },
  "errors": {}
 }

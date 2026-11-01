@@ -1,6 +1,6 @@
 {
  "id": "lake-maraboon",
- "generated": "2026-11-01T09:22:32Z",
+ "generated": "2026-11-01T16:28:35Z",
  "sources": [
   {
    "source": "bom",
@@ -8,22 +8,12 @@
    "url": "https://www.bom.gov.au/",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 32,
-     "tmin": null,
-     "rain_min": 0,
-     "rain_max": null,
-     "rain_text": "0 mm",
-     "chance": 20,
-     "text": "Mostly clear."
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 33,
-     "tmin": 21,
+     "tmax": 34,
+     "tmin": 22,
      "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "0-2 mm",
+     "rain_max": 3,
+     "rain_text": "0-3 mm",
      "chance": 50,
      "text": "Shower or two."
     },
@@ -41,10 +31,10 @@
      "date": "2026-11-04",
      "tmax": 36,
      "tmin": 22,
-     "rain_min": 1,
-     "rain_max": 6,
-     "rain_text": "1-6 mm",
-     "chance": 70,
+     "rain_min": 0,
+     "rain_max": 4,
+     "rain_text": "0-4 mm",
+     "chance": 60,
      "text": "Showers. Storm developing."
     },
     {
@@ -55,11 +45,11 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 20,
-     "text": "Partly cloudy."
+     "text": "Sunny."
     },
     {
      "date": "2026-11-06",
-     "tmax": 35,
+     "tmax": 36,
      "tmin": 21,
      "rain_min": 0,
      "rain_max": null,
@@ -70,22 +60,22 @@
     {
      "date": "2026-11-07",
      "tmax": 35,
-     "tmin": 22,
+     "tmin": 21,
      "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
-     "text": "Partly cloudy."
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
+     "text": "Possible shower."
     },
     {
      "date": "2026-11-08",
      "tmax": 35,
      "tmin": 22,
      "rain_min": 0,
-     "rain_max": 3,
-     "rain_text": "0-3 mm",
-     "chance": 40,
-     "text": "Possible shower."
+     "rain_max": 1,
+     "rain_text": "0-1 mm",
+     "chance": 30,
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-09",
@@ -98,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-01T09:22:03Z"
+   "fetched": "2026-11-01T16:28:09Z"
   },
   {
    "source": "willyweather",
@@ -106,54 +96,44 @@
    "url": "https://www.willyweather.com.au/qld/fitzroy/lake-maraboon.html",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 32,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 20,
-     "text": "Mostly clear"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 33,
+     "tmax": 34,
      "tmin": 22,
-     "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "< 2 mm",
-     "chance": 45,
+     "rain_min": 1,
+     "rain_max": 5,
+     "rain_text": "1–5 mm",
+     "chance": 50,
      "text": "Shower or two"
     },
     {
      "date": "2026-11-03",
-     "tmax": 35,
+     "tmax": 36,
      "tmin": 23,
      "rain_min": 5,
      "rain_max": 10,
      "rain_text": "5–10 mm",
-     "chance": 70,
+     "chance": 75,
      "text": "Showers. Storm developing"
     },
     {
      "date": "2026-11-04",
-     "tmax": 35,
+     "tmax": 36,
      "tmin": 23,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1–5 mm",
-     "chance": 65,
+     "chance": 55,
      "text": "Showers. Storm developing"
     },
     {
      "date": "2026-11-05",
-     "tmax": 35,
-     "tmin": 22,
+     "tmax": 36,
+     "tmin": 21,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 15,
-     "text": "Partly cloudy"
+     "text": "Sunny"
     },
     {
      "date": "2026-11-06",
@@ -162,21 +142,31 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 20,
+     "chance": 15,
      "text": "Sunny"
     },
     {
      "date": "2026-11-07",
-     "tmax": 35,
+     "tmax": 34,
+     "tmin": 22,
+     "rain_min": 1,
+     "rain_max": 5,
+     "rain_text": "1–5 mm",
+     "chance": 40,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 34,
      "tmin": 22,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 35,
+     "chance": 30,
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-01T09:22:06Z"
+   "fetched": "2026-11-01T16:28:11Z"
   },
   {
    "source": "elders",
@@ -184,24 +174,14 @@
    "url": "https://eldersweather.com.au/forecast/qld/emerald",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 32,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 6,
-     "text": "Fair"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 34,
      "tmin": 22,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 14,
-     "text": "Fair"
+     "chance": 31,
+     "text": "Clear skies"
     },
     {
      "date": "2026-11-03",
@@ -210,18 +190,18 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 10,
+     "chance": 13,
      "text": "Clear skies"
     },
     {
      "date": "2026-11-04",
-     "tmax": 36,
-     "tmin": 23,
+     "tmax": 35,
+     "tmin": 22,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 15,
-     "text": "Clear skies"
+     "chance": 13,
+     "text": "Fair"
     },
     {
      "date": "2026-11-05",
@@ -230,17 +210,17 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 7,
-     "text": "Fair"
+     "chance": 6,
+     "text": "Clear skies"
     },
     {
      "date": "2026-11-06",
      "tmax": 35,
-     "tmin": 21,
+     "tmin": 22,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 10,
+     "chance": 12,
      "text": "Clear skies"
     },
     {
@@ -250,12 +230,22 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 13,
-     "text": "Fair"
+     "chance": 27,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 33,
+     "tmin": 22,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 12,
+     "text": "Partly cloudy"
     }
    ],
    "point": "Emerald",
-   "fetched": "2026-11-01T09:22:08Z"
+   "fetched": "2026-11-01T16:28:15Z"
   },
   {
    "source": "weatherzone",
@@ -263,19 +253,9 @@
    "url": "https://www.weatherzone.com/au/qld/central-highlands/emerald",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 32,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 20,
-     "text": "Mostly sunny"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 34,
-     "tmin": 21,
+     "tmax": 35,
+     "tmin": 22,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
@@ -284,57 +264,67 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 36,
-     "tmin": 22,
+     "tmax": 37,
+     "tmin": 23,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
-     "chance": 70,
-     "text": "Late shower"
+     "chance": 40,
+     "text": "Sunny"
     },
     {
      "date": "2026-11-04",
-     "tmax": 36,
+     "tmax": 37,
      "tmin": 22,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 50,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
      "text": "Late shower"
     },
     {
      "date": "2026-11-05",
      "tmax": 37,
-     "tmin": 22,
+     "tmin": 21,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 20,
+     "chance": 5,
      "text": "Sunny"
     },
     {
      "date": "2026-11-06",
      "tmax": 37,
-     "tmin": 20,
+     "tmin": 21,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 20,
-     "text": "Sunny"
+     "chance": 70,
+     "text": "Late shower"
     },
     {
      "date": "2026-11-07",
-     "tmax": 37,
-     "tmin": 22,
+     "tmax": 36,
+     "tmin": 21,
      "rain_min": 5,
      "rain_max": 10,
      "rain_text": "5-10mm",
-     "chance": 70,
-     "text": "Late shower"
+     "chance": 90,
+     "text": "Rain"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 36,
+     "tmin": 22,
+     "rain_min": 1,
+     "rain_max": 5,
+     "rain_text": "1-5mm",
+     "chance": 60,
+     "text": "Possible shower"
     }
    ],
    "point": "Emerald",
-   "fetched": "2026-11-01T09:22:25Z"
+   "fetched": "2026-11-01T16:28:28Z"
   },
   {
    "source": "wunderground",
@@ -342,29 +332,9 @@
    "url": "https://www.wunderground.com/forecast/au/lake-maraboon/-23.66,148.1",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 33,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Clear"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 34,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 35,
-     "tmin": 21,
+     "tmax": 33.9,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -372,9 +342,19 @@
      "text": "Mostly Sunny"
     },
     {
+     "date": "2026-11-03",
+     "tmax": 35,
+     "tmin": 20.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
      "date": "2026-11-04",
-     "tmax": 36,
-     "tmin": 20,
+     "tmax": 36.1,
+     "tmin": 19.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -383,8 +363,8 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 36,
-     "tmin": 20,
+     "tmax": 36.7,
+     "tmin": 19.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -393,18 +373,18 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 36,
-     "tmin": 21,
+     "tmax": 35.6,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Sunny"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-07",
-     "tmax": 35,
-     "tmin": 21,
+     "tmax": 34.4,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -413,8 +393,8 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 35,
-     "tmin": 20,
+     "tmax": 34.4,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -423,8 +403,8 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 33,
-     "tmin": 21,
+     "tmax": 32.2,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -433,8 +413,18 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 33,
-     "tmin": 21,
+     "tmax": 32.2,
+     "tmin": 20.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 32.8,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -443,7 +433,7 @@
     }
    ],
    "point": "Gindie",
-   "fetched": "2026-11-01T09:22:26Z"
+   "fetched": "2026-11-01T16:28:28Z"
   },
   {
    "source": "windy",
@@ -451,61 +441,48 @@
    "url": "https://www.windy.com/-23.66/148.1",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 32.2,
-     "tmin": 18.9,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 11,
-     "gust_max": 18,
-     "wind_dir": "NNW"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 32,
-     "tmin": 21.7,
+     "tmax": 32.9,
+     "tmin": 21.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
      "wind_max": 11,
-     "gust_max": 23,
+     "gust_max": 22,
      "wind_dir": "N"
     },
     {
      "date": "2026-11-03",
-     "tmax": 33.1,
-     "tmin": 21.9,
+     "tmax": 35.3,
+     "tmin": 23.3,
      "rain_min": 3.3,
      "rain_max": 3.3,
      "rain_text": "3.3 mm",
      "chance": null,
      "text": null,
      "wind_max": 18,
-     "gust_max": 46,
+     "gust_max": 48,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-04",
-     "tmax": 35,
-     "tmin": 21.3,
+     "tmax": 35.7,
+     "tmin": 21.6,
      "rain_min": 3,
      "rain_max": 3,
      "rain_text": "3 mm",
      "chance": null,
      "text": null,
-     "wind_max": 11,
-     "gust_max": 26,
-     "wind_dir": "NW"
+     "wind_max": 14,
+     "gust_max": 28,
+     "wind_dir": "NNE"
     },
     {
      "date": "2026-11-05",
-     "tmax": 35,
-     "tmin": 20.9,
+     "tmax": 35.2,
+     "tmin": 21,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -517,22 +494,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-01T09:22:32Z"
+   "fetched": "2026-11-01T16:28:35Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Emerald",
   "distance_km": 12.7,
-  "time": "2026-11-01T19:10:00+10:00",
-  "temp": 26.7,
-  "feels_like": 29.1,
-  "humidity": 67,
-  "wind_dir": "SE",
-  "wind_kmh": 7,
-  "gust_kmh": 9,
+  "time": "2026-11-02T02:20:00+10:00",
+  "temp": 22.5,
+  "feels_like": 24.3,
+  "humidity": 92,
+  "wind_dir": "ENE",
+  "wind_kmh": 13,
+  "gust_kmh": 17,
   "rain_since_9am": 0,
-  "fetched": "2026-11-01T09:21:56Z"
+  "fetched": "2026-11-01T16:28:02Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -542,25 +519,20 @@
     "kind": "lake",
     "spot": "Lake Maraboon",
     "windy": {
-     "2026-11-01": {
-      "wind_max": 10,
-      "gust_max": 20,
-      "wind_dir": "NNW"
-     },
      "2026-11-02": {
-      "wind_max": 11,
-      "gust_max": 27,
-      "wind_dir": "ENE"
+      "wind_max": 12,
+      "gust_max": 21,
+      "wind_dir": "NE"
      },
      "2026-11-03": {
       "wind_max": 18,
-      "gust_max": 44,
+      "gust_max": 45,
       "wind_dir": "NNW"
      },
      "2026-11-04": {
-      "wind_max": 10,
-      "gust_max": 27,
-      "wind_dir": "NNW"
+      "wind_max": 15,
+      "gust_max": 31,
+      "wind_dir": "NNE"
      },
      "2026-11-05": {
       "wind_max": 9,
@@ -570,7 +542,7 @@
     }
    }
   ],
-  "fetched": "2026-11-01T09:22:02Z"
+  "fetched": "2026-11-01T16:28:08Z"
  },
  "errors": {}
 }
