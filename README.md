@@ -51,8 +51,5 @@ To set it up:
 4. Put the Worker's address (for example `https://aus-forecast-refresh.<name>.workers.dev`) in `RELAY` near
    the top of the Refresh now code in `index.html`. The button stays hidden while `RELAY` is empty.
 
-The older app at https://d3skj3t.github.io/oxley-forecast-public reads its figures from this
-repository too.
-
 Figures belong to the sites they come from. For warnings and safety decisions, follow the Bureau of
 Meteorology.
