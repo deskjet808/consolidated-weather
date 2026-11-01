@@ -1,6 +1,6 @@
 {
  "id": "moogerah",
- "generated": "2026-11-01T09:15:11Z",
+ "generated": "2026-11-01T16:21:58Z",
  "sources": [
   {
    "source": "bom",
@@ -8,19 +8,9 @@
    "url": "https://www.bom.gov.au/",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 28,
-     "tmin": null,
-     "rain_min": 4,
-     "rain_max": 10,
-     "rain_text": "4-10 mm",
-     "chance": 90,
-     "text": null
-    },
-    {
      "date": "2026-11-02",
      "tmax": 32,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
@@ -29,18 +19,18 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 19,
-     "rain_min": 9,
+     "rain_min": 8,
      "rain_max": 20,
-     "rain_text": "9-20 mm",
-     "chance": 90,
+     "rain_text": "8-20 mm",
+     "chance": 95,
      "text": null
     },
     {
      "date": "2026-11-04",
      "tmax": 33,
-     "tmin": 19,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
@@ -50,41 +40,41 @@
     {
      "date": "2026-11-05",
      "tmax": 34,
-     "tmin": 16,
+     "tmin": 15,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
-     "chance": 10,
+     "chance": 5,
      "text": null
     },
     {
      "date": "2026-11-06",
      "tmax": 29,
-     "tmin": 17,
+     "tmin": 16,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "0-1 mm",
-     "chance": 40,
+     "chance": 30,
      "text": null
     },
     {
      "date": "2026-11-07",
      "tmax": 31,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0-5 mm",
-     "chance": 60,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
      "text": null
     },
     {
      "date": "2026-11-08",
-     "tmax": 28,
-     "tmin": 17,
+     "tmax": 27,
+     "tmin": 18,
      "rain_min": 0,
-     "rain_max": 6,
-     "rain_text": "0-6 mm",
-     "chance": 50,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
      "text": null
     },
     {
@@ -98,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-01T09:14:40Z"
+   "fetched": "2026-11-01T16:21:34Z"
   },
   {
    "source": "willyweather",
@@ -106,19 +96,9 @@
    "url": "https://www.willyweather.com.au/qld/darling-downs/moogerah.html",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 28,
-     "tmin": 17,
-     "rain_min": 5,
-     "rain_max": 10,
-     "rain_text": "5–10 mm",
-     "chance": 85,
-     "text": "Shower or two. Storm"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 32,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
@@ -127,18 +107,18 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 19,
      "rain_min": 10,
      "rain_max": 20,
      "rain_text": "10–20 mm",
-     "chance": 90,
+     "chance": 95,
      "text": "Showers. Storms"
     },
     {
      "date": "2026-11-04",
      "tmax": 33,
-     "tmin": 19,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
@@ -152,31 +132,41 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 15,
-     "text": "Mostly sunny"
+     "chance": 5,
+     "text": "Sunny"
     },
     {
      "date": "2026-11-06",
      "tmax": 29,
-     "tmin": 17,
+     "tmin": 16,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 40,
-     "text": "Possible shower"
+     "chance": 25,
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-07",
      "tmax": 31,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "< 2 mm",
+     "chance": 40,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 27,
      "tmin": 18,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1–5 mm",
-     "chance": 55,
+     "chance": 45,
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-01T09:14:43Z"
+   "fetched": "2026-11-01T16:21:36Z"
   },
   {
    "source": "elders",
@@ -184,93 +174,83 @@
    "url": "https://eldersweather.com.au/forecast/qld/moogerah",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 24,
-     "tmin": 16,
-     "rain_min": 10,
-     "rain_max": 15,
-     "rain_text": "10 - 15 mm",
-     "chance": 28,
-     "text": "Partly cloudy"
-    },
-    {
      "date": "2026-11-02",
      "tmax": 30,
-     "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 16,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 26,
-     "tmin": 19,
-     "rain_min": 10,
-     "rain_max": 15,
-     "rain_text": "10 - 15 mm",
-     "chance": 36,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 31,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 31,
-     "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 1,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 26,
      "tmin": 15,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 30,
+     "chance": 16,
      "text": "Fair"
     },
     {
-     "date": "2026-11-07",
-     "tmax": 28,
+     "date": "2026-11-03",
+     "tmax": 26,
+     "tmin": 18,
+     "rain_min": 20,
+     "rain_max": 25,
+     "rain_text": "20 - 25 mm",
+     "chance": 38,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 30,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 35,
-     "text": "Rain"
+     "chance": 4,
+     "text": "Fair"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 31,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 0,
+     "text": "Clear skies"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 27,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 6,
+     "text": "Clear skies"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 28,
+     "tmin": 16,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 15,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 25,
+     "tmin": 16,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 23,
+     "text": "Rain showers"
     }
    ],
-   "fetched": "2026-11-01T09:14:48Z"
+   "fetched": "2026-11-01T16:21:39Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/southeast-coast/moogerah",
    "days": [
-    {
-     "date": "2026-11-01",
-     "tmax": 27,
-     "tmin": 16,
-     "rain_min": 10,
-     "rain_max": 20,
-     "rain_text": "10-20mm",
-     "chance": 90,
-     "text": "Possible thunderstorm"
-    },
     {
      "date": "2026-11-02",
      "tmax": 32,
@@ -279,7 +259,7 @@
      "rain_max": 5,
      "rain_text": "1-5mm",
      "chance": 40,
-     "text": "Late shower"
+     "text": "Mostly sunny"
     },
     {
      "date": "2026-11-03",
@@ -294,12 +274,12 @@
     {
      "date": "2026-11-04",
      "tmax": 33,
-     "tmin": 19,
+     "tmin": 18,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 20,
-     "text": "Fog then sunny"
+     "chance": 5,
+     "text": "Sunny"
     },
     {
      "date": "2026-11-05",
@@ -308,32 +288,42 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 30,
+     "chance": 5,
      "text": "Sunny"
     },
     {
      "date": "2026-11-06",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 16,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 50,
-     "text": "Possible shower"
+     "chance": 30,
+     "text": "Mostly sunny"
     },
     {
      "date": "2026-11-07",
      "tmax": 31,
      "tmin": 17,
-     "rain_min": 10,
-     "rain_max": 20,
-     "rain_text": "10-20mm",
-     "chance": 90,
-     "text": "Heavy rain"
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5-10mm",
+     "chance": 80,
+     "text": "Possible thunderstorm"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 27,
+     "tmin": 19,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5-10mm",
+     "chance": 70,
+     "text": "Possible thunderstorm"
     }
    ],
    "point": "Beaudesert",
-   "fetched": "2026-11-01T09:15:04Z"
+   "fetched": "2026-11-01T16:21:51Z"
   },
   {
    "source": "wunderground",
@@ -341,19 +331,9 @@
    "url": "https://www.wunderground.com/forecast/au/moogerah/-28.084,152.529",
    "days": [
     {
-     "date": "2026-11-01",
-     "tmax": 25,
-     "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
      "date": "2026-11-02",
-     "tmax": 31,
-     "tmin": 18,
+     "tmax": 31.1,
+     "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -362,27 +342,27 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 26,
-     "tmin": 17,
-     "rain_min": 12.14,
-     "rain_max": 12.14,
-     "rain_text": "12.14 mm",
+     "tmax": 25.6,
+     "tmin": 16.1,
+     "rain_min": 15.7,
+     "rain_max": 15.7,
+     "rain_text": "15.7 mm",
      "chance": null,
      "text": "Scattered Thunderstorms"
     },
     {
      "date": "2026-11-04",
-     "tmax": 31,
+     "tmax": 31.1,
      "tmin": 15,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Sunny"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-05",
-     "tmax": 32,
+     "tmax": 31.7,
      "tmin": 15,
      "rain_min": 0,
      "rain_max": 0,
@@ -392,8 +372,8 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 28,
-     "tmin": 16,
+     "tmax": 28.3,
+     "tmin": 16.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -403,7 +383,7 @@
     {
      "date": "2026-11-07",
      "tmax": 30,
-     "tmin": 17,
+     "tmin": 16.7,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -412,18 +392,18 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 26,
-     "tmin": 13,
-     "rain_min": 1.6,
-     "rain_max": 1.6,
-     "rain_text": "1.6 mm",
+     "tmax": 26.1,
+     "tmin": 12.8,
+     "rain_min": 0.8,
+     "rain_max": 0.8,
+     "rain_text": "0.8 mm",
      "chance": null,
      "text": "PM Showers"
     },
     {
      "date": "2026-11-09",
      "tmax": 25,
-     "tmin": 15,
+     "tmin": 14.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -432,35 +412,32 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 27,
-     "tmin": 16,
+     "tmax": 26.7,
+     "tmin": 16.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 26.7,
+     "tmin": 17.2,
+     "rain_min": 10.2,
+     "rain_max": 10.2,
+     "rain_text": "10.2 mm",
+     "chance": null,
+     "text": "Showers"
     }
    ],
-   "fetched": "2026-11-01T09:15:04Z"
+   "fetched": "2026-11-01T16:21:51Z"
   },
   {
    "source": "windy",
    "name": "Windy",
    "url": "https://www.windy.com/-28.084/152.529",
    "days": [
-    {
-     "date": "2026-11-01",
-     "tmax": 26.6,
-     "tmin": 15.9,
-     "rain_min": 4,
-     "rain_max": 4,
-     "rain_text": "4 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 11,
-     "gust_max": 30,
-     "wind_dir": "NNW"
-    },
     {
      "date": "2026-11-02",
      "tmax": 30.2,
@@ -470,9 +447,9 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 13,
-     "gust_max": 33,
-     "wind_dir": "ENE"
+     "wind_max": 14,
+     "gust_max": 32,
+     "wind_dir": "NE"
     },
     {
      "date": "2026-11-03",
@@ -483,9 +460,9 @@
      "rain_text": "23.3 mm",
      "chance": null,
      "text": null,
-     "wind_max": 12,
-     "gust_max": 31,
-     "wind_dir": "NNE"
+     "wind_max": 10,
+     "gust_max": 27,
+     "wind_dir": "N"
     },
     {
      "date": "2026-11-04",
@@ -496,7 +473,7 @@
      "rain_text": "0.7 mm",
      "chance": null,
      "text": null,
-     "wind_max": 15,
+     "wind_max": 16,
      "gust_max": 33,
      "wind_dir": "W"
     },
@@ -515,22 +492,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-01T09:15:11Z"
+   "fetched": "2026-11-01T16:21:58Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Warwick",
   "distance_km": 44.2,
-  "time": "2026-11-01T19:10:00+10:00",
-  "temp": 19.3,
-  "feels_like": 21.8,
-  "humidity": 93,
-  "wind_dir": "NW",
-  "wind_kmh": 2,
-  "gust_kmh": 6,
+  "time": "2026-11-02T02:10:00+10:00",
+  "temp": 15.3,
+  "feels_like": 16.9,
+  "humidity": 97,
+  "wind_dir": "CALM",
+  "wind_kmh": 0,
+  "gust_kmh": 0,
   "rain_since_9am": 7.4,
-  "fetched": "2026-11-01T09:14:33Z"
+  "fetched": "2026-11-01T16:21:26Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -540,23 +517,18 @@
     "kind": "lake",
     "spot": "open water",
     "windy": {
-     "2026-11-01": {
-      "wind_max": 11,
-      "gust_max": 31,
-      "wind_dir": "N"
-     },
      "2026-11-02": {
-      "wind_max": 13,
-      "gust_max": 31,
+      "wind_max": 14,
+      "gust_max": 30,
       "wind_dir": "ENE"
      },
      "2026-11-03": {
-      "wind_max": 12,
-      "gust_max": 31,
-      "wind_dir": "NNE"
+      "wind_max": 10,
+      "gust_max": 28,
+      "wind_dir": "N"
      },
      "2026-11-04": {
-      "wind_max": 15,
+      "wind_max": 16,
       "gust_max": 33,
       "wind_dir": "W"
      },
@@ -568,7 +540,7 @@
     }
    }
   ],
-  "fetched": "2026-11-01T09:14:39Z"
+  "fetched": "2026-11-01T16:21:33Z"
  },
  "errors": {}
 }
