@@ -2,7 +2,7 @@
 
 A weather app for boating and jet skiing in Queensland, with any place in Australia searchable.
 
-**Site:** https://d3skj3t.github.io/consolidated-weather
+**Site:** https://d3sjj3t.github.io/consolidated-weather
 
 ## What it shows
 
@@ -44,7 +44,7 @@ are running.
 
 To set it up:
 
-1. On GitHub, create a fine-grained personal access token for `D3skJ3t/consolidated-weather` only, with
+1. On GitHub, create a fine-grained personal access token for `D3SJJ3T/consolidated-weather` only, with
    **Actions: Read and write** and **Contents: Read-only**.
 2. On Cloudflare, create a Worker (Workers & Pages, Create, Start with Hello World), name it
    `aus-forecast-refresh`, deploy it, then Edit code, replace the code with `relay/worker.js` and deploy.
