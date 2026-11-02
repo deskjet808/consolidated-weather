@@ -1,0 +1,527 @@
+{
+ "id": "brisbane-airport",
+ "generated": "2026-11-02T01:36:46Z",
+ "sources": [
+  {
+   "source": "bom",
+   "name": "BOM official",
+   "url": "https://www.bom.gov.au/",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Partly cloudy."
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 15,
+     "rain_max": 25,
+     "rain_text": "15-25 mm",
+     "chance": 95,
+     "text": "Showers. Storm."
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 31,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Sunny."
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 33,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 5,
+     "text": "Sunny."
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 26,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Partly cloudy."
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 27,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
+     "text": "Possible shower."
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
+     "text": "Possible shower."
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": null,
+     "tmin": 16,
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": null,
+     "chance": null,
+     "text": null
+    }
+   ],
+   "fetched": "2026-11-02T01:36:05Z"
+  },
+  {
+   "source": "willyweather",
+   "name": "WillyWeather",
+   "url": "https://www.willyweather.com.au/qld/brisbane/brisbane-airport.html",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 15,
+     "rain_max": 25,
+     "rain_text": "15–25 mm",
+     "chance": 95,
+     "text": "Showers. Storm"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 31,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 33,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 26,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 27,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "< 2 mm",
+     "chance": 45,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "< 2 mm",
+     "chance": 45,
+     "text": "Possible shower"
+    }
+   ],
+   "fetched": "2026-11-02T01:36:16Z"
+  },
+  {
+   "source": "elders",
+   "name": "Elders Weather",
+   "url": "https://eldersweather.com.au/forecast/qld/brisbane-airport",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 28,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 8,
+     "text": "Fair"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 27,
+     "tmin": 21,
+     "rain_min": 20,
+     "rain_max": 25,
+     "rain_text": "20 - 25 mm",
+     "chance": 34,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 31,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 3,
+     "text": "Fair"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 32,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 1,
+     "text": "Clear skies"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 14,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 36,
+     "text": "Rain"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 43,
+     "text": "Fair"
+    }
+   ],
+   "fetched": "2026-11-02T01:36:17Z"
+  },
+  {
+   "source": "weatherzone",
+   "name": "Weatherzone",
+   "url": "https://www.weatherzone.com/au/qld/brisbane/brisbane-airport",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Fog then sunny"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5-10mm",
+     "chance": 70,
+     "text": "Rain"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 31,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 33,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 10,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 26,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 27,
+     "tmin": 19,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 90,
+     "text": "Possible thunderstorm"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5-10mm",
+     "chance": 80,
+     "text": "Rain"
+    }
+   ],
+   "point": "Brisbane Ap",
+   "fetched": "2026-11-02T01:36:30Z"
+  },
+  {
+   "source": "wunderground",
+   "name": "Weather Underground",
+   "url": "https://www.wunderground.com/forecast/au/pinkenba/-27.392,153.13",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 28,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 22.95,
+     "rain_max": 22.95,
+     "rain_text": "22.95 mm",
+     "chance": null,
+     "text": "PM Thunderstorms"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 31,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 25,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 26,
+     "tmin": 20,
+     "rain_min": 2.41,
+     "rain_max": 2.41,
+     "rain_text": "2.41 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 26,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 23,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly Sunny"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 24,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 25,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    }
+   ],
+   "point": "Pinkenba",
+   "fetched": "2026-11-02T01:36:32Z"
+  },
+  {
+   "source": "windy",
+   "name": "Windy",
+   "url": "https://www.windy.com/-27.392/153.13",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 28.3,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 19,
+     "gust_max": 33,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 24.9,
+     "tmin": 21.1,
+     "rain_min": 25.5,
+     "rain_max": 25.5,
+     "rain_text": "25.5 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 18,
+     "gust_max": 37,
+     "wind_dir": "NNE"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 30.9,
+     "tmin": 21.3,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 18,
+     "gust_max": 42,
+     "wind_dir": "NW"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 32.8,
+     "tmin": 19.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 18,
+     "gust_max": 35,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 24.9,
+     "tmin": 19.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 21,
+     "gust_max": 36,
+     "wind_dir": "E"
+    }
+   ],
+   "point": "mblue model",
+   "fetched": "2026-11-02T01:36:46Z"
+  }
+ ],
+ "observations": {
+  "source": "bom_obs",
+  "station": "Brisbane Airport",
+  "distance_km": 0.4,
+  "time": "2026-11-02T11:30:00+10:00",
+  "temp": 27.7,
+  "feels_like": 28.9,
+  "humidity": 69,
+  "wind_dir": "NNE",
+  "wind_kmh": 17,
+  "gust_kmh": 22,
+  "rain_since_9am": 0,
+  "fetched": "2026-11-02T01:36:04Z"
+ },
+ "errors": {}
+}
