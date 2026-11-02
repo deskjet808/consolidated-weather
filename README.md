@@ -8,15 +8,16 @@ A weather app for boating and jet skiing in Queensland, with any place in Austra
 
 - **Featured locations** (the dropdown, grouped by region): 31 beaches, bays and jet ski lakes, plus a
   few others. For each one, forecasts from six sources side by side: the Bureau of Meteorology,
-  Weatherzone, WillyWeather, Elders Weather, Weather Underground and Windy.
+  Weatherzone, WillyWeather, Yr (Norway), Weather Underground and Windy.
 - **Any other place:** search a suburb, town or postcode to see the Bureau of Meteorology forecast and
   the nearest weather station's latest reading. Tap "Save place" to keep it in "My places" on that
   device.
 - **Boating conditions** for the chosen day, with a separate report for each body of water at a
   featured location (for example, Maroochydore has the Maroochy River and the open ocean). Each
   report has a calm / choppy / rough guide from the strongest daytime wind, the Bureau's hourly wind
-  and gusts and Windy's wind for a point on that water, and tide times at a WillyWeather spot on that
-  water. Open-ocean reports add swell; lakes have wind only. Any Bureau warnings for the area show
+  and gusts and Windy's wind for a point on that water, Seabreeze's wind and waves for the town,
+  Windfinder's wind, gusts and waves at its nearest spot (today and tomorrow), and tide times at a
+  WillyWeather spot on that water. Open-ocean reports add swell; lakes have wind only. Any Bureau warnings for the area show
   above the reports. The waters and their spots are listed under `waters` in `locations.json`.
 
 ## How it works

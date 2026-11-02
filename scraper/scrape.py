@@ -140,58 +140,51 @@ def scrape_willyweather(loc):
     return with_point({"source": "willyweather", "name": "WillyWeather", "url": url, "days": days}, loc, place)
 
 
-# ---- Elders Weather: 7-day table in the server-rendered HTML ----
-def elders_date(label, idx, today):
-    label = clean(label)
-    if idx == 0 or label.lower() == "today":
-        return today
-    try:
-        d = datetime.strptime(f"{label} {today.year}", "%a %b %d %Y").date()
-    except ValueError:
-        return today + timedelta(days=idx)
-    if d < today - timedelta(days=180):  # header crosses into the new year
-        d = d.replace(year=today.year + 1)
-    return d
+# ---- Yr (Norwegian Meteorological Institute): free forecast API by coordinates ----
+YR_UA = {"User-Agent": "consolidated-weather github.com/deskjet808/consolidated-weather"}  # met.no asks for an identifying agent
+YR_TEXT = {"clearsky": "Clear", "fair": "Fair", "partlycloudy": "Partly cloudy", "cloudy": "Cloudy", "fog": "Fog",
+           "lightrainshowers": "Light showers", "rainshowers": "Showers", "heavyrainshowers": "Heavy showers",
+           "lightrain": "Light rain", "rain": "Rain", "heavyrain": "Heavy rain",
+           "lightrainshowersandthunder": "Showers and thunder", "rainshowersandthunder": "Showers and thunder",
+           "heavyrainshowersandthunder": "Storms", "lightrainandthunder": "Rain and thunder",
+           "rainandthunder": "Rain and thunder", "heavyrainandthunder": "Storms"}
 
 
-def scrape_elders(loc):
-    url = f"https://eldersweather.com.au/forecast/{loc['elders']}"
-    soup = BeautifulSoup(get(url).text, "html.parser")
-    title = soup.title.get_text() if soup.title else ""
-    if "Australia" in title:  # unknown places fall back to a national page
-        raise ValueError(f"wrong page served: {clean(title)[:80]}")
-    table = None
-    for t in soup.select("table"):
-        heads = [clean(th.get_text()) for th in t.select("thead th")]
-        if "Today" in heads:
-            table = t
-            break
-    if table is None:
-        raise ValueError("7-day table not found")
-    heads = [clean(th.get_text()) for th in table.select("thead th")][1:]
-    rows = {}
-    for tr in table.select("tbody tr"):
-        cells = tr.find_all("td")
-        if not cells:
-            continue
-        label = clean(cells[0].get_text())
-        vals = []
-        for td in cells[1:]:
-            img = td.find("img")
-            vals.append(img.get("alt") if img and label == "Summary" else clean(td.get_text()))
-        rows[label] = vals
-    today = datetime.now(ZoneInfo(loc["tz"])).date()
+def scrape_yr(loc):
+    url = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={loc['lat']:.3f}&lon={loc['lon']:.3f}"
+    tz = ZoneInfo(loc["tz"])
+    temps, rain, wind, sym = {}, {}, {}, {}
+    for t in get(url, headers=YR_UA).json()["properties"]["timeseries"]:
+        when = datetime.fromisoformat(t["time"].replace("Z", "+00:00")).astimezone(tz)
+        d = when.date().isoformat()
+        now, data = t["data"]["instant"]["details"], t["data"]
+        temps.setdefault(d, []).append(now.get("air_temperature"))
+        if now.get("wind_speed") is not None:
+            cur = wind.setdefault(d, {"wind_max": 0, "wind_dir": None})
+            if now["wind_speed"] * 3.6 > cur["wind_max"]:
+                cur["wind_max"], cur["wind_dir"] = round(now["wind_speed"] * 3.6), compass(now.get("wind_from_direction"))
+        # Hourly steps for the first few days, then 6-hourly: add up whichever this step has
+        one = (data.get("next_1_hours") or {}).get("details", {}).get("precipitation_amount")
+        six = data.get("next_6_hours") or {}
+        mm = one if one is not None else (six.get("details") or {}).get("precipitation_amount") if "next_1_hours" not in data else None
+        if mm is not None:
+            rain[d] = rain.get(d, 0) + mm
+        # The day's picture: the forecast for the 6 hours starting closest to 10am
+        if six.get("summary") and (d not in sym or abs(when.hour - 10) < sym[d][0]):
+            sym[d] = (abs(when.hour - 10), six["summary"]["symbol_code"].split("_")[0])
     days = []
-    for i, h in enumerate(heads):
-        def col(k):
-            v = rows.get(k) or []
-            return v[i] if i < len(v) else None
-        tmax = (col("Maximum") or "").replace("°C", "")
-        tmin = (col("Minimum") or "").replace("°C", "")
-        days.append(day(elders_date(h, i, today).isoformat(), tmax, tmin, col("Rain Amount"),
-                        chance=col("Chance of Rain"), text=col("Summary")))
-    return with_point({"source": "elders", "name": "Elders Weather", "url": url, "days": days},
-                      loc, title.replace("Forecast - ", ""))
+    for d in sorted(temps):
+        vals = [v for v in temps[d] if v is not None]
+        if len(vals) < 4:  # too little of the day covered for a fair high and low
+            continue
+        mm = round(rain[d], 1) if d in rain else None
+        code = sym[d][1] if d in sym else ""
+        days.append({**day(d, max(vals), min(vals), None if mm is None else f"{mm:g} mm", mm, mm,
+                           text=YR_TEXT.get(code, code.capitalize() or None)), **wind.get(d, {})})
+    if not days:
+        raise ValueError("forecast had no days")
+    return {"source": "yr", "name": "Yr (Norway)", "url": f"https://www.yr.no/en/forecast/daily-table/{loc['lat']:.3f},{loc['lon']:.3f}",
+            "days": days}
 
 
 def capture_json(url, wanted):
@@ -409,6 +402,80 @@ def ww_swell(path, tz):
     return swell, place
 
 
+# ---- Seabreeze: 7-day wind and wave series embedded in the forecast page (knots, every 1.5 hours) ----
+def seabreeze(slug, tz):
+    """Each day's strongest daytime wind (6am to 6pm) and biggest wave, and the place Seabreeze names."""
+    html = get(f"https://www.seabreeze.com.au/weather/wind-forecast/{slug}").text
+    i = html.find("sb.Weather.renderGraphs(json)")
+    if i < 0:
+        raise ValueError("forecast data not in page")
+    seg = html[max(html.rfind("var json", 0, i), html.rfind("json =", 0, i)):i]
+    obj, _ = json.JSONDecoder().raw_decode(seg[seg.find("{"):])
+    graph = next((d for L, d in zip(obj["layout"], obj["data"]) if L["type"] == "F"), None)
+    if not graph:
+        raise ValueError("no wind and wave graph")
+    head, title = graph.split(",", 13), obj["global"].get("location")
+    start = datetime.strptime(head[12], "%Y%m%d%H%M").replace(tzinfo=tz)  # the series' local start
+    pts = graph.split("7 day wind & wave forecast for ", 1)[1].split(",", 1)[1].split(",")
+    days = {}
+    for k in range(0, len(pts) - 5, 6):
+        t, kts, wdir, wave = pts[k:k + 4]
+        when = start + timedelta(hours=int(t) / 100)
+        if not 6 <= when.hour <= 18 or not kts:
+            continue
+        cur = days.setdefault(when.date().isoformat(), {"wind_max": 0, "wind_dir": None, "wave_m": None})
+        kmh = round(float(kts) * 1.852)
+        if kmh > cur["wind_max"]:
+            cur["wind_max"], cur["wind_dir"] = kmh, wdir or None
+        if wave and (cur["wave_m"] is None or float(wave) > cur["wave_m"]):
+            cur["wave_m"] = round(float(wave), 1)
+    if not days:
+        raise ValueError("no daytime forecast points")
+    return days, title
+
+
+# ---- Windfinder: today and tomorrow, every 3 hours, in the free forecast page (m/s) ----
+def windfinder(kw, tz):
+    """Each day's strongest daytime wind and gust (6am to 6pm), with direction and biggest wave."""
+    r = get(f"https://www.windfinder.com/forecast/{kw}")
+    r.encoding = "utf-8"
+    soup = BeautifulSoup(r.text, "html.parser")
+    today = datetime.now(tz).date()
+    days = {}
+    for block in soup.select(".fc-day"):
+        head = block.select_one(".fc-day-headline")
+        try:
+            d = datetime.strptime(f"{clean(head.get_text())} {today.year}", "%A, %b %d %Y").date()
+            if d < today - timedelta(days=180):
+                d = d.replace(year=today.year + 1)
+        except (AttributeError, ValueError):
+            continue
+        for cell in block.select('[class*="_cell-timespan_"]'):
+            row = cell.find_parent()
+            m = re.match(r"(\d+)h", clean(cell.get_text()))
+            if not m or not 6 <= int(m.group(1)) <= 18:
+                continue
+            ws = row.select_one('[class*="_cell-wind-speeds_"]')
+            nums = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", ws.get_text())] if ws else []
+            if not nums:
+                continue
+            cur = days.setdefault(d.isoformat(), {"wind_max": 0, "gust_max": 0, "wind_dir": None, "wave_m": None})
+            wind = round(nums[0] * 3.6)
+            if wind > cur["wind_max"]:
+                arrow = row.select_one('[class*="_cell-direction_"] img[alt]')
+                deg = num(re.sub(r"[^\d.]", "", arrow["alt"])) if arrow else None
+                cur["wind_max"], cur["wind_dir"] = wind, compass(deg)  # the angle is where the wind comes from
+            if len(nums) > 1:
+                cur["gust_max"] = max(cur["gust_max"], round(nums[1] * 3.6))
+            wv = row.select_one('[class*="_cell-wave-height_"]')
+            h = re.search(r"\d+(?:\.\d+)?", wv.get_text()) if wv else None
+            if h and (cur["wave_m"] is None or float(h.group()) > cur["wave_m"]):
+                cur["wave_m"] = float(h.group())
+    if not days:
+        raise ValueError("no forecast hours in page")
+    return days
+
+
 def scrape_marine(loc):
     """Boating figures for each body of water at the location (its "waters" in locations.json, e.g. the
     Maroochy River and the open ocean at Maroochydore): tide times at that water's WillyWeather spot, swell
@@ -418,6 +485,12 @@ def scrape_marine(loc):
         return None
     tz = ZoneInfo(loc["tz"])
     out, problems = [], []
+    sb = sb_place = None  # Seabreeze forecasts by town, so one forecast serves every water here
+    if loc.get("seabreeze"):
+        try:
+            sb, sb_place = seabreeze(loc["seabreeze"], tz)
+        except Exception as e:
+            problems.append(f"Seabreeze: {masked(e)}")
     for w in waters:
         r = {"name": w["name"], "kind": w["kind"], "spot": w["spot"]}
         if w["kind"] != "lake":
@@ -440,17 +513,25 @@ def scrape_marine(loc):
                           for d in days if d.get("wind_max") is not None}
         except Exception as e:
             problems.append(f"{w['name']} Windy: {masked(e)}")
+        if sb:
+            r["seabreeze"], r["seabreeze_place"] = sb, sb_place
+        if w.get("windfinder"):
+            try:
+                r["windfinder"] = windfinder(w["windfinder"]["kw"], tz)
+                r["windfinder_place"] = w["windfinder"]["name"]
+            except Exception as e:
+                problems.append(f"{w['name']} Windfinder: {masked(e)}")
         out.append(r)
-    if not any(x.get("tides") or x.get("swell") or x.get("windy") for x in out):
+    if not any(x.get("tides") or x.get("swell") or x.get("windy") or x.get("seabreeze") or x.get("windfinder") for x in out):
         raise ValueError("no marine figures: " + "; ".join(problems))
-    res = {"source": "willyweather, windy", "waters": out}
+    res = {"source": "willyweather, windy, seabreeze, windfinder", "waters": out}
     if problems:
         res["problems"] = problems
     return res
 
 
-SCRAPERS = [scrape_bom, scrape_willyweather, scrape_elders, scrape_weatherzone, scrape_wunderground,
-            scrape_windy]
+SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_wunderground, scrape_windy,
+            scrape_yr]
 EXTRAS = [scrape_observations, scrape_marine]  # written as top-level "observations" and "marine"
 
 
