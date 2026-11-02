@@ -311,6 +311,11 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 @keyframes sc-tw{from{opacity:.3}to{opacity:1}}
 /* Storms: Harris's animated thundercloud, played frame by frame onto a canvas */
 .scene .sc-anim{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#000}
+/* Wider screens: the upright clip at full height in the middle, its sides fading into black, so the lightning still strikes downwards */
+@media (min-aspect-ratio:4/5){
+  .scene>div:has(>.sc-anim){background:#000}
+  .scene .sc-anim{left:50%;right:auto;width:auto;transform:translateX(-50%);-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+}
 .hbtns .btn.icon{padding:8px 10px}
 /* Quick-jump bar (phones) */
 .jump{display:none}
@@ -445,7 +450,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       </table>
     </div>
     <p class="note">The Bureau of Meteorology first, then each forecast site. Red figures are 3°C or more from the median.</p>
-    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Weather Underground, Windy and Yr don't publish a chance of rain, AccuWeather doesn't publish rain amounts, and Windy has no written forecast, so it has no picture.</p></details>
+    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy doesn't publish a chance of rain, AccuWeather doesn't publish rain amounts, and Windy has no written forecast, so it has no picture.</p></details>
   </section>
 
   <section class="chartcard" aria-labelledby="charth">
@@ -511,16 +516,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
   const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
-  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"accuweather",name:"AccuWeather",c:"--s3"},{id:"yr",name:"Yr (Norway)",c:"--s4"},{id:"wunderground",name:"Weather Underground",c:"--s5"},{id:"windy",name:"Windy",c:"--s6"}];
+  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"accuweather",name:"AccuWeather",c:"--s3"},{id:"windy",name:"Windy",c:"--s6"}];
   // Harris's list, in his order, for the "Your weather sites" panel
   const PANEL=[{kind:"site",id:"weatherzone",name:"Weatherzone",dom:"weatherzone.com.au",c:"--s1"},
     {kind:"site",id:"willyweather",name:"WillyWeather",dom:"willyweather.com.au",c:"--s2"},
     {kind:"site",id:"windy",name:"Windy",dom:"windy.com",c:"--s6"},
-    {kind:"site",id:"wunderground",name:"Weather Underground",dom:"wunderground.com",c:"--s5"},
     {kind:"meteye",name:"BOM MetEye",dom:"bom.gov.au/australia/meteye",c:"--bom"},
     {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"},
-    {kind:"site",id:"accuweather",name:"AccuWeather",dom:"accuweather.com",c:"--s3"},
-    {kind:"site",id:"yr",name:"Yr (Norway)",dom:"yr.no",c:"--s4"}];
+    {kind:"site",id:"accuweather",name:"AccuWeather",dom:"accuweather.com",c:"--s3"}];
   async function loadScraped(){
     if(state.loc.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
     const r=await fetch(dataUrl(),{cache:"no-store"});
@@ -827,14 +830,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const front=many?layer(47,6,60,480,1.1,1.9,3):layer(31,2,140,380,.8,1.2,2);
     return `<div class="sc-clouds" aria-hidden="true"><img class="sc-drift slow" src="${back}" alt="" style="opacity:${night?.8:.8}"><img class="sc-drift" src="${front}" alt="" style="opacity:${night?.92:.95}"></div>`;
   }
-  // The animated thundercloud: 30 frames (3 seconds) as small JPEGs in img/storm, upright for phones (p00..p29) and
-  // turned to landscape for wider screens (d00..d29). Each frame is decoded only when it's drawn, so memory stays
-  // low. It stops once the scene is replaced; with reduced motion it shows one bright frame and doesn't play.
+  // The animated thundercloud: 30 upright frames (3 seconds) as small JPEGs in img/storm (p00..p29). Phones fill the
+  // screen with it; wider screens show it at full height in the middle (see .sc-anim). Each frame is decoded only when
+  // it's drawn, so memory stays low. It stops once the scene is replaced; with reduced motion it shows one bright
+  // frame and doesn't play.
   const STORM_FRAMES=30,STORM_STILL=25;
   function stormAnim(el){
-    const pre=matchMedia("(max-aspect-ratio: 4/5)").matches?"p":"d";
     const cv=document.createElement("canvas");cv.className="sc-anim";el.appendChild(cv);
-    const ctx=cv.getContext("2d"),url=k=>`img/storm/${pre}${String(k).padStart(2,"0")}.jpg`;
+    const ctx=cv.getContext("2d"),url=k=>`img/storm/p${String(k).padStart(2,"0")}.jpg`;
     const draw=b=>createImageBitmap(b).then(bm=>{if(cv.width!==bm.width){cv.width=bm.width;cv.height=bm.height;}ctx.drawImage(bm,0,0);bm.close();});
     const get=k=>fetch(url(k)).then(r=>r.blob());
     if(matchMedia("(prefers-reduced-motion: reduce)").matches){get(STORM_STILL).then(draw,()=>{});return;}
@@ -1073,7 +1076,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Searched places only have the Bureau's figures, so show just those cards plus a pointer to the full list
     const full=state.loc.kind==="full";
     const cards=full?PANEL:PANEL.filter(p=>p.kind==="meteye"||p.kind==="obs");
-    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, AccuWeather, Yr, Weather Underground and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
+    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, AccuWeather and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
       if(p.kind==="site"){const src=siteSrc(p.id);
         if(!src)return empty(p,errs[p.id]?"Couldn't fetch: "+errs[p.id]:"No data yet.");
         const d=siteDay(p.id,k);if(!d)return empty(p,"No forecast for this day.");

@@ -140,53 +140,6 @@ def scrape_willyweather(loc):
     return with_point({"source": "willyweather", "name": "WillyWeather", "url": url, "days": days}, loc, place)
 
 
-# ---- Yr (Norwegian Meteorological Institute): free forecast API by coordinates ----
-YR_UA = {"User-Agent": "consolidated-weather github.com/deskjet808/consolidated-weather"}  # met.no asks for an identifying agent
-YR_TEXT = {"clearsky": "Clear", "fair": "Fair", "partlycloudy": "Partly cloudy", "cloudy": "Cloudy", "fog": "Fog",
-           "lightrainshowers": "Light showers", "rainshowers": "Showers", "heavyrainshowers": "Heavy showers",
-           "lightrain": "Light rain", "rain": "Rain", "heavyrain": "Heavy rain",
-           "lightrainshowersandthunder": "Showers and thunder", "rainshowersandthunder": "Showers and thunder",
-           "heavyrainshowersandthunder": "Storms", "lightrainandthunder": "Rain and thunder",
-           "rainandthunder": "Rain and thunder", "heavyrainandthunder": "Storms"}
-
-
-def scrape_yr(loc):
-    url = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={loc['lat']:.3f}&lon={loc['lon']:.3f}"
-    tz = ZoneInfo(loc["tz"])
-    temps, rain, wind, sym = {}, {}, {}, {}
-    for t in get(url, headers=YR_UA).json()["properties"]["timeseries"]:
-        when = datetime.fromisoformat(t["time"].replace("Z", "+00:00")).astimezone(tz)
-        d = when.date().isoformat()
-        now, data = t["data"]["instant"]["details"], t["data"]
-        temps.setdefault(d, []).append(now.get("air_temperature"))
-        if now.get("wind_speed") is not None:
-            cur = wind.setdefault(d, {"wind_max": 0, "wind_dir": None})
-            if now["wind_speed"] * 3.6 > cur["wind_max"]:
-                cur["wind_max"], cur["wind_dir"] = round(now["wind_speed"] * 3.6), compass(now.get("wind_from_direction"))
-        # Hourly steps for the first few days, then 6-hourly: add up whichever this step has
-        one = (data.get("next_1_hours") or {}).get("details", {}).get("precipitation_amount")
-        six = data.get("next_6_hours") or {}
-        mm = one if one is not None else (six.get("details") or {}).get("precipitation_amount") if "next_1_hours" not in data else None
-        if mm is not None:
-            rain[d] = rain.get(d, 0) + mm
-        # The day's picture: the forecast for the 6 hours starting closest to 10am
-        if six.get("summary") and (d not in sym or abs(when.hour - 10) < sym[d][0]):
-            sym[d] = (abs(when.hour - 10), six["summary"]["symbol_code"].split("_")[0])
-    days = []
-    for d in sorted(temps):
-        vals = [v for v in temps[d] if v is not None]
-        if len(vals) < 4:  # too little of the day covered for a fair high and low
-            continue
-        mm = round(rain[d], 1) if d in rain else None
-        code = sym[d][1] if d in sym else ""
-        days.append({**day(d, max(vals), min(vals), None if mm is None else f"{mm:g} mm", mm, mm,
-                           text=YR_TEXT.get(code, code.capitalize() or None)), **wind.get(d, {})})
-    if not days:
-        raise ValueError("forecast had no days")
-    return {"source": "yr", "name": "Yr (Norway)", "url": f"https://www.yr.no/en/forecast/daily-table/{loc['lat']:.3f},{loc['lon']:.3f}",
-            "days": days}
-
-
 # ---- AccuWeather: 10-day cards in the page, which only loads in a real browser ----
 def scrape_accuweather(loc):
     slug, key = loc["accuweather"].split("/")
@@ -284,58 +237,6 @@ def scrape_weatherzone(loc):
         raise ValueError("forecast response had no days")
     # e.g. Archerfield for Oxley: the forecast point Weatherzone uses
     return with_point({"source": "weatherzone", "name": "Weatherzone", "url": url, "days": days}, loc, place)
-
-
-def wu_unit(el):
-    """Weather Underground's unit class on a value element: "m" metric, "e" imperial (US)."""
-    return next((c for c in (el.get("class") or []) if c in ("m", "e", "h", "s")), None) if el else None
-
-
-# ---- Weather Underground: 10-day cards in the plain HTML, found by coordinates ----
-def scrape_wunderground(loc):
-    slug, expect = loc["wunderground"]
-    url = f"https://www.wunderground.com/forecast/au/{slug}/{loc['lat']},{loc['lon']}"
-    # Accepting JSON gets a different page (Brisbane, other layout), so ask for HTML only
-    # It occasionally serves its Brisbane page, or the right place in a layout without the day cards,
-    # so retry a few times before giving up
-    for attempt in range(4):
-        html = get(url, headers={"Accept": "text/html,application/xhtml+xml,*/*;q=0.8"}).text
-        soup = BeautifulSoup(html, "html.parser")
-        title = soup.title.get_text() if soup.title else ""
-        if title.startswith(expect + ",") and soup.select_one("a.day-link"):
-            break
-        time.sleep(3)
-    else:
-        raise ValueError(f"wrong page served: {clean(title)[:80]}")
-    days = []
-    for a in soup.select("a.day-link"):
-        m = re.search(r"/date/(\d{4}-\d{2}-\d{2})", a.get("href", ""))
-        sunrise = a.select_one(".sunrise[data-time]")
-        date = m.group(1) if m else (sunrise["data-time"][:10] if sunrise else None)
-        if not date:
-            continue
-        hi, lo = a.select_one(".high"), a.select_one(".low")
-        cond, qpf = a.select_one(".condition"), a.select_one(".precip")
-        # Units follow the visitor's location: GitHub's US servers get Fahrenheit and inches. The low
-        # and rain elements carry a unit class ("m" metric, "e" imperial); the high has none.
-        t_unit, r_unit = wu_unit(lo), wu_unit(qpf)
-        if t_unit not in ("m", "e") or (qpf and r_unit not in ("m", "e")):
-            raise ValueError(f"unknown units: low {lo.get('class') if lo else None}, rain {qpf.get('class') if qpf else None}")
-        to_c = (lambda v: None if v is None else round((v - 32) * 5 / 9, 1)) if t_unit == "e" else (lambda v: v)
-        # "--" for today's high once the day has passed its peak; num() turns that into None
-        tmax = to_c(num(hi.get_text().replace("°", ""))) if hi else None
-        tmin = to_c(num(lo.get_text().replace("°", ""))) if lo else None
-        mm = num(qpf.get_text()) if qpf else None
-        if mm is not None and r_unit == "e":
-            mm = round(mm * 25.4, 1)
-        for v in (tmax, tmin):
-            if v is not None and not -10 <= v <= 50:
-                raise ValueError(f"implausible temperature {v} for {date} after unit handling")
-        days.append(day(date, tmax, tmin, None if mm is None else f"{mm:g} mm", mm, mm,
-                        text=cond.get_text() if cond else None))
-    if not days:
-        raise ValueError("no forecast cards found in page")
-    return with_point({"source": "wunderground", "name": "Weather Underground", "url": url, "days": days}, loc, expect)
 
 
 # ---- Windy: point forecast arrives as background JSON (signed by the page), temperatures in Kelvin ----
@@ -579,8 +480,8 @@ def scrape_marine(loc):
     return res
 
 
-SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_wunderground, scrape_windy,
-            scrape_yr, scrape_accuweather]
+SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_windy,
+            scrape_accuweather]
 EXTRAS = [scrape_observations, scrape_marine]  # written as top-level "observations" and "marine"
 
 
