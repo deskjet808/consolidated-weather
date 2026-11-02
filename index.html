@@ -190,7 +190,12 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .hours{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(66px,88px);gap:6px;overflow-x:auto;padding:2px 2px 6px}
 .hours>div{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font:.72rem/1.3 var(--mono);box-shadow:var(--shadow)}
 .hours .wx{width:30px;height:30px}
-.hours b{font:600 1rem var(--mono)}
+.hours b{font:600 1rem var(--mono);white-space:nowrap}
+.hours b small{font-size:.62rem;font-weight:500;color:var(--muted)}
+.hourhd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;font-size:.78rem;color:var(--muted);margin-bottom:-4px}
+.hourhd .key{display:inline-flex;align-items:center;gap:5px}
+.hourhd .key i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-left:4px}
+.hourhd .key i.calm{background:var(--good)} .hourhd .key i.choppy{background:var(--warn)} .hourhd .key i.rough{background:var(--bad)}
 .hours .calm b{color:var(--good)} .hours .choppy b{color:var(--warn)} .hours .rough b{color:var(--bad)}
 .hours .calm{background:color-mix(in srgb,var(--good) 14%,var(--surface));border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
 .hours .choppy{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
@@ -946,9 +951,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       if(note)out.push(note);
       const inBest=x=>best&&x>=best.from&&x<=best.to;
       const strip=day.filter(h=>tzHour(h.time)%2===0).map(h=>{const x=tzHour(h.time);
-        return `<div class="${windClass(h.wind)}${inBest(x)?" best":""}"><span class="t">${hourTxt(x)}</span>${wx(h.icon,h.night)}<b>${f0(h.wind)}</b><span class="dir">${arrow(h.dir)}${esc(h.dir||"")}</span><span class="t">gust ${f0(h.gust)}</span></div>`;}).join("");
+        return `<div class="${windClass(h.wind)}${inBest(x)?" best":""}"><span class="t">${hourTxt(x)}</span>${wx(h.icon,h.night)}<b>${f0(h.wind)}<small> km/h</small></b><span class="dir">${arrow(h.dir)}${esc(h.dir||"")}</span><span class="t">gusts ${f0(h.gust)}</span></div>`;}).join("");
       const html=`<div class="whd"><h3>${ui(kind==="ocean"?"wave":"boat")}${esc(title)}</h3>${kind?`<span class="kind">${KIND[kind]||kind}</span>`:""}</div>
-        <div class="panel">${out.join("")}</div>${strip?`<div class="hours">${strip}</div>`:""}`;
+        <div class="panel">${out.join("")}</div>${strip?`<div class="hourhd"><span>Wind each 2 hours (km/h) · gusts below</span><span class="key"><i class="calm"></i>Calm <i class="choppy"></i>Choppy <i class="rough"></i>Rough</span></div><div class="hours">${strip}</div>`:""}`;
       const line=[rate?`<b>${esc(bt)}</b>`:"No wind forecast for this day yet",highs.length?"High tide "+highs.map(esc).join(", "):""].filter(Boolean).join(" · ");
       return{html,rate,line};
     }
