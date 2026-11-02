@@ -84,9 +84,18 @@ section{display:flex;flex-direction:column;gap:10px;min-width:0}
 
 /* Header */
 header{display:flex;flex-direction:column;gap:10px}
-.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 12px}
-.brand{display:inline-flex;align-items:center;gap:10px;font:700 1.65rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
-.brand img{width:48px;height:48px;border-radius:11px;flex:none;box-shadow:var(--shadow)}
+/* Logo, then the app name on two lines, then the buttons; on phones the name gets its own row below */
+.topbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"logo name btns";align-items:center;gap:12px 14px}
+.logo{grid-area:logo;width:120px;height:120px;border-radius:24px;box-shadow:var(--shadow)}
+.brand{grid-area:name;min-width:0;font:700 4.95rem/.9 var(--display);letter-spacing:.01em;text-transform:uppercase;color:var(--accent)}
+.brand>span{display:block}
+.topbar .hbtns{grid-area:btns;align-self:start}
+@media (max-width:860px){
+  .topbar{grid-template-columns:auto 1fr;grid-template-areas:"logo btns" "name name"}
+  .logo{width:72px;height:72px;border-radius:16px}
+  .brand{font-size:clamp(2.4rem,13.5vw,4.95rem)}
+  .topbar .hbtns{align-self:center;justify-content:flex-end}
+}
 .sub{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
 .sub .place{display:inline-flex;align-items:center;gap:5px}
 .sub .place .ui{color:var(--accent);width:14px;height:14px}
@@ -350,7 +359,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   .nowtop .nowcond{grid-column:1/-1}
   .nowtop .wx{width:76px;height:76px}
 }
-@media (max-width:420px){h1{font-size:1.65rem}.now .temp{font-size:3.3rem}.brand{font-size:1.3rem;gap:8px}.brand img{width:40px;height:40px;border-radius:9px}}
+@media (max-width:420px){h1{font-size:1.65rem}.now .temp{font-size:3.3rem}}
 @media (prefers-reduced-motion:no-preference){
   .day,.btn,.card{transition:border-color .15s,background .15s}
   .btn[disabled] .ui{animation:spin 1s linear infinite}
@@ -363,7 +372,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 <div class="wrap">
   <header>
     <div class="topbar">
-      <span class="brand"><img src="img/icon-192.png" alt="" width="48" height="48"><span>Consolidated Weather</span></span>
+      <img class="logo" src="img/icon-192.png" alt="" width="120" height="120">
+      <span class="brand"><span>Consolidated</span> <span>Weather</span></span>
       <div class="hbtns">
         <button class="btn" id="saveBtn" type="button" hidden aria-pressed="false"><i data-ui="star"></i><span id="saveTxt">Save place</span></button>
         <button class="btn icon" id="sceneBtn" type="button" aria-pressed="true" aria-label="Weather background" title="Weather background"><i data-ui="scene"></i></button>
