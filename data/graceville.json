@@ -1,6 +1,6 @@
 {
  "id": "graceville",
- "generated": "2026-11-02T09:05:23Z",
+ "generated": "2026-11-02T12:59:31Z",
  "sources": [
   {
    "source": "bom",
@@ -15,7 +15,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 20,
-     "text": "Partly cloudy."
+     "text": "Possible storm."
     },
     {
      "date": "2026-11-03",
@@ -29,7 +29,7 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 34,
+     "tmax": 33,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": null,
@@ -49,7 +49,7 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": null,
@@ -59,7 +59,7 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 30,
+     "tmax": 31,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": 2,
@@ -69,7 +69,7 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 30,
+     "tmax": 29,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 1,
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T09:04:54Z"
+   "fetched": "2026-11-02T12:59:05Z"
   },
   {
    "source": "willyweather",
@@ -113,12 +113,12 @@
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 15,
-     "text": "Partly cloudy"
+     "text": "Possible storm"
     },
     {
      "date": "2026-11-03",
      "tmax": 29,
-     "tmin": 20,
+     "tmin": 19,
      "rain_min": 15,
      "rain_max": 30,
      "rain_text": "15–30 mm",
@@ -152,13 +152,13 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 15,
+     "chance": 20,
      "text": "Partly cloudy"
     },
     {
      "date": "2026-11-07",
      "tmax": 31,
-     "tmin": 18,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": 2,
      "rain_text": "< 2 mm",
@@ -167,94 +167,16 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "< 2 mm",
-     "chance": 40,
-     "text": "Possible shower"
-    }
-   ],
-   "fetched": "2026-11-02T09:04:57Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/graceville",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 31,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 0,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 28,
-     "tmin": 21,
-     "rain_min": 25,
-     "rain_max": 30,
-     "rain_text": "25 - 30 mm",
-     "chance": 35,
-     "text": "Mostly cloudy"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 33,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 0,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 27,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 4,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-07",
      "tmax": 29,
-     "tmin": 20,
+     "tmin": 19,
      "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 25,
-     "text": "Mostly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 27,
-     "tmin": 20,
-     "rain_min": 10,
-     "rain_max": 15,
-     "rain_text": "10 - 15 mm",
-     "chance": 34,
-     "text": "Mostly cloudy"
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 35,
+     "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T09:05:00Z"
+   "fetched": "2026-11-02T12:59:07Z"
   },
   {
    "source": "weatherzone",
@@ -274,12 +196,12 @@
     {
      "date": "2026-11-03",
      "tmax": 29,
-     "tmin": 20,
+     "tmin": 19,
      "rain_min": 20,
      "rain_max": 40,
      "rain_text": "20-40mm",
      "chance": 70,
-     "text": "Possible shower"
+     "text": "Possible thunderstorm"
     },
     {
      "date": "2026-11-04",
@@ -314,134 +236,26 @@
     {
      "date": "2026-11-07",
      "tmax": 31,
-     "tmin": 18,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 60,
-     "text": "Late shower"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 30,
      "tmin": 19,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
-     "chance": 80,
-     "text": "Rain"
-    }
-   ],
-   "point": "Archerfield",
-   "fetched": "2026-11-02T09:05:14Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/graceville/-27.521,152.978",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 32.8,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 26.7,
-     "tmin": 18.3,
-     "rain_min": 28.7,
-     "rain_max": 28.7,
-     "rain_text": "28.7 mm",
-     "chance": null,
-     "text": "Heavy Thunderstorms"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 32.2,
-     "tmin": 16.7,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 33.9,
-     "tmin": 17.2,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 27.8,
-     "tmin": 17.8,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 30,
-     "tmin": 18.3,
-     "rain_min": 2,
-     "rain_max": 2,
-     "rain_text": "2 mm",
-     "chance": null,
-     "text": "PM Showers"
+     "chance": 60,
+     "text": "Possible thunderstorm"
     },
     {
      "date": "2026-11-08",
-     "tmax": 27.2,
-     "tmin": 15,
+     "tmax": 29,
+     "tmin": 19,
      "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 24.4,
-     "tmin": 16.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 25.6,
-     "tmin": 17.2,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 26.7,
-     "tmin": 18.3,
-     "rain_min": 1.3,
-     "rain_max": 1.3,
-     "rain_text": "1.3 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 80,
+     "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T09:05:15Z"
+   "point": "Archerfield",
+   "fetched": "2026-11-02T12:59:21Z"
   },
   {
    "source": "windy",
@@ -463,7 +277,7 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 26.2,
+     "tmax": 27.3,
      "tmin": 20.9,
      "rain_min": 26.7,
      "rain_max": 26.7,
@@ -472,12 +286,12 @@
      "text": null,
      "wind_max": 8,
      "gust_max": 35,
-     "wind_dir": "N"
+     "wind_dir": "NNE"
     },
     {
      "date": "2026-11-04",
      "tmax": 31.8,
-     "tmin": 20,
+     "tmin": 19.9,
      "rain_min": 0.4,
      "rain_max": 0.4,
      "rain_text": "0.4 mm",
@@ -490,7 +304,7 @@
     {
      "date": "2026-11-05",
      "tmax": 34.5,
-     "tmin": 18.8,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -498,39 +312,41 @@
      "text": null,
      "wind_max": 10,
      "gust_max": 30,
-     "wind_dir": "W"
+     "wind_dir": "WSW"
     },
     {
      "date": "2026-11-06",
      "tmax": 26.8,
-     "tmin": 18.6,
+     "tmin": 18.7,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
      "wind_max": 10,
-     "gust_max": 24,
+     "gust_max": 25,
      "wind_dir": "ENE"
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T09:05:23Z"
+   "fetched": "2026-11-02T12:59:28Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 6,
-  "time": "2026-11-02T19:00:00+10:00",
-  "temp": 23.4,
-  "feels_like": 23.3,
-  "humidity": 79,
-  "wind_dir": "E",
-  "wind_kmh": 19,
-  "gust_kmh": 24,
+  "time": "2026-11-02T22:50:00+10:00",
+  "temp": 21.7,
+  "feels_like": 23.6,
+  "humidity": 89,
+  "wind_dir": "NE",
+  "wind_kmh": 9,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T09:04:54Z"
+  "fetched": "2026-11-02T12:59:04Z"
  },
- "errors": {}
+ "errors": {
+  "accuweather": "ValueError: no forecast cards: Access Denied"
+ }
 }
