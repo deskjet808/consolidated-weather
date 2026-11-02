@@ -786,8 +786,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
     // Harris's photos for sunny and mostly sunny days: the beach at featured locations within 5 km of an ocean or
     // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places, and featured
-    // locations marked "photo": false, keep the drawings. Clear nights everywhere get Harris's night sky photo.
-    const photo=phase==="night"&&cond==="clear"?"night-clear":
+    // locations marked "photo": false, keep the drawings. Clear and mostly clear nights everywhere get Harris's night sky photo.
+    const photo=phase==="night"&&(cond==="clear"||cond==="mostly")?"night-clear":
       state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills")+"-sunny":"";
     const ext=photo==="night-clear"?"jpg":"webp";
     const key=cond+"/"+phase+(photo?"/"+photo:"");
