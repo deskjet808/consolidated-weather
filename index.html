@@ -855,7 +855,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const sunnyDay=phase==="day"&&/^(clear|mostly|partly|windy)$/.test(cond)&&state.loc.photo!==false;
     const photo=phase==="night"&&/^(clear|mostly|partly|cloudy)$/.test(cond)?"night-milkyway":
       phase==="night"&&cond==="storm"?"night-storm":
-      phase==="night"&&(cond==="rain"||cond==="showers")?"night-rain":
+      phase==="night"&&(cond==="rain"||cond==="showers")?"night-rain-grey":
       sunnyDay?(state.loc.kind==="full"&&state.loc.beach?"beach":"hills")+"-sunny":"";
     const ext=photo.startsWith("night-")?"jpg":"webp";
     const clouds=photo&&cond==="partly"?"few":photo&&cond==="cloudy"?"many":"";
