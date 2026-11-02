@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Australian Forecasts</title>
+<title>Consolidated Weather</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#eef3f4">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Consolidated Weather">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -257,8 +261,13 @@ svg{display:block;max-width:100%}
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--scrim0:.58;--fade:0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.5}}
 :root[data-theme="dark"] .scene{--scrim0:.5}
+/* The beach photo stays brighter than the drawn scenes */
+.scene.photo{--scrim0:.3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene.photo{--scrim0:.42}}
+:root[data-theme="dark"] .scene.photo{--scrim0:.42}
 .scene>div{position:absolute;inset:0;transition:opacity 1.2s ease}
 .scene svg{width:100%;height:100%;display:block}
+.scene img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
 .scene::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc(var(--scrim0) + (1 - var(--scrim0)) * .7 * var(--fade))}
 html.scenic body{background:transparent}
 html.scenic .wrap{position:relative;z-index:1}
@@ -340,7 +349,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 <div class="wrap">
   <header>
     <div class="topbar">
-      <span class="brand"><i data-wx="partly_cloudy"></i><span>Aus Forecast</span></span>
+      <span class="brand"><i data-wx="partly_cloudy"></i><span>Consolidated Weather</span></span>
       <div class="hbtns">
         <button class="btn" id="saveBtn" type="button" hidden aria-pressed="false"><i data-ui="star"></i><span id="saveTxt">Save place</span></button>
         <button class="btn icon" id="sceneBtn" type="button" aria-pressed="true" aria-label="Weather background" title="Weather background"><i data-ui="scene"></i></button>
@@ -771,12 +780,17 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const box=$("scene");
     if(!sceneOn){box.innerHTML="";sceneKey="";return;}
     if(!state.data||!ni)return;
-    const cond=sceneCond(ni.icon),phase=scenePhase(ni.night),key=cond+"/"+phase;
-    box.dataset.scene=key;
+    const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
+    // Harris's beach photo for sunny days at featured locations within 5 km of an ocean or bay beach ("beach" in locations.json)
+    const photo=state.loc.beach&&phase==="day"&&(cond==="clear"||cond==="mostly");
+    const key=cond+"/"+phase+(photo?"/beach":"");
+    box.dataset.scene=key;box.classList.toggle("photo",photo);
     if(key===sceneKey)return;sceneKey=key;
     // Fade the new scene in over the old one
-    const el=document.createElement("div");el.style.opacity="0";el.innerHTML=sceneSvg(cond,phase);box.appendChild(el);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
+    const el=document.createElement("div");el.style.opacity="0";
+    el.innerHTML=photo?'<img src="img/beach-sunny.webp" alt="" decoding="async">':sceneSvg(cond,phase);box.appendChild(el);
+    const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
+    const img=el.querySelector("img");if(img)img.decode().then(show,show);else show();
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
   }
   $("sceneBtn").addEventListener("click",()=>{sceneOn=!sceneOn;try{localStorage.setItem(SCENE_KEY,sceneOn?"on":"off");}catch(e){}renderScene(state.data?nowIcon():null);});
@@ -1065,7 +1079,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       u.searchParams.set(L.kind==="full"?"loc":"place",L.kind==="full"?L.id:L.g7);history.replaceState(null,"",u);}catch(e){}
     const coords=isNum(L.lat)&&isNum(L.lon)?` · ${Math.abs(L.lat).toFixed(2)}°S ${L.lon.toFixed(2)}°E`:"";
     $("eyebrow").textContent=`${L.kind==="full"?"Full comparison":"Bureau of Meteorology only"} · ${L.state||""} ${L.postcode||""}${coords}`;
-    document.title=L.name+" · Australian Forecasts";
+    document.title=L.name+" · Consolidated Weather";
     renderPicker();renderSave();
     state.sel=0;state.water=0;state.scrape={state:"pending"};state.data=null;hideTip();
     try{state.data=JSON.parse(localStorage.getItem(cacheKey())||"null");}catch(e){}
@@ -1125,7 +1139,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 
   // Fill the icon placeholders in the page markup
   document.querySelectorAll("[data-ui]").forEach(e=>e.outerHTML=ui(e.dataset.ui));
-  document.querySelectorAll("[data-wx]").forEach(e=>e.outerHTML=wx(e.dataset.wx,false,"Aus Forecast"));
+  document.querySelectorAll("[data-wx]").forEach(e=>e.outerHTML=wx(e.dataset.wx,false,"Consolidated Weather"));
   $("now").innerHTML=`<div class="nowtop">${wx("partly_cloudy")}<div><div class="temp num">–</div><div class="feels">Loading…</div></div></div>`;
 
   // Start: from the link (?loc= or ?place=), else the last place used on this device, else Oxley
