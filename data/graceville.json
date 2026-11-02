@@ -1,6 +1,6 @@
 {
  "id": "graceville",
- "generated": "2026-11-02T01:29:17Z",
+ "generated": "2026-11-02T02:50:49Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T01:28:54Z"
+   "fetched": "2026-11-02T02:50:22Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T01:28:54Z"
+   "fetched": "2026-11-02T02:50:25Z"
   },
   {
    "source": "elders",
@@ -180,7 +180,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 8,
+     "chance": 7,
      "text": "Fair"
     },
     {
@@ -190,7 +190,7 @@
      "rain_min": 20,
      "rain_max": 25,
      "rain_text": "20 - 25 mm",
-     "chance": 35,
+     "chance": 37,
      "text": "Mostly cloudy"
     },
     {
@@ -201,7 +201,7 @@
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
      "chance": 3,
-     "text": "Clear skies"
+     "text": "Fair"
     },
     {
      "date": "2026-11-05",
@@ -244,7 +244,7 @@
      "text": "Fair"
     }
    ],
-   "fetched": "2026-11-02T01:28:55Z"
+   "fetched": "2026-11-02T02:50:28Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Archerfield",
-   "fetched": "2026-11-02T01:29:07Z"
+   "fetched": "2026-11-02T02:50:41Z"
   },
   {
    "source": "wunderground",
@@ -332,7 +332,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 31,
+     "tmax": 31.7,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
@@ -342,18 +342,18 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 26,
-     "tmin": 19,
-     "rain_min": 22.97,
-     "rain_max": 22.97,
-     "rain_text": "22.97 mm",
+     "tmax": 26.1,
+     "tmin": 18.3,
+     "rain_min": 23.4,
+     "rain_max": 23.4,
+     "rain_text": "23.4 mm",
      "chance": null,
      "text": "Thunderstorms"
     },
     {
      "date": "2026-11-04",
-     "tmax": 33,
-     "tmin": 18,
+     "tmax": 32.8,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -362,8 +362,8 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 34,
-     "tmin": 18,
+     "tmax": 33.3,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -372,8 +372,8 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 27,
-     "tmin": 18,
+     "tmax": 27.2,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -382,17 +382,17 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 29,
-     "tmin": 19,
-     "rain_min": 5.48,
-     "rain_max": 5.48,
-     "rain_text": "5.48 mm",
+     "tmax": 28.3,
+     "tmin": 18.3,
+     "rain_min": 4.6,
+     "rain_max": 4.6,
+     "rain_text": "4.6 mm",
      "chance": null,
      "text": "PM Showers"
     },
     {
      "date": "2026-11-08",
-     "tmax": 27,
+     "tmax": 26.7,
      "tmin": 15,
      "rain_min": 0,
      "rain_max": 0,
@@ -402,8 +402,8 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 25,
-     "tmin": 16,
+     "tmax": 24.4,
+     "tmin": 16.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -412,8 +412,8 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 25,
-     "tmin": 17,
+     "tmax": 25.6,
+     "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -422,16 +422,16 @@
     },
     {
      "date": "2026-11-11",
-     "tmax": 27,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
+     "tmax": 26.7,
+     "tmin": 18.9,
+     "rain_min": 3,
+     "rain_max": 3,
+     "rain_text": "3 mm",
      "chance": null,
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T01:29:10Z"
+   "fetched": "2026-11-02T02:50:42Z"
   },
   {
    "source": "windy",
@@ -440,7 +440,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 30.2,
+     "tmax": 31.3,
      "tmin": 18.7,
      "rain_min": 0,
      "rain_max": 0,
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T01:29:17Z"
+   "fetched": "2026-11-02T02:50:49Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 6,
-  "time": "2026-11-02T11:20:00+10:00",
-  "temp": 29.5,
-  "feels_like": 31.4,
-  "humidity": 53,
-  "wind_dir": "N",
-  "wind_kmh": 7,
-  "gust_kmh": 11,
+  "time": "2026-11-02T12:40:00+10:00",
+  "temp": 31.8,
+  "feels_like": 32.3,
+  "humidity": 40,
+  "wind_dir": "SW",
+  "wind_kmh": 9,
+  "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T01:28:53Z"
+  "fetched": "2026-11-02T02:50:22Z"
  },
  "errors": {}
 }
