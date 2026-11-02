@@ -450,7 +450,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       </table>
     </div>
     <p class="note">The Bureau of Meteorology first, then each forecast site. Red figures are 3°C or more from the median.</p>
-    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy doesn't publish a chance of rain, AccuWeather doesn't publish rain amounts, and Windy has no written forecast, so it has no picture.</p></details>
+    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy doesn't publish a chance of rain or a written forecast, so it has no picture.</p></details>
   </section>
 
   <section class="chartcard" aria-labelledby="charth">
@@ -516,14 +516,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
   const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
-  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"accuweather",name:"AccuWeather",c:"--s3"},{id:"windy",name:"Windy",c:"--s6"}];
+  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"windy",name:"Windy",c:"--s6"}];
   // Harris's list, in his order, for the "Your weather sites" panel
   const PANEL=[{kind:"site",id:"weatherzone",name:"Weatherzone",dom:"weatherzone.com.au",c:"--s1"},
     {kind:"site",id:"willyweather",name:"WillyWeather",dom:"willyweather.com.au",c:"--s2"},
     {kind:"site",id:"windy",name:"Windy",dom:"windy.com",c:"--s6"},
     {kind:"meteye",name:"BOM MetEye",dom:"bom.gov.au/australia/meteye",c:"--bom"},
-    {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"},
-    {kind:"site",id:"accuweather",name:"AccuWeather",dom:"accuweather.com",c:"--s3"}];
+    {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"}];
   async function loadScraped(){
     if(state.loc.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
     const r=await fetch(dataUrl(),{cache:"no-store"});
@@ -1076,7 +1075,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Searched places only have the Bureau's figures, so show just those cards plus a pointer to the full list
     const full=state.loc.kind==="full";
     const cards=full?PANEL:PANEL.filter(p=>p.kind==="meteye"||p.kind==="obs");
-    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, AccuWeather and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
+    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
       if(p.kind==="site"){const src=siteSrc(p.id);
         if(!src)return empty(p,errs[p.id]?"Couldn't fetch: "+errs[p.id]:"No data yet.");
         const d=siteDay(p.id,k);if(!d)return empty(p,"No forecast for this day.");

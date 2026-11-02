@@ -140,55 +140,6 @@ def scrape_willyweather(loc):
     return with_point({"source": "willyweather", "name": "WillyWeather", "url": url, "days": days}, loc, place)
 
 
-# ---- AccuWeather: 10-day cards in the page, which only loads in a real browser ----
-def scrape_accuweather(loc):
-    slug, key = loc["accuweather"].split("/")
-    url = f"https://www.accuweather.com/en/au/{slug}/{key}/daily-weather-forecast/{key}"
-    soup = BeautifulSoup(capture_html(url), "html.parser")
-    title = soup.title.get_text() if soup.title else ""
-    cards = soup.select(".daily-wrapper")
-    if not cards:
-        raise ValueError(f"no forecast cards: {clean(title)[:80]}")
-    today = datetime.now(ZoneInfo(loc["tz"])).date()
-    fahrenheit = "°F" in soup.get_text() and "°C" not in soup.get_text()
-    to_c = (lambda v: None if v is None else round((v - 32) * 5 / 9, 1)) if fahrenheit else (lambda v: v)
-    days = []
-    for i, c in enumerate(cards):
-        sub = c.select_one(".date.sub")  # month/day, e.g. 11/2
-        try:
-            m, dd = (int(x) for x in clean(sub.get_text()).split("/"))
-            d = today.replace(month=m, day=dd)
-            if d < today - timedelta(days=180):
-                d = d.replace(year=today.year + 1)
-        except (AttributeError, ValueError):
-            d = today + timedelta(days=i)
-        hi, lo = c.select_one(".high"), c.select_one(".low")
-        tmax = to_c(num(re.sub(r"[^\d.-]", "", hi.get_text()))) if hi else None
-        tmin = to_c(num(re.sub(r"[^\d.-]", "", lo.get_text()))) if lo else None
-        pr, ph = c.select_one(".precip"), c.select_one(".phrase")
-        days.append(day(d.isoformat(), tmax, tmin, chance=re.sub(r"[^\d]", "", pr.get_text()) if pr else None,
-                        text=ph.get_text() if ph else None))
-    place = title.split(",")[0] if "," in title else ""
-    return with_point({"source": "accuweather", "name": "AccuWeather", "url": url, "days": days}, loc, place)
-
-
-def capture_html(url):
-    """Load url in headless Chromium and return the page HTML, for sites that turn away plain requests."""
-    from playwright.sync_api import sync_playwright
-
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        try:
-            ctx = browser.new_context(user_agent=UA, locale="en-AU", timezone_id="Australia/Brisbane",
-                                      viewport={"width": 1366, "height": 900})
-            page = ctx.new_page()
-            page.goto(url, wait_until="domcontentloaded", timeout=45000)
-            page.wait_for_timeout(3000)
-            return page.content()
-        finally:
-            browser.close()
-
-
 def capture_json(url, wanted):
     """Load url in headless Chromium and return the JSON bodies of responses whose URL satisfies wanted().
     Used for sites whose forecast only arrives as background requests the page itself signs."""
@@ -480,8 +431,7 @@ def scrape_marine(loc):
     return res
 
 
-SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_windy,
-            scrape_accuweather]
+SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_windy]
 EXTRAS = [scrape_observations, scrape_marine]  # written as top-level "observations" and "marine"
 
 
