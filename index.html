@@ -85,16 +85,14 @@ section{display:flex;flex-direction:column;gap:10px;min-width:0}
 /* Header */
 header{display:flex;flex-direction:column;gap:10px}
 /* Logo, then the app name on two lines, then the buttons; on phones the name gets its own row below */
-.topbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"logo name btns";align-items:center;gap:12px 14px}
+.topbar{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo name";align-items:center;gap:12px 14px}
 .logo{grid-area:logo;width:120px;height:120px;border-radius:24px;box-shadow:var(--shadow)}
 .brand{grid-area:name;min-width:0;font:700 4.95rem/.9 var(--display);letter-spacing:.01em;text-transform:uppercase;color:var(--accent)}
 .brand>span{display:block}
-.topbar .hbtns{grid-area:btns;align-self:start}
 @media (max-width:860px){
-  .topbar{grid-template-columns:auto 1fr;grid-template-areas:"logo btns" "name name"}
+  .topbar{grid-template-columns:auto 1fr;grid-template-areas:"logo ." "name name"}
   .logo{width:72px;height:72px;border-radius:16px}
   .brand{font-size:clamp(2.4rem,13.5vw,4.95rem)}
-  .topbar .hbtns{align-self:center;justify-content:flex-end}
 }
 .sub{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
 .sub .place{display:inline-flex;align-items:center;gap:5px}
@@ -118,7 +116,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 /* Place search: a box beside the location name; results drop down below it */
 .locrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px}
 .locrow .loctitle{min-width:0;max-width:100%}
-.finder{position:relative;flex:1 1 220px;max-width:340px;min-width:0}
+.finder{position:relative;flex:1 1 140px;min-width:0}
+.locrow .hbtns{flex:none}
 .finder form{display:flex}
 .searchbox{position:relative;flex:1;min-width:0;display:flex;border-radius:12px}
 .searchbox .sgo{position:absolute;left:3px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:9px;background:none;color:var(--muted)}
@@ -129,7 +128,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .finder .drop{position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:max(100%,300px);max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:6px}
 .finder .note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:var(--shadow)}
 .results{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);max-height:320px;overflow-y:auto;box-shadow:var(--shadow)}
-@media (max-width:700px){.finder{flex-basis:100%;max-width:none}.finder .drop{width:100%}}
+@media (max-width:700px){.locrow .loctitle{flex:1 0 100%}}
 .results li+li{border-top:1px solid var(--line)}
 .results button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:0;background:none;padding:10px 12px;font:600 .95rem var(--body)}
 .results button:hover,.results button:focus-visible{background:var(--accent-soft);outline:none}
@@ -374,19 +373,19 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <div class="topbar">
       <img class="logo" src="img/icon-192.png" alt="" width="120" height="120">
       <span class="brand"><span>Consolidated</span> <span>Weather</span></span>
-      <div class="hbtns">
-        <button class="btn" id="saveBtn" type="button" hidden aria-pressed="false"><i data-ui="star"></i><span id="saveTxt">Save place</span></button>
-        <button class="btn icon" id="sceneBtn" type="button" aria-pressed="true" aria-label="Weather background" title="Weather background"><i data-ui="scene"></i></button>
-        <button class="btn" id="refresh" type="button"><i data-ui="refresh"></i>Refresh</button>
-      </div>
     </div>
     <div class="locrow">
       <h1 class="loctitle"><select id="loc" aria-label="Choose a location"><option>Loading locations…</option></select></h1>
       <div class="finder" role="search" aria-label="Find a place">
         <form id="searchForm">
-          <div class="searchbox"><button class="sgo" type="submit" aria-label="Search"><i data-ui="search"></i></button><input id="q" type="search" placeholder="Search a place or postcode" autocomplete="off" enterkeyhint="search" aria-label="Place or postcode"></div>
+          <div class="searchbox"><button class="sgo" type="submit" aria-label="Search"><i data-ui="search"></i></button><input id="q" type="search" placeholder="Place or postcode" autocomplete="off" enterkeyhint="search" aria-label="Place or postcode"></div>
         </form>
         <div class="drop"><p class="note" id="searchNote" hidden></p><ul class="results" id="results" hidden></ul></div>
+      </div>
+      <div class="hbtns">
+        <button class="btn" id="saveBtn" type="button" hidden aria-pressed="false"><i data-ui="star"></i><span id="saveTxt">Save place</span></button>
+        <button class="btn icon" id="sceneBtn" type="button" aria-pressed="true" aria-label="Weather background" title="Weather background"><i data-ui="scene"></i></button>
+        <button class="btn" id="refresh" type="button"><i data-ui="refresh"></i>Refresh</button>
       </div>
     </div>
     <div class="sub">
