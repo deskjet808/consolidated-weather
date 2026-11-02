@@ -261,8 +261,7 @@ svg{display:block;max-width:100%}
 .tip .tv{font:.78rem var(--mono);color:var(--muted)}
 .tip .tv b{color:var(--fg);font-weight:600}
 
-/* Weather scene: an illustrated sky behind the page for the location's weather right now (day, dawn, dusk or
-   night). A scrim in the page colour keeps text readable and thickens as you scroll down. */
+/* Weather scene: an illustrated sky behind the page for the location's weather right now (day or night). A scrim in the page colour keeps text readable and thickens as you scroll down. */
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--scrim0:.58;--fade:0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.5}}
 :root[data-theme="dark"] .scene{--scrim0:.5}
@@ -711,8 +710,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   const sky=(ic,night)=>!ic?"":/storm|cyclone/.test(ic)?"storm":/rain|shower|snow/.test(ic)?"rain":night?"night":/sunny|partly/.test(ic)?"sun":"";
 
   // Weather scene. Condition: the Bureau's weather type for this hour (nowIcon), grouped into ten scenes.
-  // Time of day: dawn and dusk run from 45 minutes before to 30 minutes after the Bureau's sunrise and
-  // sunset for the location; night is in between; without those times, the Bureau's own day/night flag.
+  // Time of day: day from the Bureau's sunrise to sunset for the location, night otherwise; without those
+  // times, the Bureau's own day/night flag.
   const SCENE_KEY="aus-forecast-scene";
   let sceneOn=true;try{sceneOn=localStorage.getItem(SCENE_KEY)!=="off";}catch(e){}
   const sceneCond=ic=>!ic?"partly":/storm|cyclone/.test(ic)?"storm":/heavy_shower|shower/.test(ic)?"showers":/rain|drizzle/.test(ic)?"rain":
@@ -721,23 +720,20 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   function scenePhase(night){
     const t=Date.now(),d=bomDay(dates()[0]),r=d&&Date.parse(d.rise),st=d&&Date.parse(d.set);
     if(!isFinite(r)||!isFinite(st))return night?"night":"day";
-    const near=(x)=>t>=x-45*60e3&&t<x+30*60e3;
-    return near(r)?"dawn":near(st)?"dusk":t>r&&t<st?"day":"night";
+    return t>=r&&t<st?"day":"night";
   }
   function sceneSvg(cond,phase){
     let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
     const over=/cloudy|rain|showers/.test(cond),dark=cond==="storm";
     const kind=dark?"storm":over?"over":cond==="fog"?"fog":cond==="hazy"?"hazy":"clear";
     const SKY={day:{clear:["#2a76d2","#5d9fe0","#a6d6f6"],over:["#6d7c8a","#8d9aa6","#b8c2ca"],storm:["#2b3540","#3d4853","#5d6873"],fog:["#9aa5ad","#b6bfc5","#d3d9dc"],hazy:["#9c9a8a","#c4b593","#e4d3a9"]},
-      dawn:{clear:["#2f3b78","#b8779a","#f6b07f"],over:["#454b66","#8a6f80","#d39a86"],storm:["#262a3a","#4a3f4c","#7a5a58"],fog:["#59607a","#a98e98","#ddbfae"],hazy:["#4a4a6a","#b98a7e","#efbf8c"]},
-      dusk:{clear:["#1c2156","#a84a78","#f7a35c"],over:["#363250","#7f5266","#c2806a"],storm:["#1f1c2c","#3e2f3c","#6e4a4a"],fog:["#3b3a5a","#93707e","#d0a594"],hazy:["#2e2b55","#b0597a","#f0a465"]},
       night:{clear:["#040917","#0b1630","#1a2c52"],over:["#0a0f15","#141b24","#232c38"],storm:["#05070b","#0d1117","#1b2028"],fog:["#0f151c","#1c242e","#2e3843"],hazy:["#0b0f1c","#161d30","#2b3045"]}};
     const sk=SKY[phase][kind];
-    const cloudFill=phase==="night"?(dark?"#141a22":"#2a3443"):dark?"#46515c":over||cond==="fog"?(phase==="day"?"#d5dce2":"#a28a92"):(phase==="day"?"#ffffff":"#f6c4ae");
-    const cloud2=phase==="night"?(dark?"#0e1319":"#1f2733"):dark?"#323c46":over?(phase==="day"?"#aeb9c2":"#7c6672"):(phase==="day"?"#eef4f8":"#e8a796");
-    const hills=phase==="night"?["#0a1220","#060b15"]:phase==="day"?(over||dark||cond==="fog"?["#4f5f5a","#3b4945"]:["#3f6e55","#2c5240"]):["#3a2e4a","#241d33"];
+    const cloudFill=phase==="night"?(dark?"#141a22":"#2a3443"):dark?"#46515c":over||cond==="fog"?"#d5dce2":"#ffffff";
+    const cloud2=phase==="night"?(dark?"#0e1319":"#1f2733"):dark?"#323c46":over?"#aeb9c2":"#eef4f8";
+    const hills=phase==="night"?["#0a1220","#060b15"]:over||dark||cond==="fog"?["#4f5f5a","#3b4945"]:["#3f6e55","#2c5240"];
     let g=`<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sk[0]}"/><stop offset=".55" stop-color="${sk[1]}"/><stop offset="1" stop-color="${sk[2]}"/></linearGradient>
-      <radialGradient id="glow"><stop offset="0" stop-color="${phase==="day"?"#fff3c4":"#ffd09a"}" stop-opacity=".75"/><stop offset="1" stop-color="${phase==="day"?"#fff3c4":"#ff9a5a"}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="glow"><stop offset="0" stop-color="#fff3c4" stop-opacity=".75"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
       <radialGradient id="mglow"><stop offset="0" stop-color="#dfe6ff" stop-opacity=".35"/><stop offset="1" stop-color="#dfe6ff" stop-opacity="0"/></radialGradient>
       <pattern id="rn" width="80" height="240" patternUnits="userSpaceOnUse" patternTransform="skewX(-12)"><g stroke="${phase==="night"?"#8fa6bf":"#e3ecf4"}" stroke-width="2" stroke-linecap="round">${[[8,10],[30,90],[52,40],[70,170],[20,200],[44,140],[62,110]].map(([x,y])=>`<line x1="${x}" y1="${y}" x2="${x}" y2="${y+34}"/>`).join("")}</g></pattern></defs>
       <rect width="1600" height="1000" fill="url(#sk)"/>`;
@@ -749,10 +745,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       g+=`<g fill="#fff" opacity=".85">${st}</g><circle cx="990" cy="150" r="150" fill="url(#mglow)"/>
         <mask id="mm"><circle cx="990" cy="150" r="44" fill="#fff"/><circle cx="1011" cy="136" r="40" fill="#000"/></mask><circle cx="990" cy="150" r="44" fill="#f3ecd2" mask="url(#mm)"/>`;
     }
-    // Sun: high by day, low and orange at dawn and dusk
-    if(phase!=="night"&&(clearish||cond==="hazy")){
-      const low=phase!=="day",cx=low?820:990,cy=low?760:140,r=low?78:56;
-      g+=`<circle cx="${cx}" cy="${cy}" r="${r*4}" fill="url(#glow)"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="${low?"#ffb066":cond==="hazy"?"#ffe0a0":"#ffd65c"}"/>`;
+    // Sun by day
+    if(phase==="day"&&(clearish||cond==="hazy")){
+      g+=`<circle cx="990" cy="140" r="224" fill="url(#glow)"/><circle cx="990" cy="140" r="56" fill="${cond==="hazy"?"#ffe0a0":"#ffd65c"}"/>`;
     }
     // Clouds, drifting slowly
     const CN={clear:0,mostly:2,partly:4,windy:3,hazy:1,fog:3,cloudy:8,showers:7,rain:9,storm:9}[cond];
@@ -806,7 +801,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
   }
   $("sceneBtn").addEventListener("click",()=>{sceneOn=!sceneOn;try{localStorage.setItem(SCENE_KEY,sceneOn?"on":"off");}catch(e){}renderScene(state.data?nowIcon():null);});
-  // Dawn, dusk and night change with the clock, so check every few minutes
+  // Day and night change with the clock, so check every few minutes
   setInterval(()=>{if(state.data)renderScene(nowIcon());},5*60e3);
   // The scrim thickens further down the page so tables and charts stay easy to read
   let scrollQueued=false;
