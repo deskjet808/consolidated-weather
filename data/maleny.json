@@ -1,6 +1,6 @@
 {
  "id": "maleny",
- "generated": "2026-11-02T10:15:32Z",
+ "generated": "2026-11-02T13:12:44Z",
  "sources": [
   {
    "source": "bom",
@@ -15,7 +15,7 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 30,
-     "text": "Possible storm."
+     "text": "Mostly clear."
     },
     {
      "date": "2026-11-03",
@@ -29,7 +29,7 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 32,
+     "tmax": 31,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": null,
@@ -44,7 +44,7 @@
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
-     "chance": 5,
+     "chance": 0,
      "text": "Sunny."
     },
     {
@@ -52,29 +52,29 @@
      "tmax": 26,
      "tmin": 17,
      "rain_min": 0,
-     "rain_max": null,
-     "rain_text": "0 mm",
-     "chance": 20,
+     "rain_max": 1,
+     "rain_text": "0-1 mm",
+     "chance": 30,
      "text": "Partly cloudy."
     },
     {
      "date": "2026-11-07",
-     "tmax": 28,
-     "tmin": 16,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5 mm",
-     "chance": 60,
-     "text": "Shower or two."
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 27,
+     "tmax": 29,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 4,
      "rain_text": "0-4 mm",
      "chance": 50,
+     "text": "Shower or two."
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 25,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 3,
+     "rain_text": "0-3 mm",
+     "chance": 60,
      "text": "Shower or two."
     },
     {
@@ -85,12 +85,12 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 30,
-     "text": "Cloudy."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-10",
      "tmax": null,
-     "tmin": 15,
+     "tmin": 16,
      "rain_min": null,
      "rain_max": null,
      "rain_text": null,
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T10:15:07Z"
+   "fetched": "2026-11-02T13:12:21Z"
   },
   {
    "source": "willyweather",
@@ -113,7 +113,7 @@
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 25,
-     "text": "Possible storm"
+     "text": "Mostly clear"
     },
     {
      "date": "2026-11-03",
@@ -127,7 +127,7 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 32,
+     "tmax": 31,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
@@ -139,10 +139,10 @@
      "date": "2026-11-05",
      "tmax": 32,
      "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 5,
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": "No Rain",
+     "chance": null,
      "text": "Sunny"
     },
     {
@@ -152,109 +152,31 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 25,
+     "chance": 30,
      "text": "Partly cloudy"
     },
     {
      "date": "2026-11-07",
-     "tmax": 28,
-     "tmin": 16,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1–5 mm",
-     "chance": 60,
-     "text": "Shower or two"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 27,
+     "tmax": 29,
      "tmin": 17,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1–5 mm",
      "chance": 50,
      "text": "Shower or two"
-    }
-   ],
-   "fetched": "2026-11-02T10:15:09Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/maleny",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 28,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 14,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 25,
-     "tmin": 18,
-     "rain_min": 20,
-     "rain_max": 25,
-     "rain_text": "20 - 25 mm",
-     "chance": 34,
-     "text": "Mist"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 30,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 31,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 25,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 16,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 27,
-     "tmin": 17,
-     "rain_min": 5,
-     "rain_max": 10,
-     "rain_text": "5 - 10 mm",
-     "chance": 32,
-     "text": "Mostly cloudy"
     },
     {
      "date": "2026-11-08",
-     "tmax": 24,
-     "tmin": 15,
-     "rain_min": 0,
+     "tmax": 25,
+     "tmin": 18,
+     "rain_min": 1,
      "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 35,
-     "text": "Rain showers"
+     "rain_text": "1–5 mm",
+     "chance": 55,
+     "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T10:15:11Z"
+   "fetched": "2026-11-02T13:12:24Z"
   },
   {
    "source": "weatherzone",
@@ -273,18 +195,28 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 28.1,
-     "tmin": 19.1,
-     "rain_min": 5,
-     "rain_max": 10,
-     "rain_text": "5-10mm",
-     "chance": 60,
+     "tmax": 26.2,
+     "tmin": 18.4,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 50,
      "text": "Possible thunderstorm"
     },
     {
      "date": "2026-11-04",
-     "tmax": 31.6,
-     "tmin": 18.5,
+     "tmax": 31.5,
+     "tmin": 18.6,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 10,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 32.1,
+     "tmin": 17.9,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -292,29 +224,19 @@
      "text": "Sunny"
     },
     {
-     "date": "2026-11-05",
-     "tmax": 32.2,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 50,
-     "text": "Sunny"
-    },
-    {
      "date": "2026-11-06",
-     "tmax": 25.4,
-     "tmin": 17.6,
+     "tmax": 25.9,
+     "tmin": 17.4,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
      "chance": 70,
-     "text": "Possible shower"
+     "text": "Rain"
     },
     {
      "date": "2026-11-07",
-     "tmax": 26.9,
-     "tmin": 17.9,
+     "tmax": 28.3,
+     "tmin": 17.5,
      "rain_min": 5,
      "rain_max": 10,
      "rain_text": "5-10mm",
@@ -323,8 +245,8 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 26.1,
-     "tmin": 18.3,
+     "tmax": 25.1,
+     "tmin": 18.4,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
@@ -332,115 +254,7 @@
      "text": "Rain"
     }
    ],
-   "fetched": "2026-11-02T10:15:24Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/maleny/-26.758,152.852",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 28.9,
-     "tmin": 17.2,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 25,
-     "tmin": 17.2,
-     "rain_min": 17.3,
-     "rain_max": 17.3,
-     "rain_text": "17.3 mm",
-     "chance": null,
-     "text": "PM Thunderstorms"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 31.7,
-     "tmin": 15.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Sunny"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 32.2,
-     "tmin": 15.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 25.6,
-     "tmin": 16.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 27.8,
-     "tmin": 16.7,
-     "rain_min": 8.6,
-     "rain_max": 8.6,
-     "rain_text": "8.6 mm",
-     "chance": null,
-     "text": "PM Showers"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 25,
-     "tmin": 13.3,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 21.7,
-     "tmin": 13.3,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 22.8,
-     "tmin": 15,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 24.4,
-     "tmin": 16.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    }
-   ],
-   "fetched": "2026-11-02T10:15:25Z"
+   "fetched": "2026-11-02T13:12:37Z"
   },
   {
    "source": "windy",
@@ -514,22 +328,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T10:15:32Z"
+   "fetched": "2026-11-02T13:12:44Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Nambour",
   "distance_km": 15.2,
-  "time": "2026-11-02T20:10:00+10:00",
-  "temp": 20.4,
-  "feels_like": 23.3,
+  "time": "2026-11-02T23:00:00+10:00",
+  "temp": 19.6,
+  "feels_like": 22.5,
   "humidity": 97,
-  "wind_dir": "WSW",
-  "wind_kmh": 4,
-  "gust_kmh": 6,
+  "wind_dir": "W",
+  "wind_kmh": 2,
+  "gust_kmh": 4,
   "rain_since_9am": 22,
-  "fetched": "2026-11-02T10:15:06Z"
+  "fetched": "2026-11-02T13:12:20Z"
  },
  "errors": {}
 }
