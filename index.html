@@ -143,6 +143,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .now .temp{font:600 3.8rem/1 var(--display);font-variant-numeric:tabular-nums}
 .now .temp small{font-size:1.4rem;color:var(--muted);margin-left:2px;vertical-align:top}
 .now .feels{font:.85rem var(--body);color:var(--muted)}
+.now .nowdate{font:500 .72rem/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
 .now .cond{font:600 1.25rem/1.2 var(--display)}
 .now .hilo{font:.82rem/1.4 var(--mono);color:var(--muted);margin-top:4px}
 .stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:0}
@@ -306,6 +307,20 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 @keyframes sc-fall{from{transform:translateY(-240px)}to{transform:translateY(0)}}
 @keyframes sc-flash{0%,92%,100%{opacity:0}92.6%{opacity:.85}93.2%{opacity:.1}93.8%{opacity:.6}95%{opacity:0}}
 @keyframes sc-tw{from{opacity:.3}to{opacity:1}}
+/* Storm night photo: a glowing aura around the bolt that breathes, and every few seconds a flickering strike
+   that lights up the photo. Both sit above the scrim (still behind the page) so they shine through. */
+.scene .sc-aura,.scene .sc-strike{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;--bx:53%;--by:22%}
+@media (max-aspect-ratio:4/5){.scene .sc-aura,.scene .sc-strike{--bx:57%;--by:18%}}
+.scene .sc-aura{background:radial-gradient(ellipse 22% 42% at var(--bx) var(--by),rgb(190 210 255/.6),rgb(130 160 255/.28) 45%,transparent 78%),radial-gradient(ellipse 70% 95% at var(--bx) var(--by),rgb(100 120 240/.26),rgb(80 90 200/.1) 55%,transparent 80%)}
+.scene .sc-strike{opacity:0;background:radial-gradient(ellipse 40% 70% at var(--bx) var(--by),rgb(235 242 255/.95),rgb(170 195 255/.55) 35%,rgb(100 125 235/.22) 65%,transparent 90%)}
+@media (prefers-reduced-motion:no-preference){
+  .scene .sc-aura{animation:sc-aura 2.6s ease-in-out infinite alternate}
+  .scene .sc-strike{animation:sc-strike 8s linear infinite}
+  .scene.storm img{animation:sc-bright 8s linear infinite}
+}
+@keyframes sc-aura{from{opacity:.55}to{opacity:1}}
+@keyframes sc-strike{0%,80%{opacity:0}80.6%{opacity:1}81.2%{opacity:.15}82%{opacity:.85}82.5%{opacity:.25}83.6%{opacity:.7}86.5%,100%{opacity:0}}
+@keyframes sc-bright{0%,80%{filter:none}80.6%{filter:brightness(2.2) contrast(1.15)}81.2%{filter:brightness(1.2)}82%{filter:brightness(1.9)}82.5%{filter:brightness(1.25)}83.6%{filter:brightness(1.6)}86.5%,100%{filter:none}}
 .hbtns .btn.icon{padding:8px 10px}
 /* Quick-jump bar (phones) */
 .jump{display:none}
@@ -802,18 +817,21 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Harris's photos for sunny and mostly sunny days: the beach at featured locations within 5 km of an ocean or
     // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places, and featured
     // locations marked "photo": false, keep the drawings. Clear and mostly clear nights everywhere get Harris's Milky Way photo
-    // (turned sideways for wider screens).
+    // (turned sideways for wider screens). Rainy and showery nights get rain on a window, storm nights lightning
+    // (widened for wider screens with a blurred copy of the photo either side).
     const photo=phase==="night"&&(cond==="clear"||cond==="mostly")?"night-milkyway":
+      phase==="night"&&cond==="storm"?"night-storm":
+      phase==="night"&&(cond==="rain"||cond==="showers")?"night-rain":
       state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills")+"-sunny":"";
-    const ext=photo==="night-milkyway"?"jpg":"webp";
+    const ext=photo.startsWith("night-")?"jpg":"webp";
     const key=cond+"/"+phase+(photo?"/"+photo:"");
-    box.dataset.scene=key;box.classList.toggle("photo",!!photo);
+    box.dataset.scene=key;box.classList.toggle("photo",!!photo);box.classList.toggle("storm",photo==="night-storm");
     if(key===sceneKey)return;sceneKey=key;
     // Fade the new scene in over the old one
     // The first scene shows straight away; later ones fade in over the old one
     const first=!box.firstElementChild,el=document.createElement("div");el.style.opacity=first?"1":"0";
     // Upright phones get a tall crop centred on the sun; wider screens get the full photo
-    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>`:sceneSvg(cond,phase);box.appendChild(el);
+    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${photo==="night-storm"?'<div class="sc-aura"></div><div class="sc-strike"></div>':""}`:sceneSvg(cond,phase);box.appendChild(el);
     const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
     const img=el.querySelector("img");if(first){}else if(img)img.decode().then(show,show);else show();
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
@@ -835,7 +853,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     $("now").dataset.sky=sky(ni.icon,ni.night);renderScene(ni);
     const top=`<div class="nowtop">${wx(ni.icon,ni.night)||wx("partly_cloudy")}
         <div><div class="temp num">${ob?f0(ob.temp):"–"}<small>°C</small></div><div class="feels">${ob?"Feels like "+f0(ob.feels)+"°":"No station reading"}</div></div>
-        <div class="nowcond"><div class="cond">${esc(today&&today.text||(ni.icon?WX_LABEL[ni.icon]||"":"")||"Latest reading")}</div>
+        <div class="nowcond"><div class="nowdate">${new Date().toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long",timeZone:state.loc.tz})}</div><div class="cond">${esc(today&&today.text||(ni.icon?WX_LABEL[ni.icon]||"":"")||"Latest reading")}</div>
           <div class="hilo">${today?`Today ${isNum(today.tmax)?"max "+f0(today.tmax)+"°":""}${isNum(today.tmin)?" min "+f0(today.tmin)+"°":""}${isNum(today.chance)?" · "+f0(today.chance)+"% chance of rain":""}`:""}</div></div></div>`;
     $("now").innerHTML=top+`<dl class="stats">
       ${stat("drop","Humidity",ob?f0(ob.hum)+"%":"–")}
