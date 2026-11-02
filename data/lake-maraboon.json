@@ -1,6 +1,6 @@
 {
  "id": "lake-maraboon",
- "generated": "2026-11-02T00:46:18Z",
+ "generated": "2026-11-02T01:03:03Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:45:54Z"
+   "fetched": "2026-11-02T01:02:37Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Mostly sunny"
     }
    ],
-   "fetched": "2026-11-02T00:45:56Z"
+   "fetched": "2026-11-02T01:02:40Z"
   },
   {
    "source": "elders",
@@ -180,7 +180,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 33,
+     "chance": 32,
      "text": "Clear skies"
     },
     {
@@ -190,7 +190,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 12,
+     "chance": 14,
      "text": "Clear skies"
     },
     {
@@ -245,7 +245,7 @@
     }
    ],
    "point": "Emerald",
-   "fetched": "2026-11-02T00:45:57Z"
+   "fetched": "2026-11-02T01:02:43Z"
   },
   {
    "source": "weatherzone",
@@ -324,7 +324,7 @@
     }
    ],
    "point": "Emerald",
-   "fetched": "2026-11-02T00:46:10Z"
+   "fetched": "2026-11-02T01:02:56Z"
   },
   {
    "source": "wunderground",
@@ -433,7 +433,7 @@
     }
    ],
    "point": "Gindie",
-   "fetched": "2026-11-02T00:46:11Z"
+   "fetched": "2026-11-02T01:02:57Z"
   },
   {
    "source": "windy",
@@ -507,22 +507,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:46:18Z"
+   "fetched": "2026-11-02T01:03:03Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Emerald",
   "distance_km": 12.7,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 26.6,
-  "feels_like": 30.1,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 27.1,
+  "feels_like": 30.7,
   "humidity": 75,
-  "wind_dir": "ESE",
-  "wind_kmh": 6,
-  "gust_kmh": 9,
+  "wind_dir": "S",
+  "wind_kmh": 7,
+  "gust_kmh": 7,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:45:47Z"
+  "fetched": "2026-11-02T01:02:30Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -560,7 +560,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:45:53Z"
+  "fetched": "2026-11-02T01:02:37Z"
  },
  "errors": {}
 }

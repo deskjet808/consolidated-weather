@@ -1,6 +1,6 @@
 {
  "id": "bargara",
- "generated": "2026-11-02T00:42:34Z",
+ "generated": "2026-11-02T00:59:08Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:42:09Z"
+   "fetched": "2026-11-02T00:58:45Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T00:42:11Z"
+   "fetched": "2026-11-02T00:58:47Z"
   },
   {
    "source": "elders",
@@ -180,7 +180,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 14,
+     "chance": 15,
      "text": "Clear skies"
     },
     {
@@ -244,7 +244,7 @@
      "text": "Mostly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:42:15Z"
+   "fetched": "2026-11-02T00:58:48Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Bundaberg",
-   "fetched": "2026-11-02T00:42:27Z"
+   "fetched": "2026-11-02T00:59:01Z"
   },
   {
    "source": "wunderground",
@@ -431,7 +431,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:42:27Z"
+   "fetched": "2026-11-02T00:59:01Z"
   },
   {
    "source": "windy",
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:42:34Z"
+   "fetched": "2026-11-02T00:59:08Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Bundaberg",
   "distance_km": 17.4,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 26.3,
-  "feels_like": 26.4,
-  "humidity": 73,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 27,
+  "feels_like": 26.7,
+  "humidity": 70,
   "wind_dir": "N",
-  "wind_kmh": 22,
-  "gust_kmh": 30,
+  "wind_kmh": 24,
+  "gust_kmh": 28,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:41:53Z"
+  "fetched": "2026-11-02T00:58:27Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -934,7 +934,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:42:09Z"
+  "fetched": "2026-11-02T00:58:44Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "manly",
- "generated": "2026-11-02T00:39:51Z",
+ "generated": "2026-11-02T00:56:23Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:39:26Z"
+   "fetched": "2026-11-02T00:55:58Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T00:39:28Z"
+   "fetched": "2026-11-02T00:56:00Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Fair"
     }
    ],
-   "fetched": "2026-11-02T00:39:31Z"
+   "fetched": "2026-11-02T00:56:01Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Brisbane Ap",
-   "fetched": "2026-11-02T00:39:43Z"
+   "fetched": "2026-11-02T00:56:16Z"
   },
   {
    "source": "wunderground",
@@ -431,7 +431,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:39:44Z"
+   "fetched": "2026-11-02T00:56:16Z"
   },
   {
    "source": "windy",
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:39:51Z"
+   "fetched": "2026-11-02T00:56:23Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 8.9,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 27,
-  "feels_like": 28.8,
-  "humidity": 77,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 26.8,
+  "feels_like": 27.3,
+  "humidity": 70,
   "wind_dir": "NNE",
-  "wind_kmh": 17,
+  "wind_kmh": 19,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:39:18Z"
+  "fetched": "2026-11-02T00:55:49Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -709,7 +709,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:39:26Z"
+  "fetched": "2026-11-02T00:55:57Z"
  },
  "errors": {}
 }

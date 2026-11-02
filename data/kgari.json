@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-02T00:43:50Z",
+ "generated": "2026-11-02T01:00:21Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:43:24Z"
+   "fetched": "2026-11-02T00:59:57Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower"
     }
    ],
-   "fetched": "2026-11-02T00:43:26Z"
+   "fetched": "2026-11-02T01:00:00Z"
   },
   {
    "source": "elders",
@@ -245,7 +245,7 @@
     }
    ],
    "point": "Eurong",
-   "fetched": "2026-11-02T00:43:29Z"
+   "fetched": "2026-11-02T01:00:00Z"
   },
   {
    "source": "weatherzone",
@@ -324,7 +324,7 @@
     }
    ],
    "point": "Hervey Bay",
-   "fetched": "2026-11-02T00:43:41Z"
+   "fetched": "2026-11-02T01:00:14Z"
   },
   {
    "source": "wunderground",
@@ -333,7 +333,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 27.2,
+     "tmax": 27.8,
      "tmin": 22.2,
      "rain_min": 0,
      "rain_max": 0,
@@ -344,12 +344,12 @@
     {
      "date": "2026-11-03",
      "tmax": 26.7,
-     "tmin": 22.2,
-     "rain_min": 9.9,
-     "rain_max": 9.9,
-     "rain_text": "9.9 mm",
+     "tmin": 21.7,
+     "rain_min": 3.8,
+     "rain_max": 3.8,
+     "rain_text": "3.8 mm",
      "chance": null,
-     "text": "PM Thunderstorms"
+     "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-04",
@@ -373,8 +373,8 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 26.1,
-     "tmin": 21.7,
+     "tmax": 25.6,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -385,19 +385,19 @@
      "date": "2026-11-07",
      "tmax": 27.2,
      "tmin": 22.2,
-     "rain_min": 2.8,
-     "rain_max": 2.8,
-     "rain_text": "2.8 mm",
+     "rain_min": 1.8,
+     "rain_max": 1.8,
+     "rain_text": "1.8 mm",
      "chance": null,
      "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-08",
-     "tmax": 26.7,
+     "tmax": 26.1,
      "tmin": 20,
-     "rain_min": 3.6,
-     "rain_max": 3.6,
-     "rain_text": "3.6 mm",
+     "rain_min": 4.3,
+     "rain_max": 4.3,
+     "rain_text": "4.3 mm",
      "chance": null,
      "text": "Showers"
     },
@@ -414,7 +414,7 @@
     {
      "date": "2026-11-10",
      "tmax": 24.4,
-     "tmin": 21.1,
+     "tmin": 20.6,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -433,7 +433,7 @@
     }
    ],
    "point": "Eurong",
-   "fetched": "2026-11-02T00:43:42Z"
+   "fetched": "2026-11-02T01:00:14Z"
   },
   {
    "source": "windy",
@@ -507,22 +507,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:43:50Z"
+   "fetched": "2026-11-02T01:00:21Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hervey Bay",
   "distance_km": 27.6,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 26.1,
-  "feels_like": 25.8,
-  "humidity": 74,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 26.6,
+  "feels_like": 26.5,
+  "humidity": 73,
   "wind_dir": "NNW",
   "wind_kmh": 24,
-  "gust_kmh": 33,
+  "gust_kmh": 28,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:43:06Z"
+  "fetched": "2026-11-02T00:59:40Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -936,7 +936,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:43:24Z"
+  "fetched": "2026-11-02T00:59:57Z"
  },
  "errors": {}
 }

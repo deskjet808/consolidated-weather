@@ -1,6 +1,6 @@
 {
  "id": "cairns",
- "generated": "2026-11-02T00:48:52Z",
+ "generated": "2026-11-02T01:05:41Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:48:28Z"
+   "fetched": "2026-11-02T01:05:16Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Mostly sunny"
     }
    ],
-   "fetched": "2026-11-02T00:48:30Z"
+   "fetched": "2026-11-02T01:05:18Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:48:31Z"
+   "fetched": "2026-11-02T01:05:19Z"
   },
   {
    "source": "weatherzone",
@@ -322,7 +322,7 @@
      "text": "Mostly sunny"
     }
    ],
-   "fetched": "2026-11-02T00:48:44Z"
+   "fetched": "2026-11-02T01:05:33Z"
   },
   {
    "source": "wunderground",
@@ -332,7 +332,7 @@
     {
      "date": "2026-11-02",
      "tmax": 31.7,
-     "tmin": 23.9,
+     "tmin": 23.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -351,17 +351,17 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 30.6,
+     "tmax": 31.1,
      "tmin": 22.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Partly Cloudy"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-05",
-     "tmax": 31.1,
+     "tmax": 31.7,
      "tmin": 23.3,
      "rain_min": 0,
      "rain_max": 0,
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:48:45Z"
+   "fetched": "2026-11-02T01:05:34Z"
   },
   {
    "source": "windy",
@@ -439,7 +439,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 31.2,
+     "tmax": 30.9,
      "tmin": 23.9,
      "rain_min": 0,
      "rain_max": 0,
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:48:52Z"
+   "fetched": "2026-11-02T01:05:41Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cairns Racecourse",
   "distance_km": 3.8,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 29.7,
-  "feels_like": 33.3,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 29.8,
+  "feels_like": 33,
   "humidity": 73,
   "wind_dir": "NE",
-  "wind_kmh": 13,
-  "gust_kmh": 24,
+  "wind_kmh": 15,
+  "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:48:11Z"
+  "fetched": "2026-11-02T01:04:58Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -934,7 +934,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:48:28Z"
+  "fetched": "2026-11-02T01:05:16Z"
  },
  "errors": {}
 }
