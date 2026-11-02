@@ -786,8 +786,10 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
     // Harris's photos for sunny and mostly sunny days: the beach at featured locations within 5 km of an ocean or
     // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places, and featured
-    // locations marked "photo": false, keep the drawings.
-    const photo=state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills"):"";
+    // locations marked "photo": false, keep the drawings. Clear nights everywhere get Harris's night sky photo.
+    const photo=phase==="night"&&cond==="clear"?"night-clear":
+      state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills")+"-sunny":"";
+    const ext=photo==="night-clear"?"jpg":"webp";
     const key=cond+"/"+phase+(photo?"/"+photo:"");
     box.dataset.scene=key;box.classList.toggle("photo",!!photo);
     if(key===sceneKey)return;sceneKey=key;
@@ -795,7 +797,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // The first scene shows straight away; later ones fade in over the old one
     const first=!box.firstElementChild,el=document.createElement("div");el.style.opacity=first?"1":"0";
     // Upright phones get a tall crop centred on the sun; wider screens get the full photo
-    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-sunny-phone.webp"><img src="img/${photo}-sunny-desktop.webp" alt="" decoding="async"></picture>`:sceneSvg(cond,phase);box.appendChild(el);
+    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>`:sceneSvg(cond,phase);box.appendChild(el);
     const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
     const img=el.querySelector("img");if(first){}else if(img)img.decode().then(show,show);else show();
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
