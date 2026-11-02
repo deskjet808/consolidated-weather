@@ -229,6 +229,82 @@ def scrape_windy(loc):
     return out
 
 
+# ---- Open-Meteo: free forecast API (no key) for single weather models, by coordinates ----
+# Free for non-commercial use with attribution (CC BY 4.0), which the app's cards give
+WMO_TEXT = {0: "Clear", 1: "Mostly sunny", 2: "Partly cloudy", 3: "Cloudy", 45: "Fog", 48: "Fog",
+            51: "Light drizzle", 53: "Drizzle", 55: "Heavy drizzle", 56: "Drizzle", 57: "Drizzle",
+            61: "Light rain", 63: "Rain", 65: "Heavy rain", 66: "Rain", 67: "Heavy rain",
+            71: "Light snow", 73: "Snow", 75: "Heavy snow", 77: "Snow",
+            80: "Light showers", 81: "Showers", 82: "Heavy showers", 85: "Snow", 86: "Snow",
+            95: "Storms", 96: "Storms with hail", 99: "Storms with hail"}
+OM_DAILY = ("temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,"
+            "weather_code,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant")
+
+
+def open_meteo(loc, model, source, name):
+    url = (f"https://api.open-meteo.com/v1/forecast?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"
+           f"&daily={OM_DAILY}&timezone={loc['tz']}&forecast_days=8")
+    for attempt in range(3):
+        r = requests.get(url, headers=HEADERS, timeout=30)
+        if r.status_code != 429:  # shared GitHub addresses are sometimes rate-limited; wait and try again
+            break
+        time.sleep(20)
+    r.raise_for_status()
+    dl = r.json().get("daily") or {}
+    days = []
+    for i, d in enumerate(dl.get("time") or []):
+        col = lambda k: (dl.get(k) or [None] * (i + 1))[i]
+        tmax, tmin, mm = col("temperature_2m_max"), col("temperature_2m_min"), col("precipitation_sum")
+        if tmax is None and tmin is None:
+            continue  # past the model's range
+        mm = None if mm is None else round(mm, 1)
+        w, g = col("wind_speed_10m_max"), col("wind_gusts_10m_max")
+        days.append({**day(d, tmax, tmin, None if mm is None else f"{mm:g} mm", mm, mm,
+                           chance=col("precipitation_probability_max"), text=WMO_TEXT.get(col("weather_code"))),
+                     "wind_max": None if w is None else round(w), "gust_max": None if g is None else round(g),
+                     "wind_dir": compass(col("wind_direction_10m_dominant"))})
+    if not days:
+        raise ValueError("forecast had no days")
+    return {"source": source, "name": name, "days": days,
+            "url": f"https://open-meteo.com/en/docs?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"}
+
+
+def scrape_ecmwf(loc):
+    """The European Centre's model (ECMWF IFS, 9 km)."""
+    return open_meteo(loc, "ecmwf_ifs", "ecmwf", "ECMWF")
+
+
+def scrape_icon(loc):
+    """The German weather service's model (DWD ICON)."""
+    return open_meteo(loc, "icon_seamless", "icon", "ICON")
+
+
+# ---- Foreca: 10-day cards in the plain HTML; "foreca" in locations.json is its place id ----
+def scrape_foreca(loc):
+    url = f"https://www.foreca.com/en/{loc['foreca']}/{loc['id']}/10-day-forecast"
+    soup = BeautifulSoup(get(url).text, "html.parser")
+    title = soup.title.get_text() if soup.title else ""  # "10 day forecast - Oxley, Brisbane, AU - Foreca.com"
+    today = datetime.now(ZoneInfo(loc["tz"])).date()
+    days = []
+    for i, c in enumerate(soup.select(".day-container")):
+        d = today + timedelta(days=i)
+        # The card says "Mon 2": check its day of the month so a stale page can't shift every figure by a day
+        label = c.select_one(".time_24h")
+        dom = re.search(r"\d+", label.get_text()) if label else None
+        if dom and int(dom.group()) != d.day:
+            raise ValueError(f"day {i} is labelled {clean(label.get_text())}, expected {d.day}")
+        temps = [num(t.get_text().strip().rstrip("°�").strip()) for t in c.select(".temp_c")]
+        mm = c.select_one(".rain_mm")
+        mm = num(mm.find(string=True, recursive=False)) if mm else None
+        sym = c.select_one("img.symb")
+        days.append(day(d.isoformat(), temps[0] if temps else None, temps[1] if len(temps) > 1 else None,
+                        None if mm is None else f"{mm:g} mm", mm, mm, text=sym.get("title") if sym else None))
+    if not days:
+        raise ValueError(f"no forecast cards: {clean(title)[:80]}")
+    m = re.search(r"forecast - ([^,]+)", title)
+    return with_point({"source": "foreca", "name": "Foreca", "url": url, "days": days}, loc, m.group(1) if m else "")
+
+
 # ---- Bureau of Meteorology latest observations from the station nearest the location ----
 def scrape_observations(loc):
     j = get(f"https://api.weather.bom.gov.au/v1/locations/{loc['bom']}/observations").json()
@@ -431,7 +507,7 @@ def scrape_marine(loc):
     return res
 
 
-SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_windy]
+SCRAPERS = [scrape_bom, scrape_willyweather, scrape_weatherzone, scrape_windy, scrape_ecmwf, scrape_icon, scrape_foreca]
 EXTRAS = [scrape_observations, scrape_marine]  # written as top-level "observations" and "marine"
 
 
