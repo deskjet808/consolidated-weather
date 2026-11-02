@@ -5,9 +5,9 @@
 //                           FRESH_MINUTES old, a refresh for it is already running, or MAX_RUNNING are running
 //   GET  /data?loc=<id>     that location's data file straight from the repository (no CDN delay), and
 //                           whether a refresh for it is still running
-// Token: a fine-grained GitHub token for D3skJ3t/aus-forecast only, with Actions read and write and
+// Token: a fine-grained GitHub token for D3skJ3t/consolidated-weather only, with Actions read and write and
 // Contents read-only.
-const REPO = "D3skJ3t/aus-forecast";
+const REPO = "D3skJ3t/consolidated-weather";
 const WORKFLOW = "scrape.yml";
 const ORIGIN = "https://d3skj3t.github.io";
 const FRESH_MINUTES = 30;
