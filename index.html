@@ -288,6 +288,8 @@ svg{display:block;max-width:100%}
 .scene>div{position:absolute;inset:0;transition:opacity 1.2s ease}
 .scene svg{width:100%;height:100%;display:block}
 .scene picture{display:block;width:100%;height:100%}
+.scene .sc-clouds{position:absolute;inset:0;overflow:hidden}
+.scene .sc-clouds img{position:absolute;top:0;left:-8%;width:116%;height:100%;object-fit:cover}
 .scene img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
 .scene::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc(var(--scrim0) + (1 - var(--scrim0)) * .7 * var(--fade))}
 /* With the background off, the scene (and its scrim) would sit over the page, so hide it */
@@ -806,6 +808,36 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     g=g.replace(/(id="|url\(#)(sk|glow|mglow|rn|mm)\b/g,"$1$2"+u);
     return `<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
   }
+  // Clouds drifting over a photo: a few by day, a few or many by night. Each cloud is a cluster of overlapping puffs,
+  // shaded light on top and grey underneath, with its edges roughened by noise and softened, so it reads as a real
+  // cumulus. Each layer is drawn once as an image and slid slowly across, which keeps it smooth on phones.
+  function cloudLayer(amount,night){
+    const many=amount==="many";
+    // Night clouds are moonlit blue-grey so they show against the dark sky
+    const col=night?(many?["#77839a","#4a556a","#262e3c"]:["#8e9bb2","#5a667c","#2c3545"]):["#ffffff","#eef2f6","#aebccb"];
+    function layer(seed0,n,yMin,yMax,sMin,sMax,blur){
+      let seed=seed0;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+      // f: roughen the edges with noise, soften a little, then let the noise thin the cloud in patches so light shows
+      // through; h: the same, softer, for the sunlit (or moonlit) tops; s: a blurred shadow underneath
+      let defs=`<filter id="f" x="-30%" y="-50%" width="160%" height="200%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="5" seed="${seed0%97}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="48" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="${blur}" result="b"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.4 0 0 0 -.7" result="m"/><feComposite in="b" in2="m" operator="arithmetic" k1=".55" k2=".6" k3="0" k4="0"/></filter><filter id="h" x="-30%" y="-50%" width="160%" height="200%"><feTurbulence type="fractalNoise" baseFrequency=".025" numOctaves="4" seed="${(seed0+7)%97}"/><feDisplacementMap in="SourceGraphic" scale="36" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="${blur+3}"/></filter><filter id="s" x="-50%" y="-80%" width="200%" height="260%"><feGaussianBlur stdDeviation="24"/></filter>`,body="";
+      for(let c=0;c<n;c++){
+        const cx=-100+rnd()*1800,cy=yMin+rnd()*(yMax-yMin),s=sMin+rnd()*(sMax-sMin),w=300*s,h=110*s;
+        defs+=`<linearGradient id="g${c}" gradientUnits="userSpaceOnUse" x1="0" y1="${(cy-h).toFixed(0)}" x2="0" y2="${(cy+h*.45).toFixed(0)}"><stop offset="0" stop-color="${col[0]}"/><stop offset=".5" stop-color="${col[1]}"/><stop offset="1" stop-color="${col[2]}"/></linearGradient>`;
+        // A flat-ish base, big puffs along the middle, and small puffs crowding the top edge
+        let puffs=`<ellipse cx="${cx.toFixed(0)}" cy="${(cy+h*.25).toFixed(0)}" rx="${(w*.55).toFixed(0)}" ry="${(h*.28).toFixed(0)}"/>`,tops="";
+        const k=12+Math.floor(rnd()*8);
+        for(let i=0;i<k;i++){const t=rnd()-.5,edge=1-Math.abs(t)*1.4,px=cx+t*w,r=h*(.18+rnd()*.32)*Math.max(.3,edge),py=cy+h*.2-r*.5-rnd()*h*.45*Math.max(0,edge);
+          puffs+=`<circle cx="${px.toFixed(0)}" cy="${py.toFixed(0)}" r="${r.toFixed(0)}"/>`;
+          if(rnd()<.6)tops+=`<circle cx="${(px+(rnd()-.5)*r*.4).toFixed(0)}" cy="${(py-r*.35).toFixed(0)}" r="${(r*.62).toFixed(0)}"/>`;}
+        body+=`<g filter="url(#s)" fill="${col[2]}" opacity=".4" transform="translate(0 ${(h*.14).toFixed(0)})">${puffs}</g><g filter="url(#f)" fill="url(#g${c})">${puffs}</g><g filter="url(#h)" fill="${col[0]}" opacity="${night?.45:.7}">${tops}</g>`;
+      }
+      const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><defs>${defs}</defs>${many&&blur>3?`<linearGradient id="o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col[1]}" stop-opacity=".55"/><stop offset=".35" stop-color="${col[1]}" stop-opacity=".32"/><stop offset=".7" stop-color="${col[1]}" stop-opacity=".1"/><stop offset="1" stop-color="${col[1]}" stop-opacity="0"/></linearGradient><rect width="1600" height="1000" fill="url(#o)"/>`:""}${body}</svg>`;
+      return "data:image/svg+xml,"+encodeURIComponent(svg);
+    }
+    const back=many?layer(29,7,20,380,1.3,2.2,4):layer(13,3,90,330,.7,1.1,3);
+    const front=many?layer(47,6,60,480,1.1,1.9,3):layer(31,2,140,380,.8,1.2,2);
+    return `<div class="sc-clouds" aria-hidden="true"><img class="sc-drift slow" src="${back}" alt="" style="opacity:${night?.8:.8}"><img class="sc-drift" src="${front}" alt="" style="opacity:${night?.92:.95}"></div>`;
+  }
   let sceneKey="",sceneN=0;
   function renderScene(ni){
     document.documentElement.classList.toggle("scenic",sceneOn);
@@ -814,16 +846,19 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     if(!sceneOn){box.innerHTML="";sceneKey="";return;}
     if(!state.data||!ni)return;
     const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
-    // Harris's photos for sunny and mostly sunny days: the beach at featured locations within 5 km of an ocean or
-    // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places, and featured
-    // locations marked "photo": false, keep the drawings. Clear and mostly clear nights everywhere get Harris's Milky Way photo
-    // (turned sideways for wider screens). Rainy and showery nights get rain on a window, storm nights lightning
-    // (widened for wider screens with a blurred copy of the photo either side).
-    const photo=phase==="night"&&(cond==="clear"||cond==="mostly")?"night-milkyway":
+    // Harris's photos. Clear, mostly sunny, partly cloudy and windy days: the beach at featured locations within 5 km
+    // of an ocean or bay beach ("beach" in locations.json), the hills everywhere else, searched places included;
+    // locations marked "photo": false keep the drawings. Clear, mostly clear, partly cloudy and cloudy nights everywhere
+    // get the Milky Way (turned sideways for wider screens). Rainy and showery nights get rain on a window, storm
+    // nights lightning (widened for wider screens with a blurred copy of the photo either side). Partly cloudy days
+    // and nights, and cloudy nights, have drawn clouds drifting over the photo.
+    const sunnyDay=phase==="day"&&/^(clear|mostly|partly|windy)$/.test(cond)&&state.loc.photo!==false;
+    const photo=phase==="night"&&/^(clear|mostly|partly|cloudy)$/.test(cond)?"night-milkyway":
       phase==="night"&&cond==="storm"?"night-storm":
       phase==="night"&&(cond==="rain"||cond==="showers")?"night-rain":
-      state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills")+"-sunny":"";
+      sunnyDay?(state.loc.kind==="full"&&state.loc.beach?"beach":"hills")+"-sunny":"";
     const ext=photo.startsWith("night-")?"jpg":"webp";
+    const clouds=photo&&cond==="partly"?"few":photo&&cond==="cloudy"?"many":"";
     const key=cond+"/"+phase+(photo?"/"+photo:"");
     box.dataset.scene=key;box.classList.toggle("photo",!!photo);box.classList.toggle("storm",photo==="night-storm");
     if(key===sceneKey)return;sceneKey=key;
@@ -831,7 +866,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // The first scene shows straight away; later ones fade in over the old one
     const first=!box.firstElementChild,el=document.createElement("div");el.style.opacity=first?"1":"0";
     // Upright phones get a tall crop centred on the sun; wider screens get the full photo
-    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${photo==="night-storm"?'<div class="sc-aura"></div><div class="sc-strike"></div>':""}`:sceneSvg(cond,phase);box.appendChild(el);
+    el.innerHTML=photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${photo==="night-storm"?'<div class="sc-aura"></div><div class="sc-strike"></div>':""}${clouds?cloudLayer(clouds,phase==="night"):""}`:sceneSvg(cond,phase);box.appendChild(el);
     const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
     const img=el.querySelector("img");if(first){}else if(img)img.decode().then(show,show);else show();
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
