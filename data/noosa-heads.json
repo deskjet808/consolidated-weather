@@ -1,22 +1,12 @@
 {
  "id": "noosa-heads",
- "generated": "2026-11-02T13:33:20Z",
+ "generated": "2026-11-02T14:03:38Z",
  "sources": [
   {
    "source": "bom",
    "name": "BOM official",
    "url": "https://www.bom.gov.au/",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 29,
-     "tmin": null,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "0-1 mm",
-     "chance": 30,
-     "text": "Clear."
-    },
     {
      "date": "2026-11-03",
      "tmax": 28,
@@ -96,25 +86,25 @@
      "rain_text": null,
      "chance": null,
      "text": null
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": null,
+     "tmin": null,
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": null,
+     "chance": null,
+     "text": null
     }
    ],
-   "fetched": "2026-11-02T13:32:55Z"
+   "fetched": "2026-11-02T14:01:15Z"
   },
   {
    "source": "willyweather",
    "name": "WillyWeather",
    "url": "https://www.willyweather.com.au/qld/sunshine-coast/noosa-heads.html",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 29,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 25,
-     "text": "Clear"
-    },
     {
      "date": "2026-11-03",
      "tmax": 28,
@@ -174,25 +164,25 @@
      "rain_text": "1–5 mm",
      "chance": 60,
      "text": "Shower or two"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 26,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 25,
+     "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T13:32:57Z"
+   "fetched": "2026-11-02T14:01:18Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/southeast-coast/noosa-heads",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 60,
-     "text": "Possible thunderstorm"
-    },
     {
      "date": "2026-11-03",
      "tmax": 28,
@@ -252,10 +242,20 @@
      "rain_text": "1-5mm",
      "chance": 70,
      "text": "Thunderstorms"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 26,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Possible shower"
     }
    ],
    "point": "Sunshine Coast",
-   "fetched": "2026-11-02T13:33:10Z"
+   "fetched": "2026-11-02T14:01:29Z"
   },
   {
    "source": "windy",
@@ -263,22 +263,9 @@
    "url": "https://www.windy.com/-26.394/153.09",
    "days": [
     {
-     "date": "2026-11-02",
-     "tmax": 28.6,
-     "tmin": 20.5,
-     "rain_min": 0.9,
-     "rain_max": 0.9,
-     "rain_text": "0.9 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 9,
-     "gust_max": 25,
-     "wind_dir": "NW"
-    },
-    {
      "date": "2026-11-03",
-     "tmax": 26.6,
-     "tmin": 19.8,
+     "tmax": 26.7,
+     "tmin": 20.4,
      "rain_min": 20,
      "rain_max": 20,
      "rain_text": "20 mm",
@@ -326,28 +313,28 @@
      "wind_max": 13,
      "gust_max": 26,
      "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29.1,
+     "tmin": 19.9,
+     "rain_min": 8,
+     "rain_max": 8,
+     "rain_text": "8 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 12,
+     "gust_max": 34,
+     "wind_dir": "N"
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T13:33:18Z"
+   "fetched": "2026-11-02T14:01:36Z"
   },
   {
    "source": "ecmwf",
    "name": "ECMWF",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 28.3,
-     "tmin": 20,
-     "rain_min": 3.6,
-     "rain_max": 3.6,
-     "rain_text": "3.6 mm",
-     "chance": 100,
-     "text": "Heavy drizzle",
-     "wind_max": 18,
-     "gust_max": 42,
-     "wind_dir": "NNW"
-    },
     {
      "date": "2026-11-03",
      "tmax": 26.7,
@@ -438,28 +425,28 @@
      "wind_max": 23,
      "gust_max": 62,
      "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 23.6,
+     "tmin": 18.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 24,
+     "text": "Cloudy",
+     "wind_max": 18,
+     "gust_max": 44,
+     "wind_dir": "NE"
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.394&longitude=153.09&models=ecmwf_ifs",
-   "fetched": "2026-11-02T13:33:19Z"
+   "fetched": "2026-11-02T14:03:37Z"
   },
   {
    "source": "icon",
    "name": "ICON",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 29.5,
-     "tmin": 20,
-     "rain_min": 13.6,
-     "rain_max": 13.6,
-     "rain_text": "13.6 mm",
-     "chance": 80,
-     "text": "Storms with hail",
-     "wind_max": 9,
-     "gust_max": 27,
-     "wind_dir": "NW"
-    },
     {
      "date": "2026-11-03",
      "tmax": 28,
@@ -540,7 +527,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.394&longitude=153.09&models=icon_seamless",
-   "fetched": "2026-11-02T13:33:19Z"
+   "fetched": "2026-11-02T14:03:37Z"
   },
   {
    "source": "foreca",
@@ -548,22 +535,12 @@
    "url": "https://www.foreca.com/en/102155135/noosa-heads/10-day-forecast",
    "days": [
     {
-     "date": "2026-11-02",
-     "tmax": 27,
-     "tmin": 21,
-     "rain_min": 4.3,
-     "rain_max": 4.3,
-     "rain_text": "4.3 mm",
-     "chance": null,
-     "text": "Partly cloudy, possible thunderstorms with rain"
-    },
-    {
      "date": "2026-11-03",
      "tmax": 28,
      "tmin": 21,
-     "rain_min": 19.6,
-     "rain_max": 19.6,
-     "rain_text": "19.6 mm",
+     "rain_min": 27.6,
+     "rain_max": 27.6,
+     "rain_text": "27.6 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
@@ -571,9 +548,9 @@
      "date": "2026-11-04",
      "tmax": 31,
      "tmin": 21,
-     "rain_min": null,
-     "rain_max": null,
-     "rain_text": null,
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
      "chance": null,
      "text": "Mostly clear"
     },
@@ -591,29 +568,29 @@
      "date": "2026-11-06",
      "tmax": 25,
      "tmin": 20,
-     "rain_min": 0.3,
-     "rain_max": 0.3,
-     "rain_text": "0.3 mm",
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": null,
      "chance": null,
-     "text": "Partly cloudy and light rain"
+     "text": "Clear"
     },
     {
      "date": "2026-11-07",
      "tmax": 26,
      "tmin": 20,
-     "rain_min": 0.8,
-     "rain_max": 0.8,
-     "rain_text": "0.8 mm",
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Mostly clear"
     },
     {
      "date": "2026-11-08",
      "tmax": 26,
      "tmin": 21,
-     "rain_min": 0.9,
-     "rain_max": 0.9,
-     "rain_text": "0.9 mm",
+     "rain_min": 0.8,
+     "rain_max": 0.8,
+     "rain_text": "0.8 mm",
      "chance": null,
      "text": "Partly cloudy and light rain"
     },
@@ -621,9 +598,9 @@
      "date": "2026-11-09",
      "tmax": 23,
      "tmin": 19,
-     "rain_min": 0.8,
-     "rain_max": 0.8,
-     "rain_text": "0.8 mm",
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
      "chance": null,
      "text": "Partly cloudy and light rain"
     },
@@ -641,29 +618,39 @@
      "date": "2026-11-11",
      "tmax": 26,
      "tmin": 21,
-     "rain_min": 0.6,
-     "rain_max": 0.6,
-     "rain_text": "0.6 mm",
+     "rain_min": 1.3,
+     "rain_max": 1.3,
+     "rain_text": "1.3 mm",
      "chance": null,
-     "text": "Partly cloudy"
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-12",
+     "tmax": 26,
+     "tmin": 21,
+     "rain_min": 5,
+     "rain_max": 5,
+     "rain_text": "5 mm",
+     "chance": null,
+     "text": "Cloudy and showers"
     }
    ],
-   "fetched": "2026-11-02T13:33:20Z"
+   "fetched": "2026-11-02T14:03:38Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Tewantin",
   "distance_km": 4.9,
-  "time": "2026-11-02T23:20:00+10:00",
-  "temp": 21,
-  "feels_like": 24.6,
+  "time": "2026-11-02T23:50:00+10:00",
+  "temp": 21.1,
+  "feels_like": 24,
   "humidity": 97,
   "wind_dir": "NNW",
-  "wind_kmh": 2,
+  "wind_kmh": 6,
   "gust_kmh": 7,
   "rain_since_9am": 5.8,
-  "fetched": "2026-11-02T13:32:35Z"
+  "fetched": "2026-11-02T14:00:55Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -673,28 +660,6 @@
     "kind": "river",
     "spot": "Noosa Sound",
     "tides": {
-     "2026-11-02": [
-      {
-       "type": "high",
-       "time": "2:35 am",
-       "height_m": 0.84
-      },
-      {
-       "type": "low",
-       "time": "9:00 am",
-       "height_m": 0.43
-      },
-      {
-       "type": "high",
-       "time": "3:02 pm",
-       "height_m": 1.21
-      },
-      {
-       "type": "low",
-       "time": "10:40 pm",
-       "height_m": 0.4
-      }
-     ],
      "2026-11-03": [
       {
        "type": "high",
@@ -821,14 +786,31 @@
        "time": "7:39 pm",
        "height_m": 1.08
       }
+     ],
+     "2026-11-09": [
+      {
+       "type": "low",
+       "time": "2:33 am",
+       "height_m": 0.21
+      },
+      {
+       "type": "high",
+       "time": "8:23 am",
+       "height_m": 1.31
+      },
+      {
+       "type": "low",
+       "time": "3:28 pm",
+       "height_m": 0.38
+      },
+      {
+       "type": "high",
+       "time": "8:18 pm",
+       "height_m": 1.03
+      }
      ]
     },
     "windy": {
-     "2026-11-02": {
-      "wind_max": 9,
-      "gust_max": 25,
-      "wind_dir": "NW"
-     },
      "2026-11-03": {
       "wind_max": 15,
       "gust_max": 42,
@@ -848,14 +830,14 @@
       "wind_max": 13,
       "gust_max": 26,
       "wind_dir": "ESE"
+     },
+     "2026-11-07": {
+      "wind_max": 12,
+      "gust_max": 34,
+      "wind_dir": "N"
      }
     },
     "seabreeze": {
-     "2026-11-02": {
-      "wind_max": 24,
-      "wind_dir": "NE",
-      "wave_m": 0.8
-     },
      "2026-11-03": {
       "wind_max": 17,
       "wind_dir": "NNE",
@@ -885,6 +867,11 @@
       "wind_max": 33,
       "wind_dir": "SSE",
       "wave_m": 0.9
+     },
+     "2026-11-09": {
+      "wind_max": 24,
+      "wind_dir": "SE",
+      "wave_m": 1.7
      }
     },
     "seabreeze_place": "Noosa Heads",
@@ -909,28 +896,6 @@
     "kind": "ocean",
     "spot": "Noosa Main Beach",
     "tides": {
-     "2026-11-02": [
-      {
-       "type": "high",
-       "time": "2:01 am",
-       "height_m": 1.26
-      },
-      {
-       "type": "low",
-       "time": "7:40 am",
-       "height_m": 0.64
-      },
-      {
-       "type": "high",
-       "time": "2:28 pm",
-       "height_m": 1.81
-      },
-      {
-       "type": "low",
-       "time": "9:20 pm",
-       "height_m": 0.6
-      }
-     ],
      "2026-11-03": [
       {
        "type": "high",
@@ -1057,21 +1022,38 @@
        "time": "7:05 pm",
        "height_m": 1.61
       }
+     ],
+     "2026-11-09": [
+      {
+       "type": "low",
+       "time": "1:13 am",
+       "height_m": 0.31
+      },
+      {
+       "type": "high",
+       "time": "7:49 am",
+       "height_m": 1.95
+      },
+      {
+       "type": "low",
+       "time": "2:08 pm",
+       "height_m": 0.57
+      },
+      {
+       "type": "high",
+       "time": "7:44 pm",
+       "height_m": 1.54
+      }
      ]
     },
     "swell": {
-     "2026-11-02": {
-      "max_m": 1,
-      "dir": "NNE",
-      "period_s": 4
-     },
      "2026-11-03": {
       "max_m": 0.9,
       "dir": "E",
-      "period_s": 6
+      "period_s": 7
      },
      "2026-11-04": {
-      "max_m": 1.3,
+      "max_m": 1.5,
       "dir": "NNE",
       "period_s": 5
      },
@@ -1081,32 +1063,32 @@
       "period_s": 5
      },
      "2026-11-06": {
-      "max_m": 1.8,
+      "max_m": 1.9,
       "dir": "SSE",
       "period_s": 6
      },
      "2026-11-07": {
-      "max_m": 1.3,
-      "dir": "SSE",
-      "period_s": 6
+      "max_m": 1.4,
+      "dir": "SE",
+      "period_s": 8
      },
      "2026-11-08": {
-      "max_m": 1.5,
-      "dir": "N",
-      "period_s": 5
+      "max_m": 1.4,
+      "dir": "SE",
+      "period_s": 9
      },
      "2026-11-09": {
-      "max_m": 1.2,
-      "dir": "SSW",
-      "period_s": 4
+      "max_m": 2.5,
+      "dir": "SSE",
+      "period_s": 10
+     },
+     "2026-11-10": {
+      "max_m": 1.8,
+      "dir": "SSE",
+      "period_s": 11
      }
     },
     "windy": {
-     "2026-11-02": {
-      "wind_max": 9,
-      "gust_max": 25,
-      "wind_dir": "NW"
-     },
      "2026-11-03": {
       "wind_max": 15,
       "gust_max": 42,
@@ -1126,14 +1108,14 @@
       "wind_max": 13,
       "gust_max": 26,
       "wind_dir": "ESE"
+     },
+     "2026-11-07": {
+      "wind_max": 12,
+      "gust_max": 34,
+      "wind_dir": "N"
      }
     },
     "seabreeze": {
-     "2026-11-02": {
-      "wind_max": 24,
-      "wind_dir": "NE",
-      "wave_m": 0.8
-     },
      "2026-11-03": {
       "wind_max": 17,
       "wind_dir": "NNE",
@@ -1163,6 +1145,11 @@
       "wind_max": 33,
       "wind_dir": "SSE",
       "wave_m": 0.9
+     },
+     "2026-11-09": {
+      "wind_max": 24,
+      "wind_dir": "SE",
+      "wave_m": 1.7
      }
     },
     "seabreeze_place": "Noosa Heads",
@@ -1183,7 +1170,7 @@
     "windfinder_place": "Noosa Main Beach"
    }
   ],
-  "fetched": "2026-11-02T13:32:55Z"
+  "fetched": "2026-11-02T14:01:14Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "maroochydore",
- "generated": "2026-11-02T13:39:21Z",
+ "generated": "2026-11-02T13:56:35Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T13:38:46Z"
+   "fetched": "2026-11-02T13:55:11Z"
   },
   {
    "source": "willyweather",
@@ -176,7 +176,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T13:38:48Z"
+   "fetched": "2026-11-02T13:55:13Z"
   },
   {
    "source": "weatherzone",
@@ -254,7 +254,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T13:39:11Z"
+   "fetched": "2026-11-02T13:55:27Z"
   },
   {
    "source": "windy",
@@ -328,7 +328,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T13:39:19Z"
+   "fetched": "2026-11-02T13:55:34Z"
   },
   {
    "source": "ecmwf",
@@ -440,7 +440,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.656&longitude=153.089&models=ecmwf_ifs",
-   "fetched": "2026-11-02T13:39:20Z"
+   "fetched": "2026-11-02T13:56:34Z"
   },
   {
    "source": "icon",
@@ -539,7 +539,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.656&longitude=153.089&models=icon_seamless",
-   "fetched": "2026-11-02T13:39:20Z"
+   "fetched": "2026-11-02T13:56:35Z"
   },
   {
    "source": "foreca",
@@ -550,9 +550,9 @@
      "date": "2026-11-02",
      "tmax": 27,
      "tmin": 21,
-     "rain_min": 2.7,
-     "rain_max": 2.7,
-     "rain_text": "2.7 mm",
+     "rain_min": 2.3,
+     "rain_max": 2.3,
+     "rain_text": "2.3 mm",
      "chance": null,
      "text": "Partly cloudy, possible thunderstorms with rain"
     },
@@ -560,9 +560,9 @@
      "date": "2026-11-03",
      "tmax": 25,
      "tmin": 20,
-     "rain_min": 17,
-     "rain_max": 17,
-     "rain_text": "17 mm",
+     "rain_min": 25.9,
+     "rain_max": 25.9,
+     "rain_text": "25.9 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
@@ -590,11 +590,11 @@
      "date": "2026-11-06",
      "tmax": 25,
      "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
+     "rain_min": 1,
+     "rain_max": 1,
+     "rain_text": "1 mm",
      "chance": null,
-     "text": "Mostly clear"
+     "text": "Partly cloudy and showers"
     },
     {
      "date": "2026-11-07",
@@ -610,9 +610,9 @@
      "date": "2026-11-08",
      "tmax": 26,
      "tmin": 18,
-     "rain_min": 0.8,
-     "rain_max": 0.8,
-     "rain_text": "0.8 mm",
+     "rain_min": 0.9,
+     "rain_max": 0.9,
+     "rain_text": "0.9 mm",
      "chance": null,
      "text": "Partly cloudy and light rain"
     },
@@ -620,19 +620,19 @@
      "date": "2026-11-09",
      "tmax": 23,
      "tmin": 18,
-     "rain_min": 0.5,
-     "rain_max": 0.5,
-     "rain_text": "0.5 mm",
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
      "chance": null,
-     "text": "Partly cloudy"
+     "text": "Partly cloudy and light rain"
     },
     {
      "date": "2026-11-10",
      "tmax": 25,
      "tmin": 18,
-     "rain_min": 1,
-     "rain_max": 1,
-     "rain_text": "1 mm",
+     "rain_min": 1.1,
+     "rain_max": 1.1,
+     "rain_text": "1.1 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
@@ -640,29 +640,29 @@
      "date": "2026-11-11",
      "tmax": 26,
      "tmin": 19,
-     "rain_min": 1.6,
-     "rain_max": 1.6,
-     "rain_text": "1.6 mm",
+     "rain_min": 0.8,
+     "rain_max": 0.8,
+     "rain_text": "0.8 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy and light rain"
     }
    ],
-   "fetched": "2026-11-02T13:39:21Z"
+   "fetched": "2026-11-02T13:56:35Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 6.3,
-  "time": "2026-11-02T23:30:00+10:00",
-  "temp": 20,
-  "feels_like": 22.5,
-  "humidity": 94,
-  "wind_dir": "SSW",
-  "wind_kmh": 4,
-  "gust_kmh": 9,
+  "time": "2026-11-02T23:50:00+10:00",
+  "temp": 19.3,
+  "feels_like": 21.8,
+  "humidity": 93,
+  "wind_dir": "S",
+  "wind_kmh": 2,
+  "gust_kmh": 7,
   "rain_since_9am": 1.2,
-  "fetched": "2026-11-02T13:38:27Z"
+  "fetched": "2026-11-02T13:54:50Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -1182,7 +1182,7 @@
     "windfinder_place": "Mooloolaba (Tide)"
    }
   ],
-  "fetched": "2026-11-02T13:38:46Z"
+  "fetched": "2026-11-02T13:55:10Z"
  },
  "errors": {}
 }

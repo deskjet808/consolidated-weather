@@ -1,6 +1,6 @@
 {
  "id": "lake-maroon",
- "generated": "2026-11-02T12:21:45Z",
+ "generated": "2026-11-02T13:51:44Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T12:21:22Z"
+   "fetched": "2026-11-02T13:49:19Z"
   },
   {
    "source": "willyweather",
@@ -176,85 +176,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T12:21:24Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/maroon",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30,
-     "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 4,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 25,
-     "tmin": 18,
-     "rain_min": 15,
-     "rain_max": 20,
-     "rain_text": "15 - 20 mm",
-     "chance": 39,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 31,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Mist"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 32,
-     "tmin": 15,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 0,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 28,
-     "tmin": 16,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 7,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 29,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 23,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 25,
-     "tmin": 15,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 16,
-     "text": "Rain showers"
-    }
-   ],
-   "fetched": "2026-11-02T12:21:27Z"
+   "fetched": "2026-11-02T13:49:22Z"
   },
   {
    "source": "weatherzone",
@@ -333,115 +255,7 @@
     }
    ],
    "point": "Beaudesert",
-   "fetched": "2026-11-02T12:21:38Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/lake-maroon/-28.17,152.67",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 31.7,
-     "tmin": 17.8,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 25,
-     "tmin": 16.1,
-     "rain_min": 23.4,
-     "rain_max": 23.4,
-     "rain_text": "23.4 mm",
-     "chance": null,
-     "text": "Thunderstorms"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 31.1,
-     "tmin": 15,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 32.8,
-     "tmin": 15.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 29.4,
-     "tmin": 16.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Sunny"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 30.6,
-     "tmin": 16.7,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 26.1,
-     "tmin": 12.2,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Sunny"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 25.6,
-     "tmin": 13.9,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 26.7,
-     "tmin": 15.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 27.8,
-     "tmin": 17.2,
-     "rain_min": 2.8,
-     "rain_max": 2.8,
-     "rain_text": "2.8 mm",
-     "chance": null,
-     "text": "PM Showers"
-    }
-   ],
-   "fetched": "2026-11-02T12:21:39Z"
+   "fetched": "2026-11-02T13:49:36Z"
   },
   {
    "source": "windy",
@@ -471,8 +285,8 @@
      "chance": null,
      "text": null,
      "wind_max": 11,
-     "gust_max": 36,
-     "wind_dir": "N"
+     "gust_max": 35,
+     "wind_dir": "NNW"
     },
     {
      "date": "2026-11-04",
@@ -515,25 +329,344 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T12:21:45Z"
+   "fetched": "2026-11-02T13:49:43Z"
+  },
+  {
+   "source": "ecmwf",
+   "name": "ECMWF",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29.2,
+     "tmin": 15.5,
+     "rain_min": 0.4,
+     "rain_max": 0.4,
+     "rain_text": "0.4 mm",
+     "chance": 26,
+     "text": "Light drizzle",
+     "wind_max": 12,
+     "gust_max": 24,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 25.3,
+     "tmin": 17,
+     "rain_min": 23,
+     "rain_max": 23,
+     "rain_text": "23 mm",
+     "chance": 100,
+     "text": "Storms with hail",
+     "wind_max": 14,
+     "gust_max": 38,
+     "wind_dir": "NNW"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 29.6,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 25,
+     "text": "Fog",
+     "wind_max": 20,
+     "gust_max": 41,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 30.5,
+     "tmin": 13.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 0,
+     "text": "Clear",
+     "wind_max": 21,
+     "gust_max": 44,
+     "wind_dir": "WSW"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 27.4,
+     "tmin": 15.4,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 13,
+     "text": "Partly cloudy",
+     "wind_max": 14,
+     "gust_max": 35,
+     "wind_dir": "SE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 27.9,
+     "tmin": 15.3,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
+     "chance": 24,
+     "text": "Light drizzle",
+     "wind_max": 11,
+     "gust_max": 30,
+     "wind_dir": "NW"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 21.1,
+     "tmin": 12.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 12,
+     "text": "Cloudy",
+     "wind_max": 24,
+     "gust_max": 52,
+     "wind_dir": "SSE"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 23.8,
+     "tmin": 11.8,
+     "rain_min": 0.6,
+     "rain_max": 0.6,
+     "rain_text": "0.6 mm",
+     "chance": 20,
+     "text": "Light drizzle",
+     "wind_max": 11,
+     "gust_max": 31,
+     "wind_dir": "E"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-28.17&longitude=152.67&models=ecmwf_ifs",
+   "fetched": "2026-11-02T13:49:43Z"
+  },
+  {
+   "source": "icon",
+   "name": "ICON",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29.9,
+     "tmin": 15.8,
+     "rain_min": 13.1,
+     "rain_max": 13.1,
+     "rain_text": "13.1 mm",
+     "chance": 63,
+     "text": "Storms with hail",
+     "wind_max": 15,
+     "gust_max": 30,
+     "wind_dir": "NNW"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 23.1,
+     "tmin": 19.4,
+     "rain_min": 16,
+     "rain_max": 16,
+     "rain_text": "16 mm",
+     "chance": 93,
+     "text": "Storms",
+     "wind_max": 13,
+     "gust_max": 34,
+     "wind_dir": "N"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 29.8,
+     "tmin": 17.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 5,
+     "text": "Fog",
+     "wind_max": 19,
+     "gust_max": 41,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 31.6,
+     "tmin": 14.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 0,
+     "text": "Partly cloudy",
+     "wind_max": 22,
+     "gust_max": 46,
+     "wind_dir": "WSW"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 26.1,
+     "tmin": 15.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 5,
+     "text": "Cloudy",
+     "wind_max": 14,
+     "gust_max": 30,
+     "wind_dir": "NNE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 30.7,
+     "tmin": 16.1,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Partly cloudy",
+     "wind_max": 14,
+     "gust_max": 32,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 23.1,
+     "tmin": 14.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 19,
+     "text": "Partly cloudy",
+     "wind_max": 19,
+     "gust_max": 42,
+     "wind_dir": "SSE"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-28.17&longitude=152.67&models=icon_seamless",
+   "fetched": "2026-11-02T13:51:44Z"
+  },
+  {
+   "source": "foreca",
+   "name": "Foreca",
+   "url": "https://www.foreca.com/en/102158657/lake-maroon/10-day-forecast",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 1.1,
+     "rain_max": 1.1,
+     "rain_text": "1.1 mm",
+     "chance": null,
+     "text": "Partly cloudy and light rain"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 26,
+     "tmin": 17,
+     "rain_min": 21.6,
+     "rain_max": 21.6,
+     "rain_text": "21.6 mm",
+     "chance": null,
+     "text": "Cloudy, thunderstorms with rain"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 30,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Clear"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 32,
+     "tmin": 13,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Clear"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 28,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 28,
+     "tmin": 17,
+     "rain_min": 0.5,
+     "rain_max": 0.5,
+     "rain_text": "0.5 mm",
+     "chance": null,
+     "text": "Partly cloudy and light rain"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 25,
+     "tmin": 14,
+     "rain_min": 0.4,
+     "rain_max": 0.4,
+     "rain_text": "0.4 mm",
+     "chance": null,
+     "text": "Partly cloudy and light rain"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 25,
+     "tmin": 11,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 26,
+     "tmin": 14,
+     "rain_min": 0.2,
+     "rain_max": 0.2,
+     "rain_text": "0.2 mm",
+     "chance": null,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 26,
+     "tmin": 17,
+     "rain_min": 3.6,
+     "rain_max": 3.6,
+     "rain_text": "3.6 mm",
+     "chance": null,
+     "text": "Cloudy and showers"
+    }
+   ],
+   "fetched": "2026-11-02T13:51:44Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beaudesert AWS",
   "distance_km": 38.2,
-  "time": "2026-11-02T22:10:00+10:00",
-  "temp": 20.6,
-  "feels_like": 23.3,
-  "humidity": 84,
+  "time": "2026-11-02T23:40:00+10:00",
+  "temp": 19.6,
+  "feels_like": 22.5,
+  "humidity": 92,
   "wind_dir": "CALM",
   "wind_kmh": 0,
-  "gust_kmh": 4,
+  "gust_kmh": 0,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T12:21:14Z"
+  "fetched": "2026-11-02T13:49:12Z"
  },
  "marine": {
-  "source": "willyweather, windy",
+  "source": "willyweather, windy, seabreeze, windfinder",
   "waters": [
    {
     "name": "Lake Maroon",
@@ -548,7 +681,7 @@
      "2026-11-03": {
       "wind_max": 11,
       "gust_max": 32,
-      "wind_dir": "N"
+      "wind_dir": "NNW"
      },
      "2026-11-04": {
       "wind_max": 17,
@@ -557,7 +690,7 @@
      },
      "2026-11-05": {
       "wind_max": 17,
-      "gust_max": 32,
+      "gust_max": 31,
       "wind_dir": "W"
      },
      "2026-11-06": {
@@ -568,7 +701,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T12:21:21Z"
+  "fetched": "2026-11-02T13:49:19Z"
  },
  "errors": {}
 }

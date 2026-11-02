@@ -1,6 +1,6 @@
 {
  "id": "caloundra",
- "generated": "2026-11-02T13:56:28Z",
+ "generated": "2026-11-02T13:43:17Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T13:56:05Z"
+   "fetched": "2026-11-02T13:41:54Z"
   },
   {
    "source": "willyweather",
@@ -176,7 +176,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T13:56:07Z"
+   "fetched": "2026-11-02T13:41:56Z"
   },
   {
    "source": "weatherzone",
@@ -254,7 +254,7 @@
      "text": "Late shower"
     }
    ],
-   "fetched": "2026-11-02T13:56:19Z"
+   "fetched": "2026-11-02T13:42:09Z"
   },
   {
    "source": "windy",
@@ -328,7 +328,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T13:56:26Z"
+   "fetched": "2026-11-02T13:42:15Z"
   },
   {
    "source": "ecmwf",
@@ -440,7 +440,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.803&longitude=153.133&models=ecmwf_ifs",
-   "fetched": "2026-11-02T13:56:26Z"
+   "fetched": "2026-11-02T13:43:16Z"
   },
   {
    "source": "icon",
@@ -539,7 +539,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.803&longitude=153.133&models=icon_seamless",
-   "fetched": "2026-11-02T13:56:27Z"
+   "fetched": "2026-11-02T13:43:16Z"
   },
   {
    "source": "foreca",
@@ -647,22 +647,22 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T13:56:28Z"
+   "fetched": "2026-11-02T13:43:17Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 23.1,
-  "time": "2026-11-02T23:50:00+10:00",
-  "temp": 19.3,
-  "feels_like": 21.8,
-  "humidity": 93,
-  "wind_dir": "S",
-  "wind_kmh": 2,
-  "gust_kmh": 7,
+  "time": "2026-11-02T23:30:00+10:00",
+  "temp": 20,
+  "feels_like": 22.5,
+  "humidity": 94,
+  "wind_dir": "SSW",
+  "wind_kmh": 4,
+  "gust_kmh": 9,
   "rain_since_9am": 1.2,
-  "fetched": "2026-11-02T13:55:44Z"
+  "fetched": "2026-11-02T13:41:34Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -1182,7 +1182,7 @@
     "windfinder_place": "Caloundra Head"
    }
   ],
-  "fetched": "2026-11-02T13:56:04Z"
+  "fetched": "2026-11-02T13:41:53Z"
  },
  "errors": {}
 }
