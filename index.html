@@ -20,10 +20,13 @@
   --accent:#0b6a86; --accent-soft:#dcedf2;
   --good:#2f7d4f; --warn:#b07a12; --bad:#b4442f;
   --bom:#12242c; --bom-soft:#e8eef0;
-  --s1:#9c6b00; --s2:#0f8a7e; --s3:#a8327d; --s4:#7a5c3a; --s5:#8f3b52; --s6:#3b5b8f;
+  --s1:#9c6b00; --s2:#0f8a7e; --s3:#a8327d; --s4:#6a4fc0; --s5:#55800f; --s6:#3b5b8f;
   /* Weather icons and sky tints */
   --sun:#f2a91c; --moon:#d9b54a; --cloud:#c2ced4; --cloud2:#94a7b0; --cloud-dark:#7a8b94;
   --rain:#2b88d0; --bolt:#f2a91c; --snow:#6fb0dc; --haze:#c2a878; --cool:#4aa3df; --warm:#f08c3a;
+  /* Glossy weather pictures: top and bottom of each gradient */
+  --g-sun1:#ffe27a; --g-sun2:#ff9d1c; --g-moon1:#fff1b8; --g-moon2:#e2b941; --g-c1:#ffffff; --g-c2:#c6d4dc;
+  --g-d1:#a9b6be; --g-d2:#5d6e78; --g-drop1:#8fd0ff; --g-drop2:#1f7fd6;
   --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6;
   --shadow:0 1px 2px rgb(18 36 44/.05),0 6px 18px rgb(18 36 44/.06);
   --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
@@ -36,9 +39,10 @@
   --accent:#5cc0de; --accent-soft:#173a45;
   --good:#6cc690; --warn:#e2b04a; --bad:#ef8a72;
   --bom:#f2f6f7; --bom-soft:#1d2e35;
-  --s1:#d9a441; --s2:#4fd1c0; --s3:#e57fbf; --s4:#c9a27a; --s5:#e58aa3; --s6:#8fb0e8;
+  --s1:#d9a441; --s2:#4fd1c0; --s3:#e57fbf; --s4:#b39cf5; --s5:#a6d65a; --s6:#8fb0e8;
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
+  --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
   --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}}
@@ -47,9 +51,10 @@
   --accent:#5cc0de; --accent-soft:#173a45;
   --good:#6cc690; --warn:#e2b04a; --bad:#ef8a72;
   --bom:#f2f6f7; --bom-soft:#1d2e35;
-  --s1:#d9a441; --s2:#4fd1c0; --s3:#e57fbf; --s4:#c9a27a; --s5:#e58aa3; --s6:#8fb0e8;
+  --s1:#d9a441; --s2:#4fd1c0; --s3:#e57fbf; --s4:#b39cf5; --s5:#a6d65a; --s6:#8fb0e8;
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
+  --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
   --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}
@@ -68,18 +73,18 @@ h2 .ui{width:20px;height:20px;color:var(--accent)}
 .note{font-size:.82rem;color:var(--muted);margin:0}
 section{display:flex;flex-direction:column;gap:10px;min-width:0}
 
-/* Icons: .ui are line icons in the text colour, .wx are the coloured weather pictures */
+/* Icons: .ui are line icons in the text colour, .wx are the glossy weather pictures (gradients in #wxDefs) */
 .ui{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.125em}
 .wx{flex:none;display:block;overflow:visible}
-.wx .w-sun{fill:var(--sun);stroke:var(--sun);stroke-width:3.5;stroke-linecap:round}
-.wx .w-moon{fill:var(--moon)}
-.wx .w-cloud{fill:var(--cloud)} .wx .w-cloud2{fill:var(--cloud2)} .wx .w-dark{fill:var(--cloud-dark)}
-.wx .w-rain{stroke:var(--rain);stroke-width:3.5;stroke-linecap:round}
-.wx .w-bolt{fill:var(--bolt);stroke:var(--bolt);stroke-width:1.5;stroke-linejoin:round}
+.wx .w-sun{fill:url(#wxSun)} .wx .w-glow{fill:url(#wxGlow)}
+.wx .w-moon{fill:url(#wxMoon);filter:url(#wxSoft)}
+.wx .w-cloud{fill:url(#wxCloud);filter:url(#wxSoft)} .wx .w-cloud2{fill:url(#wxCloud2);filter:url(#wxSoft)} .wx .w-dark{fill:url(#wxDark);filter:url(#wxSoft)}
+.wx .w-rain{fill:url(#wxDrop)}
+.wx .w-bolt{fill:url(#wxBolt);filter:url(#wxSoft)}
 .wx .w-snow{fill:none;stroke:var(--snow);stroke-width:3;stroke-linecap:round}
-.wx .w-line,.wx .w-wind{fill:none;stroke:var(--cloud2);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.wx .w-line,.wx .w-wind{fill:none;stroke:var(--g-d1);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
 .wx .w-haze{fill:none;stroke:var(--haze);stroke-width:3.5;stroke-linecap:round}
-.wx .w-spin{fill:none;stroke:var(--cloud-dark);stroke-width:4;stroke-linecap:round}
+.wx .w-spin{fill:none;stroke:var(--g-d2);stroke-width:4;stroke-linecap:round}
 .arrow{width:14px;height:14px;color:var(--accent)}
 
 /* Header */
@@ -377,6 +382,18 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 </style>
 </head>
 <body>
+<!-- Shading for the weather pictures, shared by every .wx icon on the page -->
+<svg id="wxDefs" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <radialGradient id="wxSun" cx=".38" cy=".35" r=".75"><stop offset="0" style="stop-color:var(--g-sun1)"/><stop offset="1" style="stop-color:var(--g-sun2)"/></radialGradient>
+  <radialGradient id="wxGlow"><stop offset=".55" style="stop-color:var(--g-sun2);stop-opacity:.45"/><stop offset="1" style="stop-color:var(--g-sun2);stop-opacity:0"/></radialGradient>
+  <linearGradient id="wxMoon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g-moon1)"/><stop offset="1" style="stop-color:var(--g-moon2)"/></linearGradient>
+  <linearGradient id="wxCloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-c1)"/><stop offset="1" style="stop-color:var(--g-c2)"/></linearGradient>
+  <linearGradient id="wxCloud2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-c2)"/><stop offset="1" style="stop-color:var(--g-d1)"/></linearGradient>
+  <linearGradient id="wxDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-d1)"/><stop offset="1" style="stop-color:var(--g-d2)"/></linearGradient>
+  <linearGradient id="wxDrop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-drop1)"/><stop offset="1" style="stop-color:var(--g-drop2)"/></linearGradient>
+  <linearGradient id="wxBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-sun1)"/><stop offset="1" style="stop-color:var(--g-sun2)"/></linearGradient>
+  <filter id="wxSoft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".28"/></filter>
+</defs></svg>
 <div class="scene" id="scene" aria-hidden="true"></div>
 <div class="wrap">
   <header>
@@ -450,7 +467,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       </table>
     </div>
     <p class="note">The Bureau of Meteorology first, then each forecast site. Red figures are 3°C or more from the median.</p>
-    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy doesn't publish a chance of rain or a written forecast, so it has no picture.</p></details>
+    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy and Foreca don't publish a chance of rain, and Windy has no written forecast, so it has no picture.</p></details>
   </section>
 
   <section class="chartcard" aria-labelledby="charth">
@@ -516,11 +533,16 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
   const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
-  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"windy",name:"Windy",c:"--s6"}];
-  // Harris's list, in his order, for the "Your weather sites" panel
+  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"windy",name:"Windy",c:"--s6"},
+    {id:"ecmwf",name:"ECMWF",c:"--s3"},{id:"icon",name:"ICON",c:"--s4"},{id:"foreca",name:"Foreca",c:"--s5"}];
+  // Harris's list, in his order, for the "Your weather sites" panel. ECMWF and ICON come from Open-Meteo, whose
+  // free use asks for credit, given in each card's note.
   const PANEL=[{kind:"site",id:"weatherzone",name:"Weatherzone",dom:"weatherzone.com.au",c:"--s1"},
     {kind:"site",id:"willyweather",name:"WillyWeather",dom:"willyweather.com.au",c:"--s2"},
     {kind:"site",id:"windy",name:"Windy",dom:"windy.com",c:"--s6"},
+    {kind:"site",id:"ecmwf",name:"ECMWF",dom:"open-meteo.com",c:"--s3",note:"European model (ECMWF IFS). Weather data by Open-Meteo.com"},
+    {kind:"site",id:"icon",name:"ICON",dom:"open-meteo.com",c:"--s4",note:"German weather service model (DWD ICON). Weather data by Open-Meteo.com"},
+    {kind:"site",id:"foreca",name:"Foreca",dom:"foreca.com",c:"--s5"},
     {kind:"meteye",name:"BOM MetEye",dom:"bom.gov.au/australia/meteye",c:"--bom"},
     {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"}];
   async function loadScraped(){
@@ -544,11 +566,10 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   const CLOUD='<circle cx="22" cy="39" r="10"/><circle cx="35" cy="33" r="14"/><circle cx="46" cy="40" r="9"/><rect x="12" y="38" width="44" height="11" rx="5.5"/>';
   const grp=(cls,body,x=0,y=0,s=1)=>`<g class="${cls}" transform="translate(${x} ${y}) scale(${s})">${body}</g>`;
   const cloud=(cls,x,y,s)=>grp(cls,CLOUD,x,y,s);
-  function sun(cx,cy,r){const p=v=>v.toFixed(1);let s=`<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
-    for(let i=0;i<8;i++){const a=i*Math.PI/4,c=Math.cos(a),n=Math.sin(a);s+=`<line x1="${p(cx+c*(r+4))}" y1="${p(cy+n*(r+4))}" x2="${p(cx+c*(r+8.5))}" y2="${p(cy+n*(r+8.5))}"/>`;}
-    return `<g class="w-sun">${s}</g>`;}
+  // A shaded sun in a soft glow, in place of rays
+  const sun=(cx,cy,r)=>`<circle class="w-glow" cx="${cx}" cy="${cy}" r="${(r*1.85).toFixed(1)}"/><circle class="w-sun" cx="${cx}" cy="${cy}" r="${r+2}"/>`;
   const moon=(x,y,s)=>grp("w-moon",'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',x,y,s);
-  const drops=(...xy)=>`<g class="w-rain">${xy.map(([x,y])=>`<line x1="${x}" y1="${y}" x2="${x-3}" y2="${y+8}"/>`).join("")}</g>`;
+  const drops=(...xy)=>`<g class="w-rain">${xy.map(([x,y])=>`<path d="M${x-1} ${y}c0 0-4.2 5.3-4.2 8a4.2 4.2 0 0 0 8.4 0c0-2.7-4.2-8-4.2-8z"/>`).join("")}</g>`;
   const lines=(cls,ys,x1,x2)=>`<g class="${cls}">${ys.map(y=>`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/>`).join("")}</g>`;
   const flake=(x,y,r=4)=>`<path d="M${x} ${y-r}v${2*r}M${x-r*.87} ${y-r/2}l${r*1.73} ${r}M${x-r*.87} ${y+r/2}l${r*1.73} ${-r}"/>`;
   const BOLT='<polygon class="w-bolt" points="36,41 27,53 33,53 29,62 41,48 35,48 39,41"/>';
@@ -1075,11 +1096,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Searched places only have the Bureau's figures, so show just those cards plus a pointer to the full list
     const full=state.loc.kind==="full";
     const cards=full?PANEL:PANEL.filter(p=>p.kind==="meteye"||p.kind==="obs");
-    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
+    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, Windy, ECMWF, ICON and Foreca are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
       if(p.kind==="site"){const src=siteSrc(p.id);
         if(!src)return empty(p,errs[p.id]?"Couldn't fetch: "+errs[p.id]:"No data yet.");
         const d=siteDay(p.id,k);if(!d)return empty(p,"No forecast for this day.");
-        return fc(p,{tmax:d.tmax,tmin:d.tmin,rainText:rangeText(d.rain_min,d.rain_max,d.rain_text),chance:d.chance,text:d.text},!src.point?"":p.id==="windy"?"Weather model: "+src.point.replace(/ model$/,""):"Forecast point: "+src.point);}
+        return fc(p,{tmax:d.tmax,tmin:d.tmin,rainText:rangeText(d.rain_min,d.rain_max,d.rain_text),chance:d.chance,text:d.text},p.note||(!src.point?"":p.id==="windy"?"Weather model: "+src.point.replace(/ model$/,""):"Forecast point: "+src.point));}
       if(p.kind==="meteye"){const b=bomDay(k);if(!b)return empty(p,"No Bureau forecast for this day.");
         return fc(p,{tmax:b.tmax,tmin:b.tmin,rainText:rangeText(b.rmin,b.rmax),chance:b.chance,text:b.text,icon:b.icon},"Bureau grid forecast for "+state.loc.name+" (same as the BOM row)");}
       if(p.kind==="obs"){const o=obsNow();if(!o)return empty(p,"No station reading right now.");
