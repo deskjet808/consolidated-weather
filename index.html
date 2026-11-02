@@ -427,7 +427,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <div class="waters" id="boat"></div>
     <p class="note">Calm under 15 km/h, choppy 15 to 25, rough above 25. The outlined hours are the best stretch of the day.</p>
     <details class="about"><summary>About this</summary><p>A rough guide for jet skis and small boats, from the strongest daytime wind (6am to 6pm). The best stretch is the longest run of daylight hours under 15 km/h, or, if there isn't one, under 26 km/h. Gusts, swell and local conditions matter too; check the Bureau of Meteorology's marine warnings before heading out.</p>
-    <p>Wind and gusts: the Bureau of Meteorology's hourly forecast for a point on each water. Windy: windy.com at the same point. Swell (open ocean only) and tide times: WillyWeather, for the spot named on each card.</p></details>
+    <p>Wind and gusts: the Bureau of Meteorology's hourly forecast for a point on each water. Windy: windy.com at the same point. Seabreeze: its forecast for the town. Windfinder: its nearest spot, for today and tomorrow (its free forecast goes no further). Swell (open ocean only) and tide times: WillyWeather, for the spot named on each card.</p></details>
   </section>
 
   <section aria-labelledby="panelh">
@@ -445,7 +445,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       </table>
     </div>
     <p class="note">The Bureau of Meteorology first, then each forecast site. Red figures are 3°C or more from the median.</p>
-    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Weather Underground and Windy don't publish a chance of rain, and Windy has no written forecast, so it has no picture.</p></details>
+    <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Weather Underground, Windy and Yr don't publish a chance of rain, and Windy has no written forecast, so it has no picture.</p></details>
   </section>
 
   <section class="chartcard" aria-labelledby="charth">
@@ -511,7 +511,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
   const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
-  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"elders",name:"Elders Weather",c:"--s3"},{id:"wunderground",name:"Weather Underground",c:"--s5"},{id:"windy",name:"Windy",c:"--s6"}];
+  const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"yr",name:"Yr (Norway)",c:"--s4"},{id:"wunderground",name:"Weather Underground",c:"--s5"},{id:"windy",name:"Windy",c:"--s6"}];
   // Harris's list, in his order, for the "Your weather sites" panel
   const PANEL=[{kind:"site",id:"weatherzone",name:"Weatherzone",dom:"weatherzone.com.au",c:"--s1"},
     {kind:"site",id:"willyweather",name:"WillyWeather",dom:"willyweather.com.au",c:"--s2"},
@@ -519,7 +519,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     {kind:"site",id:"wunderground",name:"Weather Underground",dom:"wunderground.com",c:"--s5"},
     {kind:"meteye",name:"BOM MetEye",dom:"bom.gov.au/australia/meteye",c:"--bom"},
     {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"},
-    {kind:"site",id:"elders",name:"Elders Weather",dom:"eldersweather.com.au",c:"--s3"}];
+    {kind:"site",id:"yr",name:"Yr (Norway)",dom:"yr.no",c:"--s4"}];
   async function loadScraped(){
     if(state.loc.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
     const r=await fetch(dataUrl(),{cache:"no-store"});
@@ -994,7 +994,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const W=D.bom&&D.bom.warnings;
     if(W&&W.length){$("warns").innerHTML=`${ui("alert")}<div><b>Bureau of Meteorology warnings for this area</b><ul>${W.map(w=>`<li>${esc(w.title)}</li>`).join("")}</ul></div>`;$("warns").hidden=false;}
     else $("warns").hidden=true;
-    const ICON={"On the water":"boat","Wind and gusts":"wind","Windy":"gust","Swell":"wave","Tides":"tide","Lake":"wave","Tides and swell":"wave"};
+    const ICON={"On the water":"boat","Wind and gusts":"wind","Windy":"gust","Seabreeze":"wind","Windfinder":"gust","Swell":"wave","Tides":"tide","Lake":"wave","Tides and swell":"wave"};
     const card=(name,dom,c,body,cls="",src="")=>`<div class="card ${cls}" style="--c:var(${c})"${src?` title="${esc(src)}"`:""}><div class="chd"><span class="cn">${esc(name)}</span>${ICON[name]?ui(ICON[name]):""}</div><span class="cd">${esc(dom)}</span>${body}</div>`;
     const kmkn=v=>isNum(v)?`${f0(v)} km/h <span>(${f0(v/1.852)} kn)</span>`:"–";
     const maxBy=(a,f)=>a.reduce((m,h)=>isNum(f(h))&&(!m||f(h)>f(m))?h:m,null);
@@ -1020,6 +1020,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
         :card("Wind and gusts","Bureau · "+place,"--bom",`<span class="cx">The Bureau's hourly forecast covers about the next 3 days.</span>`,"empty"));
       if(L.kind==="full")out.push(windy&&isNum(windy.wind_max)?card("Windy",place,"--s6",`<span class="ct">${f0(windy.wind_max)} <span>km/h ${arrow(windy.wind_dir)} ${esc(windy.wind_dir||"")}</span></span><span class="cr">Gusts to ${f0(windy.gust_max)} km/h</span><span class="cd">Strongest of the day</span>`,"","windy.com, "+place)
         :card("Windy",place,"--s6",`<span class="cx">${kind&&!mw?later:"No wind figures for this day."}</span>`,"empty"));
+      // Seabreeze (by town) and Windfinder (nearest spot): strongest daytime wind, and waves where they give them
+      const wave=v=>isNum(v)&&kind!=="lake"?` · waves ${v} m`:"";
+      if(L.kind==="full"&&mw&&mw.seabreeze){const s=mw.seabreeze[k],sp=mw.seabreeze_place||L.name;
+        out.push(s&&isNum(s.wind_max)?card("Seabreeze",sp,"--s1",`<span class="ct">${f0(s.wind_max)} <span>km/h ${arrow(s.wind_dir)} ${esc(s.wind_dir||"")}</span></span><span class="cr">${f0(s.wind_max/1.852)} kn${wave(s.wave_m)}</span><span class="cd">Strongest 6am to 6pm</span>`,"","seabreeze.com.au forecast for "+sp)
+          :card("Seabreeze",sp,"--s1",`<span class="cx">No Seabreeze forecast for this day.</span>`,"empty"));}
+      if(L.kind==="full"&&mw&&mw.windfinder){const s=mw.windfinder[k],sp=mw.windfinder_place||spot;
+        out.push(s&&isNum(s.wind_max)?card("Windfinder",sp,"--s5",`<span class="ct">${f0(s.wind_max)} <span>km/h ${arrow(s.wind_dir)} ${esc(s.wind_dir||"")}</span></span><span class="cr">Gusts to ${f0(s.gust_max)} km/h${wave(s.wave_m)}</span><span class="cd">Strongest 6am to 6pm</span>`,"","windfinder.com forecast for "+sp)
+          :card("Windfinder",sp,"--s5",`<span class="cx">Windfinder's free forecast covers today and tomorrow only.</span>`,"empty"));}
       if(kind==="ocean"){
         const sw=mw&&mw.swell&&mw.swell[k],swPlace=mw&&mw.swell_place||spot;
         out.push(sw?card("Swell",swPlace,"--s2",`<span class="ct">${sw.max_m} <span>m ${esc(sw.dir||"")}</span></span><span class="cr">${sw.period_s?"Period "+sw.period_s+" s · ":""}highest of the day</span>`,"","WillyWeather open-ocean swell forecast, "+swPlace)
@@ -1064,7 +1072,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Searched places only have the Bureau's figures, so show just those cards plus a pointer to the full list
     const full=state.loc.kind==="full";
     const cards=full?PANEL:PANEL.filter(p=>p.kind==="meteye"||p.kind==="obs");
-    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, Elders Weather, Weather Underground and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
+    $("panel").innerHTML=(full?"":`<div class="card empty" style="--c:var(--accent)"><span class="cn">Other sites</span><span class="cx">Weatherzone, WillyWeather, Yr, Weather Underground and Windy are compared for the ${LOCS.length} featured locations in the list. Searched places show the Bureau of Meteorology only.</span></div>`)+cards.map(p=>{
       if(p.kind==="site"){const src=siteSrc(p.id);
         if(!src)return empty(p,errs[p.id]?"Couldn't fetch: "+errs[p.id]:"No data yet.");
         const d=siteDay(p.id,k);if(!d)return empty(p,"No forecast for this day.");
@@ -1152,8 +1160,12 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const tile=(name,src,e,okText)=>{if(!src)return `<div class="${e?"failed":"none"}"><span class="sn"><i></i>${esc(name)}</span><span>${e?"Failed: "+esc(e):"No data yet"}</span></div>`;
       const old=Date.now()-Date.parse(src.fetched)>12*3600e3;
       return `<div class="${e?"failed":old?"stale":""}"><span class="sn"><i></i>${esc(name)}</span><span>${e?"Last run failed; showing data from "+ago(src.fetched):okText||"Updated "+ago(src.fetched)}</span></div>`;};
+    // Seabreeze and Windfinder come in with the boating figures; a problem with either shows on its card
+    const M=S.marine,mProb=src=>((M&&M.problems)||[]).find(p=>p.includes(src))||null;
+    const marineTile=(name,field)=>M&&(M.waters||[]).some(w=>w[field])?tile(name,M,mProb(name),"Updated "+ago(M.fetched)+" · boating section"):M?tile(name,null,mProb(name)):"";
     $("sites").innerHTML=[{id:"bom",name:"BOM (scraped copy)"},...SITES].map(s=>tile(s.name,siteSrc(s.id),errs[s.id])).join("")+
-      tile("BOM observations",S.observations,errs.observations,S.observations&&S.observations.station?esc(S.observations.station)+", updated "+ago(S.observations.fetched):null);
+      tile("BOM observations",S.observations,errs.observations,S.observations&&S.observations.station?esc(S.observations.station)+", updated "+ago(S.observations.fetched):null)+
+      marineTile("Seabreeze","seabreeze")+marineTile("Windfinder","windfinder");
   }
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
   document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{state.measure=b.dataset.m;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));if(state.data)renderChart();}));
