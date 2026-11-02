@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-02T10:45:14Z",
+ "generated": "2026-11-02T13:36:52Z",
  "sources": [
   {
    "source": "bom",
@@ -25,12 +25,12 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 40,
-     "text": "Possible shower."
+     "text": "Shower or two."
     },
     {
      "date": "2026-11-04",
      "tmax": 32,
-     "tmin": 18,
+     "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "0-1 mm",
@@ -55,7 +55,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 10,
-     "text": "Sunny."
+     "text": "Mostly sunny."
     },
     {
      "date": "2026-11-07",
@@ -65,7 +65,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 10,
-     "text": "Partly cloudy."
+     "text": "Sunny."
     },
     {
      "date": "2026-11-08",
@@ -75,7 +75,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 20,
-     "text": "Partly cloudy."
+     "text": "Sunny."
     },
     {
      "date": "2026-11-09",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T10:44:44Z"
+   "fetched": "2026-11-02T13:33:30Z"
   },
   {
    "source": "willyweather",
@@ -122,11 +122,21 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 40,
-     "text": "Possible shower"
+     "chance": 45,
+     "text": "Shower or two"
     },
     {
      "date": "2026-11-04",
+     "tmax": 32,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 30,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-05",
      "tmax": 32,
      "tmin": 18,
      "rain_min": 0,
@@ -136,125 +146,37 @@
      "text": "Partly cloudy"
     },
     {
-     "date": "2026-11-05",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 10,
-     "text": "Partly cloudy"
-    },
-    {
      "date": "2026-11-06",
      "tmax": 32,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 10,
-     "text": "Sunny"
+     "chance": 15,
+     "text": "Mostly sunny"
     },
     {
      "date": "2026-11-07",
      "tmax": 31,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 32,
      "tmin": 18,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 15,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 31,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 30,
-     "text": "Partly cloudy"
+     "text": "Sunny"
     }
    ],
-   "fetched": "2026-11-02T10:44:46Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/lake-tinaroo",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Mist"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 30,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 9,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 4,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 31,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 1,
-     "text": "Mostly cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 7,
-     "text": "Partly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 31,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 12,
-     "text": "Mostly cloudy"
-    }
-   ],
-   "fetched": "2026-11-02T10:44:50Z"
+   "fetched": "2026-11-02T13:33:32Z"
   },
   {
    "source": "weatherzone",
@@ -314,7 +236,7 @@
     {
      "date": "2026-11-07",
      "tmax": 31,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
@@ -323,7 +245,7 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 31,
+     "tmax": 32,
      "tmin": 18,
      "rain_min": 1,
      "rain_max": 5,
@@ -333,115 +255,7 @@
     }
    ],
    "point": "Atherton",
-   "fetched": "2026-11-02T10:45:06Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/lake-tinaroo/-17.2,145.56",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 31,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 32,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 29,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 28,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    }
-   ],
-   "fetched": "2026-11-02T10:45:06Z"
+   "fetched": "2026-11-02T13:33:43Z"
   },
   {
    "source": "windy",
@@ -484,7 +298,7 @@
      "chance": null,
      "text": null,
      "wind_max": 10,
-     "gust_max": 26,
+     "gust_max": 25,
      "wind_dir": "NE"
     },
     {
@@ -515,25 +329,345 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T10:45:14Z"
+   "fetched": "2026-11-02T13:33:49Z"
+  },
+  {
+   "source": "ecmwf",
+   "name": "ECMWF",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 29.8,
+     "tmin": 19.2,
+     "rain_min": 1.9,
+     "rain_max": 1.9,
+     "rain_text": "1.9 mm",
+     "chance": 94,
+     "text": "Drizzle",
+     "wind_max": 11,
+     "gust_max": 30,
+     "wind_dir": "ENE"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 29.9,
+     "tmin": 18.7,
+     "rain_min": 0.9,
+     "rain_max": 0.9,
+     "rain_text": "0.9 mm",
+     "chance": 81,
+     "text": "Light drizzle",
+     "wind_max": 11,
+     "gust_max": 31,
+     "wind_dir": "ENE"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 30,
+     "tmin": 18.2,
+     "rain_min": 1.1,
+     "rain_max": 1.1,
+     "rain_text": "1.1 mm",
+     "chance": 67,
+     "text": "Drizzle",
+     "wind_max": 10,
+     "gust_max": 29,
+     "wind_dir": "ENE"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 31.1,
+     "tmin": 17.4,
+     "rain_min": 1.4,
+     "rain_max": 1.4,
+     "rain_text": "1.4 mm",
+     "chance": 57,
+     "text": "Drizzle",
+     "wind_max": 12,
+     "gust_max": 31,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 30.6,
+     "tmin": 17.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Fog",
+     "wind_max": 15,
+     "gust_max": 36,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29.9,
+     "tmin": 17.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 8,
+     "text": "Fog",
+     "wind_max": 14,
+     "gust_max": 35,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 30.2,
+     "tmin": 18.1,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 18,
+     "text": "Fog",
+     "wind_max": 12,
+     "gust_max": 33,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 28.3,
+     "tmin": 18.2,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": 27,
+     "text": "Light drizzle",
+     "wind_max": 15,
+     "gust_max": 38,
+     "wind_dir": "E"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-17.2&longitude=145.56&models=ecmwf_ifs",
+   "fetched": "2026-11-02T13:34:50Z"
+  },
+  {
+   "source": "icon",
+   "name": "ICON",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 30.8,
+     "tmin": 18.9,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": 38,
+     "text": "Fog",
+     "wind_max": 9,
+     "gust_max": 27,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 32.2,
+     "tmin": 19.6,
+     "rain_min": 1.1,
+     "rain_max": 1.1,
+     "rain_text": "1.1 mm",
+     "chance": 5,
+     "text": "Light rain",
+     "wind_max": 12,
+     "gust_max": 34,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 32.5,
+     "tmin": 19,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": 10,
+     "text": "Fog",
+     "wind_max": 9,
+     "gust_max": 32,
+     "wind_dir": "NE"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 32.1,
+     "tmin": 19.1,
+     "rain_min": 1.4,
+     "rain_max": 1.4,
+     "rain_text": "1.4 mm",
+     "chance": 10,
+     "text": "Storms",
+     "wind_max": 11,
+     "gust_max": 27,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 34.1,
+     "tmin": 17.4,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 8,
+     "text": "Fog",
+     "wind_max": 18,
+     "gust_max": 46,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 33.3,
+     "tmin": 18.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 10,
+     "text": "Fog",
+     "wind_max": 15,
+     "gust_max": 38,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 33.6,
+     "tmin": 17.9,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
+     "chance": 28,
+     "text": "Fog",
+     "wind_max": 12,
+     "gust_max": 40,
+     "wind_dir": "E"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-17.2&longitude=145.56&models=icon_seamless",
+   "fetched": "2026-11-02T13:36:51Z"
+  },
+  {
+   "source": "foreca",
+   "name": "Foreca",
+   "url": "https://www.foreca.com/en/102162019/lake-tinaroo/10-day-forecast",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 30,
+     "tmin": 22,
+     "rain_min": 1.8,
+     "rain_max": 1.8,
+     "rain_text": "1.8 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 31,
+     "tmin": 22,
+     "rain_min": 1.9,
+     "rain_max": 1.9,
+     "rain_text": "1.9 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 32,
+     "tmin": 22,
+     "rain_min": 1.2,
+     "rain_max": 1.2,
+     "rain_text": "1.2 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 31,
+     "tmin": 21,
+     "rain_min": 1.9,
+     "rain_max": 1.9,
+     "rain_text": "1.9 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 31,
+     "tmin": 22,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 30,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 31,
+     "tmin": 21,
+     "rain_min": 0.2,
+     "rain_max": 0.2,
+     "rain_text": "0.2 mm",
+     "chance": null,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 0.6,
+     "rain_max": 0.6,
+     "rain_text": "0.6 mm",
+     "chance": null,
+     "text": "Partly cloudy and light rain"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 29,
+     "tmin": 20,
+     "rain_min": 0.9,
+     "rain_max": 0.9,
+     "rain_text": "0.9 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 1.1,
+     "rain_max": 1.1,
+     "rain_text": "1.1 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    }
+   ],
+   "point": "Kairi",
+   "fetched": "2026-11-02T13:36:52Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-02T20:40:00+10:00",
-  "temp": 23.1,
-  "feels_like": 27.6,
-  "humidity": 91,
+  "time": "2026-11-02T23:20:00+10:00",
+  "temp": 22.3,
+  "feels_like": 26.9,
+  "humidity": 97,
   "wind_dir": "CALM",
   "wind_kmh": 0,
   "gust_kmh": 0,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T10:44:36Z"
+  "fetched": "2026-11-02T13:33:20Z"
  },
  "marine": {
-  "source": "willyweather, windy",
+  "source": "willyweather, windy, seabreeze, windfinder",
   "waters": [
    {
     "name": "Lake Tinaroo",
@@ -552,7 +686,7 @@
      },
      "2026-11-04": {
       "wind_max": 10,
-      "gust_max": 26,
+      "gust_max": 25,
       "wind_dir": "NE"
      },
      "2026-11-05": {
@@ -565,10 +699,28 @@
       "gust_max": 29,
       "wind_dir": "E"
      }
-    }
+    },
+    "windfinder": {
+     "2026-11-02": {
+      "wind_max": 11,
+      "gust_max": 22,
+      "wind_dir": "E",
+      "wave_m": null
+     },
+     "2026-11-03": {
+      "wind_max": 11,
+      "gust_max": 25,
+      "wind_dir": "E",
+      "wave_m": null
+     }
+    },
+    "windfinder_place": "Kairi / Lake Tinaroo"
    }
   ],
-  "fetched": "2026-11-02T10:44:43Z"
+  "problems": [
+   "Seabreeze: ValueError: no wind and wave graph"
+  ],
+  "fetched": "2026-11-02T13:33:29Z"
  },
  "errors": {}
 }
