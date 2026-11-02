@@ -1,4 +1,4 @@
-# Australian Forecasts
+# Consolidated Weather
 
 A weather app for boating and jet skiing in Queensland, with any place in Australia searchable.
 
