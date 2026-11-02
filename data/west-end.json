@@ -1,0 +1,527 @@
+{
+ "id": "west-end",
+ "generated": "2026-11-02T01:30:14Z",
+ "sources": [
+  {
+   "source": "bom",
+   "name": "BOM official",
+   "url": "https://www.bom.gov.au/",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 32,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Partly cloudy."
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 29,
+     "tmin": 21,
+     "rain_min": 15,
+     "rain_max": 30,
+     "rain_text": "15-30 mm",
+     "chance": 95,
+     "text": "Showers. Storms."
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 34,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Sunny."
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 36,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 5,
+     "text": "Sunny."
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": null,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Partly cloudy."
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
+     "text": "Possible shower."
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 30,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "0-2 mm",
+     "chance": 40,
+     "text": "Possible shower."
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": null,
+     "tmin": 16,
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": null,
+     "chance": null,
+     "text": null
+    }
+   ],
+   "fetched": "2026-11-02T01:29:58Z"
+  },
+  {
+   "source": "willyweather",
+   "name": "WillyWeather",
+   "url": "https://www.willyweather.com.au/qld/brisbane/west-end.html",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 32,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 28,
+     "tmin": 21,
+     "rain_min": 15,
+     "rain_max": 30,
+     "rain_text": "15–30 mm",
+     "chance": 95,
+     "text": "Showers. Storms"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 33,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 35,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 28,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 15,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "< 2 mm",
+     "chance": 45,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 30,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 2,
+     "rain_text": "< 2 mm",
+     "chance": 40,
+     "text": "Possible shower"
+    }
+   ],
+   "fetched": "2026-11-02T01:29:58Z"
+  },
+  {
+   "source": "elders",
+   "name": "Elders Weather",
+   "url": "https://eldersweather.com.au/forecast/qld/west-end",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 8,
+     "text": "Fair"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 28,
+     "tmin": 22,
+     "rain_min": 20,
+     "rain_max": 25,
+     "rain_text": "20 - 25 mm",
+     "chance": 35,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 32,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 3,
+     "text": "Clear skies"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 33,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 1,
+     "text": "Clear skies"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 14,
+     "text": "Mostly cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29,
+     "tmin": 20,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5 - 10 mm",
+     "chance": 39,
+     "text": "Rain"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 5,
+     "rain_text": "0 - 5 mm",
+     "chance": 39,
+     "text": "Fair"
+    }
+   ],
+   "fetched": "2026-11-02T01:29:59Z"
+  },
+  {
+   "source": "weatherzone",
+   "name": "Weatherzone",
+   "url": "https://www.weatherzone.com/au/qld/brisbane/west-end",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 32,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 28,
+     "tmin": 21,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 70,
+     "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 33,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 35,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 28,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Late shower"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 80,
+     "text": "Possible thunderstorm"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 30,
+     "tmin": 20,
+     "rain_min": 10,
+     "rain_max": 20,
+     "rain_text": "10-20mm",
+     "chance": 90,
+     "text": "Rain"
+    }
+   ],
+   "point": "Brisbane",
+   "fetched": "2026-11-02T01:30:06Z"
+  },
+  {
+   "source": "wunderground",
+   "name": "Weather Underground",
+   "url": "https://www.wunderground.com/forecast/au/highgate-hill/-27.483,153.007",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 31,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 26,
+     "tmin": 19,
+     "rain_min": 22.97,
+     "rain_max": 22.97,
+     "rain_text": "22.97 mm",
+     "chance": null,
+     "text": "Thunderstorms"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 33,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 34,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 27,
+     "tmin": 18,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29,
+     "tmin": 19,
+     "rain_min": 5.48,
+     "rain_max": 5.48,
+     "rain_text": "5.48 mm",
+     "chance": null,
+     "text": "PM Showers"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 27,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 25,
+     "tmin": 16,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 25,
+     "tmin": 17,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 27,
+     "tmin": 19,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Partly Cloudy"
+    }
+   ],
+   "point": "Highgate Hill",
+   "fetched": "2026-11-02T01:30:07Z"
+  },
+  {
+   "source": "windy",
+   "name": "Windy",
+   "url": "https://www.windy.com/-27.483/153.007",
+   "days": [
+    {
+     "date": "2026-11-02",
+     "tmax": 30.2,
+     "tmin": 18.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 10,
+     "gust_max": 26,
+     "wind_dir": "ENE"
+    },
+    {
+     "date": "2026-11-03",
+     "tmax": 26.5,
+     "tmin": 20.2,
+     "rain_min": 25.5,
+     "rain_max": 25.5,
+     "rain_text": "25.5 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 8,
+     "gust_max": 27,
+     "wind_dir": "NNE"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 32.9,
+     "tmin": 21.1,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 10,
+     "gust_max": 34,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 34.5,
+     "tmin": 19.3,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 10,
+     "gust_max": 29,
+     "wind_dir": "W"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 27,
+     "tmin": 18.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 10,
+     "gust_max": 28,
+     "wind_dir": "E"
+    }
+   ],
+   "point": "mblue model",
+   "fetched": "2026-11-02T01:30:14Z"
+  }
+ ],
+ "observations": {
+  "source": "bom_obs",
+  "station": "Brisbane",
+  "distance_km": 2.7,
+  "time": "2026-11-02T11:20:00+10:00",
+  "temp": 29.2,
+  "feels_like": 31.1,
+  "humidity": 54,
+  "wind_dir": "WNW",
+  "wind_kmh": 7,
+  "gust_kmh": 11,
+  "rain_since_9am": 0,
+  "fetched": "2026-11-02T01:29:57Z"
+ },
+ "errors": {}
+}
