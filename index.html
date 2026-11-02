@@ -84,9 +84,9 @@ section{display:flex;flex-direction:column;gap:10px;min-width:0}
 
 /* Header */
 header{display:flex;flex-direction:column;gap:10px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{display:inline-flex;align-items:center;gap:8px;font:700 1.05rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
-.brand .wx{width:34px;height:34px}
+.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 12px}
+.brand{display:inline-flex;align-items:center;gap:10px;font:700 1.65rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.brand .wx{width:48px;height:48px}
 .sub{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
 .sub .place{display:inline-flex;align-items:center;gap:5px}
 .sub .place .ui{color:var(--accent);width:14px;height:14px}
@@ -96,7 +96,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .btn .ui{width:16px;height:16px}
 .btn:hover{border-color:var(--accent)}
 .btn[disabled]{opacity:.6;cursor:progress}
-.hbtns{display:flex;gap:8px;flex-wrap:wrap}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
 #saveBtn[aria-pressed="true"]{border-color:var(--warn);color:var(--warn)}
 #saveBtn[aria-pressed="true"] .ui{fill:currentColor}
 /* Location picker: the page title is the dropdown */
@@ -343,7 +343,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   .nowtop .nowcond{grid-column:1/-1}
   .nowtop .wx{width:76px;height:76px}
 }
-@media (max-width:420px){h1{font-size:1.65rem}.now .temp{font-size:3.3rem}.brand span{display:none}}
+@media (max-width:420px){h1{font-size:1.65rem}.now .temp{font-size:3.3rem}.brand{font-size:1.3rem;gap:8px}.brand .wx{width:38px;height:38px}}
 @media (prefers-reduced-motion:no-preference){
   .day,.btn,.card{transition:border-color .15s,background .15s}
   .btn[disabled] .ui{animation:spin 1s linear infinite}
