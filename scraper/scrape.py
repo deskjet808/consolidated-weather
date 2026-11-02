@@ -5,12 +5,14 @@ rain_min, rain_max, rain_text, chance, text}]}], observations: {...}, errors: {s
 A source that fails keeps its last good entry (its "fetched" time shows how old it is).
 
 Runs are staggered: each run updates only the locations that are due (last updated DUE_MINUTES ago
-or more), oldest first. With a run every 30 minutes only about 6 are due each time, so every location
-refreshes about every 3 hours without all the sites being hit at once. GitHub often starts scheduled
-runs hours late, so a late run catches up on everything that's due, within TIME_BUDGET_MINUTES.
+or more), oldest first, and at most its share of them (a sixth of all locations, as there are six runs
+in 3 hours). So every location refreshes about every 3 hours without all the sites being hit at once,
+and after a run that updates everything (--all) the locations spread back out into separate
+runs within a cycle. GitHub often starts scheduled runs hours late, so locations not updated for
+OVERDUE_MINUTES are taken as well, within TIME_BUDGET_MINUTES.
 --all updates every location.
 """
-import argparse, json, os, re, sys, time, traceback
+import argparse, json, math, os, re, sys, time, traceback
 from html import unescape
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -21,6 +23,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCATIONS = os.path.join(ROOT, "locations.json")
 DATA = os.path.join(ROOT, "data")
 DUE_MINUTES = 165  # a little under 3 hours, so a late run doesn't push a location past its slot
+RUNS_PER_CYCLE = 6  # a run every 30 minutes, each location every 3 hours
+OVERDUE_MINUTES = 330  # past this, a location is updated even beyond the run's share (GitHub ran late)
 TIME_BUDGET_MINUTES = 30  # stop starting new locations after this, leaving time to commit (job timeout 45)
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36")
@@ -511,6 +515,15 @@ def last_updated(loc):
         return datetime.min.replace(tzinfo=timezone.utc)
 
 
+def pick_due(locs, updated, now):
+    """The locations this run updates, oldest first: its share of those due, plus any overdue.
+    updated maps location id to its last update time."""
+    due = sorted((l for l in locs if updated[l["id"]] <= now - timedelta(minutes=DUE_MINUTES)),
+                 key=lambda l: updated[l["id"]])
+    overdue = sum(updated[l["id"]] <= now - timedelta(minutes=OVERDUE_MINUTES) for l in due)
+    return due[:max(math.ceil(len(locs) / RUNS_PER_CYCLE), overdue)]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--all", action="store_true", help="update every location now")
@@ -522,8 +535,7 @@ def main():
     elif args.all:
         todo = locs
     else:
-        cutoff = datetime.now(timezone.utc) - timedelta(minutes=DUE_MINUTES)
-        todo = sorted((l for l in locs if last_updated(l) <= cutoff), key=last_updated)
+        todo = pick_due(locs, {l["id"]: last_updated(l) for l in locs}, datetime.now(timezone.utc))
     if not todo:
         print("Nothing due")
         return 0

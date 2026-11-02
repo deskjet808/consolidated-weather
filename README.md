@@ -24,9 +24,10 @@ A weather app for boating and jet skiing in Queensland, with any place in Austra
 - `index.html` is the whole app, served by GitHub Pages.
 - `locations.json` lists the featured locations and each weather site's page for them.
 - `scraper/scrape.py` collects the figures from the weather sites into `data/<location>.json`.
-  GitHub Actions (`.github/workflows/scrape.yml`) runs it every 30 minutes; each run updates only the
-  few locations that are due, so every location refreshes about every 3 hours without hitting the
-  sites all at once.
+  GitHub Actions (`.github/workflows/scrape.yml`) runs it every 30 minutes; each run updates at most a
+  sixth of the locations (the oldest that are due), so every location refreshes about every 3 hours
+  without hitting the sites all at once. After a run that updates everything, they spread back out
+  within a cycle.
 - Searched places, hourly wind and warnings come straight from the Bureau of Meteorology in the
   browser, so they need no scraping.
 
