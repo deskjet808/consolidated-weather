@@ -7,8 +7,8 @@ A weather app for boating and jet skiing in Queensland, with any place in Austra
 ## What it shows
 
 - **Featured locations** (the dropdown, grouped by region): 31 beaches, bays and jet ski lakes, plus a
-  few others. For each one, forecasts from five sources side by side: the Bureau of Meteorology,
-  Weatherzone, WillyWeather, AccuWeather and Windy.
+  few others. For each one, forecasts from four sources side by side: the Bureau of Meteorology,
+  Weatherzone, WillyWeather and Windy.
 - **Any other place:** search a suburb, town or postcode to see the Bureau of Meteorology forecast and
   the nearest weather station's latest reading. Tap "Save place" to keep it in "My places" on that
   device.
