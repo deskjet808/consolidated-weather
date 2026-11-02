@@ -275,6 +275,8 @@ svg{display:block;max-width:100%}
 .scene picture{display:block;width:100%;height:100%}
 .scene img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
 .scene::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc(var(--scrim0) + (1 - var(--scrim0)) * .7 * var(--fade))}
+/* With the background off, the scene (and its scrim) would sit over the page, so hide it */
+html:not(.scenic) .scene{display:none}
 html.scenic body{background:transparent}
 html.scenic .wrap{position:relative;z-index:1}
 html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in srgb,var(--surface) 90%,transparent)}
