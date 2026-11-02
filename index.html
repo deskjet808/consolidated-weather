@@ -788,8 +788,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     if(!state.data||!ni)return;
     const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
     // Harris's photos for sunny and mostly sunny days: the beach at featured locations within 5 km of an ocean or
-    // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places keep the drawings.
-    const photo=state.loc.kind==="full"&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills"):"";
+    // bay beach ("beach" in locations.json), the hills at the other featured locations. Searched places, and featured
+    // locations marked "photo": false, keep the drawings.
+    const photo=state.loc.kind==="full"&&state.loc.photo!==false&&phase==="day"&&(cond==="clear"||cond==="mostly")?(state.loc.beach?"beach":"hills"):"";
     const key=cond+"/"+phase+(photo?"/"+photo:"");
     box.dataset.scene=key;box.classList.toggle("photo",!!photo);
     if(key===sceneKey)return;sceneKey=key;
