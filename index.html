@@ -252,6 +252,30 @@ svg{display:block;max-width:100%}
 .tip .tv{font:.78rem var(--mono);color:var(--muted)}
 .tip .tv b{color:var(--fg);font-weight:600}
 
+/* Weather scene: an illustrated sky behind the page for the location's weather right now (day, dawn, dusk or
+   night). A scrim in the page colour keeps text readable and thickens as you scroll down. */
+.scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--scrim0:.58;--fade:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.5}}
+:root[data-theme="dark"] .scene{--scrim0:.5}
+.scene>div{position:absolute;inset:0;transition:opacity 1.2s ease}
+.scene svg{width:100%;height:100%;display:block}
+.scene::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:calc(var(--scrim0) + (1 - var(--scrim0)) * .7 * var(--fade))}
+html.scenic body{background:transparent}
+html.scenic .wrap{position:relative;z-index:1}
+html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in srgb,var(--surface) 90%,transparent)}
+@media (prefers-reduced-motion:no-preference){
+  .sc-drift{animation:sc-drift 180s linear infinite alternate}
+  .sc-drift.slow{animation-duration:260s}
+  .sc-fall{animation:sc-fall 1.6s linear infinite}
+  .sc-fall.slow{animation-duration:2.4s}
+  .sc-flash{animation:sc-flash 12s linear infinite}
+  .sc-tw{animation:sc-tw 4s ease-in-out infinite alternate}
+}
+@keyframes sc-drift{to{transform:translateX(140px)}}
+@keyframes sc-fall{from{transform:translateY(-240px)}to{transform:translateY(0)}}
+@keyframes sc-flash{0%,92%,100%{opacity:0}92.6%{opacity:.85}93.2%{opacity:.1}93.8%{opacity:.6}95%{opacity:0}}
+@keyframes sc-tw{from{opacity:.3}to{opacity:1}}
+.hbtns .btn.icon{padding:8px 10px}
 /* Quick-jump bar (phones) */
 .jump{display:none}
 .jump a{flex:none;font:600 .85rem var(--body);color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px}
@@ -312,12 +336,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 </style>
 </head>
 <body>
+<div class="scene" id="scene" aria-hidden="true"></div>
 <div class="wrap">
   <header>
     <div class="topbar">
       <span class="brand"><i data-wx="partly_cloudy"></i><span>Aus Forecast</span></span>
       <div class="hbtns">
         <button class="btn" id="saveBtn" type="button" hidden aria-pressed="false"><i data-ui="star"></i><span id="saveTxt">Save place</span></button>
+        <button class="btn icon" id="sceneBtn" type="button" aria-pressed="true" aria-label="Weather background" title="Weather background"><i data-ui="scene"></i></button>
         <button class="btn" id="refresh" type="button"><i data-ui="refresh"></i>Refresh</button>
       </div>
     </div>
@@ -540,6 +566,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     thermo:'<path d="M14 14.76V4a2 2 0 0 0-4 0v10.76a4 4 0 1 0 4 0z"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
+    scene:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.6"/>',
     star:'<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/>',
     pin:'<path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
     wave:'<path d="M2 12c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 17c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 7c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>',
@@ -666,13 +693,107 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     return{icon:dayIcon(ds[0],rowsFor(ds[0])),night:hr<6||hr>=19};}
   const sky=(ic,night)=>!ic?"":/storm|cyclone/.test(ic)?"storm":/rain|shower|snow/.test(ic)?"rain":night?"night":/sunny|partly/.test(ic)?"sun":"";
 
+  // Weather scene. Condition: the Bureau's weather type for this hour (nowIcon), grouped into ten scenes.
+  // Time of day: dawn and dusk run from 45 minutes before to 30 minutes after the Bureau's sunrise and
+  // sunset for the location; night is in between; without those times, the Bureau's own day/night flag.
+  const SCENE_KEY="aus-forecast-scene";
+  let sceneOn=true;try{sceneOn=localStorage.getItem(SCENE_KEY)!=="off";}catch(e){}
+  const sceneCond=ic=>!ic?"partly":/storm|cyclone/.test(ic)?"storm":/heavy_shower|shower/.test(ic)?"showers":/rain|drizzle/.test(ic)?"rain":
+    /fog|frost/.test(ic)?"fog":/haz|dust|smoke/.test(ic)?"hazy":/wind/.test(ic)?"windy":/mostly_sunny/.test(ic)?"mostly":
+    /partly/.test(ic)?"partly":/cloud|snow/.test(ic)?"cloudy":/sunny|clear/.test(ic)?"clear":"partly";
+  function scenePhase(night){
+    const t=Date.now(),d=bomDay(dates()[0]),r=d&&Date.parse(d.rise),st=d&&Date.parse(d.set);
+    if(!isFinite(r)||!isFinite(st))return night?"night":"day";
+    const near=(x)=>t>=x-45*60e3&&t<x+30*60e3;
+    return near(r)?"dawn":near(st)?"dusk":t>r&&t<st?"day":"night";
+  }
+  function sceneSvg(cond,phase){
+    let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+    const over=/cloudy|rain|showers/.test(cond),dark=cond==="storm";
+    const kind=dark?"storm":over?"over":cond==="fog"?"fog":cond==="hazy"?"hazy":"clear";
+    const SKY={day:{clear:["#2a76d2","#5d9fe0","#a6d6f6"],over:["#6d7c8a","#8d9aa6","#b8c2ca"],storm:["#2b3540","#3d4853","#5d6873"],fog:["#9aa5ad","#b6bfc5","#d3d9dc"],hazy:["#9c9a8a","#c4b593","#e4d3a9"]},
+      dawn:{clear:["#2f3b78","#b8779a","#f6b07f"],over:["#454b66","#8a6f80","#d39a86"],storm:["#262a3a","#4a3f4c","#7a5a58"],fog:["#59607a","#a98e98","#ddbfae"],hazy:["#4a4a6a","#b98a7e","#efbf8c"]},
+      dusk:{clear:["#1c2156","#a84a78","#f7a35c"],over:["#363250","#7f5266","#c2806a"],storm:["#1f1c2c","#3e2f3c","#6e4a4a"],fog:["#3b3a5a","#93707e","#d0a594"],hazy:["#2e2b55","#b0597a","#f0a465"]},
+      night:{clear:["#040917","#0b1630","#1a2c52"],over:["#0a0f15","#141b24","#232c38"],storm:["#05070b","#0d1117","#1b2028"],fog:["#0f151c","#1c242e","#2e3843"],hazy:["#0b0f1c","#161d30","#2b3045"]}};
+    const sk=SKY[phase][kind];
+    const cloudFill=phase==="night"?(dark?"#141a22":"#2a3443"):dark?"#46515c":over||cond==="fog"?(phase==="day"?"#d5dce2":"#a28a92"):(phase==="day"?"#ffffff":"#f6c4ae");
+    const cloud2=phase==="night"?(dark?"#0e1319":"#1f2733"):dark?"#323c46":over?(phase==="day"?"#aeb9c2":"#7c6672"):(phase==="day"?"#eef4f8":"#e8a796");
+    const hills=phase==="night"?["#0a1220","#060b15"]:phase==="day"?(over||dark||cond==="fog"?["#4f5f5a","#3b4945"]:["#3f6e55","#2c5240"]):["#3a2e4a","#241d33"];
+    let g=`<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sk[0]}"/><stop offset=".55" stop-color="${sk[1]}"/><stop offset="1" stop-color="${sk[2]}"/></linearGradient>
+      <radialGradient id="glow"><stop offset="0" stop-color="${phase==="day"?"#fff3c4":"#ffd09a"}" stop-opacity=".75"/><stop offset="1" stop-color="${phase==="day"?"#fff3c4":"#ff9a5a"}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="mglow"><stop offset="0" stop-color="#dfe6ff" stop-opacity=".35"/><stop offset="1" stop-color="#dfe6ff" stop-opacity="0"/></radialGradient>
+      <pattern id="rn" width="80" height="240" patternUnits="userSpaceOnUse" patternTransform="skewX(-12)"><g stroke="${phase==="night"?"#8fa6bf":"#e3ecf4"}" stroke-width="2" stroke-linecap="round">${[[8,10],[30,90],[52,40],[70,170],[20,200],[44,140],[62,110]].map(([x,y])=>`<line x1="${x}" y1="${y}" x2="${x}" y2="${y+34}"/>`).join("")}</g></pattern></defs>
+      <rect width="1600" height="1000" fill="url(#sk)"/>`;
+    const clearish=/clear|mostly|partly|windy/.test(cond);
+    // Stars and moon on clearer nights
+    if(phase==="night"&&(clearish||cond==="hazy")){
+      const n=cond==="clear"?90:cond==="mostly"?70:45;let st="";
+      for(let i=0;i<n;i++){const x=rnd()*1600,y=rnd()*620,r=.6+rnd()*1.5;st+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}"${i%11===0?` class="sc-tw" style="animation-delay:-${(rnd()*4).toFixed(1)}s"`:""}/>`;}
+      g+=`<g fill="#fff" opacity=".85">${st}</g><circle cx="990" cy="150" r="150" fill="url(#mglow)"/>
+        <mask id="mm"><circle cx="990" cy="150" r="44" fill="#fff"/><circle cx="1011" cy="136" r="40" fill="#000"/></mask><circle cx="990" cy="150" r="44" fill="#f3ecd2" mask="url(#mm)"/>`;
+    }
+    // Sun: high by day, low and orange at dawn and dusk
+    if(phase!=="night"&&(clearish||cond==="hazy")){
+      const low=phase!=="day",cx=low?820:990,cy=low?760:140,r=low?78:56;
+      g+=`<circle cx="${cx}" cy="${cy}" r="${r*4}" fill="url(#glow)"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="${low?"#ffb066":cond==="hazy"?"#ffe0a0":"#ffd65c"}"/>`;
+    }
+    // Clouds, drifting slowly
+    const CN={clear:0,mostly:2,partly:4,windy:3,hazy:1,fog:3,cloudy:8,showers:7,rain:9,storm:9}[cond];
+    const puff=(x,y,s,f)=>`<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${s.toFixed(2)})" fill="${f}"><ellipse cx="0" cy="22" rx="110" ry="30"/><circle cx="-48" cy="6" r="38"/><circle cx="6" cy="-14" r="52"/><circle cx="58" cy="8" r="34"/></g>`;
+    let back="",front="";
+    for(let i=0;i<CN;i++){const x=-150+rnd()*1800,y=over||dark?60+rnd()*420:90+rnd()*360,s=over||dark?1.4+rnd()*1.3:.8+rnd()*.9;
+      if(i%2)front+=puff(x,y,s,cloudFill);else back+=puff(x,y,s,cloud2);}
+    if(over||dark)back=`<rect width="1600" height="420" fill="${cloud2}" opacity=".55"/>`+back;
+    if(back)g+=`<g class="sc-drift slow" opacity=".9">${back}</g>`;
+    if(front)g+=`<g class="sc-drift" opacity=".95">${front}</g>`;
+    // Rain, showers, storm
+    if(/rain|showers|storm/.test(cond)){
+      const op=cond==="showers"?.4:.6;
+      g+=`<g opacity="${op}"><rect class="sc-fall${cond==="showers"?" slow":""}" x="-200" y="0" width="2000" height="1240" fill="url(#rn)"/></g>`;
+    }
+    if(cond==="storm")g+=`<rect class="sc-flash" width="1600" height="1000" fill="#dfe6ff" opacity="0"/><path class="sc-flash" d="M960 300l-60 170h50l-40 150 120-200h-55l45-120z" fill="#fff3b0" opacity="0"/>`;
+    // Wind streaks, fog bands, haze
+    if(cond==="windy")g+=`<g class="sc-drift" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".35">${[[100,300],[500,520],[900,380],[300,640],[1100,600]].map(([x,y])=>`<path d="M${x} ${y}c120-30 240 30 360 0s180-40 260-10"/>`).join("")}</g>`;
+    if(cond==="fog")g+=`<g class="sc-drift slow" fill="${phase==="night"?"#3b4652":"#eef2f4"}" opacity=".45">${[480,600,720].map((y,i)=>`<rect x="-200" y="${y}" width="2000" height="${70+i*20}" rx="40"/>`).join("")}</g>`;
+    if(cond==="hazy")g+=`<rect width="1600" height="1000" fill="#d9b77a" opacity="${phase==="night"?.08:.22}"/>`;
+    // Hills along the bottom
+    g+=`<path d="M0 820 C200 760 380 800 560 770 S900 720 1100 780 1400 760 1600 790V1000H0z" fill="${hills[0]}"/>
+      <path d="M0 880 C240 840 420 900 700 860 S1150 830 1350 870 1520 860 1600 875V1000H0z" fill="${hills[1]}"/>`;
+    // Unique ids, so the old and new scene don't share gradients while one fades into the other
+    const u="-"+(++sceneN);
+    g=g.replace(/(id="|url\(#)(sk|glow|mglow|rn|mm)\b/g,"$1$2"+u);
+    return `<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
+  }
+  let sceneKey="",sceneN=0;
+  function renderScene(ni){
+    document.documentElement.classList.toggle("scenic",sceneOn);
+    $("sceneBtn").setAttribute("aria-pressed",String(sceneOn));
+    const box=$("scene");
+    if(!sceneOn){box.innerHTML="";sceneKey="";return;}
+    if(!state.data||!ni)return;
+    const cond=sceneCond(ni.icon),phase=scenePhase(ni.night),key=cond+"/"+phase;
+    box.dataset.scene=key;
+    if(key===sceneKey)return;sceneKey=key;
+    // Fade the new scene in over the old one
+    const el=document.createElement("div");el.style.opacity="0";el.innerHTML=sceneSvg(cond,phase);box.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
+    setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
+  }
+  $("sceneBtn").addEventListener("click",()=>{sceneOn=!sceneOn;try{localStorage.setItem(SCENE_KEY,sceneOn?"on":"off");}catch(e){}renderScene(state.data?nowIcon():null);});
+  // Dawn, dusk and night change with the clock, so check every few minutes
+  setInterval(()=>{if(state.data)renderScene(nowIcon());},5*60e3);
+  // The scrim thickens further down the page so tables and charts stay easy to read
+  let scrollQueued=false;
+  addEventListener("scroll",()=>{if(scrollQueued)return;scrollQueued=true;
+    requestAnimationFrame(()=>{scrollQueued=false;$("scene").style.setProperty("--fade",Math.min(1,scrollY/1400).toFixed(3));});},{passive:true});
+
   function render(){
     const D=state.data;if(!D)return;
     $("status").textContent="Updated "+new Date(D.fetched).toLocaleString("en-AU",{weekday:"short",hour:"numeric",minute:"2-digit"});
     // Now: big picture and reading, then six small figures
     const ob=obsNow(),today=bomDay(dates()[0]),ni=nowIcon();
     const stat=(icon,label,val)=>`<div><dt>${ui(icon)}${label}</dt><dd>${val}</dd></div>`;
-    $("now").dataset.sky=sky(ni.icon,ni.night);
+    $("now").dataset.sky=sky(ni.icon,ni.night);renderScene(ni);
     const top=`<div class="nowtop">${wx(ni.icon,ni.night)||wx("partly_cloudy")}
         <div><div class="temp num">${ob?f0(ob.temp):"–"}<small>°C</small></div><div class="feels">${ob?"Feels like "+f0(ob.feels)+"°":"No station reading"}</div></div>
         <div class="nowcond"><div class="cond">${esc(today&&today.text||(ni.icon?WX_LABEL[ni.icon]||"":"")||"Latest reading")}</div>
