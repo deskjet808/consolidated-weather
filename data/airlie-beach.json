@@ -1,6 +1,6 @@
 {
  "id": "airlie-beach",
- "generated": "2026-11-02T00:47:26Z",
+ "generated": "2026-11-02T01:04:14Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:47:00Z"
+   "fetched": "2026-11-02T01:03:49Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:47:02Z"
+   "fetched": "2026-11-02T01:03:51Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Fair"
     }
    ],
-   "fetched": "2026-11-02T00:47:06Z"
+   "fetched": "2026-11-02T01:03:52Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Hamilton Island",
-   "fetched": "2026-11-02T00:47:19Z"
+   "fetched": "2026-11-02T01:04:06Z"
   },
   {
    "source": "wunderground",
@@ -432,7 +432,7 @@
     }
    ],
    "point": "Cannonvale",
-   "fetched": "2026-11-02T00:47:20Z"
+   "fetched": "2026-11-02T01:04:07Z"
   },
   {
    "source": "windy",
@@ -506,22 +506,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:47:26Z"
+   "fetched": "2026-11-02T01:04:14Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hamilton Island",
   "distance_km": 27.1,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 28.1,
-  "feels_like": 28.6,
-  "humidity": 69,
-  "wind_dir": "NNW",
-  "wind_kmh": 22,
-  "gust_kmh": 26,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 28.4,
+  "feels_like": 29.3,
+  "humidity": 68,
+  "wind_dir": "NW",
+  "wind_kmh": 20,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:46:52Z"
+  "fetched": "2026-11-02T01:03:40Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -710,7 +710,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:47:00Z"
+  "fetched": "2026-11-02T01:03:48Z"
  },
  "errors": {}
 }

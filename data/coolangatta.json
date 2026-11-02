@@ -1,6 +1,6 @@
 {
  "id": "coolangatta",
- "generated": "2026-11-02T00:35:47Z",
+ "generated": "2026-11-02T00:52:08Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:34:47Z"
+   "fetched": "2026-11-02T00:51:38Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T00:34:48Z"
+   "fetched": "2026-11-02T00:51:40Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:34:51Z"
+   "fetched": "2026-11-02T00:51:45Z"
   },
   {
    "source": "weatherzone",
@@ -258,17 +258,17 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 60,
+     "chance": 40,
      "text": "Fog then sunny"
     },
     {
      "date": "2026-11-03",
-     "tmax": 27,
+     "tmax": 26,
      "tmin": 19,
      "rain_min": 5,
      "rain_max": 10,
      "rain_text": "5-10mm",
-     "chance": 50,
+     "chance": 60,
      "text": "Possible thunderstorm"
     },
     {
@@ -288,17 +288,17 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 30,
+     "chance": 10,
      "text": "Sunny"
     },
     {
      "date": "2026-11-06",
-     "tmax": 25,
+     "tmax": 26,
      "tmin": 18,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 30,
+     "chance": 20,
      "text": "Mostly sunny"
     },
     {
@@ -309,20 +309,20 @@
      "rain_max": 10,
      "rain_text": "5-10mm",
      "chance": 70,
-     "text": "Rain"
+     "text": "Possible thunderstorm"
     },
     {
      "date": "2026-11-08",
-     "tmax": 25,
+     "tmax": 27,
      "tmin": 19,
-     "rain_min": 5,
-     "rain_max": 10,
-     "rain_text": "5-10mm",
+     "rain_min": 1,
+     "rain_max": 5,
+     "rain_text": "1-5mm",
      "chance": 90,
-     "text": "Possible thunderstorm"
+     "text": "Rain"
     }
    ],
-   "fetched": "2026-11-01T20:47:46Z"
+   "fetched": "2026-11-02T00:51:59Z"
   },
   {
    "source": "wunderground",
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:35:40Z"
+   "fetched": "2026-11-02T00:52:00Z"
   },
   {
    "source": "windy",
@@ -439,7 +439,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 26,
+     "tmax": 25.6,
      "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:35:47Z"
+   "fetched": "2026-11-02T00:52:08Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Coolangatta",
   "distance_km": 0.2,
-  "time": "2026-11-02T10:20:00+10:00",
-  "temp": 25,
-  "feels_like": 22.8,
-  "humidity": 72,
+  "time": "2026-11-02T10:40:00+10:00",
+  "temp": 26.5,
+  "feels_like": 25.9,
+  "humidity": 73,
   "wind_dir": "ESE",
-  "wind_kmh": 30,
+  "wind_kmh": 26,
   "gust_kmh": 35,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:34:29Z"
+  "fetched": "2026-11-02T00:51:19Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -933,7 +933,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:34:46Z"
+  "fetched": "2026-11-02T00:51:37Z"
  },
  "errors": {
   "weatherzone": "ValueError: expected background response never arrived"

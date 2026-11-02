@@ -1,6 +1,6 @@
 {
  "id": "moreton-island",
- "generated": "2026-11-02T00:40:33Z",
+ "generated": "2026-11-02T00:57:06Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:40:09Z"
+   "fetched": "2026-11-02T00:56:42Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower"
     }
    ],
-   "fetched": "2026-11-02T00:40:11Z"
+   "fetched": "2026-11-02T00:56:44Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:40:14Z"
+   "fetched": "2026-11-02T00:56:45Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Cape Moreton",
-   "fetched": "2026-11-02T00:40:25Z"
+   "fetched": "2026-11-02T00:56:59Z"
   },
   {
    "source": "wunderground",
@@ -332,7 +332,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 23.9,
+     "tmax": 24.4,
      "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
@@ -342,27 +342,27 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 23.3,
-     "tmin": 20.6,
-     "rain_min": 19,
-     "rain_max": 19,
-     "rain_text": "19 mm",
+     "tmax": 23.9,
+     "tmin": 21.1,
+     "rain_min": 9.7,
+     "rain_max": 9.7,
+     "rain_text": "9.7 mm",
      "chance": null,
-     "text": "PM Thunderstorms/Wind"
+     "text": "Scattered Thunderstorms/Wind"
     },
     {
      "date": "2026-11-04",
      "tmax": 25,
-     "tmin": 20.6,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Sunny"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-05",
-     "tmax": 26.1,
+     "tmax": 26.7,
      "tmin": 20.6,
      "rain_min": 0,
      "rain_max": 0,
@@ -372,28 +372,28 @@
     },
     {
      "date": "2026-11-06",
-     "tmax": 22.8,
-     "tmin": 20.6,
+     "tmax": 23.3,
+     "tmin": 21.1,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Mostly Sunny"
+     "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-07",
      "tmax": 23.9,
-     "tmin": 20,
-     "rain_min": 8.9,
-     "rain_max": 8.9,
-     "rain_text": "8.9 mm",
+     "tmin": 20.6,
+     "rain_min": 7.9,
+     "rain_max": 7.9,
+     "rain_text": "7.9 mm",
      "chance": null,
      "text": "Partly Cloudy"
     },
     {
      "date": "2026-11-08",
-     "tmax": 22.8,
-     "tmin": 17.8,
+     "tmax": 23.3,
+     "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -402,8 +402,8 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 20.6,
-     "tmin": 18.3,
+     "tmax": 21.1,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -412,8 +412,8 @@
     },
     {
      "date": "2026-11-10",
-     "tmax": 21.7,
-     "tmin": 19.4,
+     "tmax": 22.2,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -422,7 +422,7 @@
     },
     {
      "date": "2026-11-11",
-     "tmax": 22.2,
+     "tmax": 22.8,
      "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
@@ -432,7 +432,7 @@
     }
    ],
    "point": "Woorim",
-   "fetched": "2026-11-02T00:40:26Z"
+   "fetched": "2026-11-02T00:56:59Z"
   },
   {
    "source": "windy",
@@ -506,22 +506,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:40:33Z"
+   "fetched": "2026-11-02T00:57:06Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Moreton",
   "distance_km": 11.6,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 23.9,
-  "feels_like": 23.9,
-  "humidity": 80,
-  "wind_dir": "NNW",
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 24.1,
+  "feels_like": 24.3,
+  "humidity": 81,
+  "wind_dir": "NW",
   "wind_kmh": 20,
-  "gust_kmh": 26,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:39:51Z"
+  "fetched": "2026-11-02T00:56:24Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -935,7 +935,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:40:08Z"
+  "fetched": "2026-11-02T00:56:41Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "yeppoon",
- "generated": "2026-11-02T00:46:52Z",
+ "generated": "2026-11-02T01:03:40Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:46:29Z"
+   "fetched": "2026-11-02T01:03:15Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T00:46:31Z"
+   "fetched": "2026-11-02T01:03:17Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Thunderstorms"
     }
    ],
-   "fetched": "2026-11-02T00:46:32Z"
+   "fetched": "2026-11-02T01:03:18Z"
   },
   {
    "source": "weatherzone",
@@ -322,7 +322,7 @@
      "text": "Possible thunderstorm"
     }
    ],
-   "fetched": "2026-11-02T00:46:44Z"
+   "fetched": "2026-11-02T01:03:32Z"
   },
   {
    "source": "wunderground",
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:46:45Z"
+   "fetched": "2026-11-02T01:03:33Z"
   },
   {
    "source": "windy",
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:46:52Z"
+   "fetched": "2026-11-02T01:03:40Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Yeppoon",
   "distance_km": 0.3,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 27.3,
-  "feels_like": 31,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 26.9,
+  "feels_like": 29.3,
   "humidity": 79,
   "wind_dir": "NE",
-  "wind_kmh": 9,
-  "gust_kmh": 11,
+  "wind_kmh": 15,
+  "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:46:19Z"
+  "fetched": "2026-11-02T01:03:04Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -751,7 +751,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:46:28Z"
+  "fetched": "2026-11-02T01:03:14Z"
  },
  "errors": {}
 }

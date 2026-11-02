@@ -1,6 +1,6 @@
 {
  "id": "southport",
- "generated": "2026-11-02T00:41:52Z",
+ "generated": "2026-11-02T00:58:26Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:41:27Z"
+   "fetched": "2026-11-02T00:58:01Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T00:41:29Z"
+   "fetched": "2026-11-02T00:58:03Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:41:32Z"
+   "fetched": "2026-11-02T00:58:04Z"
   },
   {
    "source": "weatherzone",
@@ -322,7 +322,7 @@
      "text": "Rain"
     }
    ],
-   "fetched": "2026-11-02T00:41:45Z"
+   "fetched": "2026-11-02T00:58:19Z"
   },
   {
    "source": "wunderground",
@@ -331,7 +331,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 29.4,
+     "tmax": 28.3,
      "tmin": 20.6,
      "rain_min": 0,
      "rain_max": 0,
@@ -343,16 +343,16 @@
      "date": "2026-11-03",
      "tmax": 24.4,
      "tmin": 19.4,
-     "rain_min": 17.3,
-     "rain_max": 17.3,
-     "rain_text": "17.3 mm",
+     "rain_min": 15.2,
+     "rain_max": 15.2,
+     "rain_text": "15.2 mm",
      "chance": null,
      "text": "Thunderstorms"
     },
     {
      "date": "2026-11-04",
      "tmax": 30,
-     "tmin": 18.3,
+     "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -361,7 +361,7 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 31.7,
+     "tmax": 31.1,
      "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
@@ -391,7 +391,7 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 25,
+     "tmax": 24.4,
      "tmin": 16.1,
      "rain_min": 0,
      "rain_max": 0,
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:41:45Z"
+   "fetched": "2026-11-02T00:58:20Z"
   },
   {
    "source": "windy",
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:41:52Z"
+   "fetched": "2026-11-02T00:58:26Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gold Coast Seaway",
   "distance_km": 3.8,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 26.3,
-  "feels_like": 26.8,
-  "humidity": 73,
-  "wind_dir": "ESE",
-  "wind_kmh": 20,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 26,
+  "feels_like": 26.1,
+  "humidity": 75,
+  "wind_dir": "SE",
+  "wind_kmh": 22,
   "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:41:10Z"
+  "fetched": "2026-11-02T00:57:41Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -933,7 +933,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:41:26Z"
+  "fetched": "2026-11-02T00:58:00Z"
  },
  "errors": {}
 }

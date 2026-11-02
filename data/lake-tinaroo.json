@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-02T00:49:27Z",
+ "generated": "2026-11-02T01:06:15Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:49:00Z"
+   "fetched": "2026-11-02T01:05:50Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:49:02Z"
+   "fetched": "2026-11-02T01:05:53Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:49:06Z"
+   "fetched": "2026-11-02T01:05:54Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Atherton",
-   "fetched": "2026-11-02T00:49:20Z"
+   "fetched": "2026-11-02T01:06:07Z"
   },
   {
    "source": "wunderground",
@@ -368,7 +368,7 @@
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Partly Cloudy"
+     "text": "Mostly Sunny"
     },
     {
      "date": "2026-11-06",
@@ -382,7 +382,7 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 31.7,
+     "tmax": 32.2,
      "tmin": 17.8,
      "rain_min": 0,
      "rain_max": 0,
@@ -392,7 +392,7 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 31.7,
+     "tmax": 32.2,
      "tmin": 18.9,
      "rain_min": 0,
      "rain_max": 0,
@@ -422,7 +422,7 @@
     },
     {
      "date": "2026-11-11",
-     "tmax": 27.8,
+     "tmax": 28.3,
      "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
@@ -431,7 +431,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:49:20Z"
+   "fetched": "2026-11-02T01:06:08Z"
   },
   {
    "source": "windy",
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:49:27Z"
+   "fetched": "2026-11-02T01:06:15Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 29.6,
-  "feels_like": 31.5,
+  "time": "2026-11-02T11:00:00+10:00",
+  "temp": 29,
+  "feels_like": 30.3,
   "humidity": 53,
-  "wind_dir": "NE",
-  "wind_kmh": 7,
+  "wind_dir": "N",
+  "wind_kmh": 9,
   "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:48:53Z"
+  "fetched": "2026-11-02T01:05:42Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -558,7 +558,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:48:59Z"
+  "fetched": "2026-11-02T01:05:49Z"
  },
  "errors": {}
 }

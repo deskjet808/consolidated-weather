@@ -1,6 +1,6 @@
 {
  "id": "mackay",
- "generated": "2026-11-02T00:48:10Z",
+ "generated": "2026-11-02T01:04:58Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:47:45Z"
+   "fetched": "2026-11-02T01:04:34Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Possible shower developing"
     }
    ],
-   "fetched": "2026-11-02T00:47:47Z"
+   "fetched": "2026-11-02T01:04:36Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:47:50Z"
+   "fetched": "2026-11-02T01:04:37Z"
   },
   {
    "source": "weatherzone",
@@ -322,7 +322,7 @@
      "text": "Possible thunderstorm"
     }
    ],
-   "fetched": "2026-11-02T00:48:03Z"
+   "fetched": "2026-11-02T01:04:50Z"
   },
   {
    "source": "wunderground",
@@ -331,7 +331,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 30,
+     "tmax": 30.6,
      "tmin": 23.3,
      "rain_min": 0,
      "rain_max": 0,
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:48:03Z"
+   "fetched": "2026-11-02T01:04:51Z"
   },
   {
    "source": "windy",
@@ -439,7 +439,7 @@
    "days": [
     {
      "date": "2026-11-02",
-     "tmax": 30.5,
+     "tmax": 30.7,
      "tmin": 24.5,
      "rain_min": 0,
      "rain_max": 0,
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:48:10Z"
+   "fetched": "2026-11-02T01:04:58Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mackay Airport",
   "distance_km": 3.5,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 30.8,
-  "feels_like": 31,
-  "humidity": 60,
-  "wind_dir": "N",
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 30.1,
+  "feels_like": 29.5,
+  "humidity": 56,
+  "wind_dir": null,
   "wind_kmh": 24,
-  "gust_kmh": 32,
+  "gust_kmh": 28,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:47:27Z"
+  "fetched": "2026-11-02T01:04:14Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -934,7 +934,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:47:44Z"
+  "fetched": "2026-11-02T01:04:33Z"
  },
  "errors": {}
 }

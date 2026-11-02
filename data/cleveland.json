@@ -1,6 +1,6 @@
 {
  "id": "cleveland",
- "generated": "2026-11-02T00:37:49Z",
+ "generated": "2026-11-02T00:54:10Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:37:23Z"
+   "fetched": "2026-11-02T00:53:45Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T00:37:27Z"
+   "fetched": "2026-11-02T00:53:47Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Mostly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:37:28Z"
+   "fetched": "2026-11-02T00:53:48Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Logan City",
-   "fetched": "2026-11-02T00:37:41Z"
+   "fetched": "2026-11-02T00:54:03Z"
   },
   {
    "source": "wunderground",
@@ -431,7 +431,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:37:42Z"
+   "fetched": "2026-11-02T00:54:03Z"
   },
   {
    "source": "windy",
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:37:49Z"
+   "fetched": "2026-11-02T00:54:10Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Redland (Alexandra Hills)",
   "distance_km": 3,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 26.8,
-  "feels_like": 29.3,
-  "humidity": 71,
-  "wind_dir": "E",
-  "wind_kmh": 9,
+  "time": "2026-11-02T10:40:00+10:00",
+  "temp": 26.4,
+  "feels_like": 28.1,
+  "humidity": 72,
+  "wind_dir": "NE",
+  "wind_kmh": 13,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:37:15Z"
+  "fetched": "2026-11-02T00:53:37Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -709,7 +709,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:37:23Z"
+  "fetched": "2026-11-02T00:53:45Z"
  },
  "errors": {}
 }

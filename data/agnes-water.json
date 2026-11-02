@@ -1,6 +1,6 @@
 {
  "id": "agnes-water",
- "generated": "2026-11-02T00:45:13Z",
+ "generated": "2026-11-02T01:01:51Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:44:50Z"
+   "fetched": "2026-11-02T01:01:24Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower"
     }
    ],
-   "fetched": "2026-11-02T00:44:52Z"
+   "fetched": "2026-11-02T01:01:26Z"
   },
   {
    "source": "elders",
@@ -200,7 +200,7 @@
      "rain_min": 0,
      "rain_max": 5,
      "rain_text": "0 - 5 mm",
-     "chance": 8,
+     "chance": 9,
      "text": "Mostly cloudy"
     },
     {
@@ -244,7 +244,7 @@
      "text": "Mostly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:44:53Z"
+   "fetched": "2026-11-02T01:01:30Z"
   },
   {
    "source": "weatherzone",
@@ -323,7 +323,7 @@
     }
    ],
    "point": "Miriam Vale",
-   "fetched": "2026-11-02T00:45:06Z"
+   "fetched": "2026-11-02T01:01:43Z"
   },
   {
    "source": "wunderground",
@@ -431,7 +431,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:45:07Z"
+   "fetched": "2026-11-02T01:01:44Z"
   },
   {
    "source": "windy",
@@ -505,22 +505,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:45:13Z"
+   "fetched": "2026-11-02T01:01:51Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone",
   "distance_km": 76.1,
-  "time": "2026-11-02T10:40:00+10:00",
-  "temp": 27.3,
-  "feels_like": 29.4,
-  "humidity": 68,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 27.7,
+  "feels_like": 29.3,
+  "humidity": 66,
   "wind_dir": "N",
-  "wind_kmh": 11,
-  "gust_kmh": 20,
+  "wind_kmh": 13,
+  "gust_kmh": 19,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:44:34Z"
+  "fetched": "2026-11-02T01:01:07Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -934,7 +934,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:44:50Z"
+  "fetched": "2026-11-02T01:01:24Z"
  },
  "errors": {}
 }

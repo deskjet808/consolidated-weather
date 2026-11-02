@@ -1,6 +1,6 @@
 {
  "id": "redcliffe",
- "generated": "2026-11-02T00:41:10Z",
+ "generated": "2026-11-02T00:57:40Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T00:40:43Z"
+   "fetched": "2026-11-02T00:57:17Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Shower or two"
     }
    ],
-   "fetched": "2026-11-02T00:40:45Z"
+   "fetched": "2026-11-02T00:57:20Z"
   },
   {
    "source": "elders",
@@ -244,7 +244,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:40:49Z"
+   "fetched": "2026-11-02T00:57:21Z"
   },
   {
    "source": "weatherzone",
@@ -322,7 +322,7 @@
      "text": "Rain"
     }
    ],
-   "fetched": "2026-11-02T00:41:02Z"
+   "fetched": "2026-11-02T00:57:33Z"
   },
   {
    "source": "wunderground",
@@ -430,7 +430,7 @@
      "text": "Partly Cloudy"
     }
    ],
-   "fetched": "2026-11-02T00:41:03Z"
+   "fetched": "2026-11-02T00:57:33Z"
   },
   {
    "source": "windy",
@@ -504,22 +504,22 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T00:41:10Z"
+   "fetched": "2026-11-02T00:57:40Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 19.9,
-  "time": "2026-11-02T10:30:00+10:00",
-  "temp": 27,
-  "feels_like": 28.8,
-  "humidity": 77,
+  "time": "2026-11-02T10:50:00+10:00",
+  "temp": 26.8,
+  "feels_like": 27.3,
+  "humidity": 70,
   "wind_dir": "NNE",
-  "wind_kmh": 17,
+  "wind_kmh": 19,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T00:40:34Z"
+  "fetched": "2026-11-02T00:57:07Z"
  },
  "marine": {
   "source": "willyweather, windy",
@@ -708,7 +708,7 @@
     }
    }
   ],
-  "fetched": "2026-11-02T00:40:42Z"
+  "fetched": "2026-11-02T00:57:17Z"
  },
  "errors": {}
 }
