@@ -1,6 +1,6 @@
 {
  "id": "lake-atkinson",
- "generated": "2026-11-02T10:06:57Z",
+ "generated": "2026-11-02T13:03:02Z",
  "sources": [
   {
    "source": "bom",
@@ -19,7 +19,7 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 31,
+     "tmax": 29,
      "tmin": 20,
      "rain_min": 15,
      "rain_max": 30,
@@ -34,12 +34,12 @@
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
-     "chance": 5,
+     "chance": 10,
      "text": null
     },
     {
      "date": "2026-11-05",
-     "tmax": 36,
+     "tmax": 35,
      "tmin": 17,
      "rain_min": 0,
      "rain_max": null,
@@ -50,7 +50,7 @@
     {
      "date": "2026-11-06",
      "tmax": 31,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
@@ -59,7 +59,7 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 31,
+     "tmax": 33,
      "tmin": 18,
      "rain_min": 0,
      "rain_max": 1,
@@ -69,7 +69,7 @@
     },
     {
      "date": "2026-11-08",
-     "tmax": 30,
+     "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
@@ -79,7 +79,7 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 27,
+     "tmax": 28,
      "tmin": 15,
      "rain_min": 0,
      "rain_max": null,
@@ -90,7 +90,7 @@
     {
      "date": "2026-11-10",
      "tmax": null,
-     "tmin": 17,
+     "tmin": 18,
      "rain_min": null,
      "rain_max": null,
      "rain_text": null,
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T10:06:33Z"
+   "fetched": "2026-11-02T13:02:39Z"
   },
   {
    "source": "willyweather",
@@ -113,11 +113,11 @@
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 15,
-     "text": "Mostly clear"
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-03",
-     "tmax": 31,
+     "tmax": 29,
      "tmin": 20,
      "rain_min": 15,
      "rain_max": 30,
@@ -132,7 +132,7 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 5,
+     "chance": 10,
      "text": "Sunny"
     },
     {
@@ -148,7 +148,7 @@
     {
      "date": "2026-11-06",
      "tmax": 31,
-     "tmin": 18,
+     "tmin": 17,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
@@ -157,106 +157,27 @@
     },
     {
      "date": "2026-11-07",
-     "tmax": 32,
+     "tmax": 33,
      "tmin": 18,
      "rain_min": 0,
-     "rain_max": 2,
-     "rain_text": "< 2 mm",
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
      "chance": 40,
      "text": "Possible shower"
     },
     {
      "date": "2026-11-08",
-     "tmax": 30,
+     "tmax": 29,
      "tmin": 19,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 30,
-     "text": "Partly cloudy"
+     "chance": 35,
+     "text": "Possible shower"
     }
    ],
    "point": "Atkinsons Dam",
-   "fetched": "2026-11-02T10:06:35Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/atkinsons-dam",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 31,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 4,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 27,
-     "tmin": 20,
-     "rain_min": 20,
-     "rain_max": 25,
-     "rain_text": "20 - 25 mm",
-     "chance": 37,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 32,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 33,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 0,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 29,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 14,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 31,
-     "text": "Mostly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 27,
-     "tmin": 17,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 20,
-     "text": "Rain showers"
-    }
-   ],
-   "point": "Atkinsons Dam",
-   "fetched": "2026-11-02T10:06:38Z"
+   "fetched": "2026-11-02T13:02:41Z"
   },
   {
    "source": "weatherzone",
@@ -275,12 +196,12 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 29,
-     "tmin": 20,
+     "tmax": 28,
+     "tmin": 19,
      "rain_min": 10,
      "rain_max": 20,
      "rain_text": "10-20mm",
-     "chance": 80,
+     "chance": 90,
      "text": "Possible thunderstorm"
     },
     {
@@ -291,7 +212,7 @@
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 5,
-     "text": "Sunny"
+     "text": "Mostly sunny"
     },
     {
      "date": "2026-11-05",
@@ -306,145 +227,36 @@
     {
      "date": "2026-11-06",
      "tmax": 31,
-     "tmin": 17,
+     "tmin": 16,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 40,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 32,
+     "tmin": 18,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5-10mm",
+     "chance": 60,
+     "text": "Late shower"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 29,
+     "tmin": 18,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 50,
-     "text": "Late shower"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 31,
-     "tmin": 17,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 60,
-     "text": "Possible thunderstorm"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 30,
-     "tmin": 19,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 70,
      "text": "Possible shower"
     }
    ],
    "point": "Gatton",
-   "fetched": "2026-11-02T10:06:50Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/lake-atkinson/-27.43,152.44",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 32.8,
-     "tmin": 19.4,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 27.8,
-     "tmin": 17.8,
-     "rain_min": 23.1,
-     "rain_max": 23.1,
-     "rain_text": "23.1 mm",
-     "chance": null,
-     "text": "Thunderstorms"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 32.8,
-     "tmin": 15.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Mostly Sunny"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 34.4,
-     "tmin": 16.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 31.1,
-     "tmin": 17.2,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 31.7,
-     "tmin": 17.8,
-     "rain_min": 2,
-     "rain_max": 2,
-     "rain_text": "2 mm",
-     "chance": null,
-     "text": "PM Showers"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 28.9,
-     "tmin": 13.9,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 26.7,
-     "tmin": 14.4,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 28.3,
-     "tmin": 16.7,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 29.4,
-     "tmin": 18.3,
-     "rain_min": 2.3,
-     "rain_max": 2.3,
-     "rain_text": "2.3 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    }
-   ],
-   "point": "Atkinsons Dam",
-   "fetched": "2026-11-02T10:06:50Z"
+   "fetched": "2026-11-02T13:02:52Z"
   },
   {
    "source": "windy",
@@ -466,8 +278,8 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 26.9,
-     "tmin": 20.2,
+     "tmax": 27.1,
+     "tmin": 20.4,
      "rain_min": 26.7,
      "rain_max": 26.7,
      "rain_text": "26.7 mm",
@@ -479,8 +291,8 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 30.6,
-     "tmin": 18.6,
+     "tmax": 30.8,
+     "tmin": 18.7,
      "rain_min": 0.4,
      "rain_max": 0.4,
      "rain_text": "0.4 mm",
@@ -493,7 +305,7 @@
     {
      "date": "2026-11-05",
      "tmax": 33.9,
-     "tmin": 16.3,
+     "tmin": 16.6,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -506,7 +318,7 @@
     {
      "date": "2026-11-06",
      "tmax": 28.6,
-     "tmin": 16.7,
+     "tmin": 16.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -518,25 +330,25 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T10:06:57Z"
+   "fetched": "2026-11-02T13:02:59Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gatton",
   "distance_km": 17,
-  "time": "2026-11-02T20:00:00+10:00",
-  "temp": 23.6,
-  "feels_like": 25.2,
-  "humidity": 72,
-  "wind_dir": "E",
+  "time": "2026-11-02T22:50:00+10:00",
+  "temp": 21.6,
+  "feels_like": 23.5,
+  "humidity": 85,
+  "wind_dir": "ESE",
   "wind_kmh": 7,
-  "gust_kmh": 9,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T10:06:24Z"
+  "fetched": "2026-11-02T13:02:31Z"
  },
  "marine": {
-  "source": "willyweather, windy",
+  "source": "willyweather, windy, seabreeze, windfinder",
   "waters": [
    {
     "name": "Lake Atkinson",
@@ -568,10 +380,27 @@
       "gust_max": 22,
       "wind_dir": "SSE"
      }
-    }
+    },
+    "windfinder": {
+     "2026-11-02": {
+      "wind_max": 4,
+      "gust_max": 14,
+      "wind_dir": "NW",
+      "wave_m": null
+     },
+     "2026-11-03": {
+      "wind_max": 25,
+      "gust_max": 43,
+      "wind_dir": "NW",
+      "wave_m": null
+     }
+    },
+    "windfinder_place": "Gatton"
    }
   ],
-  "fetched": "2026-11-02T10:06:32Z"
+  "fetched": "2026-11-02T13:02:38Z"
  },
- "errors": {}
+ "errors": {
+  "accuweather": "ValueError: no forecast cards: Access Denied"
+ }
 }
