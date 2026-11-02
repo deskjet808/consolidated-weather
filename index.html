@@ -972,6 +972,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   $("brief").addEventListener("click",e=>{const b=e.target.closest(".brow");if(!b)return;pickWater(+b.dataset.w);
     $("boath").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"});});
   function renderBoat(k){
+    // Locations marked "boating": false in locations.json (inland suburbs like Oxley) show no boating at all
+    const noBoat=state.loc.boating===false;
+    [$("briefh"),$("boath")].forEach(h=>h.closest("section").hidden=noBoat);
+    document.querySelector('.jump a[href="#boath"]').hidden=noBoat;
+    if(noBoat)return;
     const D=state.data,L=state.loc,M=D.scraped&&D.scraped.marine,tzHour=t=>+new Intl.DateTimeFormat("en-AU",{timeZone:L.tz,hour:"numeric",hourCycle:"h23"}).format(new Date(t));
     const sel=state.sel,dt=new Date(k+"T12:00:00");
     const dayName=sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"});
