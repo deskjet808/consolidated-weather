@@ -1,6 +1,6 @@
 {
  "id": "moreton-island",
- "generated": "2026-11-02T12:23:09Z",
+ "generated": "2026-11-02T14:00:54Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T12:22:41Z"
+   "fetched": "2026-11-02T13:59:29Z"
   },
   {
    "source": "willyweather",
@@ -176,85 +176,7 @@
      "text": "Shower"
     }
    ],
-   "fetched": "2026-11-02T12:22:44Z"
-  },
-  {
-   "source": "elders",
-   "name": "Elders Weather",
-   "url": "https://eldersweather.com.au/forecast/qld/moreton-island",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 26,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 1,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 25,
-     "tmin": 21,
-     "rain_min": 10,
-     "rain_max": 15,
-     "rain_text": "10 - 15 mm",
-     "chance": 31,
-     "text": "Fair"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 26,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 3,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 27,
-     "tmin": 22,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 2,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 24,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 7,
-     "text": "Clear skies"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 25,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 22,
-     "text": "Mostly cloudy"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 24,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 5,
-     "rain_text": "0 - 5 mm",
-     "chance": 22,
-     "text": "Fair"
-    }
-   ],
-   "fetched": "2026-11-02T12:22:48Z"
+   "fetched": "2026-11-02T13:59:31Z"
   },
   {
    "source": "weatherzone",
@@ -333,116 +255,7 @@
     }
    ],
    "point": "Cape Moreton",
-   "fetched": "2026-11-02T12:23:02Z"
-  },
-  {
-   "source": "wunderground",
-   "name": "Weather Underground",
-   "url": "https://www.wunderground.com/forecast/au/moreton-island/-27.122,153.408",
-   "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 25,
-     "tmin": 21.1,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-03",
-     "tmax": 23.3,
-     "tmin": 20.6,
-     "rain_min": 11.4,
-     "rain_max": 11.4,
-     "rain_text": "11.4 mm",
-     "chance": null,
-     "text": "PM Thundershowers/Wind"
-    },
-    {
-     "date": "2026-11-04",
-     "tmax": 25,
-     "tmin": 20.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 26.1,
-     "tmin": 20.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
-     "tmax": 23.3,
-     "tmin": 20.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 24.4,
-     "tmin": 20.6,
-     "rain_min": 4.1,
-     "rain_max": 4.1,
-     "rain_text": "4.1 mm",
-     "chance": null,
-     "text": "PM Showers"
-    },
-    {
-     "date": "2026-11-08",
-     "tmax": 22.8,
-     "tmin": 18.3,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy/Wind"
-    },
-    {
-     "date": "2026-11-09",
-     "tmax": 21.1,
-     "tmin": 18.9,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-10",
-     "tmax": 22.2,
-     "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    },
-    {
-     "date": "2026-11-11",
-     "tmax": 22.8,
-     "tmin": 20.6,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Partly Cloudy"
-    }
-   ],
-   "point": "Woorim",
-   "fetched": "2026-11-02T12:23:02Z"
+   "fetched": "2026-11-02T13:59:46Z"
   },
   {
    "source": "windy",
@@ -464,7 +277,7 @@
     },
     {
      "date": "2026-11-03",
-     "tmax": 24.2,
+     "tmax": 24.1,
      "tmin": 21.1,
      "rain_min": 25.8,
      "rain_max": 25.8,
@@ -473,7 +286,7 @@
      "text": null,
      "wind_max": 37,
      "gust_max": 56,
-     "wind_dir": "N"
+     "wind_dir": "NNW"
     },
     {
      "date": "2026-11-04",
@@ -485,7 +298,7 @@
      "chance": null,
      "text": null,
      "wind_max": 33,
-     "gust_max": 45,
+     "gust_max": 47,
      "wind_dir": "NNW"
     },
     {
@@ -516,25 +329,331 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T12:23:09Z"
+   "fetched": "2026-11-02T13:59:53Z"
+  },
+  {
+   "source": "ecmwf",
+   "name": "ECMWF",
+   "days": [
+    {
+     "date": "2026-11-03",
+     "tmax": 25.6,
+     "tmin": 19.4,
+     "rain_min": 11.8,
+     "rain_max": 11.8,
+     "rain_text": "11.8 mm",
+     "chance": 84,
+     "text": "Storms",
+     "wind_max": 33,
+     "gust_max": 70,
+     "wind_dir": "NNW"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 27.9,
+     "tmin": 19.8,
+     "rain_min": 1.3,
+     "rain_max": 1.3,
+     "rain_text": "1.3 mm",
+     "chance": 55,
+     "text": "Light showers",
+     "wind_max": 21,
+     "gust_max": 43,
+     "wind_dir": "NNW"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 29.9,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 0,
+     "text": "Clear",
+     "wind_max": 22,
+     "gust_max": 43,
+     "wind_dir": "NW"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 24.8,
+     "tmin": 20.9,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 2,
+     "text": "Partly cloudy",
+     "wind_max": 30,
+     "gust_max": 60,
+     "wind_dir": "SE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 26.5,
+     "tmin": 20.5,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 13,
+     "text": "Mostly sunny",
+     "wind_max": 20,
+     "gust_max": 38,
+     "wind_dir": "NNE"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 23.6,
+     "tmin": 19.8,
+     "rain_min": 1.8,
+     "rain_max": 1.8,
+     "rain_text": "1.8 mm",
+     "chance": 32,
+     "text": "Light drizzle",
+     "wind_max": 35,
+     "gust_max": 82,
+     "wind_dir": "SSE"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 23.3,
+     "tmin": 19.5,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 16,
+     "text": "Partly cloudy",
+     "wind_max": 25,
+     "gust_max": 74,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 23.9,
+     "tmin": 19.5,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 20,
+     "text": "Cloudy",
+     "wind_max": 22,
+     "gust_max": 51,
+     "wind_dir": "NNE"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-27.122&longitude=153.408&models=ecmwf_ifs",
+   "fetched": "2026-11-02T14:00:53Z"
+  },
+  {
+   "source": "icon",
+   "name": "ICON",
+   "days": [
+    {
+     "date": "2026-11-03",
+     "tmax": 23,
+     "tmin": 21.6,
+     "rain_min": 8.8,
+     "rain_max": 8.8,
+     "rain_text": "8.8 mm",
+     "chance": 83,
+     "text": "Storms",
+     "wind_max": 30,
+     "gust_max": 49,
+     "wind_dir": "N"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 26.5,
+     "tmin": 21.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 5,
+     "text": "Fog",
+     "wind_max": 24,
+     "gust_max": 36,
+     "wind_dir": "NNW"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 27.1,
+     "tmin": 21.1,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 0,
+     "text": "Partly cloudy",
+     "wind_max": 40,
+     "gust_max": 64,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 22.1,
+     "tmin": 20.5,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 6,
+     "text": "Cloudy",
+     "wind_max": 32,
+     "gust_max": 53,
+     "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 24.6,
+     "tmin": 21.3,
+     "rain_min": 0.9,
+     "rain_max": 0.9,
+     "rain_text": "0.9 mm",
+     "chance": 40,
+     "text": "Cloudy",
+     "wind_max": 19,
+     "gust_max": 30,
+     "wind_dir": "N"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 22.9,
+     "tmin": 19.5,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 39,
+     "text": "Cloudy",
+     "wind_max": 41,
+     "gust_max": 66,
+     "wind_dir": "SSE"
+    }
+   ],
+   "url": "https://open-meteo.com/en/docs?latitude=-27.122&longitude=153.408&models=icon_seamless",
+   "fetched": "2026-11-02T14:00:53Z"
+  },
+  {
+   "source": "foreca",
+   "name": "Foreca",
+   "url": "https://www.foreca.com/en/109957533/moreton-island/10-day-forecast",
+   "days": [
+    {
+     "date": "2026-11-03",
+     "tmax": 24,
+     "tmin": 20,
+     "rain_min": 14.5,
+     "rain_max": 14.5,
+     "rain_text": "14.5 mm",
+     "chance": null,
+     "text": "Cloudy and showers"
+    },
+    {
+     "date": "2026-11-04",
+     "tmax": 26,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-05",
+     "tmax": 27,
+     "tmin": 22,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Clear"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 23,
+     "tmin": 21,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 24,
+     "tmin": 22,
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
+     "chance": null,
+     "text": "Clear"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 23,
+     "tmin": 21,
+     "rain_min": 0.5,
+     "rain_max": 0.5,
+     "rain_text": "0.5 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 22,
+     "tmin": 20,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 23,
+     "tmin": 21,
+     "rain_min": 0.4,
+     "rain_max": 0.4,
+     "rain_text": "0.4 mm",
+     "chance": null,
+     "text": "Mostly clear"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 24,
+     "tmin": 22,
+     "rain_min": 0.8,
+     "rain_max": 0.8,
+     "rain_text": "0.8 mm",
+     "chance": null,
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-12",
+     "tmax": 24,
+     "tmin": 22,
+     "rain_min": 6.1,
+     "rain_max": 6.1,
+     "rain_text": "6.1 mm",
+     "chance": null,
+     "text": "Cloudy and showers"
+    }
+   ],
+   "fetched": "2026-11-02T14:00:54Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Moreton",
   "distance_km": 11.6,
-  "time": "2026-11-02T22:10:00+10:00",
+  "time": "2026-11-02T23:50:00+10:00",
   "temp": 22.2,
-  "feels_like": 24.1,
+  "feels_like": 24.5,
   "humidity": 95,
-  "wind_dir": "E",
-  "wind_kmh": 13,
+  "wind_dir": "NE",
+  "wind_kmh": 11,
   "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T12:22:23Z"
+  "fetched": "2026-11-02T13:59:08Z"
  },
  "marine": {
-  "source": "willyweather, windy",
+  "source": "willyweather, windy, seabreeze, windfinder",
   "waters": [
    {
     "name": "Moreton Bay (west side)",
@@ -700,7 +819,7 @@
      "2026-11-03": {
       "wind_max": 27,
       "gust_max": 44,
-      "wind_dir": "N"
+      "wind_dir": "NNW"
      },
      "2026-11-04": {
       "wind_max": 24,
@@ -717,7 +836,60 @@
       "gust_max": 35,
       "wind_dir": "SSE"
      }
-    }
+    },
+    "seabreeze": {
+     "2026-11-02": {
+      "wind_max": 22,
+      "wind_dir": "NNE",
+      "wave_m": 0.9
+     },
+     "2026-11-03": {
+      "wind_max": 35,
+      "wind_dir": "N",
+      "wave_m": 1.3
+     },
+     "2026-11-04": {
+      "wind_max": 22,
+      "wind_dir": "N",
+      "wave_m": 0.9
+     },
+     "2026-11-05": {
+      "wind_max": 15,
+      "wind_dir": "N",
+      "wave_m": 1.0
+     },
+     "2026-11-06": {
+      "wind_max": 24,
+      "wind_dir": "SE",
+      "wave_m": 1.3
+     },
+     "2026-11-07": {
+      "wind_max": 24,
+      "wind_dir": "N",
+      "wave_m": 1.2
+     },
+     "2026-11-08": {
+      "wind_max": 37,
+      "wind_dir": "SE",
+      "wave_m": 1.3
+     }
+    },
+    "seabreeze_place": "Moreton Island",
+    "windfinder": {
+     "2026-11-02": {
+      "wind_max": 14,
+      "gust_max": 18,
+      "wind_dir": "NW",
+      "wave_m": 0.8
+     },
+     "2026-11-03": {
+      "wind_max": 36,
+      "gust_max": 50,
+      "wind_dir": "N",
+      "wave_m": 1.5
+     }
+    },
+    "windfinder_place": "Tangalooma Point"
    },
    {
     "name": "Open ocean (east side)",
@@ -881,17 +1053,17 @@
       "period_s": 5
      },
      "2026-11-03": {
-      "max_m": 1.3,
+      "max_m": 1.1,
+      "dir": "NNE",
+      "period_s": 4
+     },
+     "2026-11-04": {
+      "max_m": 1.5,
       "dir": "NNE",
       "period_s": 5
      },
-     "2026-11-04": {
-      "max_m": 1.6,
-      "dir": "NNE",
-      "period_s": 6
-     },
      "2026-11-05": {
-      "max_m": 1.2,
+      "max_m": 1.1,
       "dir": "NNE",
       "period_s": 5
      },
@@ -902,18 +1074,18 @@
      },
      "2026-11-07": {
       "max_m": 1.2,
-      "dir": "ESE",
+      "dir": "SE",
       "period_s": 8
      },
      "2026-11-08": {
-      "max_m": 1.6,
-      "dir": "N",
+      "max_m": 1.5,
+      "dir": "NNE",
       "period_s": 5
      },
      "2026-11-09": {
-      "max_m": 1.2,
-      "dir": "SW",
-      "period_s": 4
+      "max_m": 2,
+      "dir": "SSE",
+      "period_s": 7
      }
     },
     "windy": {
@@ -925,11 +1097,11 @@
      "2026-11-03": {
       "wind_max": 37,
       "gust_max": 56,
-      "wind_dir": "N"
+      "wind_dir": "NNW"
      },
      "2026-11-04": {
       "wind_max": 33,
-      "gust_max": 45,
+      "gust_max": 47,
       "wind_dir": "NNW"
      },
      "2026-11-05": {
@@ -942,10 +1114,63 @@
       "gust_max": 43,
       "wind_dir": "SSE"
      }
-    }
+    },
+    "seabreeze": {
+     "2026-11-02": {
+      "wind_max": 22,
+      "wind_dir": "NNE",
+      "wave_m": 0.9
+     },
+     "2026-11-03": {
+      "wind_max": 35,
+      "wind_dir": "N",
+      "wave_m": 1.3
+     },
+     "2026-11-04": {
+      "wind_max": 22,
+      "wind_dir": "N",
+      "wave_m": 0.9
+     },
+     "2026-11-05": {
+      "wind_max": 15,
+      "wind_dir": "N",
+      "wave_m": 1.0
+     },
+     "2026-11-06": {
+      "wind_max": 24,
+      "wind_dir": "SE",
+      "wave_m": 1.3
+     },
+     "2026-11-07": {
+      "wind_max": 24,
+      "wind_dir": "N",
+      "wave_m": 1.2
+     },
+     "2026-11-08": {
+      "wind_max": 37,
+      "wind_dir": "SE",
+      "wave_m": 1.3
+     }
+    },
+    "seabreeze_place": "Moreton Island",
+    "windfinder": {
+     "2026-11-02": {
+      "wind_max": 14,
+      "gust_max": 18,
+      "wind_dir": "NW",
+      "wave_m": 0.8
+     },
+     "2026-11-03": {
+      "wind_max": 36,
+      "gust_max": 50,
+      "wind_dir": "N",
+      "wave_m": 1.5
+     }
+    },
+    "windfinder_place": "Tangalooma Point"
    }
   ],
-  "fetched": "2026-11-02T12:22:40Z"
+  "fetched": "2026-11-02T13:59:28Z"
  },
  "errors": {}
 }

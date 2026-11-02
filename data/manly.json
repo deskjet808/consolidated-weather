@@ -1,6 +1,6 @@
 {
  "id": "manly",
- "generated": "2026-11-02T13:56:37Z",
+ "generated": "2026-11-02T13:54:49Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-02T13:56:14Z"
+   "fetched": "2026-11-02T13:52:23Z"
   },
   {
    "source": "willyweather",
@@ -176,7 +176,7 @@
      "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-02T13:56:16Z"
+   "fetched": "2026-11-02T13:52:27Z"
   },
   {
    "source": "weatherzone",
@@ -255,7 +255,7 @@
     }
    ],
    "point": "Brisbane Ap",
-   "fetched": "2026-11-02T13:56:27Z"
+   "fetched": "2026-11-02T13:52:40Z"
   },
   {
    "source": "windy",
@@ -329,7 +329,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T13:56:35Z"
+   "fetched": "2026-11-02T13:52:47Z"
   },
   {
    "source": "ecmwf",
@@ -441,7 +441,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.455&longitude=153.188&models=ecmwf_ifs",
-   "fetched": "2026-11-02T13:56:36Z"
+   "fetched": "2026-11-02T13:54:48Z"
   },
   {
    "source": "icon",
@@ -540,7 +540,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.455&longitude=153.188&models=icon_seamless",
-   "fetched": "2026-11-02T13:56:36Z"
+   "fetched": "2026-11-02T13:54:48Z"
   },
   {
    "source": "foreca",
@@ -648,22 +648,22 @@
      "text": "Partly cloudy and light rain"
     }
    ],
-   "fetched": "2026-11-02T13:56:37Z"
+   "fetched": "2026-11-02T13:54:49Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 8.9,
-  "time": "2026-11-02T23:50:00+10:00",
-  "temp": 22.7,
+  "time": "2026-11-02T23:40:00+10:00",
+  "temp": 22.8,
   "feels_like": 25.3,
-  "humidity": 91,
+  "humidity": 90,
   "wind_dir": "ESE",
   "wind_kmh": 9,
-  "gust_kmh": 13,
+  "gust_kmh": 11,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T13:56:04Z"
+  "fetched": "2026-11-02T13:52:12Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -905,7 +905,7 @@
     "windfinder_place": "Manly Harbour"
    }
   ],
-  "fetched": "2026-11-02T13:56:14Z"
+  "fetched": "2026-11-02T13:52:22Z"
  },
  "errors": {}
 }

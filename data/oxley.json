@@ -1,22 +1,12 @@
 {
  "id": "oxley",
- "generated": "2026-11-02T13:29:26Z",
+ "generated": "2026-11-02T14:05:03Z",
  "sources": [
   {
    "source": "bom",
    "name": "BOM official",
    "url": "https://www.bom.gov.au/",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 33,
-     "tmin": null,
-     "rain_min": 0,
-     "rain_max": null,
-     "rain_text": "0 mm",
-     "chance": 20,
-     "text": "Possible storm."
-    },
     {
      "date": "2026-11-03",
      "tmax": 29,
@@ -96,25 +86,25 @@
      "rain_text": null,
      "chance": null,
      "text": null
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": null,
+     "tmin": null,
+     "rain_min": null,
+     "rain_max": null,
+     "rain_text": null,
+     "chance": null,
+     "text": null
     }
    ],
-   "fetched": "2026-11-02T13:29:00Z"
+   "fetched": "2026-11-02T14:03:39Z"
   },
   {
    "source": "willyweather",
    "name": "WillyWeather",
    "url": "https://www.willyweather.com.au/qld/brisbane/oxley.html",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 33,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 15,
-     "text": "Possible storm"
-    },
     {
      "date": "2026-11-03",
      "tmax": 29,
@@ -174,25 +164,25 @@
      "rain_text": "< 1 mm",
      "chance": 35,
      "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 27,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 20,
+     "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-02T13:29:02Z"
+   "fetched": "2026-11-02T14:03:42Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/brisbane/oxley",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 33,
-     "tmin": 18,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
-     "chance": 50,
-     "text": "Possible shower"
-    },
     {
      "date": "2026-11-03",
      "tmax": 29,
@@ -252,10 +242,20 @@
      "rain_text": "< 1mm",
      "chance": 80,
      "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-09",
+     "tmax": 27,
+     "tmin": 15,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 60,
+     "text": "Possible shower"
     }
    ],
    "point": "Archerfield",
-   "fetched": "2026-11-02T13:29:19Z"
+   "fetched": "2026-11-02T14:03:55Z"
   },
   {
    "source": "windy",
@@ -263,22 +263,9 @@
    "url": "https://www.windy.com/-27.556/152.975",
    "days": [
     {
-     "date": "2026-11-02",
-     "tmax": 31,
-     "tmin": 18,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 20,
-     "gust_max": 37,
-     "wind_dir": "ENE"
-    },
-    {
      "date": "2026-11-03",
      "tmax": 26.4,
-     "tmin": 20.8,
+     "tmin": 20.9,
      "rain_min": 25.6,
      "rain_max": 25.6,
      "rain_text": "25.6 mm",
@@ -326,28 +313,28 @@
      "wind_max": 19,
      "gust_max": 29,
      "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 29.8,
+     "tmin": 19.3,
+     "rain_min": 8.4,
+     "rain_max": 8.4,
+     "rain_text": "8.4 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 18,
+     "gust_max": 36,
+     "wind_dir": "N"
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-02T13:29:25Z"
+   "fetched": "2026-11-02T14:04:02Z"
   },
   {
    "source": "ecmwf",
    "name": "ECMWF",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30.3,
-     "tmin": 18.2,
-     "rain_min": 0.1,
-     "rain_max": 0.1,
-     "rain_text": "0.1 mm",
-     "chance": 31,
-     "text": "Light drizzle",
-     "wind_max": 16,
-     "gust_max": 37,
-     "wind_dir": "E"
-    },
     {
      "date": "2026-11-03",
      "tmax": 26,
@@ -438,28 +425,28 @@
      "wind_max": 12,
      "gust_max": 35,
      "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 25.1,
+     "tmin": 15.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 37,
+     "text": "Cloudy",
+     "wind_max": 16,
+     "gust_max": 37,
+     "wind_dir": "NNE"
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=ecmwf_ifs",
-   "fetched": "2026-11-02T13:29:26Z"
+   "fetched": "2026-11-02T14:05:02Z"
   },
   {
    "source": "icon",
    "name": "ICON",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30.8,
-     "tmin": 19.2,
-     "rain_min": 0.7,
-     "rain_max": 0.7,
-     "rain_text": "0.7 mm",
-     "chance": 33,
-     "text": "Light showers",
-     "wind_max": 14,
-     "gust_max": 34,
-     "wind_dir": "E"
-    },
     {
      "date": "2026-11-03",
      "tmax": 26.4,
@@ -540,23 +527,13 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=icon_seamless",
-   "fetched": "2026-11-02T13:29:26Z"
+   "fetched": "2026-11-02T14:05:03Z"
   },
   {
    "source": "foreca",
    "name": "Foreca",
    "url": "https://www.foreca.com/en/102154050/oxley/10-day-forecast",
    "days": [
-    {
-     "date": "2026-11-02",
-     "tmax": 30,
-     "tmin": 21,
-     "rain_min": null,
-     "rain_max": null,
-     "rain_text": null,
-     "chance": null,
-     "text": "Mostly clear"
-    },
     {
      "date": "2026-11-03",
      "tmax": 28,
@@ -631,9 +608,9 @@
      "date": "2026-11-10",
      "tmax": 26,
      "tmin": 16,
-     "rain_min": 0.4,
-     "rain_max": 0.4,
-     "rain_text": "0.4 mm",
+     "rain_min": 0.1,
+     "rain_max": 0.1,
+     "rain_text": "0.1 mm",
      "chance": null,
      "text": "Partly cloudy"
     },
@@ -641,29 +618,39 @@
      "date": "2026-11-11",
      "tmax": 27,
      "tmin": 19,
-     "rain_min": 2.4,
-     "rain_max": 2.4,
-     "rain_text": "2.4 mm",
+     "rain_min": 2.2,
+     "rain_max": 2.2,
+     "rain_text": "2.2 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-12",
+     "tmax": 27,
+     "tmin": 20,
+     "rain_min": 11.1,
+     "rain_max": 11.1,
+     "rain_text": "11.1 mm",
+     "chance": null,
+     "text": "Overcast, thunderstorms with rain"
     }
    ],
-   "fetched": "2026-11-02T13:29:26Z"
+   "fetched": "2026-11-02T14:05:03Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 3.2,
-  "time": "2026-11-02T23:20:00+10:00",
+  "time": "2026-11-02T23:50:00+10:00",
   "temp": 22,
-  "feels_like": 24.1,
-  "humidity": 89,
-  "wind_dir": "ESE",
+  "feels_like": 24.2,
+  "humidity": 90,
+  "wind_dir": "ENE",
   "wind_kmh": 9,
-  "gust_kmh": 13,
+  "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-02T13:28:59Z"
+  "fetched": "2026-11-02T14:03:38Z"
  },
  "errors": {}
 }
