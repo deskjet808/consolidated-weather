@@ -244,9 +244,16 @@ OM_DAILY = ("temperature_2m_max,temperature_2m_min,precipitation_sum,precipitati
 def open_meteo(loc, model, source, name):
     url = (f"https://api.open-meteo.com/v1/forecast?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"
            f"&daily={OM_DAILY}&timezone={loc['tz']}&forecast_days=8")
+    # Shared GitHub addresses are sometimes rate-limited, and the API sometimes answers slowly: wait and try again
     for attempt in range(3):
-        r = requests.get(url, headers=HEADERS, timeout=30)
-        if r.status_code != 429:  # shared GitHub addresses are sometimes rate-limited; wait and try again
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=45)
+        except (requests.Timeout, requests.ConnectionError):
+            if attempt == 2:
+                raise
+            time.sleep(15)
+            continue
+        if r.status_code != 429 or attempt == 2:
             break
         time.sleep(20)
     r.raise_for_status()
