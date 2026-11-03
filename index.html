@@ -319,7 +319,7 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 /* Wider screens: the upright clip at full height in the middle, its sides fading into black, so the lightning still strikes downwards */
 @media (min-aspect-ratio:4/5){
   .scene>div:has(>.sc-anim){background:#000}
-  .scene .sc-anim{left:50%;right:auto;width:auto;transform:translateX(-50%);-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+  .scene .sc-anim:not(.fill){left:50%;right:auto;width:auto;transform:translateX(-50%);-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
 }
 .hbtns .btn.icon{padding:8px 10px}
 /* Quick-jump bar (phones) */
@@ -850,23 +850,28 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const front=many?layer(47,6,60,480,1.1,1.9,3):layer(31,2,140,380,.8,1.2,2);
     return `<div class="sc-clouds" aria-hidden="true"><img class="sc-drift slow" src="${back}" alt="" style="opacity:${night?.8:.8}"><img class="sc-drift" src="${front}" alt="" style="opacity:${night?.92:.95}"></div>`;
   }
-  // The animated thundercloud: 30 upright frames (3 seconds) as small JPEGs in img/storm (p00..p29). Phones fill the
-  // screen with it; wider screens show it at full height in the middle (see .sc-anim). Each frame is decoded only when
-  // it's drawn, so memory stays low. It stops once the scene is replaced; with reduced motion it shows one bright
-  // frame and doesn't play.
-  const STORM_FRAMES=30,STORM_STILL=25;
-  function stormAnim(el){
-    const cv=document.createElement("canvas");cv.className="sc-anim";el.appendChild(cv);
-    const ctx=cv.getContext("2d"),url=k=>`img/storm/p${String(k).padStart(2,"0")}.jpg`;
+  // Harris's animated storms, as small JPEG frames (p00, p01, ... upright; d00, d01, ... landscape). Night: the
+  // thundercloud, 30 upright frames; phones fill the screen with it, wider screens show it at full height in the
+  // middle (see .sc-anim). Day: lightning over the hills, 16 frames; wider screens get the landscape photo filling
+  // the screen (.sc-anim.fill), phones a tall strip around the bolt. ms is how long each frame shows, so the day
+  // flashes keep the original's rhythm. Each frame is decoded only when it's drawn, so memory stays low. It stops
+  // once the scene is replaced; with reduced motion it shows one bright frame and doesn't play.
+  const STORMS={
+    night:{dir:"storm",n:30,ms:[100],still:25,upright:true},
+    day:{dir:"storm-day",n:16,ms:[700,50,60,60,60,60,70,80,900,600,50,50,60,60,80,400],still:0,fill:true}};
+  function stormAnim(el,s){
+    const pre=s.upright||matchMedia("(max-aspect-ratio: 4/5)").matches?"p":"d";
+    const cv=document.createElement("canvas");cv.className="sc-anim"+(s.fill?" fill":"");el.appendChild(cv);
+    const ctx=cv.getContext("2d"),url=k=>`img/${s.dir}/${pre}${String(k).padStart(2,"0")}.jpg`;
     const draw=b=>createImageBitmap(b).then(bm=>{if(cv.width!==bm.width){cv.width=bm.width;cv.height=bm.height;}ctx.drawImage(bm,0,0);bm.close();});
     const get=k=>fetch(url(k)).then(r=>r.blob());
-    if(matchMedia("(prefers-reduced-motion: reduce)").matches){get(STORM_STILL).then(draw,()=>{});return;}
-    Promise.all(Array.from({length:STORM_FRAMES},(_,k)=>get(k))).then(frames=>{
-      let i=0,last=0;
+    if(matchMedia("(prefers-reduced-motion: reduce)").matches){get(s.still).then(draw,()=>{});return;}
+    Promise.all(Array.from({length:s.n},(_,k)=>get(k))).then(frames=>{
+      let i=0,next=0;
       const tick=t=>{if(!cv.isConnected)return;
-        if(t-last>=100){last=t;draw(frames[i]);i=(i+1)%STORM_FRAMES;}
+        if(t>=next){draw(frames[i]);next=t+(s.ms[i]||s.ms[0]);i=(i+1)%s.n;}
         requestAnimationFrame(tick);};
-      draw(frames[0]).then(()=>requestAnimationFrame(tick));
+      requestAnimationFrame(tick);
     },()=>{});
   }
   let sceneKey="",sceneN=0;
@@ -880,11 +885,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Harris's photos. Clear, mostly sunny, partly cloudy and windy days: the beach at featured locations within 5 km
     // of an ocean or bay beach ("beach" in locations.json), the hills everywhere else, searched places included;
     // locations marked "photo": false keep the drawings. Clear, mostly clear, partly cloudy and cloudy nights everywhere
-    // get the Milky Way (turned sideways for wider screens). Rainy and showery nights get rain on a window. Storms,
-    // day or night, get the animated thundercloud (turned to landscape for wider screens). Partly cloudy days
+    // get the Milky Way (turned sideways for wider screens). Rainy and showery nights get rain on a window. Storms
+    // are animated: lightning over the hills by day, the thundercloud by night. Partly cloudy days
     // and nights, and cloudy nights, have drawn clouds drifting over the photo.
     const sunnyDay=phase==="day"&&/^(clear|mostly|partly|windy)$/.test(cond)&&state.loc.photo!==false;
-    const photo=cond==="storm"?"storm-anim":
+    const photo=cond==="storm"?(phase==="day"?"storm-day":"storm-night"):
       phase==="night"&&/^(clear|mostly|partly|cloudy)$/.test(cond)?"night-milkyway":
       phase==="night"&&(cond==="rain"||cond==="showers")?"night-rain-grey":
       sunnyDay?(state.loc.kind==="full"&&state.loc.beach?"beach":"hills")+"-sunny":"";
@@ -897,8 +902,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // The first scene shows straight away; later ones fade in over the old one
     const first=!box.firstElementChild,el=document.createElement("div");el.style.opacity=first?"1":"0";
     // Upright phones get a tall crop centred on the sun; wider screens get the full photo
-    el.innerHTML=photo==="storm-anim"?"":photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${clouds?cloudLayer(clouds,phase==="night"):""}`:sceneSvg(cond,phase);box.appendChild(el);
-    if(photo==="storm-anim")stormAnim(el);
+    const storm=photo.startsWith("storm-")?STORMS[photo.slice(6)]:null;
+    el.innerHTML=storm?"":photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${clouds?cloudLayer(clouds,phase==="night"):""}`:sceneSvg(cond,phase);box.appendChild(el);
+    if(storm)stormAnim(el,storm);
     const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
     const img=el.querySelector("img");if(first){}else if(img)img.decode().then(show,show);else show();
     setTimeout(()=>{while(box.firstElementChild&&box.firstElementChild!==el)box.firstElementChild.remove();},1400);
