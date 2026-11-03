@@ -1,6 +1,6 @@
 {
  "id": "oxley",
- "generated": "2026-11-03T02:10:07Z",
+ "generated": "2026-11-03T02:11:01Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-03T02:09:42Z"
+   "fetched": "2026-11-03T02:10:36Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-03T02:09:45Z"
+   "fetched": "2026-11-03T02:10:39Z"
   },
   {
    "source": "weatherzone",
@@ -245,7 +245,7 @@
     }
    ],
    "point": "Archerfield",
-   "fetched": "2026-11-03T02:09:58Z"
+   "fetched": "2026-11-03T02:10:52Z"
   },
   {
    "source": "windy",
@@ -319,7 +319,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-03T02:10:04Z"
+   "fetched": "2026-11-03T02:10:59Z"
   },
   {
    "source": "ecmwf",
@@ -431,7 +431,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=ecmwf_ifs",
-   "fetched": "2026-11-03T02:10:05Z"
+   "fetched": "2026-11-03T02:11:00Z"
   },
   {
    "source": "icon",
@@ -530,7 +530,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=icon_seamless",
-   "fetched": "2026-11-03T02:10:06Z"
+   "fetched": "2026-11-03T02:11:00Z"
   },
   {
    "source": "foreca",
@@ -638,7 +638,7 @@
      "text": "Cloudy, thunderstorms with rain"
     }
    ],
-   "fetched": "2026-11-03T02:10:07Z"
+   "fetched": "2026-11-03T02:11:01Z"
   }
  ],
  "observations": {
@@ -653,7 +653,7 @@
   "wind_kmh": 15,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-03T02:09:42Z"
+  "fetched": "2026-11-03T02:10:36Z"
  },
  "errors": {}
 }
