@@ -1,6 +1,6 @@
 {
  "id": "bribie-island-north",
- "generated": "2026-11-03T00:17:07Z",
+ "generated": "2026-11-03T01:22:15Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-03T00:14:41Z"
+   "fetched": "2026-11-03T01:21:50Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-03T00:14:44Z"
+   "fetched": "2026-11-03T01:21:53Z"
   },
   {
    "source": "weatherzone",
@@ -245,7 +245,7 @@
     }
    ],
    "point": "Caloundra",
-   "fetched": "2026-11-03T00:14:59Z"
+   "fetched": "2026-11-03T01:22:06Z"
   },
   {
    "source": "windy",
@@ -254,16 +254,16 @@
    "days": [
     {
      "date": "2026-11-03",
-     "tmax": 26.5,
-     "tmin": 21.2,
+     "tmax": 26.8,
+     "tmin": 21.1,
      "rain_min": 24,
      "rain_max": 24,
      "rain_text": "24 mm",
      "chance": null,
      "text": null,
      "wind_max": 21,
-     "gust_max": 43,
-     "wind_dir": "N"
+     "gust_max": 40,
+     "wind_dir": "NNE"
     },
     {
      "date": "2026-11-04",
@@ -275,8 +275,8 @@
      "chance": null,
      "text": null,
      "wind_max": 9,
-     "gust_max": 29,
-     "wind_dir": "NNW"
+     "gust_max": 27,
+     "wind_dir": "NW"
     },
     {
      "date": "2026-11-05",
@@ -289,7 +289,7 @@
      "text": null,
      "wind_max": 12,
      "gust_max": 32,
-     "wind_dir": "S"
+     "wind_dir": "SSE"
     },
     {
      "date": "2026-11-06",
@@ -319,7 +319,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-03T00:15:05Z"
+   "fetched": "2026-11-03T01:22:14Z"
   },
   {
    "source": "ecmwf",
@@ -333,7 +333,7 @@
      "rain_max": 9.2,
      "rain_text": "9.2 mm",
      "chance": 98,
-     "text": "Storms with hail",
+     "text": "Storms",
      "wind_max": 18,
      "gust_max": 34,
      "wind_dir": "NNW"
@@ -431,7 +431,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.92&longitude=153.11&models=ecmwf_ifs",
-   "fetched": "2026-11-03T00:15:06Z"
+   "fetched": "2026-11-03T01:22:14Z"
   },
   {
    "source": "icon",
@@ -530,7 +530,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-26.92&longitude=153.11&models=icon_seamless",
-   "fetched": "2026-11-03T00:17:07Z"
+   "fetched": "2026-11-03T01:22:15Z"
   },
   {
    "source": "foreca",
@@ -639,22 +639,22 @@
     }
    ],
    "point": "Welsby",
-   "fetched": "2026-11-03T00:17:07Z"
+   "fetched": "2026-11-03T01:22:15Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beerburrum",
   "distance_km": 18.1,
-  "time": "2026-11-03T10:10:00+10:00",
-  "temp": 24.5,
-  "feels_like": 28.5,
-  "humidity": 83,
-  "wind_dir": "S",
-  "wind_kmh": 2,
-  "gust_kmh": 9,
+  "time": "2026-11-03T11:10:00+10:00",
+  "temp": 26.6,
+  "feels_like": 28,
+  "humidity": 62,
+  "wind_dir": "N",
+  "wind_kmh": 9,
+  "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-03T00:14:22Z"
+  "fetched": "2026-11-03T01:21:31Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -822,8 +822,8 @@
     "windy": {
      "2026-11-03": {
       "wind_max": 20,
-      "gust_max": 40,
-      "wind_dir": "N"
+      "gust_max": 38,
+      "wind_dir": "NNE"
      },
      "2026-11-04": {
       "wind_max": 11,
@@ -1100,18 +1100,18 @@
     "windy": {
      "2026-11-03": {
       "wind_max": 21,
-      "gust_max": 43,
-      "wind_dir": "N"
+      "gust_max": 40,
+      "wind_dir": "NNE"
      },
      "2026-11-04": {
       "wind_max": 9,
-      "gust_max": 29,
-      "wind_dir": "NNW"
+      "gust_max": 27,
+      "wind_dir": "NW"
      },
      "2026-11-05": {
       "wind_max": 12,
       "gust_max": 32,
-      "wind_dir": "S"
+      "wind_dir": "SSE"
      },
      "2026-11-06": {
       "wind_max": 14,
@@ -1179,7 +1179,7 @@
     "windfinder_place": "Pelican Waters"
    }
   ],
-  "fetched": "2026-11-03T00:14:41Z"
+  "fetched": "2026-11-03T01:21:50Z"
  },
  "errors": {}
 }
