@@ -1,6 +1,6 @@
 {
  "id": "oxley",
- "generated": "2026-11-03T02:11:01Z",
+ "generated": "2026-11-03T03:30:07Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-03T02:10:36Z"
+   "fetched": "2026-11-03T03:29:44Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-03T02:10:39Z"
+   "fetched": "2026-11-03T03:29:47Z"
   },
   {
    "source": "weatherzone",
@@ -245,7 +245,7 @@
     }
    ],
    "point": "Archerfield",
-   "fetched": "2026-11-03T02:10:52Z"
+   "fetched": "2026-11-03T03:29:59Z"
   },
   {
    "source": "windy",
@@ -254,11 +254,11 @@
    "days": [
     {
      "date": "2026-11-03",
-     "tmax": 27.8,
+     "tmax": 28.9,
      "tmin": 21.2,
-     "rain_min": 22.2,
-     "rain_max": 22.2,
-     "rain_text": "22.2 mm",
+     "rain_min": 21.9,
+     "rain_max": 21.9,
+     "rain_text": "21.9 mm",
      "chance": null,
      "text": null,
      "wind_max": 14,
@@ -267,8 +267,8 @@
     },
     {
      "date": "2026-11-04",
-     "tmax": 30.6,
-     "tmin": 19.6,
+     "tmax": 29.2,
+     "tmin": 19.7,
      "rain_min": 0.1,
      "rain_max": 0.1,
      "rain_text": "0.1 mm",
@@ -280,8 +280,8 @@
     },
     {
      "date": "2026-11-05",
-     "tmax": 33.3,
-     "tmin": 20.3,
+     "tmax": 33.2,
+     "tmin": 18.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -294,7 +294,7 @@
     {
      "date": "2026-11-06",
      "tmax": 25.9,
-     "tmin": 18.5,
+     "tmin": 18.3,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -319,7 +319,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-03T02:10:59Z"
+   "fetched": "2026-11-03T03:30:06Z"
   },
   {
    "source": "ecmwf",
@@ -345,7 +345,7 @@
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 59,
+     "chance": 73,
      "text": "Fog",
      "wind_max": 18,
      "gust_max": 40,
@@ -371,7 +371,7 @@
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 6,
+     "chance": 0,
      "text": "Partly cloudy",
      "wind_max": 15,
      "gust_max": 36,
@@ -384,7 +384,7 @@
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 39,
+     "chance": 47,
      "text": "Fog",
      "wind_max": 16,
      "gust_max": 37,
@@ -397,7 +397,7 @@
      "rain_min": 0.6,
      "rain_max": 0.6,
      "rain_text": "0.6 mm",
-     "chance": 35,
+     "chance": 41,
      "text": "Light drizzle",
      "wind_max": 20,
      "gust_max": 50,
@@ -431,7 +431,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=ecmwf_ifs",
-   "fetched": "2026-11-03T02:11:00Z"
+   "fetched": "2026-11-03T03:30:06Z"
   },
   {
    "source": "icon",
@@ -530,7 +530,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=icon_seamless",
-   "fetched": "2026-11-03T02:11:00Z"
+   "fetched": "2026-11-03T03:30:06Z"
   },
   {
    "source": "foreca",
@@ -638,22 +638,22 @@
      "text": "Cloudy, thunderstorms with rain"
     }
    ],
-   "fetched": "2026-11-03T02:11:01Z"
+   "fetched": "2026-11-03T03:30:07Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 3.2,
-  "time": "2026-11-03T12:00:00+10:00",
-  "temp": 29.3,
+  "time": "2026-11-03T13:20:00+10:00",
+  "temp": 27.4,
   "feels_like": 30.4,
-  "humidity": 59,
-  "wind_dir": "WNW",
-  "wind_kmh": 15,
-  "gust_kmh": 20,
+  "humidity": 64,
+  "wind_dir": "N",
+  "wind_kmh": 4,
+  "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-03T02:10:36Z"
+  "fetched": "2026-11-03T03:29:43Z"
  },
  "errors": {}
 }
