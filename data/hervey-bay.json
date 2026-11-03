@@ -1,6 +1,6 @@
 {
  "id": "hervey-bay",
- "generated": "2026-11-03T06:55:40Z",
+ "generated": "2026-11-03T20:51:38Z",
  "sources": [
   {
    "source": "bom",
@@ -8,22 +8,12 @@
    "url": "https://www.bom.gov.au/",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 28,
-     "tmin": null,
-     "rain_min": 2,
-     "rain_max": 7,
-     "rain_text": "2-7 mm",
-     "chance": 70,
-     "text": "Shower or two. Possible storm."
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 21,
-     "rain_min": 1,
-     "rain_max": 4,
-     "rain_text": "1-4 mm",
+     "rain_min": 0,
+     "rain_max": 3,
+     "rain_text": "0-3 mm",
      "chance": 60,
      "text": "Shower or two clearing."
     },
@@ -51,10 +41,10 @@
      "date": "2026-11-07",
      "tmax": 28,
      "tmin": 20,
-     "rain_min": 0,
-     "rain_max": 3,
-     "rain_text": "0-3 mm",
-     "chance": 50,
+     "rain_min": 3,
+     "rain_max": 9,
+     "rain_text": "3-9 mm",
+     "chance": 70,
      "text": "Shower or two."
     },
     {
@@ -62,25 +52,25 @@
      "tmax": 30,
      "tmin": 21,
      "rain_min": 1,
-     "rain_max": 7,
-     "rain_text": "1-7 mm",
-     "chance": 70,
+     "rain_max": 6,
+     "rain_text": "1-6 mm",
+     "chance": 60,
      "text": "Shower or two."
     },
     {
      "date": "2026-11-09",
-     "tmax": 26,
-     "tmin": 19,
+     "tmax": 27,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 20,
-     "text": "Cloudy."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-10",
-     "tmax": 27,
-     "tmin": 19,
+     "tmax": 28,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "0-1 mm",
@@ -98,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-03T06:55:16Z"
+   "fetched": "2026-11-03T20:49:17Z"
   },
   {
    "source": "willyweather",
@@ -106,18 +96,8 @@
    "url": "https://www.willyweather.com.au/qld/wide-bay/hervey-bay.html",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 28,
-     "tmin": 21,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1–5 mm",
-     "chance": 70,
-     "text": "Shower or two. Possible storm"
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 29,
+     "tmax": 28,
      "tmin": 21,
      "rain_min": 1,
      "rain_max": 5,
@@ -142,17 +122,17 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
-     "chance": 15,
+     "chance": 20,
      "text": "Partly cloudy"
     },
     {
      "date": "2026-11-07",
      "tmax": 28,
      "tmin": 20,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1–5 mm",
-     "chance": 50,
+     "rain_min": 5,
+     "rain_max": 10,
+     "rain_text": "5–10 mm",
+     "chance": 75,
      "text": "Shower or two"
     },
     {
@@ -167,16 +147,26 @@
     },
     {
      "date": "2026-11-09",
-     "tmax": 26,
-     "tmin": 19,
+     "tmax": 27,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1 mm",
      "chance": 20,
-     "text": "Cloudy"
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 28,
+     "tmin": 20,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 25,
+     "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-03T06:55:19Z"
+   "fetched": "2026-11-03T20:49:19Z"
   },
   {
    "source": "weatherzone",
@@ -184,77 +174,77 @@
    "url": "https://www.weatherzone.com/au/qld/wide-bay-and-burnett/hervey-bay",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 27.4,
-     "tmin": 22.2,
-     "rain_min": 5,
-     "rain_max": 10,
-     "rain_text": "5-10mm",
-     "chance": 60,
-     "text": "Possible shower"
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 28.4,
-     "tmin": 22,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 50,
-     "text": "Late thunder"
-    },
-    {
-     "date": "2026-11-05",
-     "tmax": 30.5,
-     "tmin": 20.6,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 20,
-     "text": "Sunny"
-    },
-    {
-     "date": "2026-11-06",
      "tmax": 28.3,
-     "tmin": 20.8,
+     "tmin": 22.4,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 20,
-     "text": "Mostly sunny"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 28.4,
-     "tmin": 21.3,
-     "rain_min": 1,
-     "rain_max": 5,
-     "rain_text": "1-5mm",
      "chance": 40,
      "text": "Possible shower"
     },
     {
-     "date": "2026-11-08",
-     "tmax": 28.2,
-     "tmin": 22.1,
+     "date": "2026-11-05",
+     "tmax": 30,
+     "tmin": 20.6,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 5,
+     "text": "Sunny"
+    },
+    {
+     "date": "2026-11-06",
+     "tmax": 28,
+     "tmin": 20.6,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 30,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-07",
+     "tmax": 28.1,
+     "tmin": 21.3,
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
-     "chance": 60,
-     "text": "Possible shower"
+     "chance": 50,
+     "text": "Possible thunderstorm"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 29.3,
+     "tmin": 22.3,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 30,
+     "text": "Mostly sunny"
     },
     {
      "date": "2026-11-09",
-     "tmax": 26.2,
+     "tmax": 26.4,
+     "tmin": 20.2,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 50,
+     "text": "Mostly sunny"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 27.6,
      "tmin": 19.9,
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 60,
-     "text": "Late shower"
+     "chance": 70,
+     "text": "Possible shower"
     }
    ],
-   "fetched": "2026-11-03T06:55:31Z"
+   "fetched": "2026-11-03T20:49:30Z"
   },
   {
    "source": "windy",
@@ -262,284 +252,284 @@
    "url": "https://www.windy.com/-25.288/152.869",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 24.5,
-     "tmin": 21,
-     "rain_min": 13.8,
-     "rain_max": 13.8,
-     "rain_text": "13.8 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 26,
-     "gust_max": 48,
-     "wind_dir": "NNW"
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 27,
-     "tmin": 21.5,
-     "rain_min": 0.1,
-     "rain_max": 0.1,
-     "rain_text": "0.1 mm",
+     "tmax": 27.9,
+     "tmin": 23,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 24,
-     "gust_max": 37,
+     "wind_max": 23,
+     "gust_max": 33,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-05",
      "tmax": 30.1,
-     "tmin": 20.6,
+     "tmin": 21.9,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 20,
-     "gust_max": 37,
+     "wind_max": 19,
+     "gust_max": 33,
      "wind_dir": "N"
     },
     {
      "date": "2026-11-06",
-     "tmax": 25.9,
-     "tmin": 20.8,
+     "tmax": 26,
+     "tmin": 20.2,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 19,
-     "gust_max": 34,
+     "wind_max": 18,
+     "gust_max": 27,
      "wind_dir": "ESE"
     },
     {
      "date": "2026-11-07",
-     "tmax": 27.1,
-     "tmin": 19.8,
-     "rain_min": 2.5,
-     "rain_max": 2.5,
-     "rain_text": "2.5 mm",
+     "tmax": 26.7,
+     "tmin": 20.4,
+     "rain_min": 4.6,
+     "rain_max": 4.6,
+     "rain_text": "4.6 mm",
      "chance": null,
      "text": null,
-     "wind_max": 19,
-     "gust_max": 32,
+     "wind_max": 18,
+     "gust_max": 37,
      "wind_dir": "N"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 28.7,
+     "tmin": 20.5,
+     "rain_min": 2.2,
+     "rain_max": 2.2,
+     "rain_text": "2.2 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 21,
+     "gust_max": 34,
+     "wind_dir": "SE"
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-03T06:55:38Z"
+   "fetched": "2026-11-03T20:49:37Z"
   },
   {
    "source": "ecmwf",
    "name": "ECMWF",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 25.2,
-     "tmin": 22.3,
-     "rain_min": 11.3,
-     "rain_max": 11.3,
-     "rain_text": "11.3 mm",
-     "chance": 76,
-     "text": "Storms",
-     "wind_max": 29,
-     "gust_max": 55,
-     "wind_dir": "NNW"
-    },
-    {
      "date": "2026-11-04",
      "tmax": 26.3,
-     "tmin": 23.2,
-     "rain_min": 0.7,
-     "rain_max": 0.7,
-     "rain_text": "0.7 mm",
-     "chance": 36,
+     "tmin": 23.6,
+     "rain_min": 0.6,
+     "rain_max": 0.6,
+     "rain_text": "0.6 mm",
+     "chance": 39,
      "text": "Light drizzle",
-     "wind_max": 31,
-     "gust_max": 63,
+     "wind_max": 28,
+     "gust_max": 61,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-05",
-     "tmax": 27.4,
-     "tmin": 20.1,
+     "tmax": 27.7,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": 0,
      "text": "Fog",
      "wind_max": 20,
-     "gust_max": 41,
+     "gust_max": 42,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-06",
      "tmax": 26.8,
-     "tmin": 20.3,
-     "rain_min": 0.2,
-     "rain_max": 0.2,
-     "rain_text": "0.2 mm",
-     "chance": 11,
-     "text": "Light drizzle",
+     "tmin": 20.6,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 13,
+     "text": "Partly cloudy",
      "wind_max": 22,
-     "gust_max": 46,
+     "gust_max": 49,
      "wind_dir": "SE"
     },
     {
      "date": "2026-11-07",
-     "tmax": 26.7,
-     "tmin": 22.1,
-     "rain_min": 6,
-     "rain_max": 6,
-     "rain_text": "6 mm",
-     "chance": 84,
+     "tmax": 27,
+     "tmin": 21.9,
+     "rain_min": 3.2,
+     "rain_max": 3.2,
+     "rain_text": "3.2 mm",
+     "chance": 98,
      "text": "Storms",
-     "wind_max": 17,
-     "gust_max": 42,
+     "wind_max": 20,
+     "gust_max": 38,
      "wind_dir": "N"
     },
     {
      "date": "2026-11-08",
-     "tmax": 28.3,
-     "tmin": 21,
-     "rain_min": 3.6,
-     "rain_max": 3.6,
-     "rain_text": "3.6 mm",
+     "tmax": 28.2,
+     "tmin": 21.9,
+     "rain_min": 2.1,
+     "rain_max": 2.1,
+     "rain_text": "2.1 mm",
      "chance": 60,
-     "text": "Drizzle",
-     "wind_max": 23,
-     "gust_max": 50,
-     "wind_dir": "NNE"
+     "text": "Light drizzle",
+     "wind_max": 22,
+     "gust_max": 48,
+     "wind_dir": "N"
     },
     {
      "date": "2026-11-09",
      "tmax": 24.9,
-     "tmin": 21,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": 6,
-     "text": "Cloudy",
-     "wind_max": 24,
-     "gust_max": 46,
+     "tmin": 21.3,
+     "rain_min": 1.3,
+     "rain_max": 1.3,
+     "rain_text": "1.3 mm",
+     "chance": 14,
+     "text": "Light drizzle",
+     "wind_max": 23,
+     "gust_max": 45,
      "wind_dir": "ESE"
     },
     {
      "date": "2026-11-10",
-     "tmax": 26.3,
-     "tmin": 21.5,
-     "rain_min": 1.8,
-     "rain_max": 1.8,
-     "rain_text": "1.8 mm",
-     "chance": 51,
+     "tmax": 27.2,
+     "tmin": 22.2,
+     "rain_min": 3.5,
+     "rain_max": 3.5,
+     "rain_text": "3.5 mm",
+     "chance": 53,
      "text": "Light drizzle",
-     "wind_max": 18,
-     "gust_max": 37,
-     "wind_dir": "NNE"
+     "wind_max": 17,
+     "gust_max": 38,
+     "wind_dir": "N"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 27.6,
+     "tmin": 24.8,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 29,
+     "text": "Cloudy",
+     "wind_max": 24,
+     "gust_max": 58,
+     "wind_dir": "NNW"
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-25.288&longitude=152.869&models=ecmwf_ifs",
-   "fetched": "2026-11-03T06:55:38Z"
+   "fetched": "2026-11-03T20:49:37Z"
   },
   {
    "source": "icon",
    "name": "ICON",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 25.1,
-     "tmin": 23,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": 35,
-     "text": "Cloudy",
-     "wind_max": 28,
-     "gust_max": 54,
-     "wind_dir": "NNW"
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 27.1,
-     "tmin": 22.9,
+     "tmax": 28.3,
+     "tmin": 22.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 28,
+     "chance": 45,
      "text": "Cloudy",
-     "wind_max": 21,
-     "gust_max": 42,
+     "wind_max": 18,
+     "gust_max": 37,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-05",
-     "tmax": 30,
-     "tmin": 20.8,
+     "tmax": 29.4,
+     "tmin": 21.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": 0,
      "text": "Fog",
-     "wind_max": 15,
+     "wind_max": 14,
      "gust_max": 29,
      "wind_dir": "NNW"
     },
     {
      "date": "2026-11-06",
-     "tmax": 26.2,
-     "tmin": 21.6,
+     "tmax": 26.3,
+     "tmin": 21.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 0,
+     "chance": 1,
      "text": "Partly cloudy",
-     "wind_max": 19,
-     "gust_max": 35,
+     "wind_max": 17,
+     "gust_max": 34,
      "wind_dir": "SE"
     },
     {
      "date": "2026-11-07",
-     "tmax": 26.5,
-     "tmin": 20.7,
-     "rain_min": 0.1,
-     "rain_max": 0.1,
-     "rain_text": "0.1 mm",
-     "chance": 29,
-     "text": "Light showers",
-     "wind_max": 17,
-     "gust_max": 35,
+     "tmax": 26.9,
+     "tmin": 20.9,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 32,
+     "text": "Cloudy",
+     "wind_max": 14,
+     "gust_max": 30,
      "wind_dir": "N"
     },
     {
      "date": "2026-11-08",
-     "tmax": 23.8,
-     "tmin": 20.2,
-     "rain_min": 9.8,
-     "rain_max": 9.8,
-     "rain_text": "9.8 mm",
-     "chance": 48,
-     "text": "Storms",
-     "wind_max": 26,
-     "gust_max": 50,
-     "wind_dir": "SE"
+     "tmax": 28.9,
+     "tmin": 21.6,
+     "rain_min": 2.1,
+     "rain_max": 2.1,
+     "rain_text": "2.1 mm",
+     "chance": 33,
+     "text": "Light showers",
+     "wind_max": 19,
+     "gust_max": 38,
+     "wind_dir": "NNE"
     },
     {
      "date": "2026-11-09",
-     "tmax": 23.6,
-     "tmin": 19.2,
+     "tmax": 25.6,
+     "tmin": 21.2,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
-     "chance": 26,
-     "text": "Partly cloudy",
-     "wind_max": 22,
-     "gust_max": 45,
-     "wind_dir": "SE"
+     "chance": 13,
+     "text": "Cloudy",
+     "wind_max": 18,
+     "gust_max": 38,
+     "wind_dir": "E"
+    },
+    {
+     "date": "2026-11-10",
+     "tmax": 26.8,
+     "tmin": 22.7,
+     "rain_min": 0,
+     "rain_max": 0,
+     "rain_text": "0 mm",
+     "chance": 3,
+     "text": "Cloudy",
+     "wind_max": 18,
+     "gust_max": 37,
+     "wind_dir": "N"
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-25.288&longitude=152.869&models=icon_seamless",
-   "fetched": "2026-11-03T06:55:39Z"
+   "fetched": "2026-11-03T20:51:38Z"
   },
   {
    "source": "foreca",
@@ -547,29 +537,19 @@
    "url": "https://www.foreca.com/en/106354957/hervey-bay/10-day-forecast",
    "days": [
     {
-     "date": "2026-11-03",
-     "tmax": 26,
-     "tmin": 22,
-     "rain_min": 4.3,
-     "rain_max": 4.3,
-     "rain_text": "4.3 mm",
-     "chance": null,
-     "text": "Cloudy, thunderstorms with rain"
-    },
-    {
      "date": "2026-11-04",
-     "tmax": 29,
-     "tmin": 22,
-     "rain_min": 2.4,
-     "rain_max": 2.4,
-     "rain_text": "2.4 mm",
+     "tmax": 27,
+     "tmin": 23,
+     "rain_min": 0.8,
+     "rain_max": 0.8,
+     "rain_text": "0.8 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
     {
      "date": "2026-11-05",
      "tmax": 29,
-     "tmin": 19,
+     "tmin": 20,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -579,90 +559,100 @@
     {
      "date": "2026-11-06",
      "tmax": 28,
-     "tmin": 19,
-     "rain_min": 0,
-     "rain_max": 0,
-     "rain_text": "0 mm",
-     "chance": null,
-     "text": "Clear"
-    },
-    {
-     "date": "2026-11-07",
-     "tmax": 27,
-     "tmin": 19,
-     "rain_min": 1.9,
-     "rain_max": 1.9,
-     "rain_text": "1.9 mm",
+     "tmin": 20,
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
     {
-     "date": "2026-11-08",
-     "tmax": 29,
+     "date": "2026-11-07",
+     "tmax": 28,
      "tmin": 20,
-     "rain_min": 2.9,
-     "rain_max": 2.9,
-     "rain_text": "2.9 mm",
+     "rain_min": 7.1,
+     "rain_max": 7.1,
+     "rain_text": "7.1 mm",
+     "chance": null,
+     "text": "Cloudy, thunderstorms with rain"
+    },
+    {
+     "date": "2026-11-08",
+     "tmax": 30,
+     "tmin": 21,
+     "rain_min": 3.3,
+     "rain_max": 3.3,
+     "rain_text": "3.3 mm",
      "chance": null,
      "text": "Partly cloudy, possible thunderstorms with rain"
     },
     {
      "date": "2026-11-09",
-     "tmax": 25,
+     "tmax": 24,
      "tmin": 20,
-     "rain_min": 0.5,
-     "rain_max": 0.5,
-     "rain_text": "0.5 mm",
+     "rain_min": 0.2,
+     "rain_max": 0.2,
+     "rain_text": "0.2 mm",
      "chance": null,
-     "text": "Cloudy"
+     "text": "Mostly clear"
     },
     {
      "date": "2026-11-10",
-     "tmax": 26,
-     "tmin": 21,
-     "rain_min": 0.9,
-     "rain_max": 0.9,
-     "rain_text": "0.9 mm",
+     "tmax": 25,
+     "tmin": 20,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-11",
-     "tmax": 27,
-     "tmin": 22,
-     "rain_min": 3.6,
-     "rain_max": 3.6,
-     "rain_text": "3.6 mm",
+     "tmax": 26,
+     "tmin": 21,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-12",
      "tmax": 27,
      "tmin": 22,
-     "rain_min": 8,
-     "rain_max": 8,
-     "rain_text": "8 mm",
+     "rain_min": 16,
+     "rain_max": 16,
+     "rain_text": "16 mm",
      "chance": null,
-     "text": "Cloudy, thunderstorms with rain"
+     "text": "Cloudy and showers"
+    },
+    {
+     "date": "2026-11-13",
+     "tmax": 26,
+     "tmin": 21,
+     "rain_min": 5.8,
+     "rain_max": 5.8,
+     "rain_text": "5.8 mm",
+     "chance": null,
+     "text": "Clear"
     }
    ],
-   "fetched": "2026-11-03T06:55:40Z"
+   "fetched": "2026-11-03T20:51:38Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hervey Bay",
   "distance_km": 4,
-  "time": "2026-11-03T16:50:00+10:00",
-  "temp": 24.1,
-  "feels_like": 22,
-  "humidity": 73,
+  "time": "2026-11-04T06:40:00+10:00",
+  "temp": 24.7,
+  "feels_like": 25.1,
+  "humidity": 84,
   "wind_dir": "NNW",
-  "wind_kmh": 28,
-  "gust_kmh": 41,
-  "rain_since_9am": 1,
-  "fetched": "2026-11-03T06:55:06Z"
+  "wind_kmh": 22,
+  "gust_kmh": 35,
+  "rain_since_9am": 3.4,
+  "fetched": "2026-11-03T20:49:07Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -672,28 +662,6 @@
     "kind": "bay",
     "spot": "Urangan Pier",
     "tides": {
-     "2026-11-03": [
-      {
-       "type": "high",
-       "time": "3:56 am",
-       "height_m": 2.75
-      },
-      {
-       "type": "low",
-       "time": "9:57 am",
-       "height_m": 1.23
-      },
-      {
-       "type": "high",
-       "time": "4:10 pm",
-       "height_m": 3.44
-      },
-      {
-       "type": "low",
-       "time": "10:49 pm",
-       "height_m": 1.04
-      }
-     ],
      "2026-11-04": [
       {
        "type": "high",
@@ -820,91 +788,113 @@
        "time": "8:28 pm",
        "height_m": 3.21
       }
+     ],
+     "2026-11-10": [
+      {
+       "type": "low",
+       "time": "2:29 am",
+       "height_m": 0.65
+      },
+      {
+       "type": "high",
+       "time": "8:58 am",
+       "height_m": 3.65
+      },
+      {
+       "type": "low",
+       "time": "3:33 pm",
+       "height_m": 1.05
+      },
+      {
+       "type": "high",
+       "time": "9:01 pm",
+       "height_m": 3.08
+      }
      ]
     },
     "windy": {
-     "2026-11-03": {
-      "wind_max": 26,
-      "gust_max": 48,
-      "wind_dir": "NNW"
-     },
      "2026-11-04": {
-      "wind_max": 24,
-      "gust_max": 37,
+      "wind_max": 23,
+      "gust_max": 33,
       "wind_dir": "NNW"
      },
      "2026-11-05": {
-      "wind_max": 20,
-      "gust_max": 37,
+      "wind_max": 19,
+      "gust_max": 33,
       "wind_dir": "N"
      },
      "2026-11-06": {
-      "wind_max": 19,
-      "gust_max": 34,
+      "wind_max": 18,
+      "gust_max": 27,
       "wind_dir": "ESE"
      },
      "2026-11-07": {
-      "wind_max": 19,
-      "gust_max": 32,
+      "wind_max": 18,
+      "gust_max": 37,
       "wind_dir": "N"
+     },
+     "2026-11-08": {
+      "wind_max": 21,
+      "gust_max": 34,
+      "wind_dir": "SE"
      }
     },
     "seabreeze": {
-     "2026-11-03": {
+     "2026-11-04": {
       "wind_max": 35,
       "wind_dir": "NNW",
       "wave_m": 0.7
      },
-     "2026-11-04": {
-      "wind_max": 37,
-      "wind_dir": "NNW",
-      "wave_m": 0.7
-     },
      "2026-11-05": {
-      "wind_max": 28,
+      "wind_max": 30,
       "wind_dir": "N",
       "wave_m": 0.5
      },
      "2026-11-06": {
-      "wind_max": 28,
+      "wind_max": 26,
       "wind_dir": "ESE",
-      "wave_m": 0.4
+      "wave_m": 0.5
      },
      "2026-11-07": {
       "wind_max": 24,
-      "wind_dir": "N",
-      "wave_m": 0.4
+      "wind_dir": "NNW",
+      "wave_m": 0.5
      },
      "2026-11-08": {
       "wind_max": 30,
       "wind_dir": "ESE",
-      "wave_m": 0.5
+      "wave_m": 0.6
      },
      "2026-11-09": {
-      "wind_max": 26,
-      "wind_dir": "E",
+      "wind_max": 24,
+      "wind_dir": "ENE",
       "wave_m": 0.5
+     },
+     "2026-11-10": {
+      "wind_max": 22,
+      "wind_dir": "NNE",
+      "wave_m": 0.3
      }
     },
     "seabreeze_place": "Hervey Bay",
     "windfinder": {
-     "2026-11-03": {
-      "wind_max": 36,
-      "gust_max": 54,
-      "wind_dir": "NNW",
-      "wave_m": 0.8
-     },
      "2026-11-04": {
       "wind_max": 32,
-      "gust_max": 40,
+      "gust_max": 43,
       "wind_dir": "N",
       "wave_m": 0.8
+     },
+     "2026-11-05": {
+      "wind_max": 25,
+      "gust_max": 32,
+      "wind_dir": "N",
+      "wave_m": 0.6
      }
     },
     "windfinder_place": "Hervey Bay / Urangan Pier"
    }
   ],
-  "fetched": "2026-11-03T06:55:16Z"
+  "fetched": "2026-11-03T20:49:16Z"
  },
  "errors": {}
 }
