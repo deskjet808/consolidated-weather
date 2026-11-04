@@ -551,7 +551,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     return new Intl.DateTimeFormat("en-CA",{timeZone:state.loc.tz,year:"numeric",month:"2-digit",day:"2-digit"}).format(t);}
   async function loadBom(){
     const out={daily:{},obs:null,ok:false,hourly:[],warnings:null},api="https://api.weather.bom.gov.au/v1/locations/"+state.loc.bom;
-    const get=u=>fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+    const get=u=>fetch(u,timed()).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
     const [f,o,h,w]=await Promise.allSettled([get(api+"/forecasts/daily"),get(api+"/observations"),get(api+"/forecasts/hourly"),get(api+"/warnings")]);
     if(f.status==="fulfilled"&&Array.isArray(f.value?.data)){
       f.value.data.forEach(d=>{const k=localDate(d.date);if(!k)return;const a=d.rain?.amount||{};
@@ -570,6 +570,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
   const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
+  // Every data request gives up after 20 seconds, so one stalled site can't leave the page stuck on "Fetching"
+  const timed=(o={})=>typeof AbortSignal!=="undefined"&&AbortSignal.timeout?{...o,signal:AbortSignal.timeout(20000)}:o;
   const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"windy",name:"Windy",c:"--s6"},
     {id:"ecmwf",name:"ECMWF",c:"--s3"},{id:"icon",name:"ICON",c:"--s4"},{id:"foreca",name:"Foreca",c:"--s5"}];
   // Harris's list, in his order, for the "Your weather sites" panel. ECMWF and ICON come from Open-Meteo, whose
@@ -584,7 +586,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"}];
   async function loadScraped(){
     if(state.loc.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
-    const r=await fetch(dataUrl(),{cache:"no-store"});
+    const r=await fetch(dataUrl(),timed({cache:"no-store"}));
     if(!r.ok)throw new Error("scraped "+r.status);
     return{state:"ok",data:await r.json()};
   }
@@ -726,8 +728,17 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const L=state.loc;if(!RELAY||!L||L.kind!=="full"||jobs[L.id])return;
     const say=t=>{notes[L.id]=t;renderScrape();};
     const job=jobs[L.id]={start:Date.now()};renderScrape();
+    // Show a newer copy of the location's figures than the one on screen
+    const use=d=>{if(state.loc.id===L.id&&state.data){state.data.scraped=d;state.scrape={state:"ok",data:d};
+      try{localStorage.setItem(cacheKey(),JSON.stringify(state.data));}catch(e){}
+      render();}};
     let r=null;
     try{r=await (await fetch(RELAY+"/refresh?loc="+encodeURIComponent(L.id),{method:"POST"})).json();}catch(e){}
+    // Already fresh on GitHub, but the page may still have an older copy (from this device, or the CDN's delay)
+    if(r&&r.status==="fresh"&&r.generated&&r.generated!==state.data?.scraped?.generated){
+      let d=null;try{d=await (await fetch(RELAY+"/data?loc="+encodeURIComponent(L.id),{cache:"no-store"})).json();}catch(e){}
+      if(d&&d.data&&d.data.generated){delete jobs[L.id];notes[L.id]="Updated just now.";use(d.data);return renderScrape();}
+    }
     if(!r||(r.status!=="started"&&r.status!=="running")){
       delete jobs[L.id];
       if(auto)return renderScrape();
@@ -740,10 +751,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       await sleep(15000);
       let d=null;try{d=await (await fetch(RELAY+"/data?loc="+encodeURIComponent(L.id),{cache:"no-store"})).json();}catch(e){continue;}
       if(d&&d.data&&d.data.generated&&d.data.generated!==job.since){
-        delete jobs[L.id];notes[L.id]="Updated just now.";
-        if(state.loc.id===L.id&&state.data){state.data.scraped=d.data;state.scrape={state:"ok",data:d.data};
-          try{localStorage.setItem(cacheKey(),JSON.stringify(state.data));}catch(e){}
-          render();}
+        delete jobs[L.id];notes[L.id]="Updated just now.";use(d.data);
         return renderScrape();
       }
       // Give GitHub a minute and a half to list the run before reading "not running" as finished
