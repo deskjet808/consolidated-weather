@@ -228,8 +228,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .fold[open]>summary{margin-bottom:10px}
 .fold-body{display:flex;flex-direction:column;gap:10px}
 .hbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);min-width:0}
-.hchart{overflow-x:auto}
-.hchart svg{width:100%;min-width:640px;height:auto;display:block}
+.hchart{overflow:hidden;touch-action:pan-y}
+.hchart svg{width:100%;height:auto;display:block}
+.hswipe{font:.74rem var(--body);color:var(--muted);display:none}
+@media (hover:none) and (pointer:coarse){.hswipe{display:block}}
 .hchart .ax{font:10px var(--mono);fill:var(--muted)}
 .hchart .tl{font:600 11px var(--mono);fill:var(--fg)}
 .hstory{margin:0;font:600 1rem/1.4 var(--body)}
@@ -468,6 +470,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <div class="hbox">
     <p class="hstory" id="hstory"></p>
     <div class="hchart" id="hchart"></div>
+    <p class="hswipe">Swipe the chart left or right for the next or previous day.</p>
     <div class="hlegend"><span><i style="background:var(--warm)"></i>Temperature</span><span><i style="background:var(--warm);opacity:.25"></i>Range across sources</span><span><i style="background:var(--rain)"></i>Chance of rain</span><span><i style="background:var(--sky-sun);border:1px solid var(--line)"></i>Sunny</span><span><i style="background:var(--sky-cloud);border:1px solid var(--line)"></i>Cloudy</span><span><i style="background:var(--sky-rain);border:1px solid var(--line)"></i>Rain</span><span><i style="background:var(--sky-storm);border:1px solid var(--line)"></i>Storms</span></div>
     <p class="note" id="hnote"></p>
     </div>
@@ -1076,7 +1079,10 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     $("hourt").textContent="Hour by hour · "+(today?"Today":state.sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
     if(!have.length){$("hstory").textContent="";$("hchart").innerHTML='<p class="note">No hourly forecasts for this day yet.</p>';$("hnote").textContent="";return;}
     $("hstory").innerHTML=hourStory(H,sun);
-    const W=720,L=30,R=12,T=46,band=12,ph=110,gap=20,rb=40,B=40,Hh=T+band+8+ph+gap+rb+B;
+    // Drawn at the width it's shown, so the text stays full size and phones don't need to scroll it sideways
+    // (which leaves a sideways swipe free for changing day); narrow screens label every 6 hours instead of 3
+    const W=Math.max(300,Math.min(900,Math.round($("hchart").clientWidth||720))),every=W<560?6:3;
+    const L=30,R=12,T=46,band=12,ph=110,gap=20,rb=40,B=40,Hh=T+band+8+ph+gap+rb+B;
     const x=h=>L+h*(W-L-R)/23,lo=Math.floor(Math.min(...have.map(r=>r.lo))/2)*2-2,hi=Math.ceil(Math.max(...have.map(r=>r.hi))/2)*2+2;
     const y=v=>T+band+8+ph-(v-lo)/(hi-lo)*ph,base=T+band+8+ph,ry0=base+gap+rb,colW=(W-L-R)/23;
     let s=`<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Temperature and chance of rain by hour, the median of the sources">`;
@@ -1090,13 +1096,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Chance of rain: the median as a bar, the lowest to highest source as a thin line
     s+=`<line x1="${L}" x2="${W-R}" y1="${ry0}" y2="${ry0}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${ry0-rb+8}" text-anchor="end">rain</text>`;
     H.forEach(r=>{if(!isNum(r.chance))return;const bc=r.pic==="storm"?"var(--storm)":"var(--rain)";
-      if(r.chance>0)s+=`<rect x="${(x(r.h)-8).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="16" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${bc};opacity:.85"/>`;
+      const bw=Math.min(16,colW*.7);
+      if(r.chance>0)s+=`<rect x="${(x(r.h)-bw/2).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="${bw.toFixed(1)}" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${bc};opacity:.85"/>`;
       if(r.chi>r.clo)s+=`<line x1="${x(r.h)}" x2="${x(r.h)}" y1="${(ry0-rb*r.chi/100).toFixed(1)}" y2="${(ry0-rb*r.clo/100).toFixed(1)}" style="stroke:var(--fg);stroke-width:1.2;opacity:.45"/>`;});
     // Every 3 hours: the picture, the temperature, the time and how many sources it rests on
     s+=`<text class="ax" x="${L-6}" y="${Hh-6}" text-anchor="end">src</text>`;
-    H.filter(r=>r.h%3===0).forEach(r=>{const night=r.h<sun.rise||r.h>sun.set;
+    H.filter(r=>r.h%every===0).forEach(r=>{const night=r.h<sun.rise||r.h>sun.set;
       if(r.pic)s+=`<svg x="${x(r.h)-17}" y="2" width="34" height="34" viewBox="0 0 64 64" class="wx">${ART[r.pic]?ART[r.pic](night):""}</svg>`;
-      if(isNum(r.temp))s+=`<circle cx="${x(r.h)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.h)}" y="${y(r.temp)-8}" text-anchor="middle">${f0(r.temp)}°</text>`;
+      if(isNum(r.temp))s+=`<circle cx="${x(r.h)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.h)+(r.h===0?4:0)}" y="${y(r.temp)-8}" text-anchor="${r.h===0?"start":"middle"}">${f0(r.temp)}°</text>`;
       s+=`<text class="ax" x="${x(r.h)}" y="${Hh-22}" text-anchor="middle">${hh12(r.h)}</text><text class="ax" x="${x(r.h)}" y="${Hh-6}" text-anchor="middle">${r.names.length||""}</text>`;});
     $("hchart").innerHTML=s+"</svg>";
     const all=[...new Set(have.flatMap(r=>r.names))],most=Math.max(...have.map(r=>r.names.length)),least=Math.min(...have.map(r=>r.names.length));
@@ -1331,6 +1338,15 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   const FOLD_KEY="aus-forecast-sites-open";
   try{if(localStorage.getItem(FOLD_KEY)==="open")$("sitesFold").open=true;}catch(e){}
   $("sitesFold").addEventListener("toggle",()=>{try{localStorage.setItem(FOLD_KEY,$("sitesFold").open?"open":"closed");}catch(e){}});
+  // Hour by hour on a phone: swipe left for the next day, right for the one before (the 7-day strip follows)
+  function pickDay(i){if(!state.data||i<0||i>6||i===state.sel)return;state.sel=i;
+    document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();}
+  let swipe=null;
+  $("hchart").addEventListener("touchstart",e=>{const t=e.touches[0];swipe=e.touches.length===1?{x:t.clientX,y:t.clientY}:null;},{passive:true});
+  $("hchart").addEventListener("touchend",e=>{if(!swipe)return;const t=e.changedTouches[0],dx=t.clientX-swipe.x,dy=t.clientY-swipe.y;swipe=null;
+    if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))pickDay(state.sel+(dx<0?1:-1));},{passive:true});
+  // The chart is drawn to fit its width, so redraw it when the window changes size (or the phone turns)
+  let hResize=0;addEventListener("resize",()=>{clearTimeout(hResize);hResize=setTimeout(()=>{if(state.data)renderHourly(dates()[state.sel]);},150);});
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
   document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{state.measure=b.dataset.m;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));if(state.data)renderChart();}));
   $("refresh").addEventListener("click",()=>{if(state.loc)load();});
