@@ -39,10 +39,27 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          # No requirements.txt: the pinned versions live in this file, so it keys the pip cache
+          cache: pip
+          cache-dependency-path: .github/workflows/scrape.yml
+      # Chromium for Playwright is ~150 MB; keep it between runs (keyed on the Playwright version below)
+      - name: Cache Playwright browser
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-1.47.0-chromium-${{ runner.os }}
       - name: Install
+        env:
+          PW_CACHED: ${{ steps.pw-cache.outputs.cache-hit }}
         run: |
           pip install requests==2.32.3 playwright==1.47.0 beautifulsoup4==4.12.3 tzdata
-          python -m playwright install --with-deps chromium
+          # The browser comes from the cache when it can; its system libraries are installed every run
+          if [ "$PW_CACHED" = "true" ]; then
+            python -m playwright install-deps chromium
+          else
+            python -m playwright install --with-deps chromium
+          fi
       - name: Scrape
         # A push (e.g. a new location) only fills in what's due or missing; tick "all" on a manual run to refresh everything
         env:

@@ -94,6 +94,51 @@ def with_point(out, loc, place):
     return out
 
 
+def local_hour(when, tz):
+    """A timezone-aware time as the location's local clock hour, without a timezone (e.g. 2026-11-04 14:00)."""
+    return when.astimezone(tz).replace(minute=0, second=0, microsecond=0, tzinfo=None)
+
+
+def pack_hours(pts, step=1):
+    """A source's hour-by-hour forecast, for the app's hourly chart, as lists running from the first hour:
+    {"start": "2026-11-04T05", "temp": [...], "chance": [...], "mm": [...], "text": [...]}, None where missing.
+    pts maps local clock hours to (temp, chance %, rain mm, description). A 3-hourly series (step=3) is filled
+    in hour by hour: temperature joined in a straight line, chance and description held, rain spread evenly."""
+    pts = {k: v for k, v in pts.items() if any(x is not None for x in v)}
+    if not pts:
+        return None
+    ks = sorted(pts)
+    if step > 1:
+        full = {}
+        for a, b in zip(ks, ks[1:] + [None]):
+            n = step if b is None else max(1, min(step, int((b - a).total_seconds() // 3600)))
+            ta, ca, ma, xa = pts[a]
+            tb = pts[b][0] if b else None
+            for i in range(n):
+                t = ta if ta is None or tb is None else round(ta + (tb - ta) * i / n, 1)
+                full[a + timedelta(hours=i)] = (t, ca, None if ma is None else round(ma / n, 2), xa)
+        pts, ks = full, sorted(full)
+    start = ks[0]
+    size = int((ks[-1] - start).total_seconds() // 3600) + 1
+    cols = [[None] * size for _ in range(4)]
+    for k, v in pts.items():
+        i = int((k - start).total_seconds() // 3600)
+        for c in range(4):
+            cols[c][i] = num(v[c]) if c < 3 else (clean(v[c]) or None)
+    return {"start": start.strftime("%Y-%m-%dT%H"), "temp": cols[0], "chance": cols[1], "mm": cols[2], "text": cols[3]}
+
+
+def try_hours(out, make):
+    """Add a source's hourly forecast to its result when it can be read; the daily figures never depend on it."""
+    try:
+        h = make()
+        if h:
+            out["hourly"] = h
+    except Exception as e:
+        out["hourly_error"] = masked(e)
+    return out
+
+
 # ---- Bureau of Meteorology: JSON feed used by its own app ----
 def scrape_bom(loc):
     url = f"https://api.weather.bom.gov.au/v1/locations/{loc['bom']}/forecasts/daily"
@@ -115,8 +160,9 @@ def scrape_bom(loc):
 # ---- WillyWeather: plain HTML, temperatures on the main page, rain on the rainfall page ----
 def scrape_willyweather(loc):
     url = f"https://www.willyweather.com.au/{loc['willyweather']}.html"
-    main = BeautifulSoup(get(url).text, "html.parser")
-    rain = BeautifulSoup(get(f"https://rainfall.willyweather.com.au/{loc['willyweather']}.html").text, "html.parser")
+    main_html = get(url).text
+    rain_html = get(f"https://rainfall.willyweather.com.au/{loc['willyweather']}.html").text
+    main, rain = BeautifulSoup(main_html, "html.parser"), BeautifulSoup(rain_html, "html.parser")
     chance = {}
     for li in rain.select("section.forecast li.day"):
         t = li.find("time")
@@ -137,7 +183,21 @@ def scrape_willyweather(loc):
         raise ValueError("no forecast days found in page")
     h1 = main.select_one("article h1")
     place = h1.find(string=True, recursive=False) if h1 else ""
-    return with_point({"source": "willyweather", "name": "WillyWeather", "url": url, "days": days}, loc, place)
+    out = with_point({"source": "willyweather", "name": "WillyWeather", "url": url, "days": days}, loc, place)
+    return try_hours(out, lambda: ww_hours(main_html, rain_html, ZoneInfo(loc["tz"])))
+
+
+def ww_hours(main_html, rain_html, tz):
+    """WillyWeather's graphs: temperature every hour, chance of rain every 3 hours (held for each 3).
+    Their times are the local clock written as if it were UTC (midnight in Brisbane is 00:00 "UTC")."""
+    at = lambda p: datetime.fromtimestamp(p["x"], timezone.utc).replace(minute=0, second=0, tzinfo=None)
+    temps = {at(p): p.get("y") for p in ww_graph(main_html, "temperature")}
+    chance = sorted((at(p), p.get("y")) for p in ww_graph(rain_html, "rainfallprobability"))
+    pts = {}
+    for h, t in temps.items():
+        c = next((v for k, v in reversed(chance) if k <= h < k + timedelta(hours=3)), None)
+        pts[h] = (t, c, None, None)
+    return pack_hours(pts)
 
 
 def capture_json(url, wanted):
@@ -177,7 +237,12 @@ def capture_json(url, wanted):
 # ---- Weatherzone: forecast arrives as background JSON, so load the page in a browser ----
 def scrape_weatherzone(loc):
     url = f"https://www.weatherzone.com/au/{loc['weatherzone']}"
-    found = capture_json(url, lambda u: "/weather/forecast/daily/TWCID/" in u and "start=" in u)
+    # The page also fetches 72 hours of hourly figures (part-day), which feed the app's hourly chart
+    found = capture_json(url, lambda u: "/weather/forecast/daily/TWCID/" in u and "start=" in u or "/api/forecast/part-day" in u)
+    hours = max((b for b in found if isinstance(b, list)), key=len, default=[])
+    found = [b for b in found if isinstance(b, dict)]
+    if not found:
+        raise ValueError("daily forecast response never arrived")
     # The page requests several date ranges from the same endpoint; keep the longest
     payload = max(found, key=lambda b: len(b.get("body") or []))
     place = next(iter(((payload.get("metadata") or {}).get("locations") or {}).values()), {}).get("name", "")
@@ -187,7 +252,12 @@ def scrape_weatherzone(loc):
     if not days:
         raise ValueError("forecast response had no days")
     # e.g. Archerfield for Oxley: the forecast point Weatherzone uses
-    return with_point({"source": "weatherzone", "name": "Weatherzone", "url": url, "days": days}, loc, place)
+    out = with_point({"source": "weatherzone", "name": "Weatherzone", "url": url, "days": days}, loc, place)
+    tz = ZoneInfo(loc["tz"])
+    return try_hours(out, lambda: pack_hours({
+        local_hour(datetime.fromisoformat(h["timestamp"].replace("Z", "+00:00")), tz):
+            (h.get("temperature"), h.get("precipitationProbability"), h.get("precipitationRate"), h.get("precis"))
+        for h in hours if h.get("timestamp")}))
 
 
 # ---- Windy: point forecast arrives as background JSON (signed by the page), temperatures in Kelvin ----
@@ -226,7 +296,11 @@ def scrape_windy(loc):
     out = {"source": "windy", "name": "Windy", "url": url, "days": days}
     if header.get("model"):
         out["point"] = f"{header['model']} model"
-    return out
+    # Every 3 hours: temperature and rain for the hourly chart (Windy gives no chance of rain or description)
+    tz = ZoneInfo(loc["tz"])
+    return try_hours(out, lambda: pack_hours({
+        local_hour(datetime.fromtimestamp(ts / 1000, timezone.utc), tz): (k2c(t), None, mm, None)
+        for ts, t, mm in zip(data.get("ts") or [], col("temperature"), col("precipAmount"))}, step=3))
 
 
 # ---- Open-Meteo: free forecast API (no key) for single weather models, by coordinates ----
@@ -239,11 +313,13 @@ WMO_TEXT = {0: "Clear", 1: "Mostly sunny", 2: "Partly cloudy", 3: "Cloudy", 45: 
             95: "Storms", 96: "Storms with hail", 99: "Storms with hail"}
 OM_DAILY = ("temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,"
             "weather_code,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant")
+OM_HOURLY = "temperature_2m,precipitation_probability,precipitation,weather_code"
 
 
 def open_meteo(loc, model, source, name):
+    # The hourly figures come in the same request, so the hourly chart costs no extra calls
     url = (f"https://api.open-meteo.com/v1/forecast?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"
-           f"&daily={OM_DAILY}&timezone={loc['tz']}&forecast_days=8")
+           f"&daily={OM_DAILY}&hourly={OM_HOURLY}&timezone={loc['tz']}&forecast_days=8")
     # Shared GitHub addresses are sometimes rate-limited, and the API sometimes answers slowly: wait and try again
     for attempt in range(3):
         try:
@@ -257,7 +333,7 @@ def open_meteo(loc, model, source, name):
             break
         time.sleep(20)
     r.raise_for_status()
-    dl = r.json().get("daily") or {}
+    dl, hl = r.json().get("daily") or {}, r.json().get("hourly") or {}
     days = []
     for i, d in enumerate(dl.get("time") or []):
         col = lambda k: (dl.get(k) or [None] * (i + 1))[i]
@@ -272,8 +348,14 @@ def open_meteo(loc, model, source, name):
                      "wind_dir": compass(col("wind_direction_10m_dominant"))})
     if not days:
         raise ValueError("forecast had no days")
-    return {"source": source, "name": name, "days": days,
-            "url": f"https://open-meteo.com/en/docs?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"}
+    out = {"source": source, "name": name, "days": days,
+           "url": f"https://open-meteo.com/en/docs?latitude={loc['lat']}&longitude={loc['lon']}&models={model}"}
+    # Times are already the location's local clock ("2026-11-04T14:00")
+    hcol = lambda k: hl.get(k) or [None] * len(hl.get("time") or [])
+    return try_hours(out, lambda: pack_hours({
+        datetime.fromisoformat(t): (tp, c, mm, WMO_TEXT.get(wc))
+        for t, tp, c, mm, wc in zip(hl.get("time") or [], hcol("temperature_2m"), hcol("precipitation_probability"),
+                                    hcol("precipitation"), hcol("weather_code"))}))
 
 
 def scrape_ecmwf(loc):
@@ -309,7 +391,23 @@ def scrape_foreca(loc):
     if not days:
         raise ValueError(f"no forecast cards: {clean(title)[:80]}")
     m = re.search(r"forecast - ([^,]+)", title)
-    return with_point({"source": "foreca", "name": "Foreca", "url": url, "days": days}, loc, m.group(1) if m else "")
+    out = with_point({"source": "foreca", "name": "Foreca", "url": url, "days": days}, loc, m.group(1) if m else "")
+    return try_hours(out, lambda: foreca_hours(loc))
+
+
+def foreca_hours(loc):
+    """Foreca's hourly pages for today (the hours left) and tomorrow: two extra pages, as chosen for the hourly
+    chart. Each page passes its hours to its own chart script as JSON, in local time."""
+    pts = {}
+    for d in (0, 1):
+        html = get(f"https://www.foreca.com/en/{loc['foreca']}/{loc['id']}/hourly?day={d}").text
+        m = re.search(r"renderHourly\(\{.*?data:\s*(\[.*?\])\s*,\s*\n", html, re.S)
+        if not m:
+            raise ValueError(f"no hourly data on day {d}'s page")
+        for h in json.loads(m.group(1)):
+            pts[datetime.fromisoformat(h["time"])] = (h.get("temp"), h.get("rainp"), h.get("rain"), h.get("wx"))
+        time.sleep(1)
+    return pack_hours(pts)
 
 
 # ---- Bureau of Meteorology latest observations from the station nearest the location ----

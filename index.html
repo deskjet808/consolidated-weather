@@ -27,7 +27,7 @@
   /* Glossy weather pictures: top and bottom of each gradient */
   --g-sun1:#ffe27a; --g-sun2:#ff9d1c; --g-moon1:#fff1b8; --g-moon2:#e2b941; --g-c1:#ffffff; --g-c2:#c6d4dc;
   --g-d1:#a9b6be; --g-d2:#5d6e78; --g-drop1:#8fd0ff; --g-drop2:#1f7fd6;
-  --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6;
+  --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6; --storm:#7a5cc4;
   --shadow:0 1px 2px rgb(18 36 44/.05),0 6px 18px rgb(18 36 44/.06);
   --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
@@ -43,7 +43,7 @@
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
-  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342;
+  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}}
 :root[data-theme="dark"]{
@@ -55,7 +55,7 @@
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
-  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342;
+  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}
 *{box-sizing:border-box}
@@ -211,6 +211,27 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .hours{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(66px,88px);gap:6px;overflow-x:auto;padding:2px 2px 6px}
 .hours>div{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font:.72rem/1.3 var(--mono);box-shadow:var(--shadow)}
 .hours .wx{width:30px;height:30px}
+/* Hour by hour: one chart for the chosen day, the median of every source with hourly figures */
+/* Folding sections: the heading is the toggle, with a short summary and Show / Hide */
+.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+.fold-sum{font:.78rem var(--mono);color:var(--muted)}
+.fold-act{margin-left:auto;font:600 .82rem var(--body);color:var(--accent);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;display:inline-flex;align-items:center;gap:6px}
+.fold-act::before{content:"Show"} .fold[open] .fold-act::before{content:"Hide"}
+.fold-act::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.fold[open] .fold-act::after{transform:translateY(2px) rotate(-135deg)}
+.fold[open]>summary{margin-bottom:10px}
+.fold-body{display:flex;flex-direction:column;gap:10px}
+.hbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);min-width:0}
+.hchart{overflow-x:auto}
+.hchart svg{width:100%;min-width:640px;height:auto;display:block}
+.hchart .ax{font:10px var(--mono);fill:var(--muted)}
+.hchart .tl{font:600 11px var(--mono);fill:var(--fg)}
+.hstory{margin:0;font:600 1rem/1.4 var(--body)}
+.hstory .st{color:var(--storm)} .hstory .wt{color:var(--rain)}
+.hlegend{display:flex;gap:6px 14px;flex-wrap:wrap;font:.76rem var(--body);color:var(--muted)}
+.hlegend i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
 .hours b{font:600 1rem var(--mono);white-space:nowrap}
 .hours b small{font-size:.62rem;font-weight:500;color:var(--muted)}
 .hourhd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;font-size:.78rem;color:var(--muted);margin-bottom:-4px}
@@ -314,8 +335,8 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 @keyframes sc-fall{from{transform:translateY(-240px)}to{transform:translateY(0)}}
 @keyframes sc-flash{0%,92%,100%{opacity:0}92.6%{opacity:.85}93.2%{opacity:.1}93.8%{opacity:.6}95%{opacity:0}}
 @keyframes sc-tw{from{opacity:.3}to{opacity:1}}
-/* Storms: Harris's animated thundercloud, played frame by frame onto a canvas */
-.scene .sc-anim{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#000}
+/* Storms: Harris's animated thundercloud and day lightning, as looping videos (a still with reduced motion) */
+.scene .sc-anim{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;background:#000}
 /* Wider screens: the upright clip at full height in the middle, its sides fading into black, so the lightning still strikes downwards */
 @media (min-aspect-ratio:4/5){
   .scene>div:has(>.sc-anim){background:#000}
@@ -421,7 +442,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     </div>
   </header>
 
-  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
+  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
 
   <div id="err" class="error" hidden></div>
 
@@ -436,6 +457,17 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <p class="note">The middle figure of all the forecasts. Tap a day to see it below.</p>
     <details class="about"><summary>About this</summary><p>Each day shows the median of the Bureau of Meteorology and the forecast sites, with the Bureau's picture and chance of rain. The dot shows how closely they agree on the top temperature: green within 2°C, amber within 4°C, red beyond that.</p></details>
     <div class="days" id="days" role="group" aria-label="Choose a day"></div>
+  </section>
+
+  <section aria-labelledby="hourh">
+    <h2 id="hourh"><i data-ui="clock"></i><span id="hourt">Hour by hour</span></h2>
+    <div class="hbox">
+    <p class="hstory" id="hstory"></p>
+    <div class="hchart" id="hchart"></div>
+    <div class="hlegend"><span><i style="background:var(--warm)"></i>Temperature</span><span><i style="background:var(--warm);opacity:.25"></i>Range across sources</span><span><i style="background:var(--rain)"></i>Chance of rain</span><span><i style="background:var(--sky-sun);border:1px solid var(--line)"></i>Sunny</span><span><i style="background:var(--sky-cloud);border:1px solid var(--line)"></i>Cloudy</span><span><i style="background:var(--sky-rain);border:1px solid var(--line)"></i>Rain</span><span><i style="background:var(--sky-storm);border:1px solid var(--line)"></i>Storms</span></div>
+    <p class="note" id="hnote"></p>
+    </div>
+    <details class="about"><summary>About this</summary><p>Each hour is the middle figure (median) of every source with an hourly forecast for it: the Bureau of Meteorology (about 3 days), Weatherzone (3 days), WillyWeather, ECMWF and ICON (about 7 days), Windy (about 5 days, every 3 hours, temperature and rain only) and Foreca (today and tomorrow). The shaded band around the temperature line runs from the lowest to the highest source, and the thin line on each rain bar from the lowest to the highest chance, so a wide band means the sources disagree. The picture for each hour is the one most sources show, except that storms show when at least half of them forecast storms, and showers only when the middle chance of rain is 30% or more. The numbers under the times say how many sources that hour is based on.</p></details>
   </section>
 
   <section aria-labelledby="briefh">
@@ -484,10 +516,15 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   </section>
 
   <section aria-labelledby="offh">
-    <h2 id="offh"><i data-ui="globe"></i>Forecast sites</h2>
-    <p class="note" id="sitesNote">Figures from the forecast sites below are collected every 3 hours and shown in the table and chart above.</p>
-    <div class="sitebar" id="sitebar" hidden><button class="btn" id="scrapeBtn" type="button"><i data-ui="refresh"></i><span id="scrapeTxt">Refresh now</span></button><span class="note" id="scrapeMsg" role="status"></span></div>
-    <div class="sites" id="sites"></div>
+    <!-- Folds away; starts folded and remembers the choice on this device. Folded, it still says whether the sources are up to date -->
+    <details class="fold" id="sitesFold">
+      <summary><h2 id="offh"><i data-ui="globe"></i>Forecast sites</h2><span class="fold-sum" id="sitesSum"></span><span class="fold-act" aria-hidden="true"></span></summary>
+      <div class="fold-body">
+        <p class="note" id="sitesNote">Figures from the forecast sites below are collected every 3 hours and shown in the table and chart above.</p>
+        <div class="sitebar" id="sitebar" hidden><button class="btn" id="scrapeBtn" type="button"><i data-ui="refresh"></i><span id="scrapeTxt">Refresh now</span></button><span class="note" id="scrapeMsg" role="status"></span></div>
+        <div class="sites" id="sites"></div>
+      </div>
+    </details>
   </section>
 
   <footer>
@@ -523,9 +560,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       out.ok=true;}
     if(o.status==="fulfilled"&&o.value?.data){out.obs=o.value.data;}
     // Hourly wind and gusts for about the next 3 days, and any Bureau warnings for the area (boating section)
-    if(h.status==="fulfilled"&&Array.isArray(h.value?.data))out.hourly=h.value.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night}));
+    if(h.status==="fulfilled"&&Array.isArray(h.value?.data))out.hourly=h.value.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night,temp:x.temp,chance:x.rain?.chance,mm:x.rain?.amount?.max??x.rain?.amount?.min}));
     // Hourly wind for each body of water's own forecast cell (river, bay, open ocean, lake)
-    const hourlyOf=v=>v.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night}));
+    const hourlyOf=v=>v.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night,temp:x.temp,chance:x.rain?.chance,mm:x.rain?.amount?.max??x.rain?.amount?.min}));
     const ws=await Promise.allSettled((state.loc.waters||[]).map(x=>get("https://api.weather.bom.gov.au/v1/locations/"+x.bom+"/forecasts/hourly")));
     out.waters=ws.map(r=>r.status==="fulfilled"&&Array.isArray(r.value?.data)?hourlyOf(r.value):[]);
     if(w.status==="fulfilled"&&Array.isArray(w.value?.data))out.warnings=w.value.data.map(x=>({title:x.title||x.short_title||"Warning",type:x.type||"",issued:x.issue_time||null}));
@@ -634,6 +671,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     up:'<path d="M12 19V5M6 11l6-6 6 6"/>',down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
     boat:'<path d="M3 15h18l-2.5 5h-13z"/><path d="M12 3v12"/><path d="M12 4l6 9h-6"/>',
     cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     chart:'<path d="M4 4v16h16"/><path d="M7 15l4-4 3 3 5-6"/>',
     table:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/>',
     grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
@@ -850,29 +888,24 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const front=many?layer(47,6,60,480,1.1,1.9,3):layer(31,2,140,380,.8,1.2,2);
     return `<div class="sc-clouds" aria-hidden="true"><img class="sc-drift slow" src="${back}" alt="" style="opacity:${night?.8:.8}"><img class="sc-drift" src="${front}" alt="" style="opacity:${night?.92:.95}"></div>`;
   }
-  // Harris's animated storms, as small JPEG frames (p00, p01, ... upright; d00, d01, ... landscape). Night: the
-  // thundercloud, 30 upright frames; phones fill the screen with it, wider screens show it at full height in the
-  // middle (see .sc-anim). Day: lightning over the hills, 16 frames; wider screens get the landscape photo filling
-  // the screen (.sc-anim.fill), phones a tall strip around the bolt. ms is how long each frame shows, so the day
-  // flashes keep the original's rhythm. Each frame is decoded only when it's drawn, so memory stays low. It stops
-  // once the scene is replaced; with reduced motion it shows one bright frame and doesn't play.
+  // Harris's animated storms, as short looping videos (img/storm-*.mp4, each with a .jpg still of the same name).
+  // Night: the thundercloud, upright; phones fill the screen with it, wider screens show it at full height in the
+  // middle (see .sc-anim). Day: lightning over the hills; wider screens get the landscape clip filling the screen
+  // (.sc-anim.fill), phones a tall strip around the bolt. The day clip keeps the original frames' flash rhythm.
+  // The still shows until the video can play, and stays if the browser won't autoplay (iPhone Low Power Mode);
+  // with reduced motion only the still shows. w and h give the box its shape before the video loads.
   const STORMS={
-    night:{dir:"storm",n:30,ms:[100],still:25,upright:true},
-    day:{dir:"storm-day",n:16,ms:[700,50,60,60,60,60,70,80,900,600,50,50,60,60,80,400],still:0,fill:true}};
+    night:{phone:{n:"storm-night-phone",w:540,h:962},wide:{n:"storm-night-phone",w:540,h:962}},
+    day:{phone:{n:"storm-day-phone",w:540,h:960},wide:{n:"storm-day-wide",w:1280,h:852},fill:true}};
   function stormAnim(el,s){
-    const pre=s.upright||matchMedia("(max-aspect-ratio: 4/5)").matches?"p":"d";
-    const cv=document.createElement("canvas");cv.className="sc-anim"+(s.fill?" fill":"");el.appendChild(cv);
-    const ctx=cv.getContext("2d"),url=k=>`img/${s.dir}/${pre}${String(k).padStart(2,"0")}.jpg`;
-    const draw=b=>createImageBitmap(b).then(bm=>{if(cv.width!==bm.width){cv.width=bm.width;cv.height=bm.height;}ctx.drawImage(bm,0,0);bm.close();});
-    const get=k=>fetch(url(k)).then(r=>r.blob());
-    if(matchMedia("(prefers-reduced-motion: reduce)").matches){get(s.still).then(draw,()=>{});return;}
-    Promise.all(Array.from({length:s.n},(_,k)=>get(k))).then(frames=>{
-      let i=0,next=0;
-      const tick=t=>{if(!cv.isConnected)return;
-        if(t>=next){draw(frames[i]);next=t+(s.ms[i]||s.ms[0]);i=(i+1)%s.n;}
-        requestAnimationFrame(tick);};
-      requestAnimationFrame(tick);
-    },()=>{});
+    const f=matchMedia("(max-aspect-ratio: 4/5)").matches?s.phone:s.wide,cls="sc-anim"+(s.fill?" fill":"");
+    if(matchMedia("(prefers-reduced-motion: reduce)").matches){
+      el.innerHTML=`<img class="${cls}" src="img/${f.n}.jpg" alt="" width="${f.w}" height="${f.h}" decoding="async">`;return;}
+    const v=document.createElement("video");
+    v.className=cls;v.width=f.w;v.height=f.h;v.poster=`img/${f.n}.jpg`;
+    v.muted=v.loop=v.playsInline=v.autoplay=true;v.setAttribute("playsinline","");v.setAttribute("aria-hidden","true");
+    v.src=`img/${f.n}.mp4`;el.appendChild(v);
+    v.play().catch(()=>{});
   }
   let sceneKey="",sceneN=0;
   function renderScene(ni){
@@ -976,7 +1009,86 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       <td>${r.rainText}</td><td>${isNum(r.chance)?f0(r.chance)+"%":dash}</td></tr>`;});
     $("tbody").innerHTML=rows.length?html+`<tr class="median"><td>Median</td><td>${f1(med.tmax)}</td><td>${f1(med.tmin)}</td><td>${f1(med.rain)}</td><td>${isNum(med.chance)?f0(med.chance)+"%":"–"}</td></tr>`
       :`<tr><td colspan="5">No forecasts for this day yet.</td></tr>`;
-    renderPanel(k,state.sel);renderBoat(k);
+    renderPanel(k,state.sel);renderHourly(k);renderBoat(k);
+  }
+
+  // ---- Hour by hour: for each hour of the chosen day, the median of every source with hourly figures ----
+  const WET=new Set(["light_rain","light_shower","shower","rain","heavy_shower"]);
+  const PIC_RANK=["sunny","mostly_sunny","partly_cloudy","hazy","dusty","windy","cloudy","fog","light_shower","light_rain","shower","rain","heavy_shower","storm"];
+  const hkind=p=>p==="storm"?"storm":WET.has(p)?"wet":p==="sunny"||p==="mostly_sunny"?"clear":"cloud";
+  const HSKY={clear:"--sky-sun",cloud:"--sky-cloud",wet:"--sky-rain",storm:"--sky-storm"};
+  const hh12=h=>h===0||h===24?"12 am":h<12?h+" am":h===12?"12 pm":(h-12)+" pm";
+  function localHourKey(iso){const p=new Intl.DateTimeFormat("en-CA",{timeZone:state.loc.tz,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",hourCycle:"h23"}).formatToParts(new Date(iso));
+    const g=t=>p.find(x=>x.type===t).value;return `${g("year")}-${g("month")}-${g("day")}T${g("hour")}`;}
+  // The scraper stores each source's hours as lists from its first local clock hour ("2026-11-04T05")
+  const keyMs=k=>Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10),+k.slice(11,13));
+  function hoursFor(k){
+    const srcs=[],B=state.data?.bom?.hourly||[];
+    if(B.some(x=>isNum(x.temp))){const m={};B.forEach(x=>{if(x.time)m[localHourKey(x.time)]=x;});
+      srcs.push({name:"BOM",at:key=>{const x=m[key];return x&&{temp:x.temp,chance:x.chance,mm:x.mm,pic:x.icon==="clear"?"sunny":x.icon};}});}
+    (state.data?.scraped?.sources||[]).forEach(s=>{const H=s.hourly,site=SITES.find(x=>x.id===s.source);if(!H||!H.start||!site)return;const t0=keyMs(H.start);
+      srcs.push({name:site.name,at:key=>{const i=(keyMs(key)-t0)/36e5;if(i<0||i>=H.temp.length)return null;
+        return{temp:H.temp[i],chance:H.chance[i],mm:H.mm[i],pic:classify(H.text[i])};}});});
+    return Array.from({length:24},(_,h)=>{
+      const v=srcs.map(s=>({name:s.name,...(s.at(k+"T"+String(h).padStart(2,"0"))||{})}));
+      const ts=v.filter(x=>isNum(x.temp)),cs=v.map(x=>x.chance).filter(isNum),ps=v.map(x=>x.pic).filter(Boolean);
+      // The hour's picture: storms when at least half the sources with a picture say so, otherwise the most common (wetter wins a tie)
+      const cnt={};ps.forEach(p=>cnt[p]=(cnt[p]||0)+1);
+      let pic=!ps.length?null:(cnt.storm||0)*2>=ps.length?"storm":Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]||PIC_RANK.indexOf(b)-PIC_RANK.indexOf(a))[0];
+      // A rain picture needs a median chance of rain of 30% or more; below that, the most common dry picture
+      const ch=median(cs);
+      if(WET.has(pic)&&isNum(ch)&&ch<30)pic=Object.keys(cnt).filter(p=>!WET.has(p)&&p!=="storm").sort((a,b)=>cnt[b]-cnt[a])[0]||"partly_cloudy";
+      return{h,names:ts.map(x=>x.name),temp:median(ts.map(x=>x.temp)),lo:ts.length?Math.min(...ts.map(x=>x.temp)):null,hi:ts.length?Math.max(...ts.map(x=>x.temp)):null,
+        chance:ch,clo:cs.length?Math.min(...cs):null,chi:cs.length?Math.max(...cs):null,pic,storms:cnt.storm||0,np:ps.length};});
+  }
+  // Sunrise and sunset hours from the Bureau's daily forecast, for day and night pictures
+  function sunHours(k){const b=state.data?.bom?.daily?.[k],hr=iso=>iso?+localHourKey(iso).slice(11):null;return{rise:hr(b?.rise)??6,set:hr(b?.set)??18};}
+  // A sentence for the day: daytime stretches (5 am to 9 pm) of sunny, cloudy, showery or stormy hours
+  function hourStory(H,sun){
+    const day=H.filter(x=>x.h>=5&&x.h<=21&&x.pic);if(!day.length)return"";
+    let runs=[];day.forEach(x=>{const k=hkind(x.pic),r=runs[runs.length-1];
+      if(r&&r.k===k&&r.to===x.h-1){r.to=x.h;r.p=Math.max(r.p,x.chance||0);r.v=Math.max(r.v,x.storms);r.n=Math.max(r.n,x.np);r.pics.push(x.pic);}
+      else runs.push({k,from:x.h,to:x.h,p:x.chance||0,v:x.storms,n:x.np,pics:[x.pic]});});
+    // A single sunny or cloudy hour between other sunny or cloudy stretches is folded into the one before
+    const dry=k=>k==="clear"||k==="cloud";
+    runs=runs.reduce((a,r)=>{const L=a[a.length-1];if(L&&(L.k===r.k||r.from===r.to&&dry(r.k)&&dry(L.k))){L.to=r.to;L.p=Math.max(L.p,r.p);L.v=Math.max(L.v,r.v);L.n=Math.max(L.n,r.n);L.pics.push(...r.pics);}else a.push(r);return a;},[]);
+    const lab=r=>r.k==="storm"?'<span class="st">storms likely</span>':r.k==="wet"?'<span class="wt">showers</span>':r.k==="clear"?(r.from>sun.set?"clear":"sunny"):r.pics.includes("cloudy")?"cloudy":"partly cloudy";
+    const extra=r=>r.k==="storm"?` (${r.v} of ${r.n} sources, ${f0(r.p)}% chance)`:r.k==="wet"?` (${f0(r.p)}% chance)`:"";
+    const cap=s=>s.replace(/^(<[^>]+>)?(\w)/,(m,t,c)=>(t||"")+c.toUpperCase());
+    if(runs.length===1){const r=runs[0];return cap(r.k==="storm"||r.k==="wet"?`${lab(r)} on and off all day${extra(r)}.`:`${lab(r)} all day.`);}
+    return cap(runs.map((r,i)=>`${lab(r)} ${i===0?"until "+hh12(r.to+1):i===runs.length-1?"from "+hh12(r.from):hh12(r.from)+" to "+hh12(r.to+1)}${extra(r)}`).join(", then ")+".");
+  }
+  function renderHourly(k){
+    const H=hoursFor(k),have=H.filter(x=>isNum(x.temp)),sun=sunHours(k),today=state.sel===0;
+    const dt=new Date(k+"T12:00:00");
+    $("hourt").textContent="Hour by hour · "+(today?"Today":state.sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
+    if(!have.length){$("hstory").textContent="";$("hchart").innerHTML='<p class="note">No hourly forecasts for this day yet.</p>';$("hnote").textContent="";return;}
+    $("hstory").innerHTML=hourStory(H,sun);
+    const W=720,L=30,R=12,T=46,band=12,ph=110,gap=20,rb=40,B=40,Hh=T+band+8+ph+gap+rb+B;
+    const x=h=>L+h*(W-L-R)/23,lo=Math.floor(Math.min(...have.map(r=>r.lo))/2)*2-2,hi=Math.ceil(Math.max(...have.map(r=>r.hi))/2)*2+2;
+    const y=v=>T+band+8+ph-(v-lo)/(hi-lo)*ph,base=T+band+8+ph,ry0=base+gap+rb,colW=(W-L-R)/23;
+    let s=`<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Temperature and chance of rain by hour, the median of the sources">`;
+    H.forEach(r=>{if(r.pic)s+=`<rect x="${(x(r.h)-colW/2).toFixed(1)}" y="${T}" width="${(colW+.5).toFixed(1)}" height="${band}" style="fill:var(${HSKY[hkind(r.pic)]})"/>`;});
+    for(let v=lo;v<=hi;v+=4)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${y(v)+3.5}" text-anchor="end">${v}°</text>`;
+    if(today){const nh=+localHourKey(new Date().toISOString()).slice(11);s+=`<line x1="${x(nh)}" x2="${x(nh)}" y1="${T}" y2="${ry0}" style="stroke:var(--accent);stroke-dasharray:3 3"/><text class="tl" x="${x(nh)}" y="${T-4}" text-anchor="middle" style="fill:var(--accent)">now</text>`;}
+    // How far apart the sources are: a faint band from the lowest to the highest temperature
+    const two=have.filter(r=>r.names.length>1);
+    if(two.length>1)s+=`<polygon points="${two.map(r=>x(r.h).toFixed(1)+","+y(r.hi).toFixed(1)).join(" ")} ${two.slice().reverse().map(r=>x(r.h).toFixed(1)+","+y(r.lo).toFixed(1)).join(" ")}" style="fill:var(--warm);opacity:.22"/>`;
+    s+=`<polyline points="${have.map(r=>x(r.h).toFixed(1)+","+y(r.temp).toFixed(1)).join(" ")}" style="fill:none;stroke:var(--warm);stroke-width:2.5;stroke-linejoin:round"/>`;
+    // Chance of rain: the median as a bar, the lowest to highest source as a thin line
+    s+=`<line x1="${L}" x2="${W-R}" y1="${ry0}" y2="${ry0}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${ry0-rb+8}" text-anchor="end">rain</text>`;
+    H.forEach(r=>{if(!isNum(r.chance))return;const bc=r.pic==="storm"?"var(--storm)":"var(--rain)";
+      if(r.chance>0)s+=`<rect x="${(x(r.h)-8).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="16" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${bc};opacity:.85"/>`;
+      if(r.chi>r.clo)s+=`<line x1="${x(r.h)}" x2="${x(r.h)}" y1="${(ry0-rb*r.chi/100).toFixed(1)}" y2="${(ry0-rb*r.clo/100).toFixed(1)}" style="stroke:var(--fg);stroke-width:1.2;opacity:.45"/>`;});
+    // Every 3 hours: the picture, the temperature, the time and how many sources it rests on
+    s+=`<text class="ax" x="${L-6}" y="${Hh-6}" text-anchor="end">src</text>`;
+    H.filter(r=>r.h%3===0).forEach(r=>{const night=r.h<sun.rise||r.h>sun.set;
+      if(r.pic)s+=`<svg x="${x(r.h)-17}" y="2" width="34" height="34" viewBox="0 0 64 64" class="wx">${ART[r.pic]?ART[r.pic](night):""}</svg>`;
+      if(isNum(r.temp))s+=`<circle cx="${x(r.h)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.h)}" y="${y(r.temp)-8}" text-anchor="middle">${f0(r.temp)}°</text>`;
+      s+=`<text class="ax" x="${x(r.h)}" y="${Hh-22}" text-anchor="middle">${hh12(r.h)}</text><text class="ax" x="${x(r.h)}" y="${Hh-6}" text-anchor="middle">${r.names.length||""}</text>`;});
+    $("hchart").innerHTML=s+"</svg>";
+    const all=[...new Set(have.flatMap(r=>r.names))],most=Math.max(...have.map(r=>r.names.length)),least=Math.min(...have.map(r=>r.names.length));
+    $("hnote").textContent=`Median of ${all.length} source${all.length===1?"":"s"}: ${all.join(", ")}.`+(least<most?` Some hours have fewer (${least} to ${most}); see the numbers under the times.`:"");
   }
 
   // Boating: one report per body of water at the location (locations.json "waters", e.g. the Maroochy River
@@ -1182,11 +1294,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   function renderSites(){
     const st=state.scrape?.state,S=state.data?.scraped,errs=(S&&S.errors)||{};
     renderScrape();
-    if(state.loc&&state.loc.kind!=="full"){$("sitesNote").textContent="This place shows the Bureau of Meteorology's forecast and nearest station only, fetched live. Pick one of the featured locations in the list for the full comparison of forecast sites.";$("sites").innerHTML="";return;}
+    if(state.loc&&state.loc.kind!=="full"){$("sitesNote").textContent="This place shows the Bureau of Meteorology's forecast and nearest station only, fetched live. Pick one of the featured locations in the list for the full comparison of forecast sites.";$("sites").innerHTML="";$("sitesSum").textContent="Bureau only for searched places";return;}
     if(st==="error"&&S)$("sitesNote").textContent="Couldn't reach the data just now, so these are the last figures saved on this device.";
     else if(st==="error")$("sitesNote").textContent="Couldn't reach the forecast data. Tap Refresh to try again.";
     else $("sitesNote").textContent="Figures from the forecast sites below are collected every 3 hours"+(RELAY?", or straight away with Refresh now,":"")+" and shown in the table and chart above. Windy covers about 6 days.";
-    if(!S){$("sites").innerHTML="";return;}
+    if(!S){$("sites").innerHTML="";$("sitesSum").textContent=st==="error"?"Couldn't reach the data":"";return;}
     const tile=(name,src,e,okText)=>{if(!src)return `<div class="${e?"failed":"none"}"><span class="sn"><i></i>${esc(name)}</span><span>${e?"Failed: "+esc(e):"No data yet"}</span></div>`;
       const old=Date.now()-Date.parse(src.fetched)>12*3600e3;
       return `<div class="${e?"failed":old?"stale":""}"><span class="sn"><i></i>${esc(name)}</span><span>${e?"Last run failed; showing data from "+ago(src.fetched):okText||"Updated "+ago(src.fetched)}</span></div>`;};
@@ -1196,10 +1308,21 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     $("sites").innerHTML=[{id:"bom",name:"BOM (scraped copy)"},...SITES].map(s=>tile(s.name,siteSrc(s.id),errs[s.id])).join("")+
       tile("BOM observations",S.observations,errs.observations,S.observations&&S.observations.station?esc(S.observations.station)+", updated "+ago(S.observations.fetched):null)+
       marineTile("Seabreeze","seabreeze")+marineTile("Windfinder","windfinder");
+    // One line for when the section is folded: how many sources have figures, the latest update, and any failures
+    const all=[{id:"bom"},...SITES].map(s=>({src:siteSrc(s.id),e:errs[s.id]})),got=all.filter(x=>x.src),bad=all.filter(x=>x.e).length;
+    const newest=Math.max(...got.map(x=>Date.parse(x.src.fetched)).filter(isFinite));
+    $("sitesSum").textContent=`${got.length} of ${all.length} sources`+(isFinite(newest)?` · updated ${ago(new Date(newest).toISOString())}`:"")+(bad?` · ${bad} failed`:"");
   }
+  // The Forecast sites section starts folded; opening or folding it is remembered on this device
+  const FOLD_KEY="aus-forecast-sites-open";
+  try{if(localStorage.getItem(FOLD_KEY)==="open")$("sitesFold").open=true;}catch(e){}
+  $("sitesFold").addEventListener("toggle",()=>{try{localStorage.setItem(FOLD_KEY,$("sitesFold").open?"open":"closed");}catch(e){}});
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
   document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{state.measure=b.dataset.m;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));if(state.data)renderChart();}));
   $("refresh").addEventListener("click",()=>{if(state.loc)load();});
+  // Coming back to the page (a phone tab left open overnight): fetch again if the figures are over 15 minutes old
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"&&state.loc&&!$("refresh").disabled&&!(Date.now()-(state.data?.fetched||0)<15*60e3))load();});
   if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>state.data&&renderChart());
 
   // Switch place: show what this device last saved for it straight away, then fetch fresh figures.
