@@ -1,6 +1,6 @@
 {
  "id": "port-douglas",
- "generated": "2026-11-04T16:09:11Z",
+ "generated": "2026-11-04T16:23:25Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-04T16:08:44Z"
+   "fetched": "2026-11-04T16:22:59Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:08:46Z"
+   "fetched": "2026-11-04T16:23:02Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-04T16:09:00Z"
+   "fetched": "2026-11-04T16:23:14Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:09:07Z"
+   "fetched": "2026-11-04T16:23:21Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-04T16:09:07Z"
+   "fetched": "2026-11-04T16:23:21Z"
   },
   {
    "source": "icon",
@@ -3448,7 +3448,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-04T16:09:07Z"
+   "fetched": "2026-11-04T16:23:22Z"
   },
   {
    "source": "foreca",
@@ -3751,22 +3751,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-04T16:09:11Z"
+   "fetched": "2026-11-04T16:23:25Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Low Isles",
   "distance_km": 15.3,
-  "time": "2026-11-05T02:00:00+10:00",
-  "temp": 25.6,
-  "feels_like": 27.7,
+  "time": "2026-11-05T02:10:00+10:00",
+  "temp": 25.5,
+  "feels_like": 28,
   "humidity": 83,
   "wind_dir": "W",
-  "wind_kmh": 15,
-  "gust_kmh": 19,
+  "wind_kmh": 13,
+  "gust_kmh": 17,
   "rain_since_9am": 0,
-  "fetched": "2026-11-04T16:08:23Z"
+  "fetched": "2026-11-04T16:22:37Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3943,7 +3943,7 @@
       "wind_dir": "ENE"
      },
      "2026-11-07": {
-      "wind_max": 12,
+      "wind_max": 11,
       "gust_max": 24,
       "wind_dir": "ENE"
      },
@@ -4297,7 +4297,7 @@
     "windfinder_place": "Fourmile Beach"
    }
   ],
-  "fetched": "2026-11-04T16:08:43Z"
+  "fetched": "2026-11-04T16:22:59Z"
  },
  "errors": {}
 }
