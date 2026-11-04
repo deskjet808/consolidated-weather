@@ -1,6 +1,6 @@
 {
  "id": "yeppoon",
- "generated": "2026-11-04T16:13:28Z",
+ "generated": "2026-11-04T16:25:40Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-04T16:12:00Z"
+   "fetched": "2026-11-04T16:25:15Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:12:03Z"
+   "fetched": "2026-11-04T16:25:17Z"
   },
   {
    "source": "weatherzone",
@@ -930,14 +930,14 @@
    "hourly": {
     "start": "2026-11-05T03",
     "temp": [
-     22.8,
      22.7,
+     22.6,
      22.4,
-     23,
-     24.7,
+     22.9,
+     24.6,
      26.9,
-     28.8,
-     30.1,
+     28.7,
+     30,
      30.7,
      31.3,
      31.1,
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-04T16:12:17Z"
+   "fetched": "2026-11-04T16:25:29Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:12:24Z"
+   "fetched": "2026-11-04T16:25:36Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-04T16:13:24Z"
+   "fetched": "2026-11-04T16:25:36Z"
   },
   {
    "source": "icon",
@@ -3447,7 +3447,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-04T16:13:24Z"
+   "fetched": "2026-11-04T16:25:36Z"
   },
   {
    "source": "foreca",
@@ -3750,22 +3750,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-04T16:13:28Z"
+   "fetched": "2026-11-04T16:25:40Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Yeppoon",
   "distance_km": 0.3,
-  "time": "2026-11-05T02:00:00+10:00",
-  "temp": 23.1,
-  "feels_like": 27.2,
+  "time": "2026-11-05T02:20:00+10:00",
+  "temp": 23,
+  "feels_like": 27.5,
   "humidity": 91,
-  "wind_dir": "WSW",
-  "wind_kmh": 2,
-  "gust_kmh": 7,
+  "wind_dir": "CALM",
+  "wind_kmh": 0,
+  "gust_kmh": 0,
   "rain_since_9am": 0,
-  "fetched": "2026-11-04T16:11:49Z"
+  "fetched": "2026-11-04T16:25:03Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4055,7 +4055,7 @@
     "windfinder_place": "Rosslyn Bay"
    }
   ],
-  "fetched": "2026-11-04T16:12:00Z"
+  "fetched": "2026-11-04T16:25:14Z"
  },
  "errors": {}
 }

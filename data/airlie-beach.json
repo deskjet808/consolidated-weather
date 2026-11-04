@@ -1,6 +1,6 @@
 {
  "id": "airlie-beach",
- "generated": "2026-11-04T16:16:04Z",
+ "generated": "2026-11-04T16:28:15Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-04T16:13:38Z"
+   "fetched": "2026-11-04T16:25:50Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:13:40Z"
+   "fetched": "2026-11-04T16:25:53Z"
   },
   {
    "source": "weatherzone",
@@ -931,13 +931,13 @@
    "hourly": {
     "start": "2026-11-05T03",
     "temp": [
+     25.2,
+     25,
      24.9,
-     24.8,
-     24.8,
      25.1,
-     26,
+     26.1,
      26.9,
-     27.6,
+     27.7,
      28.1,
      28.3,
      28.2,
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-04T16:13:53Z"
+   "fetched": "2026-11-04T16:26:03Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-04T16:13:59Z"
+   "fetched": "2026-11-04T16:26:10Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-04T16:16:00Z"
+   "fetched": "2026-11-04T16:28:10Z"
   },
   {
    "source": "icon",
@@ -3448,7 +3448,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-04T16:16:01Z"
+   "fetched": "2026-11-04T16:28:10Z"
   },
   {
    "source": "foreca",
@@ -3751,22 +3751,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-04T16:16:04Z"
+   "fetched": "2026-11-04T16:28:15Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hamilton Island",
   "distance_km": 27.1,
-  "time": "2026-11-05T02:10:00+10:00",
-  "temp": 25.2,
-  "feels_like": 22.2,
+  "time": "2026-11-05T02:20:00+10:00",
+  "temp": 25.3,
+  "feels_like": 23.2,
   "humidity": 87,
   "wind_dir": "NW",
-  "wind_kmh": 43,
-  "gust_kmh": 54,
+  "wind_kmh": 39,
+  "gust_kmh": 50,
   "rain_since_9am": 0,
-  "fetched": "2026-11-04T16:13:29Z"
+  "fetched": "2026-11-04T16:25:41Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4013,7 +4013,7 @@
     "windfinder_place": "Shute Harbour"
    }
   ],
-  "fetched": "2026-11-04T16:13:38Z"
+  "fetched": "2026-11-04T16:25:50Z"
  },
  "errors": {}
 }
