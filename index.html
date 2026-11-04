@@ -1320,10 +1320,12 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     $("sites").innerHTML=[{id:"bom",name:"BOM (scraped copy)"},...SITES].map(s=>tile(s.name,siteSrc(s.id),errs[s.id])).join("")+
       tile("BOM observations",S.observations,errs.observations,S.observations&&S.observations.station?esc(S.observations.station)+", updated "+ago(S.observations.fetched):null)+
       marineTile("Seabreeze","seabreeze")+marineTile("Windfinder","windfinder");
-    // One line for when the section is folded: how many sources have figures, the latest update, and any failures
-    const all=[{id:"bom"},...SITES].map(s=>({src:siteSrc(s.id),e:errs[s.id]})),got=all.filter(x=>x.src),bad=all.filter(x=>x.e).length;
-    const newest=Math.max(...got.map(x=>Date.parse(x.src.fetched)).filter(isFinite));
-    $("sitesSum").textContent=`${got.length} of ${all.length} sources`+(isFinite(newest)?` · updated ${ago(new Date(newest).toISOString())}`:"")+(bad?` · ${bad} failed`:"");
+    // One line for when the section is folded, counting every card below: how many have figures, the latest
+    // update, and any failures
+    const cards=[...$("sites").children],got=cards.filter(c=>!c.classList.contains("none")&&!c.classList.contains("failed")).length;
+    const bad=cards.filter(c=>c.classList.contains("failed")).length;
+    const newest=Math.max(...[...[{id:"bom"},...SITES].map(s=>siteSrc(s.id)),S.observations,M].filter(Boolean).map(x=>Date.parse(x.fetched)).filter(isFinite));
+    $("sitesSum").textContent=`${got} of ${cards.length} sources`+(isFinite(newest)?` · updated ${ago(new Date(newest).toISOString())}`:"")+(bad?` · ${bad} failed`:"");
   }
   // The Forecast sites section starts folded; opening or folding it is remembered on this device
   const FOLD_KEY="aus-forecast-sites-open";
