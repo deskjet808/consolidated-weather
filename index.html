@@ -228,10 +228,13 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .fold[open]>summary{margin-bottom:10px}
 .fold-body{display:flex;flex-direction:column;gap:10px}
 .hbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);min-width:0}
-.hchart{overflow:hidden;touch-action:pan-y}
+.hchart{overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.hchart.drag{cursor:grabbing}
 .hchart svg{width:100%;height:auto;display:block}
-.hswipe{font:.74rem var(--body);color:var(--muted);display:none}
-@media (hover:none) and (pointer:coarse){.hswipe{display:block}}
+.hswipe{font:.74rem var(--body);color:var(--muted)}
+.hnav{margin-left:auto;display:flex;gap:6px}
+.hnav .btn{font:600 1.15rem/1 var(--body);min-width:38px;justify-content:center}
+.hnav .btn:disabled{opacity:.35;cursor:default}
 .hchart .ax{font:10px var(--mono);fill:var(--muted)}
 .hchart .tl{font:600 11px var(--mono);fill:var(--fg)}
 .hstory{margin:0;font:600 1rem/1.4 var(--body)}
@@ -466,11 +469,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   </section>
 
   <section aria-labelledby="hourh">
-    <h2 id="hourh"><i data-ui="clock"></i><span id="hourt">Hour by hour</span></h2>
+    <h2 id="hourh"><i data-ui="clock"></i><span id="hourt">Hour by hour</span><span class="hnav"><button class="btn icon" id="hprev" type="button" aria-label="Previous day">‹</button><button class="btn icon" id="hnext" type="button" aria-label="Next day">›</button></span></h2>
     <div class="hbox">
     <p class="hstory" id="hstory"></p>
     <div class="hchart" id="hchart"></div>
-    <p class="hswipe">Swipe the chart left or right for the next or previous day.</p>
+    <p class="hswipe">Swipe or drag the chart sideways, or use the arrows, to change day.</p>
     <div class="hlegend"><span><i style="background:var(--warm)"></i>Temperature</span><span><i style="background:var(--warm);opacity:.25"></i>Range across sources</span><span><i style="background:var(--rain)"></i>Chance of rain</span><span><i style="background:var(--sky-sun);border:1px solid var(--line)"></i>Sunny</span><span><i style="background:var(--sky-cloud);border:1px solid var(--line)"></i>Cloudy</span><span><i style="background:var(--sky-rain);border:1px solid var(--line)"></i>Rain</span><span><i style="background:var(--sky-storm);border:1px solid var(--line)"></i>Storms</span></div>
     <p class="note" id="hnote"></p>
     </div>
@@ -1076,6 +1079,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   function renderHourly(k){
     const H=hoursFor(k),have=H.filter(x=>isNum(x.temp)),sun=sunHours(k),today=state.sel===0;
     const dt=new Date(k+"T12:00:00");
+    $("hprev").disabled=state.sel<=0;$("hnext").disabled=state.sel>=6;
     $("hourt").textContent="Hour by hour · "+(today?"Today":state.sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
     if(!have.length){$("hstory").textContent="";$("hchart").innerHTML='<p class="note">No hourly forecasts for this day yet.</p>';$("hnote").textContent="";return;}
     $("hstory").innerHTML=hourStory(H,sun);
@@ -1341,10 +1345,21 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   // Hour by hour on a phone: swipe left for the next day, right for the one before (the 7-day strip follows)
   function pickDay(i){if(!state.data||i<0||i>6||i===state.sel)return;state.sel=i;
     document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();}
+  // ... and on a computer: drag it with the mouse, swipe sideways with two fingers on a touchpad, or the ‹ › buttons
+  const swiped=(dx,dy)=>{if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))pickDay(state.sel+(dx<0?1:-1));};
   let swipe=null;
   $("hchart").addEventListener("touchstart",e=>{const t=e.touches[0];swipe=e.touches.length===1?{x:t.clientX,y:t.clientY}:null;},{passive:true});
-  $("hchart").addEventListener("touchend",e=>{if(!swipe)return;const t=e.changedTouches[0],dx=t.clientX-swipe.x,dy=t.clientY-swipe.y;swipe=null;
-    if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))pickDay(state.sel+(dx<0?1:-1));},{passive:true});
+  $("hchart").addEventListener("touchend",e=>{if(!swipe)return;const t=e.changedTouches[0];swiped(t.clientX-swipe.x,t.clientY-swipe.y);swipe=null;},{passive:true});
+  let drag=null;
+  $("hchart").addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button!==0)return;drag={x:e.clientX,y:e.clientY};$("hchart").classList.add("drag");});
+  addEventListener("pointerup",e=>{if(!drag)return;swiped(e.clientX-drag.x,e.clientY-drag.y);drag=null;$("hchart").classList.remove("drag");});
+  // A touchpad's sideways swipe arrives as sideways scrolling: add it up, then change day once per swipe
+  let wheelX=0,wheelWait=0,wheelLast=0;
+  $("hchart").addEventListener("wheel",e=>{if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();
+    const now=Date.now();if(now<wheelWait)return;if(now-wheelLast>300)wheelX=0;wheelLast=now;wheelX+=e.deltaX;
+    if(Math.abs(wheelX)>80){pickDay(state.sel+(wheelX>0?1:-1));wheelX=0;wheelWait=Date.now()+600;}},{passive:false});
+  $("hprev").addEventListener("click",()=>pickDay(state.sel-1));
+  $("hnext").addEventListener("click",()=>pickDay(state.sel+1));
   // The chart is drawn to fit its width, so redraw it when the window changes size (or the phone turns)
   let hResize=0;addEventListener("resize",()=>{clearTimeout(hResize);hResize=setTimeout(()=>{if(state.data)renderHourly(dates()[state.sel]);},150);});
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
