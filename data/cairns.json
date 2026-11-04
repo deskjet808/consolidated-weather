@@ -1,6 +1,6 @@
 {
  "id": "cairns",
- "generated": "2026-11-04T01:23:59Z",
+ "generated": "2026-11-04T01:17:56Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-04T01:23:36Z"
+   "fetched": "2026-11-04T01:15:32Z"
   },
   {
    "source": "willyweather",
@@ -166,7 +166,7 @@
      "text": "Partly cloudy"
     }
    ],
-   "fetched": "2026-11-04T01:23:38Z"
+   "fetched": "2026-11-04T01:15:34Z"
   },
   {
    "source": "weatherzone",
@@ -244,7 +244,7 @@
      "text": "Clearing shower"
     }
    ],
-   "fetched": "2026-11-04T01:23:51Z"
+   "fetched": "2026-11-04T01:15:47Z"
   },
   {
    "source": "windy",
@@ -318,7 +318,7 @@
     }
    ],
    "point": "mblue model",
-   "fetched": "2026-11-04T01:23:58Z"
+   "fetched": "2026-11-04T01:15:54Z"
   },
   {
    "source": "ecmwf",
@@ -430,7 +430,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-16.919&longitude=145.779&models=ecmwf_ifs",
-   "fetched": "2026-11-04T01:23:58Z"
+   "fetched": "2026-11-04T01:17:55Z"
   },
   {
    "source": "icon",
@@ -529,7 +529,7 @@
     }
    ],
    "url": "https://open-meteo.com/en/docs?latitude=-16.919&longitude=145.779&models=icon_seamless",
-   "fetched": "2026-11-04T01:23:59Z"
+   "fetched": "2026-11-04T01:17:55Z"
   },
   {
    "source": "foreca",
@@ -540,9 +540,9 @@
      "date": "2026-11-04",
      "tmax": 30,
      "tmin": 24,
-     "rain_min": 0.3,
-     "rain_max": 0.3,
-     "rain_text": "0.3 mm",
+     "rain_min": 0.4,
+     "rain_max": 0.4,
+     "rain_text": "0.4 mm",
      "chance": null,
      "text": "Partly cloudy and light rain"
     },
@@ -564,7 +564,7 @@
      "rain_max": 0,
      "rain_text": "0 mm",
      "chance": null,
-     "text": "Partly cloudy"
+     "text": "Clear"
     },
     {
      "date": "2026-11-07",
@@ -584,7 +584,7 @@
      "rain_max": 0.3,
      "rain_text": "0.3 mm",
      "chance": null,
-     "text": "Mostly clear"
+     "text": "Clear"
     },
     {
      "date": "2026-11-09",
@@ -600,9 +600,29 @@
      "date": "2026-11-10",
      "tmax": 30,
      "tmin": 24,
-     "rain_min": 2.1,
-     "rain_max": 2.1,
-     "rain_text": "2.1 mm",
+     "rain_min": 2.5,
+     "rain_max": 2.5,
+     "rain_text": "2.5 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-11",
+     "tmax": 30,
+     "tmin": 24,
+     "rain_min": 2.9,
+     "rain_max": 2.9,
+     "rain_text": "2.9 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
+     "date": "2026-11-12",
+     "tmax": 30,
+     "tmin": 23,
+     "rain_min": 1.5,
+     "rain_max": 1.5,
+     "rain_text": "1.5 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
@@ -630,14 +650,14 @@
      "date": "2026-11-13",
      "tmax": 31,
      "tmin": 23,
-     "rain_min": 2.8,
-     "rain_max": 2.8,
-     "rain_text": "2.8 mm",
+     "rain_min": 2.7,
+     "rain_max": 2.7,
+     "rain_text": "2.7 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     }
    ],
-   "fetched": "2026-11-04T01:23:59Z"
+   "fetched": "2026-11-04T01:17:56Z"
   }
  ],
  "observations": {
@@ -652,7 +672,7 @@
   "wind_kmh": 13,
   "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-04T01:23:15Z"
+  "fetched": "2026-11-04T01:15:11Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -1178,7 +1198,7 @@
     "windfinder_place": "Cairns (Tide)"
    }
   ],
-  "fetched": "2026-11-04T01:23:35Z"
+  "fetched": "2026-11-04T01:15:31Z"
  },
  "errors": {}
 }
