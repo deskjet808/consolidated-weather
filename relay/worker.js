@@ -1,10 +1,13 @@
 // Relay for the app's "Refresh now" button, run on Cloudflare Workers (free plan).
 // The app can't start a GitHub Actions run itself, because that needs a GitHub token and the app is a public
-// page. This relay keeps the token as a secret (GITHUB_TOKEN) and does only two things:
+// page. This relay keeps the token as a secret (GITHUB_TOKEN) and does only these things:
 //   POST /refresh?loc=<id>  start the scraper for that one featured location, unless its figures are under
 //                           FRESH_MINUTES old, a refresh for it is already running, or MAX_RUNNING are running
 //   GET  /data?loc=<id>     that location's data file straight from the repository (no CDN delay), and
 //                           whether a refresh for it is still running
+//   every 30 minutes        (the cron trigger in wrangler.toml) start the regular scraper run, which updates the
+//                           locations that are due. GitHub's own schedule often starts hours late; Cloudflare's
+//                           keeps time, and GitHub's stays as a backup. Skipped while a regular run is going.
 // Token: a fine-grained GitHub token for deskjet808/consolidated-weather only, with Actions read and write and
 // Contents read-only.
 const REPO = "deskjet808/consolidated-weather";
@@ -67,5 +70,28 @@ export default {
     });
     if (go.status !== 204) return reply({ error: "GitHub answered " + go.status }, 502);
     return reply({ status: "started", generated });
+  },
+
+  async scheduled(event, env) {
+    if (!env.GITHUB_TOKEN) throw new Error("relay has no token");
+    const headers = {
+      Authorization: "Bearer " + env.GITHUB_TOKEN,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "User-Agent": "aus-forecast-refresh",
+    };
+    const base = "https://api.github.com/repos/" + REPO + "/actions/workflows/" + WORKFLOW;
+    // A regular run is titled after the workflow ("Scrape forecasts"); one-location refreshes are "Refresh <id>"
+    const list = await fetch(base + "/runs?per_page=20", { headers });
+    if (list.ok) {
+      const busy = (await list.json()).workflow_runs.some((r) => r.status !== "completed" && !r.display_title.startsWith("Refresh "));
+      if (busy) return;
+    }
+    const go = await fetch(base + "/dispatches", {
+      method: "POST",
+      headers: { ...headers, "Content-Type": "application/json" },
+      body: JSON.stringify({ ref: "main" }),
+    });
+    if (go.status !== 204) throw new Error("GitHub answered " + go.status);
   },
 };

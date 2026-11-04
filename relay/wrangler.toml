@@ -3,3 +3,7 @@ name = "aus-forecast-refresh"
 main = "worker.js"
 compatibility_date = "2025-06-01"
 workers_dev = true
+
+# Start the regular scraper run every 30 minutes (the scheduled() handler in worker.js)
+[triggers]
+crons = ["7,37 * * * *"]
