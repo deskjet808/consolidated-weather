@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-05T10:41:33Z",
+ "generated": "2026-11-05T10:52:29Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T10:40:08Z"
+   "fetched": "2026-11-05T10:52:06Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:40:10Z"
+   "fetched": "2026-11-05T10:52:07Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-05T10:40:21Z"
+   "fetched": "2026-11-05T10:52:17Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:40:28Z"
+   "fetched": "2026-11-05T10:52:24Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T10:41:30Z"
+   "fetched": "2026-11-05T10:52:24Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-05T10:41:30Z"
+   "fetched": "2026-11-05T10:52:25Z"
   },
   {
    "source": "foreca",
@@ -3799,22 +3799,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T10:41:33Z"
+   "fetched": "2026-11-05T10:52:29Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hervey Bay",
   "distance_km": 27.6,
-  "time": "2026-11-05T20:30:00+10:00",
+  "time": "2026-11-05T20:40:00+10:00",
   "temp": 24.5,
   "feels_like": 26.4,
   "humidity": 90,
   "wind_dir": "N",
   "wind_kmh": 17,
-  "gust_kmh": 26,
+  "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T10:39:49Z"
+  "fetched": "2026-11-05T10:51:48Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4334,7 +4334,7 @@
     "windfinder_place": "Ungowa"
    }
   ],
-  "fetched": "2026-11-05T10:40:07Z"
+  "fetched": "2026-11-05T10:52:05Z"
  },
  "errors": {}
 }
