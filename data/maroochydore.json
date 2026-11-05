@@ -1,6 +1,6 @@
 {
  "id": "maroochydore",
- "generated": "2026-11-05T02:50:35Z",
+ "generated": "2026-11-05T02:57:17Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T02:50:09Z"
+   "fetched": "2026-11-05T02:56:50Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T02:50:12Z"
+   "fetched": "2026-11-05T02:56:52Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Chance shower or storm"
     ]
    },
-   "fetched": "2026-11-05T02:50:24Z"
+   "fetched": "2026-11-05T02:57:04Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T02:50:31Z"
+   "fetched": "2026-11-05T02:57:11Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T02:50:31Z"
+   "fetched": "2026-11-05T02:57:12Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Light rain"
     ]
    },
-   "fetched": "2026-11-05T02:50:32Z"
+   "fetched": "2026-11-05T02:57:12Z"
   },
   {
    "source": "foreca",
@@ -3771,22 +3771,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T02:50:35Z"
+   "fetched": "2026-11-05T02:57:17Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 6.3,
-  "time": "2026-11-05T12:40:00+10:00",
-  "temp": 35.5,
-  "feels_like": 33.2,
-  "humidity": 24,
-  "wind_dir": "NNW",
-  "wind_kmh": 15,
-  "gust_kmh": 22,
+  "time": "2026-11-05T12:50:00+10:00",
+  "temp": 32.6,
+  "feels_like": 31.5,
+  "humidity": 40,
+  "wind_dir": "NNE",
+  "wind_kmh": 19,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T02:49:49Z"
+  "fetched": "2026-11-05T02:56:31Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4311,7 +4311,7 @@
     "windfinder_place": "Mooloolaba (Tide)"
    }
   ],
-  "fetched": "2026-11-05T02:50:08Z"
+  "fetched": "2026-11-05T02:56:50Z"
  },
  "errors": {}
 }
