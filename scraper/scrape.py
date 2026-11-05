@@ -87,7 +87,7 @@ def compass(deg):
 
 
 def with_point(out, loc, place):
-    """Name the site's own place when it isn't the location itself (e.g. Eurong for K'gari)."""
+    """Name the site's own place when it isn't the location itself (e.g. Eurong for Fraser Island)."""
     p, n = clean(place).lower(), loc["name"].lower()
     if p and p not in n and n not in p:
         out["point"] = clean(place)
