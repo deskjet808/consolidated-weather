@@ -1,6 +1,6 @@
 {
  "id": "lake-atkinson",
- "generated": "2026-11-05T18:45:12Z",
+ "generated": "2026-11-05T18:56:25Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T18:44:49Z"
+   "fetched": "2026-11-05T18:54:00Z"
   },
   {
    "source": "willyweather",
@@ -850,7 +850,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:44:51Z"
+   "fetched": "2026-11-05T18:54:02Z"
   },
   {
    "source": "weatherzone",
@@ -1228,7 +1228,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:45:01Z"
+   "fetched": "2026-11-05T18:54:13Z"
   },
   {
    "source": "windy",
@@ -1793,7 +1793,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:45:08Z"
+   "fetched": "2026-11-05T18:54:19Z"
   },
   {
    "source": "ecmwf",
@@ -2684,7 +2684,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-05T18:45:08Z"
+   "fetched": "2026-11-05T18:56:20Z"
   },
   {
    "source": "icon",
@@ -3510,7 +3510,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:45:08Z"
+   "fetched": "2026-11-05T18:56:21Z"
   },
   {
    "source": "foreca",
@@ -3806,7 +3806,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:45:12Z"
+   "fetched": "2026-11-05T18:56:25Z"
   }
  ],
  "observations": {
@@ -3821,7 +3821,7 @@
   "wind_kmh": 0,
   "gust_kmh": 0,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T18:44:41Z"
+  "fetched": "2026-11-05T18:53:53Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3874,7 +3874,7 @@
     "windfinder_place": "Gatton"
    }
   ],
-  "fetched": "2026-11-05T18:44:48Z"
+  "fetched": "2026-11-05T18:54:00Z"
  },
  "errors": {}
 }

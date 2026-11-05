@@ -1,6 +1,6 @@
 {
  "id": "lake-maroon",
- "generated": "2026-11-05T18:45:45Z",
+ "generated": "2026-11-05T18:58:59Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T18:45:20Z"
+   "fetched": "2026-11-05T18:56:34Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:45:23Z"
+   "fetched": "2026-11-05T18:56:36Z"
   },
   {
    "source": "weatherzone",
@@ -883,8 +883,8 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 30,
-     "text": "Fog then sunny"
+     "chance": 40,
+     "text": "Late shower"
     },
     {
      "date": "2026-11-09",
@@ -893,7 +893,7 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 20,
+     "chance": 10,
      "text": "Sunny"
     },
     {
@@ -903,7 +903,7 @@
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
-     "chance": 70,
+     "chance": 80,
      "text": "Late shower"
     },
     {
@@ -923,7 +923,7 @@
      "rain_min": 1,
      "rain_max": 5,
      "rain_text": "1-5mm",
-     "chance": 70,
+     "chance": 60,
      "text": "Possible thunderstorm"
     }
    ],
@@ -1227,7 +1227,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:45:34Z"
+   "fetched": "2026-11-05T18:56:47Z"
   },
   {
    "source": "windy",
@@ -1295,9 +1295,9 @@
      "rain_text": "0 mm",
      "chance": null,
      "text": null,
-     "wind_max": 18,
-     "gust_max": 38,
-     "wind_dir": "N"
+     "wind_max": 14,
+     "gust_max": 36,
+     "wind_dir": "NNW"
     }
    ],
    "point": "mblue model",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:45:40Z"
+   "fetched": "2026-11-05T18:56:54Z"
   },
   {
    "source": "ecmwf",
@@ -3804,22 +3804,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:45:45Z"
+   "fetched": "2026-11-05T18:58:59Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beaudesert AWS",
   "distance_km": 38.2,
-  "time": "2026-11-06T04:40:00+10:00",
-  "temp": 17.8,
-  "feels_like": 19.6,
+  "time": "2026-11-06T04:50:00+10:00",
+  "temp": 17.7,
+  "feels_like": 19.4,
   "humidity": 86,
   "wind_dir": "CALM",
   "wind_kmh": 0,
   "gust_kmh": 0,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T18:45:13Z"
+  "fetched": "2026-11-05T18:56:27Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3845,19 +3845,22 @@
       "wind_dir": "SSE"
      },
      "2026-11-09": {
-      "wind_max": 13,
-      "gust_max": 28,
+      "wind_max": 14,
+      "gust_max": 29,
       "wind_dir": "ENE"
      },
      "2026-11-10": {
-      "wind_max": 19,
-      "gust_max": 39,
+      "wind_max": 14,
+      "gust_max": 36,
       "wind_dir": "N"
      }
     }
    }
   ],
-  "fetched": "2026-11-05T18:45:20Z"
+  "fetched": "2026-11-05T18:56:33Z"
  },
- "errors": {}
+ "errors": {
+  "ecmwf": "HTTPError: 503 Server Error: Service Unavailable for url: https://api.open-meteo.com/v1/forecast?latitude=-28.17&longitude=152.67&models=ecmwf_ifs&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,weather_code,wind_speed_10m_max,wind_gusts_10m_max,wind_direc",
+  "icon": "HTTPError: 503 Server Error: Service Unavailable for url: https://api.open-meteo.com/v1/forecast?latitude=-28.17&longitude=152.67&models=icon_seamless&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,weather_code,wind_speed_10m_max,wind_gusts_10m_max,wind_d"
+ }
 }
