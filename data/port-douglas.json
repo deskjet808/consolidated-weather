@@ -1,6 +1,6 @@
 {
  "id": "port-douglas",
- "generated": "2026-11-05T10:50:14Z",
+ "generated": "2026-11-05T10:54:50Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T10:47:50Z"
+   "fetched": "2026-11-05T10:54:26Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:47:52Z"
+   "fetched": "2026-11-05T10:54:28Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-05T10:48:03Z"
+   "fetched": "2026-11-05T10:54:38Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:48:10Z"
+   "fetched": "2026-11-05T10:54:45Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-05T10:50:10Z"
+   "fetched": "2026-11-05T10:54:45Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Fog"
     ]
    },
-   "fetched": "2026-11-05T10:50:11Z"
+   "fetched": "2026-11-05T10:54:46Z"
   },
   {
    "source": "foreca",
@@ -3798,22 +3798,22 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-05T10:50:14Z"
+   "fetched": "2026-11-05T10:54:50Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Low Isles",
   "distance_km": 15.3,
-  "time": "2026-11-05T20:40:00+10:00",
-  "temp": 26.5,
-  "feels_like": 29.4,
-  "humidity": 82,
-  "wind_dir": "NE",
-  "wind_kmh": 13,
-  "gust_kmh": 15,
+  "time": "2026-11-05T20:50:00+10:00",
+  "temp": 26.4,
+  "feels_like": 29.9,
+  "humidity": 81,
+  "wind_dir": "NNE",
+  "wind_kmh": 9,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T10:47:29Z"
+  "fetched": "2026-11-05T10:54:08Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4344,7 +4344,7 @@
     "windfinder_place": "Fourmile Beach"
    }
   ],
-  "fetched": "2026-11-05T10:47:49Z"
+  "fetched": "2026-11-05T10:54:26Z"
  },
  "errors": {}
 }

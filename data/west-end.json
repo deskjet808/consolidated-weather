@@ -1,6 +1,6 @@
 {
  "id": "west-end",
- "generated": "2026-11-05T10:44:03Z",
+ "generated": "2026-11-05T10:52:53Z",
  "sources": [
   {
    "source": "bom",
@@ -35,7 +35,7 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 40,
-     "text": "Possible shower."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-08",
@@ -45,7 +45,7 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 30,
-     "text": "Possible shower."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-09",
@@ -55,7 +55,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 10,
-     "text": "Partly cloudy."
+     "text": "Mostly sunny."
     },
     {
      "date": "2026-11-10",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T10:41:34Z"
+   "fetched": "2026-11-05T10:52:30Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:41:37Z"
+   "fetched": "2026-11-05T10:52:32Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-05T10:41:51Z"
+   "fetched": "2026-11-05T10:52:42Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T10:41:58Z"
+   "fetched": "2026-11-05T10:52:48Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T10:41:58Z"
+   "fetched": "2026-11-05T10:52:49Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T10:43:59Z"
+   "fetched": "2026-11-05T10:52:49Z"
   },
   {
    "source": "foreca",
@@ -3680,7 +3680,7 @@
     "temp": [
      28,
      27,
-     26,
+     25,
      24,
      22,
      22,
@@ -3702,7 +3702,7 @@
      24,
      23,
      22,
-     21,
+     22,
      21,
      21,
      20
@@ -3798,22 +3798,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T10:44:03Z"
+   "fetched": "2026-11-05T10:52:53Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane",
   "distance_km": 2.7,
-  "time": "2026-11-05T20:30:00+10:00",
-  "temp": 27.8,
-  "feels_like": 26.7,
-  "humidity": 30,
+  "time": "2026-11-05T20:40:00+10:00",
+  "temp": 27.9,
+  "feels_like": 26.3,
+  "humidity": 29,
   "wind_dir": "WSW",
-  "wind_kmh": 4,
-  "gust_kmh": 7,
+  "wind_kmh": 6,
+  "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T10:41:34Z"
+  "fetched": "2026-11-05T10:52:30Z"
  },
  "errors": {}
 }
