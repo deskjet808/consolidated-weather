@@ -1,6 +1,6 @@
 {
  "id": "lake-maroon",
- "generated": "2026-11-05T02:49:49Z",
+ "generated": "2026-11-05T02:56:31Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T02:47:23Z"
+   "fetched": "2026-11-05T02:56:04Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T02:47:26Z"
+   "fetched": "2026-11-05T02:56:06Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-05T02:47:38Z"
+   "fetched": "2026-11-05T02:56:17Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T02:47:45Z"
+   "fetched": "2026-11-05T02:56:24Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T02:47:45Z"
+   "fetched": "2026-11-05T02:56:25Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-05T02:49:46Z"
+   "fetched": "2026-11-05T02:56:26Z"
   },
   {
    "source": "foreca",
@@ -3772,22 +3772,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T02:49:49Z"
+   "fetched": "2026-11-05T02:56:31Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beaudesert AWS",
   "distance_km": 38.2,
-  "time": "2026-11-05T12:40:00+10:00",
-  "temp": 34.4,
-  "feels_like": 32.4,
-  "humidity": 23,
-  "wind_dir": "W",
-  "wind_kmh": 11,
-  "gust_kmh": 22,
+  "time": "2026-11-05T12:50:00+10:00",
+  "temp": 34.2,
+  "feels_like": 30,
+  "humidity": 19,
+  "wind_dir": "WNW",
+  "wind_kmh": 19,
+  "gust_kmh": 37,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T02:47:16Z"
+  "fetched": "2026-11-05T02:55:57Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3825,7 +3825,7 @@
     }
    }
   ],
-  "fetched": "2026-11-05T02:47:23Z"
+  "fetched": "2026-11-05T02:56:04Z"
  },
  "errors": {}
 }
