@@ -261,7 +261,22 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .tweek button[aria-pressed="true"]{background:var(--accent-soft);border-radius:8px}
 .tweek .tdn{grid-row:span 2;font:700 1rem var(--display)}
 .tweek .th{color:var(--rain);font-weight:500} .tweek .tl{color:var(--muted)}
-@media (max-width:560px){.tnext{margin-left:0;width:100%}.tnext div{flex:1}}
+.tsum{margin:0;font:1rem/1.4 var(--body)}
+.tsum b{font-weight:600}
+.tchartwrap{position:relative}
+.tweek button{grid-template-columns:5.2em 1fr auto}
+.tweek .tboat{grid-column:3;grid-row:1/span 2;display:grid;place-items:center;width:30px;height:30px;border-radius:50%}
+.tweek .tboat .ui{width:17px;height:17px}
+.tweek .tboat.calm{color:var(--good);background:color-mix(in srgb,var(--good) 15%,transparent)}
+.tweek .tboat.choppy{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}
+.tweek .tboat.rough{color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,transparent)}
+.tweek .tboat.unknown{color:var(--muted)}
+.tweek .tboat.none{visibility:hidden}
+.tweek button.tmore{display:block;text-align:center;font:600 .85rem var(--body);color:var(--accent);padding:9px}
+.tweek .th,.tweek .tl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+@media (max-width:560px){.tnext{margin-left:0;width:100%}.tnext div{flex:1}
+  .tweek button{grid-template-columns:3.9em 1fr auto;gap:2px 8px;padding:7px 4px;font-size:.76rem}
+  .tweek .tdn{font-size:.92rem}}
 .hours b{font:600 1rem var(--mono);white-space:nowrap}
 .hours b small{font-size:.62rem;font-weight:500;color:var(--muted)}
 .hourhd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;font-size:.78rem;color:var(--muted);margin-bottom:-4px}
@@ -505,9 +520,10 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <h2 id="tideh"><i data-ui="tide"></i><span id="tidet">Tides</span><span class="hnav"><button class="btn icon" id="tprev" type="button" aria-label="Previous day">‹</button><button class="btn icon" id="tnext" type="button" aria-label="Next day">›</button></span></h2>
     <div class="hbox">
     <div class="ttabs" id="ttabs" role="group" aria-label="Choose a water"></div>
+    <p class="tsum" id="tsum" role="status"></p>
     <div class="tnow" id="tnow"></div>
-    <div class="hchart" id="tchart"></div>
-    <p class="hswipe">Swipe or drag the chart sideways, or use the arrows, to change day. Shaded = night.</p>
+    <div class="tchartwrap"><div class="hchart" id="tchart"></div><div class="tip" id="ttip" hidden></div></div>
+    <p class="hswipe">Tap or hover on the curve to read the tide at any time. Swipe or drag sideways, or use the arrows, to change day. Shaded = night; green = good time to launch.</p>
     <div class="tlaunch" id="tlaunch"></div>
     <div class="tweek" id="tweek" role="group" aria-label="Choose a day"></div>
     </div>
@@ -1149,42 +1165,66 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   }
 
   // Tides: WillyWeather's high and low tides for each tidal water at the location (not lakes), drawn as a curve
-  // for the chosen day, with the tide right now, the next two turns, a launch hint and the week's tides.
+  // for the chosen day, with a one-line summary, the tide right now, the next two turns, a launch hint and the week.
   // Times are handled as local wall-clock time written as if UTC, so a day is simply 24 hours from midnight.
   function wallMs(t){const p=new Intl.DateTimeFormat("en-CA",{timeZone:state.loc.tz,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(t);
-    const g=x=>+p.find(y=>y.type===x).value;return Date.UTC(g("year"),g("month")-1,g("day"),g("hour"),g("minute"));}
+    const g=x=>+p.find(y=>y.type===x).value;return Date.UTC(g("year"),g("month")-1,g("day"),g("hour")%24,g("minute"));}
   const dayMs=k=>Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10));
   function tideMs(k,t){const m=String(t).match(/(\d+):(\d+)\s*(am|pm)/i);if(!m)return null;return dayMs(k)+((+m[1]%12+(m[3].toLowerCase()==="pm"?12:0))*60+ +m[2])*6e4;}
   const clock=ms=>{const d=new Date(ms),h=d.getUTCHours(),m=d.getUTCMinutes();return (h%12||12)+":"+String(m).padStart(2,"0")+(h<12?" am":" pm");};
   const span=min=>{min=Math.round(min);return min<60?min+" min":Math.floor(min/60)+" h"+(min%60?" "+min%60+" min":"");};
+  const TIDE_KEY="aus-forecast-tide-water";
   function tideWaters(){const M=state.data?.scraped?.marine,got=M&&Array.isArray(M.waters)?M.waters:[];
     return (state.loc.waters||[]).map((w,i)=>({w,i,mw:got.find(x=>x.name===w.name)})).filter(x=>x.w.kind!=="lake"&&x.mw&&x.mw.tides&&Object.keys(x.mw.tides).length);}
   function tideTurns(tides){return Object.keys(tides).sort().flatMap(k=>(tides[k]||[]).map(t=>({high:t.type==="high",ms:tideMs(k,t.time),m:t.height_m}))).filter(t=>t.ms!=null&&isNum(t.m)).sort((a,b)=>a.ms-b.ms);}
   // Between two turns the water follows half a cosine, the usual shape of a tide
   function tideAt(E,ms){for(let i=0;i<E.length-1;i++){const a=E[i],b=E[i+1];if(ms>=a.ms&&ms<=b.ms){const f=(ms-a.ms)/(b.ms-a.ms);return a.m+(b.m-a.m)*(1-Math.cos(Math.PI*f))/2;}}return null;}
+  const tideRising=(E,ms)=>{const n=E.find(e=>e.ms>ms);return n?n.high:null;};
   function sunMs(k){const b=state.data?.bom?.daily?.[k],d=dayMs(k);
     return{rise:b?.rise?wallMs(new Date(b.rise)):d+6*36e5,set:b?.set?wallMs(new Date(b.set)):d+18*36e5};}
+  // Good times to launch on day k: up to 90 minutes either side of each daylight high tide, rated by the
+  // Bureau's strongest wind on that water in that time (rate null when the Bureau's forecast doesn't reach it)
+  function launchWins(E,k,hrs){const d0=dayMs(k),sun=sunMs(k);
+    return E.filter(e=>e.high&&e.ms>=d0&&e.ms<d0+864e5).map(e=>{const a=Math.max(e.ms-90*6e4,sun.rise),b=Math.min(e.ms+90*6e4,sun.set);
+      const ws=hrs.filter(h=>{const t=wallMs(new Date(h.time));return t>a-36e5&&t<=b;}).map(h=>h.wind),wm=ws.length?Math.max(...ws):null;
+      return{e,a,b,wm,rate:wm==null?null:wm<15?"calm":wm<=25?"choppy":"rough"};}).filter(v=>v.b-v.a>=30*6e4);}
+  const RATE_WORD={calm:"calm",choppy:"choppy",rough:"rough"};
   function renderTides(k){
     const T=state.loc.kind==="full"?tideWaters():[],sec=$("tideSec");sec.hidden=!T.length;document.querySelector('.jump a[href="#tideh"]').hidden=!T.length;
     if(!T.length)return;
+    // The water you picked last time, wherever it's offered
+    if(state.tide==null){let saved=null;try{saved=localStorage.getItem(TIDE_KEY);}catch(e){}
+      state.tide=Math.max(0,T.findIndex(x=>x.w.name===saved||x.w.kind===saved));}
     if(!(state.tide<T.length))state.tide=0;
     const {w,i:wi,mw}=T[state.tide],E=tideTurns(mw.tides),spot=mw.tides_place||w.spot||w.name,sel=state.sel,ks=dates();
-    const dt=new Date(k+"T12:00:00");
-    $("tidet").textContent="Tides · "+(sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
+    const hrs=(state.data?.bom?.waters?.[wi]||[]).filter(h=>isNum(h.wind)&&h.time);
+    const dt=new Date(k+"T12:00:00"),dname=sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"});
+    $("tidet").textContent="Tides · "+dname;
     $("tprev").disabled=sel<=0;$("tnext").disabled=sel>=6;
     $("ttabs").hidden=T.length<2;
     $("ttabs").innerHTML=T.map((x,j)=>`<button type="button" data-t="${j}" aria-pressed="${j===state.tide}">${esc(x.w.name)}</button>`).join("");
-    // Right now
     const now=wallMs(new Date()),lv=tideAt(E,now),nx=E.filter(e=>e.ms>now).slice(0,2);
+    const wins=launchWins(E,k,hrs),d0=dayMs(k),sun=sunMs(k);
+    // One sentence for the day: the tide now (today only), the next turn, and the best launch still to come
+    const ahead=sel===0?wins.filter(v=>v.b>=now):wins,best=ahead.find(v=>v.rate!=="rough")||ahead[0];
+    const nextWin=!best&&sel<6?launchWins(E,ks[sel+1],hrs)[0]:null;
+    const launch=best?`best launch ${clock(best.a)} to ${clock(best.b)}${best.rate?", "+RATE_WORD[best.rate]:""}`
+      :(sel===0&&wins.length?"no more launch times today":"no high tide in daylight")+(nextWin?`; next ${sel===0?"tomorrow":"day"} ${clock(nextWin.a)} to ${clock(nextWin.b)}${nextWin.rate?", "+RATE_WORD[nextWin.rate]:""}`:"");
+    const dayHighs=E.filter(e=>e.high&&e.ms>=d0&&e.ms<d0+864e5);
+    $("tsum").innerHTML=sel===0&&lv!=null&&nx.length
+      ?`<b>${nx[0].high?"Rising":"Falling"} now</b> · ${nx[0].high?"high":"low"} tide ${clock(nx[0].ms)} (${nx[0].m} m) · ${launch}.`
+      :`<b>High tide ${dayHighs.map(e=>clock(e.ms)).join(" and ")||"–"}</b> · ${launch}.`;
+    // Right now
     $("tnow").hidden=lv==null||!nx.length;
     if(lv!=null&&nx.length){const up=nx[0].high;
       $("tnow").innerHTML=`<div class="tarr">${ui(up?"up":"down")}</div><div class="tst">${up?"Rising":"Falling"} · ${lv.toFixed(2)} m<small>${esc(spot)} · now, ${clock(now)}</small></div>
         <div class="tnext">${nx.map(e=>`<div>${e.high?"High":"Low"} in ${span((e.ms-now)/6e4)}<b>${clock(e.ms)} · ${e.m} m</b></div>`).join("")}</div>`;}
     // The day's curve
     const el=$("tchart"),W=Math.max(300,Math.min(900,Math.round(el.clientWidth||720))),every=W<560?6:3;
-    const L=34,R=12,top=28,ih=W<560?150:170,B=24,H=top+ih+B,d0=dayMs(k),sun=sunMs(k);
+    const L=34,R=12,top=28,ih=W<560?150:170,B=24,H=top+ih+B;
     const near=E.filter(e=>e.ms>=d0-864e5&&e.ms<=d0+2*864e5),mx=Math.max(2,Math.ceil(Math.max(0,...near.map(e=>e.m))*2)/2);
     const x=ms=>L+(ms-d0)/864e5*(W-L-R),y=m=>top+ih-m/mx*ih;
+    state.tgeo={E,d0,W,L,R,top,ih,x,y};
     let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tide height through the day, in metres, at ${esc(spot)}">`;
     s+=`<rect x="${x(d0)}" y="${top}" width="${Math.max(0,x(sun.rise)-x(d0)).toFixed(1)}" height="${ih}" style="fill:var(--sky-night)"/><rect x="${x(sun.set).toFixed(1)}" y="${top}" width="${Math.max(0,x(d0+864e5)-x(sun.set)).toFixed(1)}" height="${ih}" style="fill:var(--sky-night)"/>`;
     for(let m=0;m<=mx+1e-9;m+=.5)s+=`<line x1="${L}" x2="${W-R}" y1="${y(m)}" y2="${y(m)}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${y(m)+3.5}" text-anchor="end">${m}${m===mx?"m":""}</text>`;
@@ -1192,30 +1232,53 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const pts=[];for(let j=0;j<=144;j++){const ms=d0+j*6e5,v=tideAt(E,ms);if(v!=null)pts.push([x(ms).toFixed(1),y(v).toFixed(1)]);}
     if(pts.length>1){const line="M"+pts.map(p=>p.join(" ")).join("L");
       s+=`<path d="${line}L${pts.at(-1)[0]} ${y(0)}L${pts[0][0]} ${y(0)}Z" style="fill:var(--rain);opacity:.16"/><path d="${line}" style="fill:none;stroke:var(--rain);stroke-width:2.5;stroke-linejoin:round"/>`;}
+    // Launch windows as a green band along the bottom of the chart
+    wins.forEach(v=>{s+=`<rect x="${x(v.a).toFixed(1)}" y="${top+ih-5}" width="${(x(v.b)-x(v.a)).toFixed(1)}" height="5" rx="2" style="fill:var(--good);opacity:.8"/>`;});
     s+=`<text class="ax" x="${x(sun.rise)}" y="${top-8}" text-anchor="middle" style="fill:var(--warm)">sunrise ${clock(sun.rise).replace(" ","")}</text><text class="ax" x="${x(sun.set)}" y="${top-8}" text-anchor="middle" style="fill:var(--warm)">sunset ${clock(sun.set).replace(" ","")}</text>`;
     E.filter(e=>e.ms>=d0&&e.ms<=d0+864e5).forEach(e=>{const X=x(e.ms),Y=y(e.m),tx=Math.min(Math.max(X,L+40),W-R-40);
       s+=`<circle cx="${X}" cy="${Y}" r="4.5" style="fill:${e.high?"var(--rain)":"var(--surface)"};stroke:var(--rain);stroke-width:2"/><text class="tl" x="${tx}" y="${e.high?Y-9:Y+17}" text-anchor="middle">${clock(e.ms).replace(" ","")} · ${e.m}m</text>`;});
     if(now>=d0&&now<=d0+864e5&&lv!=null)s+=`<line x1="${x(now)}" x2="${x(now)}" y1="${top}" y2="${top+ih}" style="stroke:var(--accent);stroke-dasharray:3 3"/><circle cx="${x(now)}" cy="${y(lv)}" r="5" style="fill:var(--accent);stroke:var(--surface);stroke-width:2"/>`;
+    s+=`<g id="tcur" visibility="hidden"><line id="tcurl" y1="${top}" y2="${top+ih}" style="stroke:var(--fg);opacity:.5"/><circle id="tcurc" r="5" style="fill:var(--surface);stroke:var(--fg);stroke-width:2"/></g>`;
     el.innerHTML=pts.length>1?s+"</svg>":'<p class="note">No tide times for this day yet.</p>';
-    // A good time to launch: up to 90 minutes either side of a daytime high tide, with the Bureau's wind on that water
-    const highs=E.filter(e=>e.high&&e.ms>=d0&&e.ms<d0+864e5);
-    const wins=highs.map(e=>({e,a:Math.max(e.ms-90*6e4,sun.rise),b:Math.min(e.ms+90*6e4,sun.set)})).filter(v=>v.b-v.a>=30*6e4);
-    const hrs=(state.data?.bom?.waters?.[wi]||[]).filter(h=>isNum(h.wind)&&h.time);
+    $("ttip").hidden=true;
+    // Launch hint
     const lt=$("tlaunch");
     if(wins.length){lt.className="tlaunch";lt.innerHTML=ui("boat")+"<div>"+wins.map(v=>{
-        const ws=hrs.filter(h=>{const t=wallMs(new Date(h.time));return t>v.a-36e5&&t<=v.b;}).map(h=>h.wind),wm=ws.length?Math.max(...ws):null;
-        const rate=wm==null?"":wm<15?`, calm (wind up to ${f0(wm)} km/h)`:wm<=25?`, choppy (wind up to ${f0(wm)} km/h)`:`, but rough (wind up to ${f0(wm)} km/h)`;
-        const gone=v.b<now?" (already passed)":"";
+        const rate=v.wm==null?"":v.rate==="calm"?`, calm (wind up to ${f0(v.wm)} km/h)`:v.rate==="choppy"?`, choppy (wind up to ${f0(v.wm)} km/h)`:`, but rough (wind up to ${f0(v.wm)} km/h)`;
+        const gone=sel===0&&v.b<now?" (already passed)":"";
         return `<b>Good time to launch: ${clock(v.a)} to ${clock(v.b)}</b>${gone}, around the ${clock(v.e.ms)} high tide (${v.e.m} m)${rate}.`;}).join("<br>")+"</div>";}
     else{lt.className="tlaunch none";
-      lt.innerHTML=ui("boat")+`<div>No high tide in daylight${highs.length?" (high tide at "+highs.map(e=>clock(e.ms)).join(" and ")+")":""}. Near low tide, ramps and river bars can be shallow.</div>`;}
-    // The week: highs on one line, lows on the next
+      lt.innerHTML=ui("boat")+`<div>No high tide in daylight${dayHighs.length?" (high tide at "+dayHighs.map(e=>clock(e.ms)).join(" and ")+")":""}. Near low tide, ramps and river bars can be shallow.</div>`;}
+    // The week: highs on one line, lows on the next, and a boat coloured by the day's best launch
     const row=(list,cls,sym)=>`<span class="${cls}">${sym} ${list.length?list.map(t=>esc(String(t.time).replace(/\s+/g,""))+" "+t.height_m+"m").join(" · "):"–"}</span>`;
-    $("tweek").innerHTML=ks.map((d,j)=>{const t=mw.tides[d]||[];
-      return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="tdn">${j===0?"Today":new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric"})}</span>${row(t.filter(x=>x.type==="high"),"th","▲")}${row(t.filter(x=>x.type!=="high"),"tl","▼")}</button>`;}).join("");
+    const order=["calm","choppy","rough"];
+    const show=state.tideAll||sel>2?7:3;
+    $("tweek").innerHTML=ks.slice(0,show).map((d,j)=>{const t=mw.tides[d]||[],lw=launchWins(E,d,hrs);
+      const r=lw.map(v=>v.rate).filter(Boolean).sort((a,b)=>order.indexOf(a)-order.indexOf(b))[0]||(lw.length?"unknown":"none");
+      const tip=r==="none"?"No daylight high tide":r==="unknown"?"Daylight high tide, no wind forecast yet":"Best launch "+RATE_WORD[r];
+      return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="tdn">${j===0?"Today":new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric"})}</span>${row(t.filter(x=>x.type==="high"),"th","▲")}${row(t.filter(x=>x.type!=="high"),"tl","▼")}<span class="tboat ${r}" title="${tip}" aria-label="${tip}">${ui("boat")}</span></button>`;}).join("")
+      +(show<7?`<button type="button" class="tmore" id="tmore">Show all 7 days</button>`:state.tideAll&&sel<=2?`<button type="button" class="tmore" id="tmore">Show fewer</button>`:"");
   }
-  $("ttabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!state.data)return;state.tide=+b.dataset.t;renderTides(dates()[state.sel]);});
-  $("tweek").addEventListener("click",e=>{const b=e.target.closest("button");if(b)pickDay(+b.dataset.i);});
+  $("ttabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!state.data)return;state.tide=+b.dataset.t;
+    const T=tideWaters();try{localStorage.setItem(TIDE_KEY,T[state.tide].w.name);}catch(e){}renderTides(dates()[state.sel]);});
+  $("tweek").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    if(b.id==="tmore"){state.tideAll=!state.tideAll;renderTides(dates()[state.sel]);return;}pickDay(+b.dataset.i);});
+  // Tap or hover anywhere on the curve to read the tide at that time
+  function tidePoint(e){const g=state.tgeo,svg=$("tchart").querySelector("svg");if(!g||!svg)return;
+    const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)*g.W/r.width;
+    const ms=g.d0+Math.round((px-g.L)/(g.W-g.L-g.R)*1440/5)*5*6e4;if(ms<g.d0||ms>g.d0+864e5){tideTipOff();return;}
+    const v=tideAt(g.E,ms);if(v==null){tideTipOff();return;}const up=tideRising(g.E,ms);
+    const X=g.x(ms),Y=g.y(v);$("tcurl").setAttribute("x1",X);$("tcurl").setAttribute("x2",X);$("tcurc").setAttribute("cx",X);$("tcurc").setAttribute("cy",Y);
+    $("tcur").setAttribute("visibility","visible");
+    const t=$("ttip");t.innerHTML=`<b>${clock(ms)}</b> · ${v.toFixed(2)} m · ${up?"rising":"falling"}`;t.hidden=false;
+    const box=$("tchart").getBoundingClientRect();t.style.left=Math.min(Math.max(X*r.width/g.W,70),box.width-70)+"px";t.style.top=(Y*r.height/(g.top+g.ih+24))+"px";}
+  function tideTipOff(){$("ttip").hidden=true;const c=document.getElementById("tcur");if(c)c.setAttribute("visibility","hidden");}
+  $("tchart").addEventListener("pointermove",e=>{if(e.pointerType==="mouse"&&!drag)tidePoint(e);});
+  $("tchart").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")tideTipOff();});
+  $("tchart").addEventListener("click",e=>tidePoint(e));
+  document.addEventListener("pointerdown",e=>{if(!e.target.closest("#tchart"))tideTipOff();});
+  // Keep the tide right now and the countdowns current while the page is open
+  setInterval(()=>{if(state.data&&!$("tideSec").hidden&&document.visibilityState==="visible"&&$("ttip").hidden)renderTides(dates()[state.sel]);},60000);
 
   // Boating: one report per body of water at the location (locations.json "waters", e.g. the Maroochy River
   // and the open ocean at Maroochydore). Each uses the Bureau's hourly wind for a forecast cell on that water,
@@ -1487,7 +1550,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     $("eyebrow").textContent=`${L.kind==="full"?"Full comparison":"Bureau of Meteorology only"} · ${L.state||""} ${L.postcode||""}${coords}`;
     document.title=L.name+" · Consolidated Weather";
     renderPicker();renderSave();
-    state.sel=0;state.water=0;state.tide=0;state.scrape={state:"pending"};state.data=null;hideTip();
+    state.sel=0;state.water=0;state.tide=null;state.tideAll=false;state.scrape={state:"pending"};state.data=null;hideTip();
     try{state.data=JSON.parse(localStorage.getItem(cacheKey())||"null");}catch(e){}
     if(state.data)render();
     else{$("now").dataset.sky="";$("now").innerHTML=`<div class="nowtop">${wx("partly_cloudy")}<div><div class="temp num">–</div><div class="feels">Loading…</div></div></div>`;
