@@ -1,6 +1,6 @@
 {
  "id": "coolangatta",
- "generated": "2026-11-05T18:39:09Z",
+ "generated": "2026-11-05T18:49:26Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T18:38:43Z"
+   "fetched": "2026-11-05T18:49:01Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:38:45Z"
+   "fetched": "2026-11-05T18:49:03Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:38:58Z"
+   "fetched": "2026-11-05T18:49:14Z"
   },
   {
    "source": "windy",
@@ -1235,8 +1235,8 @@
    "days": [
     {
      "date": "2026-11-06",
-     "tmax": 25.1,
-     "tmin": 19,
+     "tmax": 24.8,
+     "tmin": 18.5,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -1282,7 +1282,7 @@
      "chance": null,
      "text": null,
      "wind_max": 22,
-     "gust_max": 32,
+     "gust_max": 33,
      "wind_dir": "SSW"
     },
     {
@@ -1295,7 +1295,7 @@
      "chance": null,
      "text": null,
      "wind_max": 25,
-     "gust_max": 37,
+     "gust_max": 39,
      "wind_dir": "NNE"
     }
    ],
@@ -1304,22 +1304,22 @@
     "start": "2026-11-06T01",
     "temp": [
      20,
-     19.7,
-     19.3,
+     19.5,
      19,
-     20.1,
-     21.1,
-     22.2,
-     23.2,
-     24.1,
-     25.1,
+     18.5,
+     19.6,
+     20.7,
+     21.8,
+     22.8,
+     23.8,
      24.8,
      24.6,
-     24.3,
-     23.5,
-     22.8,
-     22,
-     21.5,
+     24.4,
+     24.2,
+     23.4,
+     22.7,
+     21.9,
+     21.4,
      21,
      20.5,
      20.1,
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:39:05Z"
+   "fetched": "2026-11-05T18:49:21Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:39:05Z"
+   "fetched": "2026-11-05T18:49:21Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:39:06Z"
+   "fetched": "2026-11-05T18:49:22Z"
   },
   {
    "source": "foreca",
@@ -3803,22 +3803,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:39:09Z"
+   "fetched": "2026-11-05T18:49:26Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Coolangatta",
   "distance_km": 0.2,
-  "time": "2026-11-06T04:30:00+10:00",
-  "temp": 18.3,
-  "feels_like": 18.1,
-  "humidity": 79,
+  "time": "2026-11-06T04:40:00+10:00",
+  "temp": 18.2,
+  "feels_like": 18,
+  "humidity": 80,
   "wind_dir": "SSW",
   "wind_kmh": 9,
-  "gust_kmh": 11,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T18:38:24Z"
+  "fetched": "2026-11-05T18:48:42Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4279,7 +4279,7 @@
      },
      "2026-11-09": {
       "wind_max": 22,
-      "gust_max": 32,
+      "gust_max": 33,
       "wind_dir": "SSW"
      },
      "2026-11-10": {
@@ -4343,7 +4343,7 @@
     "windfinder_place": "Point Danger (Tide)"
    }
   ],
-  "fetched": "2026-11-05T18:38:43Z"
+  "fetched": "2026-11-05T18:49:00Z"
  },
  "errors": {}
 }

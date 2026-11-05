@@ -1,6 +1,6 @@
 {
  "id": "bribie-island-north",
- "generated": "2026-11-05T18:42:53Z",
+ "generated": "2026-11-05T18:53:10Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T18:39:29Z"
+   "fetched": "2026-11-05T18:49:45Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:39:31Z"
+   "fetched": "2026-11-05T18:49:46Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-05T18:39:42Z"
+   "fetched": "2026-11-05T18:49:57Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:39:49Z"
+   "fetched": "2026-11-05T18:50:04Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:40:49Z"
+   "fetched": "2026-11-05T18:51:05Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:42:50Z"
+   "fetched": "2026-11-05T18:53:05Z"
   },
   {
    "source": "foreca",
@@ -3805,22 +3805,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:42:53Z"
+   "fetched": "2026-11-05T18:53:10Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beerburrum",
   "distance_km": 18.1,
-  "time": "2026-11-06T04:30:00+10:00",
-  "temp": 20.3,
-  "feels_like": 22.9,
+  "time": "2026-11-06T04:40:00+10:00",
+  "temp": 20.1,
+  "feels_like": 22.6,
   "humidity": 84,
   "wind_dir": "CALM",
   "wind_kmh": 0,
-  "gust_kmh": 6,
+  "gust_kmh": 4,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T18:39:10Z"
+  "fetched": "2026-11-05T18:49:26Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4281,7 +4281,7 @@
      },
      "2026-11-10": {
       "wind_max": 28,
-      "gust_max": 47,
+      "gust_max": 48,
       "wind_dir": "NNE"
      }
     },
@@ -4340,7 +4340,7 @@
     "windfinder_place": "Pelican Waters"
    }
   ],
-  "fetched": "2026-11-05T18:39:28Z"
+  "fetched": "2026-11-05T18:49:44Z"
  },
  "errors": {}
 }

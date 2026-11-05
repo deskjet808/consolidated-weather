@@ -1,6 +1,6 @@
 {
  "id": "noosa-heads",
- "generated": "2026-11-05T18:44:40Z",
+ "generated": "2026-11-05T18:53:52Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-05T18:43:13Z"
+   "fetched": "2026-11-05T18:53:28Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:43:15Z"
+   "fetched": "2026-11-05T18:53:30Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-05T18:43:28Z"
+   "fetched": "2026-11-05T18:53:41Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-05T18:43:35Z"
+   "fetched": "2026-11-05T18:53:48Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:44:35Z"
+   "fetched": "2026-11-05T18:53:48Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:44:36Z"
+   "fetched": "2026-11-05T18:53:48Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-05T18:44:40Z"
+   "fetched": "2026-11-05T18:53:52Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Tewantin",
   "distance_km": 4.9,
-  "time": "2026-11-06T04:30:00+10:00",
+  "time": "2026-11-06T04:40:00+10:00",
   "temp": 22,
   "feels_like": 22.6,
   "humidity": 81,
   "wind_dir": "SSE",
   "wind_kmh": 13,
-  "gust_kmh": 22,
+  "gust_kmh": 28,
   "rain_since_9am": 0,
-  "fetched": "2026-11-05T18:42:54Z"
+  "fetched": "2026-11-05T18:53:10Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4344,7 +4344,7 @@
     "windfinder_place": "Noosa Main Beach"
    }
   ],
-  "fetched": "2026-11-05T18:43:13Z"
+  "fetched": "2026-11-05T18:53:28Z"
  },
  "errors": {}
 }
