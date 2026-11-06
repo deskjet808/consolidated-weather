@@ -1,6 +1,6 @@
 {
  "id": "byron-bay",
- "generated": "2026-11-06T03:36:34Z",
+ "generated": "2026-11-06T03:54:19Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-06T03:35:08Z"
+   "fetched": "2026-11-06T03:51:54Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:35:10Z"
+   "fetched": "2026-11-06T03:51:56Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:35:21Z"
+   "fetched": "2026-11-06T03:52:07Z"
   },
   {
    "source": "windy",
@@ -1235,7 +1235,7 @@
    "days": [
     {
      "date": "2026-11-06",
-     "tmax": 23.3,
+     "tmax": 25,
      "tmin": 19.5,
      "rain_min": 0,
      "rain_max": 0,
@@ -1313,23 +1313,23 @@
      20.3,
      21,
      21.8,
-     22.3,
-     22.8,
-     23.3,
+     22.9,
+     23.9,
+     25,
+     24.5,
+     24.1,
+     23.6,
      23,
-     22.6,
      22.3,
-     21.8,
+     21.7,
      21.2,
-     20.7,
-     20.4,
-     20,
-     19.7,
+     20.8,
+     20.3,
+     19.8,
      19.3,
-     18.9,
+     18.8,
+     18.6,
      18.5,
-     18.4,
-     18.4,
      18.3,
      19.2,
      20,
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:35:28Z"
+   "fetched": "2026-11-06T03:52:14Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-06T03:36:29Z"
+   "fetched": "2026-11-06T03:52:14Z"
   },
   {
    "source": "icon",
@@ -3512,7 +3512,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:36:30Z"
+   "fetched": "2026-11-06T03:54:15Z"
   },
   {
    "source": "foreca",
@@ -3767,22 +3767,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:36:34Z"
+   "fetched": "2026-11-06T03:54:19Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Byron",
   "distance_km": 0.3,
-  "time": "2026-11-06T14:30:00+11:00",
-  "temp": 24.9,
-  "feels_like": 22.5,
-  "humidity": 56,
+  "time": "2026-11-06T14:40:00+11:00",
+  "temp": 25,
+  "feels_like": 23.3,
+  "humidity": 58,
   "wind_dir": "E",
-  "wind_kmh": 22,
-  "gust_kmh": 26,
+  "wind_kmh": 20,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-06T03:34:57Z"
+  "fetched": "2026-11-06T03:51:43Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4071,7 +4071,7 @@
     "windfinder_place": "Cape Byron Light"
    }
   ],
-  "fetched": "2026-11-06T03:35:07Z"
+  "fetched": "2026-11-06T03:51:53Z"
  },
  "errors": {}
 }
