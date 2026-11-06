@@ -12,11 +12,16 @@ A weather app for boating and jet skiing in Queensland, with any place in Austra
 - **Any other place:** search a suburb, town or postcode to see the Bureau of Meteorology forecast and
   the nearest weather station's latest reading. Tap "Save place" to keep it in "My places" on that
   device.
+- **Hour by hour:** the whole week as one long strip you drag, swipe or scroll through, shown as a
+  chart or as hourly cards (the choice is remembered). Each hour is the median of every source with
+  hourly figures, with the spread between sources shown. Days alternate light and dark blue, day
+  buttons jump to a day, and the rest of the page follows the day you scroll to.
 - **Tides** for each river, bay and stretch of open ocean at a featured location: a one-line summary,
   whether the tide is rising or falling now (updated every minute), the next high and low, a curve of
   the chosen day (tap or hover to read any time, swipe to change day), a "good time to launch" hint
   (up to 90 minutes either side of a daylight high tide, with the Bureau's wind on that water) and the
-  next 3 days of tides (7 on request), each with a boat coloured calm, choppy or rough. The page
+  next 3 days of tides (7 on request), each with a boat coloured calm, choppy or rough that explains
+  itself when hovered or tapped. The page
   remembers which water you last looked at. Times and heights are WillyWeather's; the
   curve between them is an estimate.
 - **Boating conditions** for the chosen day, with a separate report for each body of water at a

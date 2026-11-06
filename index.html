@@ -31,7 +31,7 @@
   /* Glossy weather pictures: top and bottom of each gradient */
   --g-sun1:#ffe27a; --g-sun2:#ff9d1c; --g-moon1:#fff1b8; --g-moon2:#e2b941; --g-c1:#ffffff; --g-c2:#c6d4dc;
   --g-d1:#a9b6be; --g-d2:#5d6e78; --g-drop1:#8fd0ff; --g-drop2:#1f7fd6;
-  --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6; --storm:#7a5cc4;
+  --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6; --storm:#7a5cc4; --dayA:#d6e9f7; --dayB:#bcd9ef; --rainbar:#1b6db5;
   --shadow:0 1px 2px rgb(18 36 44/.05),0 6px 18px rgb(18 36 44/.06);
   --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
@@ -47,7 +47,7 @@
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
-  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5;
+  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5; --dayA:#1a364b; --dayB:#0f2131; --rainbar:#7cc4ff;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}}
 :root[data-theme="dark"]{
@@ -59,7 +59,7 @@
   --sun:#ffc24a; --moon:#f3d77e; --cloud:#c7d3d8; --cloud2:#7d909a; --cloud-dark:#93a3ac;
   --rain:#5fb0f0; --bolt:#ffc24a; --snow:#a8d4f2; --haze:#d6bf8f;
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
-  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5;
+  --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5; --dayA:#1a364b; --dayB:#0f2131; --rainbar:#7cc4ff;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
   color-scheme:dark;}
 *{box-sizing:border-box}
@@ -229,6 +229,46 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .fold-body{display:flex;flex-direction:column;gap:10px}
 .hbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);min-width:0}
 .hchart{overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+/* Hour by hour: the week as one long strip, chart or cards */
+.hhead{flex-wrap:wrap}
+.hview{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:3px;gap:2px;box-shadow:var(--shadow);margin-left:auto}
+.hview button{font:600 .85rem var(--body);color:var(--muted);background:none;border:0;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.hview button svg{width:16px;height:16px}
+.hview button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.hhead .hview+.hnav{margin-left:0}
+.hdays{display:flex;gap:6px}
+.hdays button{flex:1;min-width:0;cursor:pointer;color:var(--fg);font:700 .82rem/1.15 var(--body);display:flex;flex-direction:column;align-items:center;gap:1px;
+  padding:7px 2px;border-radius:10px;border:1px solid color-mix(in srgb,var(--fg) 22%,transparent);box-shadow:0 2px 0 color-mix(in srgb,var(--fg) 18%,transparent);transition:transform .12s,box-shadow .12s,border-color .12s}
+.hdays button small{font:500 .72rem var(--mono);color:var(--muted);white-space:nowrap}
+.hdays button.dA{background:var(--dayA)} .hdays button.dB{background:var(--dayB)}
+.hdays button:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+.hdays button:active{transform:translateY(1px);box-shadow:none}
+.hdays button.on{background:var(--accent);border-color:var(--accent);color:var(--surface);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 50%,#000)}
+.hdays button.on small{color:var(--surface);opacity:.85}
+.hwrap{position:relative;min-width:0}
+.hwrap[hidden]{display:none}
+.hscroll{overflow-x:auto;overflow-y:hidden;cursor:grab;user-select:none;-webkit-user-select:none;scrollbar-width:thin;overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+.hscroll.drag{cursor:grabbing}
+.hscroll:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hscroll.hchart svg{width:auto;max-width:none}
+.hyaxis{position:absolute;left:0;top:0;pointer-events:none}
+.hyaxis .ax{font:10px var(--mono);fill:var(--muted)}
+.hchart .dl{font:700 13px var(--display);fill:var(--fg)}
+.hstrip{display:flex;gap:6px;padding:2px 2px 10px;width:max-content}
+.hc{flex:none;width:54px;border:1px solid var(--line);border-radius:12px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:3px;font:.7rem/1.25 var(--mono)}
+.hc.dA{background:var(--dayA)} .hc.dB{background:var(--dayB)}
+.hc .t{font:600 1.05rem var(--display)}
+.hc .wx{width:30px;height:30px}
+.hc .c{color:var(--rainbar);min-height:1.2em}
+.hc .rb{width:80%;height:4px;border-radius:2px;background:color-mix(in srgb,var(--fg) 12%,transparent);overflow:hidden}
+.hc .rb i{display:block;height:100%;background:var(--rainbar)}
+.hc.wet{border:2px solid var(--rainbar)} .hc.storm{border:2px solid var(--storm)}
+.hc.now{outline:2px solid var(--accent);outline-offset:-2px} .hc.now .hr{color:var(--accent);font-weight:600}
+.hsep{flex:none;width:30px;display:flex;align-items:center;justify-content:center;border-radius:10px}
+.hsep.dA{background:var(--dayA)} .hsep.dB{background:var(--dayB)}
+.hsep span{writing-mode:vertical-rl;transform:rotate(180deg);font:700 .9rem var(--display);white-space:nowrap}
+@media (max-width:560px){.hview{order:5;width:100%;margin-left:0}.hview button{flex:1;justify-content:center}.hdays{gap:4px}.hdays button{font-size:.76rem}.hdays button small{font-size:.66rem}}
+@media (prefers-reduced-motion:reduce){.hdays button{transition:none}.hdays button:hover,.hdays button:active{transform:none}}
 .hchart.drag{cursor:grabbing}
 .hchart svg{width:100%;height:auto;display:block}
 .hswipe{font:.74rem var(--body);color:var(--muted)}
@@ -257,25 +297,31 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .tlaunch .ui{width:20px;height:20px;flex:none;color:var(--good);margin-top:1px}
 .tlaunch.none{border-color:var(--line);background:none}.tlaunch.none .ui{color:var(--muted)}
 .tweek{display:flex;flex-direction:column}
-.tweek button{display:grid;grid-template-columns:5.2em 1fr;gap:2px 10px;align-items:center;text-align:left;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);padding:7px 6px;font:.84rem/1.35 var(--mono);font-variant-numeric:tabular-nums;cursor:pointer}
-.tweek button[aria-pressed="true"]{background:var(--accent-soft);border-radius:8px}
+.tweek{position:relative}
+.trow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px;border-top:1px solid var(--line);padding-right:6px}
+.trow.on{background:var(--accent-soft);border-radius:8px}
+.tweek .tday{display:grid;grid-template-columns:5.2em 1fr;gap:2px 10px;align-items:center;text-align:left;border:0;background:none;color:var(--fg);padding:7px 6px;min-width:0;font:.84rem/1.35 var(--mono);font-variant-numeric:tabular-nums;cursor:pointer}
 .tweek .tdn{grid-row:span 2;font:700 1rem var(--display)}
 .tweek .th{color:var(--rain);font-weight:500} .tweek .tl{color:var(--muted)}
 .tsum{margin:0;font:1rem/1.4 var(--body)}
 .tsum b{font-weight:600}
 .tchartwrap{position:relative}
-.tweek button{grid-template-columns:5.2em 1fr auto}
-.tweek .tboat{grid-column:3;grid-row:1/span 2;display:grid;place-items:center;width:30px;height:30px;border-radius:50%}
+.tweek .tboat{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:0;padding:0;background:none;cursor:help}
+.tweek .tboat:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tweek .tboat .ui{width:17px;height:17px}
 .tweek .tboat.calm{color:var(--good);background:color-mix(in srgb,var(--good) 15%,transparent)}
 .tweek .tboat.choppy{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}
 .tweek .tboat.rough{color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,transparent)}
 .tweek .tboat.unknown{color:var(--muted)}
 .tweek .tboat.none{visibility:hidden}
-.tweek button.tmore{display:block;text-align:center;font:600 .85rem var(--body);color:var(--accent);padding:9px}
+.tweek button.tmore{display:block;width:100%;text-align:center;font:600 .85rem var(--body);color:var(--accent);padding:9px;border:0;border-top:1px solid var(--line);background:none;cursor:pointer}
+/* The boat explained: same look as the tide-curve tooltip, but it wraps and is placed by script to stay on screen */
+#wtip{transform:translateY(calc(-100% - 10px));white-space:normal;width:max-content;max-width:min(300px,calc(100vw - 48px));line-height:1.4}
+#wtip small{display:block;margin-top:3px;font-size:.72rem;color:var(--muted)}
 .tweek .th,.tweek .tl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 @media (max-width:560px){.tnext{margin-left:0;width:100%}.tnext div{flex:1}
-  .tweek button{grid-template-columns:3.9em 1fr auto;gap:2px 8px;padding:7px 4px;font-size:.76rem}
+  .tweek .tday{grid-template-columns:3.9em 1fr;gap:2px 8px;padding:7px 4px;font-size:.76rem}
+  .trow{padding-right:2px;gap:2px}
   .tweek .tdn{font-size:.92rem}}
 .hours b{font:600 1rem var(--mono);white-space:nowrap}
 .hours b small{font-size:.62rem;font-weight:500;color:var(--muted)}
@@ -505,15 +551,17 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   </section>
 
   <section aria-labelledby="hourh">
-    <h2 id="hourh"><i data-ui="clock"></i><span id="hourt">Hour by hour</span><span class="hnav"><button class="btn icon" id="hprev" type="button" aria-label="Previous day">‹</button><button class="btn icon" id="hnext" type="button" aria-label="Next day">›</button></span></h2>
-    <div class="hbox">
-    <p class="hstory" id="hstory"></p>
-    <div class="hchart" id="hchart"></div>
-    <p class="hswipe">Swipe or drag the chart sideways, or use the arrows, to change day.</p>
-    <div class="hlegend"><span><i style="background:var(--warm)"></i>Temperature</span><span><i style="background:var(--warm);opacity:.25"></i>Range across sources</span><span><i style="background:var(--rain)"></i>Chance of rain</span><span><i style="background:var(--sky-sun);border:1px solid var(--line)"></i>Sunny</span><span><i style="background:var(--sky-cloud);border:1px solid var(--line)"></i>Cloudy</span><span><i style="background:var(--sky-rain);border:1px solid var(--line)"></i>Rain</span><span><i style="background:var(--sky-storm);border:1px solid var(--line)"></i>Storms</span></div>
+    <h2 id="hourh" class="hhead"><i data-ui="clock"></i><span id="hourt">Hour by hour</span><span class="hview" role="group" aria-label="How to show the hours"><button type="button" id="hvChart" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 6-8 3 4"/><path d="M3 21h18"/></svg>Chart</button><button type="button" id="hvCards" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="5" height="14" rx="1.5"/><rect x="10" y="5" width="5" height="14" rx="1.5"/><rect x="17" y="5" width="4" height="14" rx="1.5"/></svg>Cards</button></span><span class="hnav"><button class="btn icon" id="hprev" type="button" aria-label="Previous day">‹</button><button class="btn icon" id="hnext" type="button" aria-label="Next day">›</button></span></h2>
+    <div class="hbox" id="hbox">
+    <p class="hstory" id="hstory" aria-live="polite"></p>
+    <div class="hdays" id="hdays" role="group" aria-label="Jump to a day"></div>
+    <div class="hwrap" id="hchartView"><div class="hscroll hchart" id="hcs" tabindex="0" aria-label="Hour by hour chart for the week. Scroll sideways."></div><svg class="hyaxis" id="hyaxis" aria-hidden="true"></svg></div>
+    <div class="hwrap" id="hcardsView" hidden><div class="hscroll" id="hks" tabindex="0" aria-label="Hourly cards for the week. Scroll sideways."><div class="hstrip" id="hstrip"></div></div></div>
+    <p class="hswipe">Drag, swipe or scroll sideways to glide through the week. Tap a day button or use the arrows to jump to a day.</p>
+    <div class="hlegend"><span><i style="background:var(--warm)"></i>Temperature</span><span><i style="background:var(--warm);opacity:.25"></i>Range across sources</span><span><i style="background:var(--rainbar)"></i>Chance of rain</span><span><i style="background:var(--dayA);border:1px solid var(--dayB)"></i><i style="background:var(--dayB)"></i>Days alternate light and dark blue</span></div>
     <p class="note" id="hnote"></p>
     </div>
-    <details class="about"><summary>About this</summary><p>Each hour is the middle figure (median) of every source with an hourly forecast for it: the Bureau of Meteorology (about 3 days), Weatherzone (3 days), WillyWeather, ECMWF and ICON (about 7 days), Windy (about 5 days, every 3 hours, temperature and rain only) and Foreca (today and tomorrow). The shaded band around the temperature line runs from the lowest to the highest source, and the thin line on each rain bar from the lowest to the highest chance, so a wide band means the sources disagree. The picture for each hour is the one most sources show, except that storms show when at least half of them forecast storms, and showers only when the middle chance of rain is 30% or more. The numbers under the times say how many sources that hour is based on.</p></details>
+    <details class="about"><summary>About this</summary><p>Each hour is the middle figure (median) of every source with an hourly forecast for it: the Bureau of Meteorology (about 3 days), Weatherzone (3 days), WillyWeather, ECMWF and ICON (about 7 days), Windy (about 5 days, every 3 hours, temperature and rain only) and Foreca (today and tomorrow). The shaded band around the temperature line runs from the lowest to the highest source, and the thin line on each rain bar from the lowest to the highest chance, so a wide band means the sources disagree. The picture for each hour is the one most sources show, except that storms show when at least half of them forecast storms, and showers only when the middle chance of rain is 30% or more. The note under the chart names the sources for the day in view. In the cards, rainy hours have a blue outline and stormy hours a purple one.</p></details>
   </section>
 
   <section aria-labelledby="tideh" id="tideSec" hidden>
@@ -525,7 +573,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     <div class="tchartwrap"><div class="hchart" id="tchart"></div><div class="tip" id="ttip" hidden></div></div>
     <p class="hswipe">Tap or hover on the curve to read the tide at any time. Swipe or drag sideways, or use the arrows, to change day. Shaded = night; green = good time to launch.</p>
     <div class="tlaunch" id="tlaunch"></div>
-    <div class="tweek" id="tweek" role="group" aria-label="Choose a day"></div>
+    <div class="tweek" id="tweek" role="group" aria-label="Choose a day"><div id="tweekRows"></div><div class="tip" id="wtip" role="tooltip" hidden></div></div>
     </div>
     <details class="about"><summary>About this</summary><p>High and low tide times and heights are WillyWeather's, for the spot named under the tide. WillyWeather gives only the turning points, so the curve between them, and the height shown for right now, follow the usual smooth tide shape and are estimates. The launch hint looks for the 90 minutes either side of a high tide that fall in daylight (sunrise and sunset from the Bureau of Meteorology), and adds the Bureau's strongest wind on that water in that time. Shallow ramps and river bars can be tricky near low tide; check local conditions.</p></details>
   </section>
@@ -1126,43 +1174,114 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     if(runs.length===1){const r=runs[0];return cap(r.k==="storm"||r.k==="wet"?`${lab(r)} on and off all day${extra(r)}.`:`${lab(r)} all day.`);}
     return cap(runs.map((r,i)=>`${lab(r)} ${i===0?"until "+hh12(r.to+1):i===runs.length-1?"from "+hh12(r.from):hh12(r.from)+" to "+hh12(r.to+1)}${extra(r)}`).join(", then ")+".");
   }
-  function renderHourly(k){
-    const H=hoursFor(k),have=H.filter(x=>isNum(x.temp)),sun=sunHours(k),today=state.sel===0;
-    const dt=new Date(k+"T12:00:00");
-    $("hprev").disabled=state.sel<=0;$("hnext").disabled=state.sel>=6;
-    $("hourt").textContent="Hour by hour · "+(today?"Today":state.sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
-    if(!have.length){$("hstory").textContent="";$("hchart").innerHTML='<p class="note">No hourly forecasts for this day yet.</p>';$("hnote").textContent="";return;}
-    $("hstory").innerHTML=hourStory(H,sun);
-    // Drawn at the width it's shown, so the text stays full size and phones don't need to scroll it sideways
-    // (which leaves a sideways swipe free for changing day); narrow screens label every 6 hours instead of 3
-    const W=Math.max(300,Math.min(900,Math.round($("hchart").clientWidth||720))),every=W<560?6:3;
-    const L=30,R=12,T=46,band=12,ph=110,gap=20,rb=40,B=40,Hh=T+band+8+ph+gap+rb+B;
-    const x=h=>L+h*(W-L-R)/23,lo=Math.floor(Math.min(...have.map(r=>r.lo))/2)*2-2,hi=Math.ceil(Math.max(...have.map(r=>r.hi))/2)*2+2;
-    const y=v=>T+band+8+ph-(v-lo)/(hi-lo)*ph,base=T+band+8+ph,ry0=base+gap+rb,colW=(W-L-R)/23;
-    let s=`<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Temperature and chance of rain by hour, the median of the sources">`;
-    H.forEach(r=>{if(r.pic)s+=`<rect x="${(x(r.h)-colW/2).toFixed(1)}" y="${T}" width="${(colW+.5).toFixed(1)}" height="${band}" style="fill:var(${HSKY[hkind(r.pic)]})"/>`;});
-    for(let v=lo;v<=hi;v+=4)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${y(v)+3.5}" text-anchor="end">${v}°</text>`;
-    if(today){const nh=+localHourKey(new Date().toISOString()).slice(11);s+=`<line x1="${x(nh)}" x2="${x(nh)}" y1="${T}" y2="${ry0}" style="stroke:var(--accent);stroke-dasharray:3 3"/><text class="tl" x="${x(nh)}" y="${T-4}" text-anchor="middle" style="fill:var(--accent)">now</text>`;}
-    // How far apart the sources are: a faint band from the lowest to the highest temperature
-    const two=have.filter(r=>r.names.length>1);
-    if(two.length>1)s+=`<polygon points="${two.map(r=>x(r.h).toFixed(1)+","+y(r.hi).toFixed(1)).join(" ")} ${two.slice().reverse().map(r=>x(r.h).toFixed(1)+","+y(r.lo).toFixed(1)).join(" ")}" style="fill:var(--warm);opacity:.22"/>`;
-    s+=`<polyline points="${have.map(r=>x(r.h).toFixed(1)+","+y(r.temp).toFixed(1)).join(" ")}" style="fill:none;stroke:var(--warm);stroke-width:2.5;stroke-linejoin:round"/>`;
-    // Chance of rain: the median as a bar, the lowest to highest source as a thin line
-    s+=`<line x1="${L}" x2="${W-R}" y1="${ry0}" y2="${ry0}" style="stroke:var(--line)"/><text class="ax" x="${L-6}" y="${ry0-rb+8}" text-anchor="end">rain</text>`;
-    H.forEach(r=>{if(!isNum(r.chance))return;const bc=r.pic==="storm"?"var(--storm)":"var(--rain)";
-      const bw=Math.min(16,colW*.7);
-      if(r.chance>0)s+=`<rect x="${(x(r.h)-bw/2).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="${bw.toFixed(1)}" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${bc};opacity:.85"/>`;
-      if(r.chi>r.clo)s+=`<line x1="${x(r.h)}" x2="${x(r.h)}" y1="${(ry0-rb*r.chi/100).toFixed(1)}" y2="${(ry0-rb*r.clo/100).toFixed(1)}" style="stroke:var(--fg);stroke-width:1.2;opacity:.45"/>`;});
-    // Every 3 hours: the picture, the temperature, the time and how many sources it rests on
-    s+=`<text class="ax" x="${L-6}" y="${Hh-6}" text-anchor="end">src</text>`;
-    H.filter(r=>r.h%every===0).forEach(r=>{const night=r.h<sun.rise||r.h>sun.set;
-      if(r.pic)s+=`<svg x="${x(r.h)-17}" y="2" width="34" height="34" viewBox="0 0 64 64" class="wx">${ART[r.pic]?ART[r.pic](night):""}</svg>`;
-      if(isNum(r.temp))s+=`<circle cx="${x(r.h)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.h)+(r.h===0?4:0)}" y="${y(r.temp)-8}" text-anchor="${r.h===0?"start":"middle"}">${f0(r.temp)}°</text>`;
-      s+=`<text class="ax" x="${x(r.h)}" y="${Hh-22}" text-anchor="middle">${hh12(r.h)}</text><text class="ax" x="${x(r.h)}" y="${Hh-6}" text-anchor="middle">${r.names.length||""}</text>`;});
-    $("hchart").innerHTML=s+"</svg>";
-    const all=[...new Set(have.flatMap(r=>r.names))],most=Math.max(...have.map(r=>r.names.length)),least=Math.min(...have.map(r=>r.names.length));
-    $("hnote").textContent=`Median of ${all.length} source${all.length===1?"":"s"}: ${all.join(", ")}.`+(least<most?` Some hours have fewer (${least} to ${most}); see the numbers under the times.`:"");
+  // The whole week as one long strip you glide through, drawn as a chart or as hourly cards (the switch is
+  // remembered). Days alternate light and dark blue. The heading, sentence and day buttons follow the day in
+  // the middle of the view; once you stop scrolling, the rest of the page moves to that day too.
+  const HV_KEY="aus-forecast-hourly-view";
+  const hv={view:"chart",built:null,PX:34,L:34,H:[],locked:null,cur:-1,quiet:false,stop:0,raf:0};
+  try{if(localStorage.getItem(HV_KEY)==="cards")hv.view="cards";}catch(e){}
+  const hsc=()=>hv.view==="chart"?$("hcs"):$("hks");
+  const dmy=k=>{const d=new Date(k+"T12:00:00");return d.getDate()+"/"+(d.getMonth()+1);};
+  const hDayShort=(d,k)=>d===0?"Today":new Date(k+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short"});
+  function hNow(){const w=wallMs(new Date()),k=new Date(w).toISOString().slice(0,10),d=dates().indexOf(k);
+    return d<0?null:d*24+new Date(w).getUTCHours()+new Date(w).getUTCMinutes()/60;}
+  const hPic=(p,night)=>p&&ART[p]?`<svg viewBox="0 0 64 64" class="wx" aria-hidden="true">${ART[p](night)}</svg>`:"";
+  function buildHourly(){
+    const ks=dates(),H=ks.flatMap((k,d)=>{const sun=sunHours(k);return hoursFor(k).map(r=>({...r,d,k,i:d*24+r.h,night:r.h<sun.rise||r.h>sun.set}));});
+    hv.H=H;hv.built=state.data;hv.cur=-1;
+    const now=hNow(),have=H.filter(r=>isNum(r.temp));
+    $("hdays").innerHTML=ks.map((k,d)=>`<button type="button" class="${d%2?"dB":"dA"}" data-d="${d}" aria-label="${esc(d===0?"Today":new Date(k+"T12:00:00").toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long"}))}">${hDayShort(d,k)}<small>${dmy(k)}</small></button>`).join("");
+    if(!have.length){$("hcs").innerHTML='<p class="note">No hourly forecasts yet.</p>';$("hstrip").innerHTML="";$("hyaxis").innerHTML="";return;}
+    // Chart: one hour = PX pixels, one temperature scale for the week
+    const wide=($("hchartView").clientWidth||$("hbox").clientWidth||720);hv.PX=wide<560?26:34;
+    const PX=hv.PX,L=hv.L,T=46,ph=120,gap=18,rb=36,B=26,Hh=T+ph+gap+rb+B,W=H.length*PX+L;
+    const lo=Math.floor(Math.min(...have.map(r=>r.lo))/2)*2-2,hi=Math.ceil(Math.max(...have.map(r=>r.hi))/2)*2+2;
+    const x=i=>L+(i+.5)*PX,y=v=>T+ph-(v-lo)/(hi-lo)*ph,ry0=T+ph+gap+rb;
+    let s=`<svg width="${W}" height="${Hh}" style="width:${W}px;height:${Hh}px" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Temperature and chance of rain for each hour of the week, the median of the sources">`;
+    ks.forEach((k,d)=>{s+=`<rect x="${L+d*24*PX}" y="0" width="${24*PX+.5}" height="${Hh}" style="fill:var(${d%2?"--dayB":"--dayA"})"/><text class="dl" x="${L+d*24*PX+12}" y="14">${esc(d===0?"Today":d===1?"Tomorrow":hDayShort(d,k)+" "+dmy(k))}</text>`;});
+    for(let v=lo;v<=hi;v+=4)s+=`<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/>`;
+    if(now!=null)s+=`<line x1="${L+now*PX}" x2="${L+now*PX}" y1="${T-6}" y2="${ry0}" style="stroke:var(--accent);stroke-dasharray:3 3"/><text class="tl" x="${L+now*PX}" y="${T-10}" text-anchor="middle" style="fill:var(--accent)">now</text>`;
+    // The line and the lowest-to-highest band, broken wherever an hour has no figures
+    const runs=[];have.forEach(r=>{const last=runs.at(-1);if(last&&last.at(-1).i===r.i-1)last.push(r);else runs.push([r]);});
+    runs.forEach(run=>{const two=run.filter(r=>r.names.length>1);
+      if(two.length>1)s+=`<polygon points="${two.map(r=>x(r.i).toFixed(1)+","+y(r.hi).toFixed(1)).join(" ")} ${two.slice().reverse().map(r=>x(r.i).toFixed(1)+","+y(r.lo).toFixed(1)).join(" ")}" style="fill:var(--warm);opacity:.22"/>`;
+      s+=`<polyline points="${run.map(r=>x(r.i).toFixed(1)+","+y(r.temp).toFixed(1)).join(" ")}" style="fill:none;stroke:var(--warm);stroke-width:2.5;stroke-linejoin:round"/>`;});
+    s+=`<line x1="${L}" x2="${W}" y1="${ry0}" y2="${ry0}" style="stroke:var(--line)"/>`;
+    H.forEach(r=>{if(!isNum(r.chance))return;const bw=PX*.62;
+      if(r.chance>0)s+=`<rect x="${(x(r.i)-bw/2).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="${bw.toFixed(1)}" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${r.pic==="storm"?"var(--storm)":"var(--rainbar)"};opacity:.9"/>`;
+      if(r.chi>r.clo)s+=`<line x1="${x(r.i)}" x2="${x(r.i)}" y1="${(ry0-rb*r.chi/100).toFixed(1)}" y2="${(ry0-rb*r.clo/100).toFixed(1)}" style="stroke:var(--fg);stroke-width:1.2;opacity:.45"/>`;});
+    H.filter(r=>r.h%3===0).forEach(r=>{
+      if(r.pic&&ART[r.pic])s+=`<svg x="${x(r.i)-15}" y="16" width="30" height="30" viewBox="0 0 64 64" class="wx">${ART[r.pic](r.night)}</svg>`;
+      if(isNum(r.temp))s+=`<circle cx="${x(r.i)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.i)}" y="${y(r.temp)-8}" text-anchor="middle">${f0(r.temp)}°</text>`;
+      s+=`<text class="ax" x="${x(r.i)}" y="${Hh-8}" text-anchor="middle">${hh12(r.h)}</text>`;});
+    $("hcs").innerHTML=s+"</svg>";
+    // The temperature scale stays put on the left while the week scrolls under it
+    let a=`<rect x="0" y="0" width="${L}" height="${Hh}" style="fill:var(--surface)"/><line x1="${L}" x2="${L}" y1="${T-6}" y2="${ry0}" style="stroke:var(--line)"/>`;
+    for(let v=lo;v<=hi;v+=4)a+=`<text class="ax" x="${L-6}" y="${y(v)+3.5}" text-anchor="end">${v}°</text>`;
+    a+=`<text class="ax" x="${L-6}" y="${ry0-rb+8}" text-anchor="end">rain</text>`;
+    const ya=$("hyaxis");ya.setAttribute("width",L+8);ya.setAttribute("height",Hh);ya.setAttribute("viewBox",`0 0 ${L+8} ${Hh}`);ya.innerHTML=a;
+    // Cards: one per hour, with a day marker between days
+    const nowH=now==null?null:Math.floor(now);
+    $("hstrip").innerHTML=H.map(r=>{const sep=r.h===0?`<div class="hsep ${r.d%2?"dB":"dA"}" data-d="${r.d}"><span>${esc(hDayShort(r.d,r.k)+" "+dmy(r.k))}</span></div>`:"";
+      const wet=r.pic==="storm"?"storm":WET.has(r.pic)?"wet":"",isNow=r.i===nowH;
+      return sep+`<div class="hc ${r.d%2?"dB":"dA"} ${wet}${isNow?" now":""}" data-i="${r.i}"><span class="hr">${isNow?"Now":hh12(r.h)}</span>${hPic(r.pic,r.night)}<span class="t">${isNum(r.temp)?f0(r.temp)+"°":"–"}</span><span class="c">${isNum(r.chance)&&r.chance>0?f0(r.chance)+"%":""}</span><span class="rb"><i style="width:${isNum(r.chance)?r.chance:0}%"></i></span></div>`;}).join("");
   }
+  // Where the view is, and moving it
+  const posIn=(el,sc)=>el.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft;
+  function hourAtCentre(){const sc=hsc();
+    if(hv.view==="chart")return Math.max(0,Math.min(hv.H.length-1,(sc.scrollLeft+sc.clientWidth/2-hv.L)/hv.PX));
+    const mid=sc.scrollLeft+sc.clientWidth/2;let best=0;for(const c of $("hstrip").querySelectorAll(".hc")){if(posIn(c,sc)<=mid)best=+c.dataset.i;else break;}return best;}
+  function hCentreOn(i){const sc=hsc();let left;
+    if(hv.view==="chart")left=hv.L+(i+.5)*hv.PX-sc.clientWidth/2;
+    else{const c=$("hstrip").querySelector(`.hc[data-i="${Math.max(0,Math.min(hv.H.length-1,Math.round(i)))}"]`);if(!c)return;left=posIn(c,sc)+c.offsetWidth/2-sc.clientWidth/2;}
+    hv.quiet=true;sc.scrollTo({left:Math.max(0,left),behavior:"auto"});requestAnimationFrame(()=>{hv.quiet=false;});}
+  const smoothOK=()=>!matchMedia("(prefers-reduced-motion:reduce)").matches;
+  // Glide so the day's midnight sits at the left edge; the heading stays on that day until you scroll yourself
+  function hGoDay(d,smooth=true){const sc=hsc();if(!hv.H.length)return;
+    const sep=$("hstrip").querySelector(`.hsep[data-d="${d}"]`);
+    const left=hv.view==="chart"?d*24*hv.PX:(d===0||!sep?0:posIn(sep,sc)-2);
+    hv.locked=d;hShowDay(d);sc.scrollTo({left:Math.max(0,left),behavior:smooth&&smoothOK()?"smooth":"auto"});}
+  function hShowDay(d){if(d===hv.cur)return;hv.cur=d;const k=dates()[d],dt=new Date(k+"T12:00:00");
+    $("hourt").textContent="Hour by hour · "+(d===0?"Today":d===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
+    $("hprev").disabled=d<=0;$("hnext").disabled=d>=6;
+    $("hdays").querySelectorAll("button").forEach((b,j)=>{b.classList.toggle("on",j===d);b.setAttribute("aria-pressed",String(j===d));});
+    const H=hoursFor(k),have=H.filter(x=>isNum(x.temp));
+    $("hstory").innerHTML=have.length?hourStory(H,sunHours(k)):"No hourly forecasts for this day yet.";
+    const all=[...new Set(have.flatMap(r=>r.names))],most=have.length?Math.max(...have.map(r=>r.names.length)):0,least=have.length?Math.min(...have.map(r=>r.names.length)):0;
+    $("hnote").textContent=all.length?`${d===0?"Today":dt.toLocaleDateString("en-AU",{weekday:"long"})}: median of ${all.length} source${all.length===1?"":"s"} (${all.join(", ")})`+(least<most?`, ${least} to ${most} for each hour.`:"."):"";}
+  // Hand the day in view to the rest of the page, without moving this strip
+  function hSettle(){if(hv.cur<0||hv.cur===state.sel)return;hv.quiet=true;pickDay(hv.cur);hv.quiet=false;}
+  function hOnScroll(){if(hv.quiet)return;if(hv.locked==null)hShowDay(Math.min(6,Math.floor(hourAtCentre()/24)));
+    clearTimeout(hv.stop);hv.stop=setTimeout(hSettle,350);}
+  function renderHourly(k){
+    if(hv.built!==state.data||!$("hcs").firstChild){const keep=hv.built&&hv.H.length?hourAtCentre():null;buildHourly();
+      hShowDay(state.sel);
+      if(keep!=null&&hv.locked==null)hCentreOn(keep);else if(state.sel===0&&hNow()!=null)hCentreOn(hNow());else hGoDay(state.sel,false);
+      return;}
+    // Another part of the page changed day: glide there (unless the change came from scrolling this strip)
+    if(hv.quiet){hShowDay(state.sel);return;}
+    if(state.sel!==hv.cur||hv.locked!==state.sel)hGoDay(state.sel);
+  }
+  function hSetView(v){const at=hv.H.length&&hv.built?hourAtCentre():null;hv.view=v;try{localStorage.setItem(HV_KEY,v);}catch(e){}
+    $("hvChart").setAttribute("aria-pressed",String(v==="chart"));$("hvCards").setAttribute("aria-pressed",String(v==="cards"));
+    $("hchartView").hidden=v!=="chart";$("hcardsView").hidden=v!=="cards";
+    if(!hv.built)return;hv.locked=null;if(at!=null)hCentreOn(at);hOnScroll();}
+  $("hvChart").addEventListener("click",()=>hSetView("chart"));$("hvCards").addEventListener("click",()=>hSetView("cards"));
+  $("hdays").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!state.data)return;const d=+b.dataset.d;hGoDay(d);hv.quiet=true;pickDay(d);hv.quiet=false;});
+  // Mouse drag with a little glide after you let go; touch screens and touchpads scroll on their own
+  ["hcs","hks"].forEach(id=>{const sc=$(id);let st=null,vel=0;
+    const unlock=()=>{hv.locked=null;};
+    ["wheel","touchstart","keydown"].forEach(ev=>sc.addEventListener(ev,unlock,{passive:true}));
+    sc.addEventListener("pointerdown",e=>{unlock();if(e.pointerType!=="mouse"||e.button!==0)return;cancelAnimationFrame(hv.raf);
+      st={x:e.clientX,left:sc.scrollLeft,t:performance.now(),lx:e.clientX};vel=0;sc.classList.add("drag");sc.setPointerCapture(e.pointerId);});
+    sc.addEventListener("pointermove",e=>{if(!st)return;sc.scrollLeft=st.left-(e.clientX-st.x);const t=performance.now(),dt=t-st.t;if(dt>0)vel=.8*((st.lx-e.clientX)/dt)+.2*vel;st.t=t;st.lx=e.clientX;});
+    const end=()=>{if(!st)return;st=null;sc.classList.remove("drag");
+      const glide=()=>{if(Math.abs(vel)<.02||matchMedia("(prefers-reduced-motion:reduce)").matches)return;sc.scrollLeft+=vel*16;vel*=.94;hv.raf=requestAnimationFrame(glide);};hv.raf=requestAnimationFrame(glide);};
+    sc.addEventListener("pointerup",end);sc.addEventListener("pointercancel",end);
+    sc.addEventListener("scroll",hOnScroll,{passive:true});});
+  $("hchartView").hidden=hv.view!=="chart";$("hcardsView").hidden=hv.view!=="cards";
+  $("hvChart").setAttribute("aria-pressed",String(hv.view==="chart"));$("hvCards").setAttribute("aria-pressed",String(hv.view==="cards"));
+
 
   // Tides: WillyWeather's high and low tides for each tidal water at the location (not lakes), drawn as a curve
   // for the chosen day, with a one-line summary, the tide right now, the next two turns, a launch hint and the week.
@@ -1189,6 +1308,22 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       const ws=hrs.filter(h=>{const t=wallMs(new Date(h.time));return t>a-36e5&&t<=b;}).map(h=>h.wind),wm=ws.length?Math.max(...ws):null;
       return{e,a,b,wm,rate:wm==null?null:wm<15?"calm":wm<=25?"choppy":"rough"};}).filter(v=>v.b-v.a>=30*6e4);}
   const RATE_WORD={calm:"calm",choppy:"choppy",rough:"rough"};
+  // The words for a week-list boat: the calmest launch window that day, its wind, and what a launch time means
+  function boatTip(lw,r){if(r==="none")return null;
+    const order=["calm","choppy","rough"],v=r==="unknown"?lw[0]:lw.filter(x=>x.rate===r)[0];
+    const range=(a,b)=>{const A=clock(a),B=clock(b);return A.slice(-2)===B.slice(-2)?A.slice(0,-3)+" to "+B:A+" to "+B;};
+    const when=range(v.a,v.b),km=f0(v.wm);
+    const main=r==="calm"?`Calm for launching: ${when}. Wind under 15 km/h (up to ${km} km/h).`
+      :r==="choppy"?`Choppy for launching: ${when}. Wind 15 to 25 km/h (up to ${km} km/h).`
+      :r==="rough"?`Rough for launching: ${when}. Wind over 25 km/h (up to ${km} km/h).`
+      :`High tide in daylight (${when}), but no wind forecast yet. The Bureau's covers only about 3 days.`;
+    const note="Launch time = up to 90 min either side of a daylight high tide.";
+    return{text:main+" "+note,html:esc(main)+"<small>"+esc(note)+"</small>"};}
+  function weekTip(b){const t=$("wtip"),box=$("tweek");t.innerHTML=b.dataset.tip;t.hidden=false;
+    // Above the boat, kept inside the list's width so it never pushes the page sideways
+    const bx=b.getBoundingClientRect(),cx=box.getBoundingClientRect(),w=t.offsetWidth;
+    t.style.left=Math.max(4,Math.min(bx.left-cx.left+bx.width/2-w/2,cx.width-w-4))+"px";t.style.top=(bx.top-cx.top)+"px";}
+  function weekTipOff(){const t=document.getElementById("wtip");if(t)t.hidden=true;}
   function renderTides(k){
     const T=state.loc.kind==="full"?tideWaters():[],sec=$("tideSec");sec.hidden=!T.length;document.querySelector('.jump a[href="#tideh"]').hidden=!T.length;
     if(!T.length)return;
@@ -1253,16 +1388,26 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const row=(list,cls,sym)=>`<span class="${cls}">${sym} ${list.length?list.map(t=>esc(String(t.time).replace(/\s+/g,""))+" "+t.height_m+"m").join(" · "):"–"}</span>`;
     const order=["calm","choppy","rough"];
     const show=state.tideAll||sel>2?7:3;
-    $("tweek").innerHTML=ks.slice(0,show).map((d,j)=>{const t=mw.tides[d]||[],lw=launchWins(E,d,hrs);
+    weekTipOff();$("tweekRows").innerHTML=ks.slice(0,show).map((d,j)=>{const t=mw.tides[d]||[],lw=launchWins(E,d,hrs);
       const r=lw.map(v=>v.rate).filter(Boolean).sort((a,b)=>order.indexOf(a)-order.indexOf(b))[0]||(lw.length?"unknown":"none");
-      const tip=r==="none"?"No daylight high tide":r==="unknown"?"Daylight high tide, no wind forecast yet":"Best launch "+RATE_WORD[r];
-      return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="tdn">${j===0?"Today":new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric"})}</span>${row(t.filter(x=>x.type==="high"),"th","▲")}${row(t.filter(x=>x.type!=="high"),"tl","▼")}<span class="tboat ${r}" title="${tip}" aria-label="${tip}">${ui("boat")}</span></button>`;}).join("")
+      const tip=boatTip(lw,r),boat=r==="none"?`<span class="tboat none" aria-hidden="true">${ui("boat")}</span>`
+        :`<button type="button" class="tboat ${r}" data-tip="${esc(tip.html)}" aria-label="${esc(tip.text)}" aria-describedby="wtip">${ui("boat")}</button>`;
+      return `<div class="trow${j===sel?" on":""}"><button type="button" class="tday" data-i="${j}" aria-pressed="${j===sel}"><span class="tdn">${j===0?"Today":new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric"})}</span>${row(t.filter(x=>x.type==="high"),"th","▲")}${row(t.filter(x=>x.type!=="high"),"tl","▼")}</button>${boat}</div>`;}).join("")
       +(show<7?`<button type="button" class="tmore" id="tmore">Show all 7 days</button>`:state.tideAll&&sel<=2?`<button type="button" class="tmore" id="tmore">Show fewer</button>`:"");
   }
   $("ttabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!state.data)return;state.tide=+b.dataset.t;
     const T=tideWaters();try{localStorage.setItem(TIDE_KEY,T[state.tide].w.name);}catch(e){}renderTides(dates()[state.sel]);});
   $("tweek").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    if(b.classList.contains("tboat")){weekTip(b);return;}  // the boat explains itself; it doesn't change day
     if(b.id==="tmore"){state.tideAll=!state.tideAll;renderTides(dates()[state.sel]);return;}pickDay(+b.dataset.i);});
+  // The boat's tooltip: hover on a computer, tap on a phone, focus from the keyboard
+  const tipBoat=e=>e.target.closest&&e.target.closest(".tboat[data-tip]");
+  $("tweek").addEventListener("pointerover",e=>{const b=tipBoat(e);if(b&&e.pointerType==="mouse")weekTip(b);});
+  $("tweek").addEventListener("pointerout",e=>{const b=tipBoat(e);if(b&&e.pointerType==="mouse"&&!b.contains(e.relatedTarget))weekTipOff();});
+  $("tweek").addEventListener("focusin",e=>{const b=tipBoat(e);if(b&&b.matches(":focus-visible"))weekTip(b);});
+  $("tweek").addEventListener("focusout",e=>{if(tipBoat(e))weekTipOff();});
+  document.addEventListener("pointerdown",e=>{if(!e.target.closest(".tboat[data-tip]"))weekTipOff();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")weekTipOff();});
   // Tap or hover anywhere on the curve to read the tide at that time
   function tidePoint(e){const g=state.tgeo,svg=$("tchart").querySelector("svg");if(!g||!svg)return;
     const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)*g.W/r.width;
@@ -1278,7 +1423,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   $("tchart").addEventListener("click",e=>tidePoint(e));
   document.addEventListener("pointerdown",e=>{if(!e.target.closest("#tchart"))tideTipOff();});
   // Keep the tide right now and the countdowns current while the page is open
-  setInterval(()=>{if(state.data&&!$("tideSec").hidden&&document.visibilityState==="visible"&&$("ttip").hidden)renderTides(dates()[state.sel]);},60000);
+  setInterval(()=>{if(state.data&&!$("tideSec").hidden&&document.visibilityState==="visible"&&$("ttip").hidden&&$("wtip").hidden)renderTides(dates()[state.sel]);},60000);
 
   // Boating: one report per body of water at the location (locations.json "waters", e.g. the Maroochy River
   // and the open ocean at Maroochydore). Each uses the Bureau's hourly wind for a forecast cell on that water,
@@ -1523,13 +1668,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       const now=Date.now();if(now<wheelWait)return;if(now-wheelLast>300)wheelX=0;wheelLast=now;wheelX+=e.deltaX;
       if(Math.abs(wheelX)>80){pickDay(state.sel+(wheelX>0?1:-1));wheelX=0;wheelWait=Date.now()+600;}},{passive:false});}
   addEventListener("pointerup",e=>{if(!drag)return;swiped(e.clientX-drag.x,e.clientY-drag.y);drag.el.classList.remove("drag");drag=null;});
-  swipeable($("hchart"));swipeable($("tchart"));
-  $("hprev").addEventListener("click",()=>pickDay(state.sel-1));
-  $("hnext").addEventListener("click",()=>pickDay(state.sel+1));
+  swipeable($("tchart"));
+  $("hprev").addEventListener("click",()=>{if(!state.data||hv.cur<=0)return;const d=hv.cur-1;hGoDay(d);hv.quiet=true;pickDay(d);hv.quiet=false;});
+  $("hnext").addEventListener("click",()=>{if(!state.data||hv.cur>=6)return;const d=hv.cur+1;hGoDay(d);hv.quiet=true;pickDay(d);hv.quiet=false;});
   $("tprev").addEventListener("click",()=>pickDay(state.sel-1));
   $("tnext").addEventListener("click",()=>pickDay(state.sel+1));
   // The chart is drawn to fit its width, so redraw it when the window changes size (or the phone turns)
-  let hResize=0;addEventListener("resize",()=>{clearTimeout(hResize);hResize=setTimeout(()=>{if(state.data){renderHourly(dates()[state.sel]);renderTides(dates()[state.sel]);}},150);});
+  let hResize=0;addEventListener("resize",()=>{clearTimeout(hResize);hResize=setTimeout(()=>{if(!state.data)return;const px=($("hchartView").clientWidth||$("hbox").clientWidth)<560?26:34;if(px!==hv.PX){hv.built=null;renderHourly(dates()[state.sel]);}renderTides(dates()[state.sel]);},150);});
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
   document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{state.measure=b.dataset.m;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));if(state.data)renderChart();}));
   $("refresh").addEventListener("click",()=>{if(state.loc)load();});
