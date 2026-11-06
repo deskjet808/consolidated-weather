@@ -1,6 +1,6 @@
 {
  "id": "jindalee",
- "generated": "2026-11-06T03:32:59Z",
+ "generated": "2026-11-06T03:34:51Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-06T03:32:30Z"
+   "fetched": "2026-11-06T03:34:24Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:32:33Z"
+   "fetched": "2026-11-06T03:34:26Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-06T03:32:47Z"
+   "fetched": "2026-11-06T03:34:40Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:32:54Z"
+   "fetched": "2026-11-06T03:34:47Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:32:55Z"
+   "fetched": "2026-11-06T03:34:48Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:32:55Z"
+   "fetched": "2026-11-06T03:34:48Z"
   },
   {
    "source": "foreca",
@@ -3768,7 +3768,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:32:59Z"
+   "fetched": "2026-11-06T03:34:51Z"
   }
  ],
  "observations": {
@@ -3783,7 +3783,199 @@
   "wind_kmh": 19,
   "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-06T03:32:29Z"
+  "fetched": "2026-11-06T03:34:14Z"
+ },
+ "marine": {
+  "source": "willyweather, windy, seabreeze, windfinder",
+  "waters": [
+   {
+    "name": "Brisbane River",
+    "kind": "river",
+    "spot": "Jindalee Boat Ramp",
+    "tides": {
+     "2026-11-06": [
+      {
+       "type": "low",
+       "time": "2:45 am",
+       "height_m": 0.12
+      },
+      {
+       "type": "high",
+       "time": "8:54 am",
+       "height_m": 1.94
+      },
+      {
+       "type": "low",
+       "time": "3:03 pm",
+       "height_m": 0.3
+      },
+      {
+       "type": "high",
+       "time": "8:53 pm",
+       "height_m": 1.92
+      }
+     ],
+     "2026-11-07": [
+      {
+       "type": "low",
+       "time": "3:24 am",
+       "height_m": 0.08
+      },
+      {
+       "type": "high",
+       "time": "9:37 am",
+       "height_m": 2.05
+      },
+      {
+       "type": "low",
+       "time": "3:53 pm",
+       "height_m": 0.29
+      },
+      {
+       "type": "high",
+       "time": "9:35 pm",
+       "height_m": 1.85
+      }
+     ],
+     "2026-11-08": [
+      {
+       "type": "low",
+       "time": "4:00 am",
+       "height_m": 0.06
+      },
+      {
+       "type": "high",
+       "time": "10:16 am",
+       "height_m": 2.13
+      },
+      {
+       "type": "low",
+       "time": "4:39 pm",
+       "height_m": 0.3
+      },
+      {
+       "type": "high",
+       "time": "10:14 pm",
+       "height_m": 1.77
+      }
+     ],
+     "2026-11-09": [
+      {
+       "type": "low",
+       "time": "4:31 am",
+       "height_m": 0.06
+      },
+      {
+       "type": "high",
+       "time": "10:53 am",
+       "height_m": 2.17
+      },
+      {
+       "type": "low",
+       "time": "5:22 pm",
+       "height_m": 0.32
+      },
+      {
+       "type": "high",
+       "time": "10:50 pm",
+       "height_m": 1.7
+      }
+     ],
+     "2026-11-10": [
+      {
+       "type": "low",
+       "time": "5:00 am",
+       "height_m": 0.07
+      },
+      {
+       "type": "high",
+       "time": "11:27 am",
+       "height_m": 2.19
+      },
+      {
+       "type": "low",
+       "time": "6:01 pm",
+       "height_m": 0.35
+      },
+      {
+       "type": "high",
+       "time": "11:24 pm",
+       "height_m": 1.62
+      }
+     ],
+     "2026-11-11": [
+      {
+       "type": "low",
+       "time": "5:28 am",
+       "height_m": 0.1
+      },
+      {
+       "type": "high",
+       "time": "12:02 pm",
+       "height_m": 2.17
+      },
+      {
+       "type": "low",
+       "time": "6:38 pm",
+       "height_m": 0.4
+      },
+      {
+       "type": "high",
+       "time": "11:58 pm",
+       "height_m": 1.55
+      }
+     ],
+     "2026-11-12": [
+      {
+       "type": "low",
+       "time": "5:56 am",
+       "height_m": 0.14
+      },
+      {
+       "type": "high",
+       "time": "12:36 pm",
+       "height_m": 2.14
+      },
+      {
+       "type": "low",
+       "time": "7:13 pm",
+       "height_m": 0.45
+      }
+     ]
+    },
+    "windy": {
+     "2026-11-06": {
+      "wind_max": 20,
+      "gust_max": 36,
+      "wind_dir": "ENE"
+     },
+     "2026-11-07": {
+      "wind_max": 21,
+      "gust_max": 38,
+      "wind_dir": "NNE"
+     },
+     "2026-11-08": {
+      "wind_max": 27,
+      "gust_max": 50,
+      "wind_dir": "ESE"
+     },
+     "2026-11-09": {
+      "wind_max": 19,
+      "gust_max": 31,
+      "wind_dir": "NE"
+     },
+     "2026-11-10": {
+      "wind_max": 22,
+      "gust_max": 37,
+      "wind_dir": "NE"
+     }
+    }
+   }
+  ],
+  "problems": [
+   "Seabreeze: ValueError: no wind and wave graph"
+  ],
+  "fetched": "2026-11-06T03:34:23Z"
  },
  "errors": {}
 }
