@@ -1,6 +1,6 @@
 {
  "id": "jindalee",
- "generated": "2026-11-06T03:34:51Z",
+ "generated": "2026-11-06T03:36:10Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-06T03:34:24Z"
+   "fetched": "2026-11-06T03:35:46Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:34:26Z"
+   "fetched": "2026-11-06T03:35:48Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-06T03:34:40Z"
+   "fetched": "2026-11-06T03:35:59Z"
   },
   {
    "source": "windy",
@@ -1236,8 +1236,8 @@
    "days": [
     {
      "date": "2026-11-06",
-     "tmax": 26.9,
-     "tmin": 19.9,
+     "tmax": 26.6,
+     "tmin": 19.8,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -1314,19 +1314,19 @@
      23.6,
      24.7,
      25.8,
-     26.2,
-     26.5,
-     26.9,
-     26.2,
-     25.4,
-     24.7,
-     23.6,
-     22.6,
-     21.5,
-     21,
-     20.4,
-     19.9,
-     19.4,
+     26.1,
+     26.3,
+     26.6,
+     25.9,
+     25.2,
+     24.5,
+     23.4,
+     22.4,
+     21.3,
+     20.8,
+     20.3,
+     19.8,
+     19.3,
      18.8,
      18.3,
      18,
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:34:47Z"
+   "fetched": "2026-11-06T03:36:05Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:34:48Z"
+   "fetched": "2026-11-06T03:36:06Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:34:48Z"
+   "fetched": "2026-11-06T03:36:06Z"
   },
   {
    "source": "foreca",
@@ -3768,22 +3768,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:34:51Z"
+   "fetched": "2026-11-06T03:36:10Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 8.2,
-  "time": "2026-11-06T13:20:00+10:00",
-  "temp": 26.7,
-  "feels_like": 24.9,
+  "time": "2026-11-06T13:30:00+10:00",
+  "temp": 25.9,
+  "feels_like": 24.2,
   "humidity": 50,
   "wind_dir": "NNE",
-  "wind_kmh": 19,
+  "wind_kmh": 17,
   "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-06T03:34:14Z"
+  "fetched": "2026-11-06T03:35:38Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3972,10 +3972,7 @@
     }
    }
   ],
-  "problems": [
-   "Seabreeze: ValueError: no wind and wave graph"
-  ],
-  "fetched": "2026-11-06T03:34:23Z"
+  "fetched": "2026-11-06T03:35:45Z"
  },
  "errors": {}
 }
