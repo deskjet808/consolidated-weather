@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-06T03:37:11Z",
+ "generated": "2026-11-06T03:55:55Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-06T03:36:44Z"
+   "fetched": "2026-11-06T03:54:28Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:36:46Z"
+   "fetched": "2026-11-06T03:54:29Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-06T03:37:00Z"
+   "fetched": "2026-11-06T03:54:43Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:37:07Z"
+   "fetched": "2026-11-06T03:54:50Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-06T03:37:07Z"
+   "fetched": "2026-11-06T03:55:51Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-06T03:37:07Z"
+   "fetched": "2026-11-06T03:55:51Z"
   },
   {
    "source": "foreca",
@@ -3769,22 +3769,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-06T03:37:11Z"
+   "fetched": "2026-11-06T03:55:55Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-06T13:30:00+10:00",
-  "temp": 35.3,
-  "feels_like": 33.4,
-  "humidity": 26,
-  "wind_dir": "NNE",
-  "wind_kmh": 15,
-  "gust_kmh": 30,
+  "time": "2026-11-06T13:50:00+10:00",
+  "temp": 34.1,
+  "feels_like": 32.8,
+  "humidity": 27,
+  "wind_dir": "NE",
+  "wind_kmh": 11,
+  "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-06T03:36:35Z"
+  "fetched": "2026-11-06T03:54:19Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3840,7 +3840,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-06T03:36:43Z"
+  "fetched": "2026-11-06T03:54:27Z"
  },
  "errors": {}
 }

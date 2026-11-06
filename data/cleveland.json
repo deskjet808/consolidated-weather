@@ -1,6 +1,6 @@
 {
  "id": "cleveland",
- "generated": "2026-11-06T03:41:41Z",
+ "generated": "2026-11-06T03:58:17Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-06T03:39:08Z"
+   "fetched": "2026-11-06T03:57:52Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:39:10Z"
+   "fetched": "2026-11-06T03:57:54Z"
   },
   {
    "source": "weatherzone",
@@ -874,7 +874,7 @@
      "rain_max": 1,
      "rain_text": "< 1mm",
      "chance": 50,
-     "text": "Possible shower"
+     "text": "Late shower"
     },
     {
      "date": "2026-11-08",
@@ -883,7 +883,7 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 60,
+     "chance": 50,
      "text": "Possible shower"
     },
     {
@@ -903,7 +903,7 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 70,
+     "chance": 60,
      "text": "Possible shower"
     },
     {
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-06T03:39:29Z"
+   "fetched": "2026-11-06T03:58:06Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-06T03:39:35Z"
+   "fetched": "2026-11-06T03:58:13Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:39:36Z"
+   "fetched": "2026-11-06T03:58:13Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:41:37Z"
+   "fetched": "2026-11-06T03:58:14Z"
   },
   {
    "source": "foreca",
@@ -3768,22 +3768,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-06T03:41:41Z"
+   "fetched": "2026-11-06T03:58:17Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Redland (Alexandra Hills)",
   "distance_km": 3,
-  "time": "2026-11-06T13:30:00+10:00",
-  "temp": 24.8,
-  "feels_like": 24.9,
-  "humidity": 56,
-  "wind_dir": "E",
+  "time": "2026-11-06T13:50:00+10:00",
+  "temp": 24.3,
+  "feels_like": 24.1,
+  "humidity": 55,
+  "wind_dir": "ENE",
   "wind_kmh": 9,
-  "gust_kmh": 19,
+  "gust_kmh": 17,
   "rain_since_9am": 0,
-  "fetched": "2026-11-06T03:38:59Z"
+  "fetched": "2026-11-06T03:57:41Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4030,7 +4030,7 @@
     "windfinder_place": "Foreshore Park"
    }
   ],
-  "fetched": "2026-11-06T03:39:08Z"
+  "fetched": "2026-11-06T03:57:51Z"
  },
  "errors": {}
 }
