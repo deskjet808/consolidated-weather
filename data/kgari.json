@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-07T04:14:27Z",
+ "generated": "2026-11-07T04:16:38Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T04:13:59Z"
+   "fetched": "2026-11-07T04:14:14Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T04:14:02Z"
+   "fetched": "2026-11-07T04:14:17Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-07T04:14:17Z"
+   "fetched": "2026-11-07T04:14:27Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T04:14:24Z"
+   "fetched": "2026-11-07T04:14:33Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T04:14:24Z"
+   "fetched": "2026-11-07T04:15:33Z"
   },
   {
    "source": "icon",
@@ -3557,7 +3557,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T04:14:24Z"
+   "fetched": "2026-11-07T04:16:34Z"
   },
   {
    "source": "foreca",
@@ -3813,7 +3813,7 @@
      "Overcast and light rain"
     ]
    },
-   "fetched": "2026-11-07T04:14:27Z"
+   "fetched": "2026-11-07T04:16:38Z"
   }
  ],
  "observations": {
@@ -3828,7 +3828,7 @@
   "wind_kmh": 24,
   "gust_kmh": 35,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T04:13:39Z"
+  "fetched": "2026-11-07T04:13:55Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4358,7 +4358,7 @@
     "windfinder_place": "Ungowa"
    }
   ],
-  "fetched": "2026-11-07T04:13:58Z"
+  "fetched": "2026-11-07T04:14:13Z"
  },
  "errors": {}
 }
