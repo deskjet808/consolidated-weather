@@ -15,6 +15,27 @@ const WORKFLOW = "scrape.yml";
 const ORIGIN = "https://deskjet808.github.io";
 const FRESH_MINUTES = 30;
 const MAX_RUNNING = 3;
+// Anyone can call the relay directly, so each visitor (by IP address) gets at most PER_MINUTE requests a minute.
+// The app asks about every 15 seconds while a refresh runs, so people using it never reach this; someone
+// flooding it is turned away before the relay spends any of the token's 5,000 GitHub calls an hour.
+const PER_MINUTE = 30;
+// GET /data answers for the same location are reused for a few seconds, so many visitors watching one refresh
+// cost GitHub one lookup between them
+const DATA_SECONDS = 10;
+// Both are kept in this Worker's memory: per Cloudflare location and reset when the Worker restarts, which is
+// enough to stop one visitor hammering it and needs no extra Cloudflare setup
+const hits = new Map();
+const recent = new Map();
+function tooMany(ip, now) {
+  const minute = Math.floor(now / 60000);
+  const h = hits.get(ip);
+  if (!h || h.minute !== minute) {
+    if (hits.size > 5000) hits.clear();
+    hits.set(ip, { minute, n: 1 });
+    return false;
+  }
+  return ++h.n > PER_MINUTE;
+}
 
 export default {
   async fetch(req, env) {
@@ -22,8 +43,12 @@ export default {
     const allow = origin === ORIGIN || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ? origin : ORIGIN;
     const cors = { "Access-Control-Allow-Origin": allow, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", Vary: "Origin" };
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    const reply = (body, status = 200) =>
-      new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json", "Cache-Control": "no-store" } });
+    const reply = (body, status = 200, extra = {}) =>
+      new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json", "Cache-Control": "no-store", ...extra } });
+
+    const now = Date.now();
+    if (tooMany(req.headers.get("CF-Connecting-IP") || "unknown", now))
+      return reply({ error: "too many requests, try again in a minute" }, 429, { "Retry-After": "60" });
 
     const url = new URL(req.url);
     const loc = url.searchParams.get("loc") || "";
@@ -31,6 +56,10 @@ export default {
     if (route !== "POST /refresh" && route !== "GET /data") return reply({ error: "not found" }, 404);
     if (!/^[a-z0-9-]{1,40}$/.test(loc)) return reply({ error: "unknown location" }, 400);
     if (!env.GITHUB_TOKEN) return reply({ error: "relay has no token" }, 500);
+    if (route === "GET /data") {
+      const r = recent.get(loc);
+      if (r && now - r.at < DATA_SECONDS * 1000) return reply(r.body);
+    }
 
     const gh = (path, init = {}) =>
       fetch("https://api.github.com/repos/" + REPO + path, {
@@ -56,7 +85,12 @@ export default {
     const runs = list.ok ? (await list.json()).workflow_runs.filter((r) => r.status !== "completed") : [];
     const running = runs.some((r) => r.display_title === "Refresh " + loc);
 
-    if (route === "GET /data") return reply({ running, data });
+    if (route === "GET /data") {
+      const body = { running, data };
+      if (recent.size > 200) recent.clear();
+      recent.set(loc, { at: now, body });
+      return reply(body);
+    }
 
     const generated = data.generated || null;
     const age = generated ? (Date.now() - Date.parse(generated)) / 60000 : Infinity;
