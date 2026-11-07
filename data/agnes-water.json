@@ -1,6 +1,6 @@
 {
  "id": "agnes-water",
- "generated": "2026-11-07T00:18:54Z",
+ "generated": "2026-11-07T00:28:20Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T00:16:27Z"
+   "fetched": "2026-11-07T00:27:54Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:16:30Z"
+   "fetched": "2026-11-07T00:27:56Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-07T00:16:43Z"
+   "fetched": "2026-11-07T00:28:09Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:16:50Z"
+   "fetched": "2026-11-07T00:28:16Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:16:50Z"
+   "fetched": "2026-11-07T00:28:16Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:18:50Z"
+   "fetched": "2026-11-07T00:28:16Z"
   },
   {
    "source": "foreca",
@@ -3780,22 +3780,22 @@
      "Overcast and light rain"
     ]
    },
-   "fetched": "2026-11-07T00:18:54Z"
+   "fetched": "2026-11-07T00:28:20Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone",
   "distance_km": 76.1,
-  "time": "2026-11-07T10:10:00+10:00",
-  "temp": 28.1,
-  "feels_like": 29.8,
-  "humidity": 68,
+  "time": "2026-11-07T10:20:00+10:00",
+  "temp": 28.4,
+  "feels_like": 30.6,
+  "humidity": 71,
   "wind_dir": "ENE",
   "wind_kmh": 15,
-  "gust_kmh": 22,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T00:16:08Z"
+  "fetched": "2026-11-07T00:27:35Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4325,7 +4325,7 @@
     "windfinder_place": "Town of 1770 / Agnes Water"
    }
   ],
-  "fetched": "2026-11-07T00:16:27Z"
+  "fetched": "2026-11-07T00:27:53Z"
  },
  "errors": {}
 }

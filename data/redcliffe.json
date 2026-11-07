@@ -1,6 +1,6 @@
 {
  "id": "redcliffe",
- "generated": "2026-11-07T00:11:47Z",
+ "generated": "2026-11-07T00:23:15Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T00:09:21Z"
+   "fetched": "2026-11-07T00:20:47Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:09:24Z"
+   "fetched": "2026-11-07T00:20:50Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-07T00:09:37Z"
+   "fetched": "2026-11-07T00:21:00Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:09:43Z"
+   "fetched": "2026-11-07T00:21:07Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:11:44Z"
+   "fetched": "2026-11-07T00:23:12Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:11:44Z"
+   "fetched": "2026-11-07T00:23:12Z"
   },
   {
    "source": "foreca",
@@ -3779,22 +3779,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:11:47Z"
+   "fetched": "2026-11-07T00:23:15Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 19.9,
-  "time": "2026-11-07T10:00:00+10:00",
-  "temp": 25.4,
-  "feels_like": 24.8,
-  "humidity": 62,
+  "time": "2026-11-07T10:10:00+10:00",
+  "temp": 25.3,
+  "feels_like": 24.9,
+  "humidity": 64,
   "wind_dir": "N",
   "wind_kmh": 17,
-  "gust_kmh": 28,
+  "gust_kmh": 26,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T00:09:12Z"
+  "fetched": "2026-11-07T00:20:37Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4041,7 +4041,7 @@
     "windfinder_place": "Sutton Beach"
    }
   ],
-  "fetched": "2026-11-07T00:09:21Z"
+  "fetched": "2026-11-07T00:20:47Z"
  },
  "errors": {}
 }
