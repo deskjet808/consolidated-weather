@@ -1,6 +1,6 @@
 {
  "id": "manly",
- "generated": "2026-11-07T18:11:30Z",
+ "generated": "2026-11-07T18:19:28Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T18:09:05Z"
+   "fetched": "2026-11-07T18:18:05Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T18:09:07Z"
+   "fetched": "2026-11-07T18:18:07Z"
   },
   {
    "source": "weatherzone",
@@ -931,9 +931,9 @@
    "hourly": {
     "start": "2026-11-08T05",
     "temp": [
-     19.6,
-     21.3,
-     22.5,
+     19.4,
+     21.1,
+     22.4,
      23.6,
      24.5,
      25.5,
@@ -1007,7 +1007,7 @@
     "chance": [
      5,
      16,
-     15,
+     17,
      5,
      9,
      5,
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-07T18:09:18Z"
+   "fetched": "2026-11-07T18:18:17Z"
   },
   {
    "source": "windy",
@@ -1284,7 +1284,7 @@
      "text": null,
      "wind_max": 24,
      "gust_max": 41,
-     "wind_dir": "N"
+     "wind_dir": "NNE"
     },
     {
      "date": "2026-11-12",
@@ -1296,7 +1296,7 @@
      "chance": null,
      "text": null,
      "wind_max": 16,
-     "gust_max": 36,
+     "gust_max": 37,
      "wind_dir": "SE"
     }
    ],
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T18:09:24Z"
+   "fetched": "2026-11-07T18:18:24Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-07T18:11:25Z"
+   "fetched": "2026-11-07T18:19:24Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T18:11:25Z"
+   "fetched": "2026-11-07T18:19:25Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-07T18:11:30Z"
+   "fetched": "2026-11-07T18:19:28Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 8.9,
-  "time": "2026-11-08T04:00:00+10:00",
-  "temp": 19.7,
-  "feels_like": 21.9,
-  "humidity": 99,
+  "time": "2026-11-08T04:10:00+10:00",
+  "temp": 19.6,
+  "feels_like": 21,
+  "humidity": 100,
   "wind_dir": "SW",
-  "wind_kmh": 7,
-  "gust_kmh": 9,
+  "wind_kmh": 11,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T18:08:56Z"
+  "fetched": "2026-11-07T18:17:56Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3998,11 +3998,11 @@
      "2026-11-11": {
       "wind_max": 24,
       "gust_max": 41,
-      "wind_dir": "N"
+      "wind_dir": "NNE"
      },
      "2026-11-12": {
       "wind_max": 16,
-      "gust_max": 36,
+      "gust_max": 37,
       "wind_dir": "SE"
      }
     },
@@ -4061,7 +4061,7 @@
     "windfinder_place": "Manly Harbour"
    }
   ],
-  "fetched": "2026-11-07T18:09:05Z"
+  "fetched": "2026-11-07T18:18:04Z"
  },
  "errors": {}
 }
