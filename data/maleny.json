@@ -1,6 +1,6 @@
 {
  "id": "maleny",
- "generated": "2026-11-07T18:08:56Z",
+ "generated": "2026-11-07T18:17:54Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T18:08:30Z"
+   "fetched": "2026-11-07T18:17:28Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T18:08:32Z"
+   "fetched": "2026-11-07T18:17:31Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-07T18:08:44Z"
+   "fetched": "2026-11-07T18:17:43Z"
   },
   {
    "source": "windy",
@@ -1281,7 +1281,7 @@
      "rain_text": "7 mm",
      "chance": null,
      "text": null,
-     "wind_max": 16,
+     "wind_max": 17,
      "gust_max": 37,
      "wind_dir": "NNW"
     },
@@ -1294,9 +1294,9 @@
      "rain_text": "26 mm",
      "chance": null,
      "text": null,
-     "wind_max": 11,
-     "gust_max": 37,
-     "wind_dir": "WSW"
+     "wind_max": 13,
+     "gust_max": 38,
+     "wind_dir": "NNW"
     }
    ],
    "point": "mblue model",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T18:08:51Z"
+   "fetched": "2026-11-07T18:17:50Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Drizzle"
     ]
    },
-   "fetched": "2026-11-07T18:08:51Z"
+   "fetched": "2026-11-07T18:17:50Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T18:08:51Z"
+   "fetched": "2026-11-07T18:17:51Z"
   },
   {
    "source": "foreca",
@@ -3803,22 +3803,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-07T18:08:56Z"
+   "fetched": "2026-11-07T18:17:54Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Nambour",
   "distance_km": 15.2,
-  "time": "2026-11-08T04:00:00+10:00",
+  "time": "2026-11-08T04:10:00+10:00",
   "temp": 18.5,
-  "feels_like": 21.3,
-  "humidity": 97,
+  "feels_like": 21.4,
+  "humidity": 98,
   "wind_dir": "CALM",
   "wind_kmh": 0,
   "gust_kmh": 0,
   "rain_since_9am": 10.8,
-  "fetched": "2026-11-07T18:08:30Z"
+  "fetched": "2026-11-07T18:17:28Z"
  },
  "errors": {}
 }
