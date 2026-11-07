@@ -1,6 +1,6 @@
 {
  "id": "sydney",
- "generated": "2026-11-07T22:18:21Z",
+ "generated": "2026-11-07T22:25:54Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T22:15:58Z"
+   "fetched": "2026-11-07T22:24:29Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T22:15:59Z"
+   "fetched": "2026-11-07T22:24:31Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-07T22:16:09Z"
+   "fetched": "2026-11-07T22:24:42Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T22:16:16Z"
+   "fetched": "2026-11-07T22:24:49Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Drizzle"
     ]
    },
-   "fetched": "2026-11-07T22:18:17Z"
+   "fetched": "2026-11-07T22:25:49Z"
   },
   {
    "source": "icon",
@@ -3512,7 +3512,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T22:18:17Z"
+   "fetched": "2026-11-07T22:25:50Z"
   },
   {
    "source": "foreca",
@@ -3787,22 +3787,22 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-07T22:18:21Z"
+   "fetched": "2026-11-07T22:25:54Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sydney - Observatory Hill",
   "distance_km": 0.6,
-  "time": "2026-11-08T09:00:00+11:00",
-  "temp": 13.7,
-  "feels_like": 8,
-  "humidity": 55,
+  "time": "2026-11-08T09:10:00+11:00",
+  "temp": 14.4,
+  "feels_like": 8.7,
+  "humidity": 53,
   "wind_dir": "SSW",
   "wind_kmh": 24,
   "gust_kmh": null,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T22:15:39Z"
+  "fetched": "2026-11-07T22:24:10Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4246,7 +4246,7 @@
     "windfinder_place": "Sydney Harbour"
    }
   ],
-  "fetched": "2026-11-07T22:15:57Z"
+  "fetched": "2026-11-07T22:24:29Z"
  },
  "errors": {}
 }

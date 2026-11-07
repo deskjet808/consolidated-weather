@@ -1,6 +1,6 @@
 {
  "id": "yeppoon",
- "generated": "2026-11-07T22:15:03Z",
+ "generated": "2026-11-07T22:23:33Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T22:12:36Z"
+   "fetched": "2026-11-07T22:22:09Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T22:12:38Z"
+   "fetched": "2026-11-07T22:22:12Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-07T22:12:50Z"
+   "fetched": "2026-11-07T22:22:21Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T22:12:57Z"
+   "fetched": "2026-11-07T22:22:27Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T22:14:57Z"
+   "fetched": "2026-11-07T22:23:28Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T22:14:58Z"
+   "fetched": "2026-11-07T22:23:28Z"
   },
   {
    "source": "foreca",
@@ -3787,22 +3787,22 @@
      "Cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-07T22:15:03Z"
+   "fetched": "2026-11-07T22:23:33Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Yeppoon",
   "distance_km": 0.3,
-  "time": "2026-11-08T08:00:00+10:00",
-  "temp": 26.8,
-  "feels_like": 29.6,
-  "humidity": 73,
-  "wind_dir": "WNW",
+  "time": "2026-11-08T08:10:00+10:00",
+  "temp": 26.9,
+  "feels_like": 29.4,
+  "humidity": 70,
+  "wind_dir": "W",
   "wind_kmh": 9,
-  "gust_kmh": 13,
+  "gust_kmh": 15,
   "rain_since_9am": 2.4,
-  "fetched": "2026-11-07T22:12:25Z"
+  "fetched": "2026-11-07T22:21:58Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4087,7 +4087,7 @@
     "windfinder_place": "Rosslyn Bay"
    }
   ],
-  "fetched": "2026-11-07T22:12:36Z"
+  "fetched": "2026-11-07T22:22:09Z"
  },
  "errors": {}
 }
