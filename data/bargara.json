@@ -1,6 +1,6 @@
 {
  "id": "bargara",
- "generated": "2026-11-07T00:14:33Z",
+ "generated": "2026-11-07T00:26:01Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-07T00:12:07Z"
+   "fetched": "2026-11-07T00:23:35Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:12:09Z"
+   "fetched": "2026-11-07T00:23:37Z"
   },
   {
    "source": "weatherzone",
@@ -931,12 +931,12 @@
    "hourly": {
     "start": "2026-11-07T11",
     "temp": [
-     28.4,
-     28.7,
-     28.8,
      28,
-     26.7,
-     26,
+     28.4,
+     28.5,
+     27.8,
+     26.6,
+     25.9,
      25.4,
      24.1,
      23.7,
@@ -1227,7 +1227,7 @@
      "Chance shower"
     ]
    },
-   "fetched": "2026-11-07T00:12:22Z"
+   "fetched": "2026-11-07T00:23:50Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-07T00:12:28Z"
+   "fetched": "2026-11-07T00:23:56Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:12:29Z"
+   "fetched": "2026-11-07T00:25:57Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-07T00:14:30Z"
+   "fetched": "2026-11-07T00:25:57Z"
   },
   {
    "source": "foreca",
@@ -3780,22 +3780,22 @@
      "Cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-07T00:14:33Z"
+   "fetched": "2026-11-07T00:26:01Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Bundaberg",
   "distance_km": 17.4,
-  "time": "2026-11-07T10:00:00+10:00",
-  "temp": 26.9,
+  "time": "2026-11-07T10:10:00+10:00",
+  "temp": 27,
   "feels_like": 28.7,
-  "humidity": 71,
+  "humidity": 73,
   "wind_dir": "NNE",
-  "wind_kmh": 13,
-  "gust_kmh": 17,
+  "wind_kmh": 15,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-07T00:11:48Z"
+  "fetched": "2026-11-07T00:23:16Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4325,7 +4325,7 @@
     "windfinder_place": "Bundaberg (Tide)"
    }
   ],
-  "fetched": "2026-11-07T00:12:06Z"
+  "fetched": "2026-11-07T00:23:35Z"
  },
  "errors": {}
 }
