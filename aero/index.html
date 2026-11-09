@@ -458,6 +458,35 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
   .waters.tabbed .wtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
   .waters.tabbed .water:not(.on){display:none}
 }
+/* Beach driving (K'gari): the daylight hours either side of low tide, when the sand is wide and firm */
+.drive{gap:14px;--drive-dark:#2b3a66}  /* night on the strip: navy in every theme */
+.dwhere{margin:0;font-size:.92rem;color:var(--muted)}
+.dwhere b{color:var(--fg);font-weight:600}
+.dnow{display:flex;align-items:center;gap:12px 14px;--c:var(--muted)}
+.dnow.good{--c:var(--good)} .dnow.mid{--c:var(--warn)} .dnow.bad{--c:var(--bad)}
+.dnow .dicon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.dnow .dicon .ui{width:24px;height:24px}
+.dnow .dverd{font:700 1.45rem/1.15 var(--display);color:var(--c)}
+.dnow .dverd small{display:block;font:400 .92rem/1.4 var(--body);color:var(--muted);margin-top:4px}
+.dnow .dverd small b{color:var(--fg);font-weight:600}
+.dswell{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:.9rem;color:var(--bad)}
+.dswell .ui{width:18px;height:18px;flex:none;margin-top:1px}
+.dstrip svg{width:100%;height:auto;display:block}
+.dstrip .ax{font:10px var(--mono);fill:var(--muted)}
+.dstrip .tl{font:600 11px var(--body);fill:var(--fg)}
+.dlegend{display:flex;gap:6px 14px;flex-wrap:wrap;font:.78rem var(--body);color:var(--muted)}
+.dlegend i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.dweek{display:flex;flex-direction:column}
+.dweek button{display:grid;grid-template-columns:5.6em minmax(0,1fr) auto;gap:4px 12px;align-items:center;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);padding:9px 6px;font:inherit;cursor:pointer}
+.dweek button:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.dweek button[aria-pressed="true"]{background:var(--accent-soft);border-radius:8px}
+.dweek .dd{font:700 1rem var(--display)}
+.dweek .dw{display:flex;flex-wrap:wrap;gap:6px}
+.dweek .dw span{font:600 .84rem var(--body);font-variant-numeric:tabular-nums;color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.dweek .dw em{font:400 .84rem var(--body);font-style:normal;color:var(--muted)}
+.dweek .ds{font:.8rem var(--body);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.dweek .ds.big{color:var(--bad);font-weight:600}
+@media (max-width:560px){.dweek button{grid-template-columns:4.2em minmax(0,1fr);padding:9px 4px}.dweek .ds{grid-column:2}.dnow .dverd{font-size:1.25rem}}
 /* "About this": the longer explanations, folded away */
 .about{font-size:.82rem;color:var(--muted)}
 .about summary{cursor:pointer;color:var(--accent);font-weight:600;width:max-content}
@@ -728,7 +757,7 @@ tr.median td,html.scenic .tablebox tr.median td{background:rgba(150,215,255,.4)}
   </header>
   <button class="stick" id="stick" type="button" tabindex="-1" aria-hidden="true"><img src="../img/icon-192.png" alt="" width="30" height="30"><b id="stickName"></b><span class="sc" id="stickCond"></span><span class="st" id="stickTemp"></span></button>
 
-  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
+  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
 
   <div id="err" class="error" hidden></div>
 
@@ -773,6 +802,18 @@ tr.median td,html.scenic .tablebox tr.median td{background:rgba(150,215,255,.4)}
     <details class="about"><summary>About this</summary><p>High and low tide times and heights are WillyWeather's, for the spot named under the tide. WillyWeather gives only the turning points, so the curve between them, and the height shown for right now, follow the usual smooth tide shape and are estimates. The launch hint looks for the 90 minutes either side of a high tide that fall in daylight (sunrise and sunset from the Bureau of Meteorology), and adds the Bureau's strongest wind on that water in that time. Shallow ramps and river bars can be tricky near low tide; check local conditions.</p></details>
   </section>
 
+  <section aria-labelledby="driveh" id="driveSec" hidden>
+    <h2 id="driveh"><i data-ui="car"></i><span id="drivet">Beach driving</span></h2>
+    <div class="hbox drive">
+      <p class="dwhere" id="dwhere"></p>
+      <div class="dnow" id="dnow" role="status"></div>
+      <p class="dswell" id="dswell" hidden></p>
+      <div class="dstrip" id="dstrip"></div>
+      <div class="dlegend"><span><i style="background:var(--good)"></i>Good: within 2 hours of low tide</span><span><i style="background:var(--warn)"></i>Mid tide: softer sand, take care</span><span><i style="background:var(--bad)"></i>Avoid: within 2 hours of high tide</span><span><i style="background:var(--drive-dark)"></i>Dark</span></div>
+      <div class="dweek" id="dweek" role="group" aria-label="Choose a day"></div>
+    </div>
+    <details class="about"><summary>About this</summary><p>The usual advice on K'gari is to drive the beaches within about two hours either side of low tide, when the sand is wide and firm, and to stay off them around high tide, when waves can reach the dunes and creek mouths run deep and fast. Driving after dark isn't advised. The times here follow that rule, using WillyWeather's tide times for the spot named above and sunrise and sunset from the Bureau of Meteorology. A big swell pushes waves further up the beach, so the swell is flagged at 2 m or more. You need a vehicle access permit from Queensland Parks to drive on K'gari; check its park alerts for closed beaches and washouts before you go. This is a guide, not a safety service.</p></details>
+  </section>
   <section aria-labelledby="briefh">
     <h2 id="briefh"><i data-ui="boat"></i><span id="brieft">On the water</span></h2>
     <div class="brief" id="brief"><p class="empty">Loading…</p></div>
@@ -984,6 +1025,7 @@ tr.median td,html.scenic .tablebox tr.median td{background:rgba(150,215,255,.4)}
     grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
     globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
     alert:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/>',
+    car:'<path d="M5 17h14v-4.5l-2-5.5H7l-2 5.5z"/><path d="M5 12.5h14"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/>',
     eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'};
   const ui=(n,cls="")=>`<svg class="ui ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${UI[n]}</svg>`;
   // Wind arrow pointing the way the wind blows (a northerly blows towards the south)
@@ -1314,7 +1356,7 @@ tr.median td,html.scenic .tablebox tr.median td{background:rgba(150,215,255,.4)}
       <td>${r.rainText}</td><td>${isNum(r.chance)?f0(r.chance)+"%":dash}</td></tr>`;});
     $("tbody").innerHTML=rows.length?html+`<tr class="median"><td>Median</td><td>${f1(med.tmax)}</td><td>${f1(med.tmin)}</td><td>${f1(med.rain)}</td><td>${isNum(med.chance)?f0(med.chance)+"%":"–"}</td></tr>`
       :`<tr><td colspan="5">No forecasts for this day yet.</td></tr>`;
-    renderPanel(k,state.sel);renderHourly(k);renderTides(k);renderBoat(k);
+    renderPanel(k,state.sel);renderHourly(k);renderTides(k);renderDrive(k);renderBoat(k);
   }
 
   // ---- Hour by hour: for each hour of the chosen day, the median of every source with hourly figures ----
@@ -1725,6 +1767,77 @@ tr.median td,html.scenic .tablebox tr.median td{background:rgba(150,215,255,.4)}
     $("brief").innerHTML=reps.map((r,i)=>`<button type="button" class="brow ${r.rate?r.rate[0]:""}" data-w="${i}"><span class="bn">${esc(r.title)}</span>${r.rate?`<span class="rate sm ${r.rate[0]}">${r.rate[1]}</span>`:""}<span class="bt">${r.line}</span></button>`).join("");
   }
 
+  // Beach driving on K'gari: good within 2 hours of low tide in daylight, to be avoided within 2 hours of high tide.
+  // Each place's "drive" in locations.json names its driving beach, and "tides" borrows another location's
+  // tide times when its own water isn't that beach (Kingfisher Bay drives 75 Mile Beach, so it uses Eurong's).
+  const DRIVE_H=2*36e5;
+  const usable=r=>r.c==="good"&&r.b-r.a>=30*6e4;  // a window under half an hour isn't worth listing
+  const driveData={};  // borrowed locations' data files, fetched once
+  function driveWater(src){const ws=(src&&src.marine&&src.marine.waters)||[],has=w=>w.tides&&Object.keys(w.tides).length;
+    return ws.find(w=>w.kind==="ocean"&&has(w))||ws.find(has)||null;}
+  function driveKind(E,ms,sun){if(ms<sun.rise||ms>sun.set)return"dark";
+    let lo=Infinity,hi=Infinity;E.forEach(e=>{const d=Math.abs(e.ms-ms);if(e.high)hi=Math.min(hi,d);else lo=Math.min(lo,d);});
+    return lo<=DRIVE_H?"good":hi<=DRIVE_H?"bad":"mid";}
+  // Day k as runs of one kind, in 10-minute steps
+  function driveRuns(E,k){const d0=dayMs(k),sun=sunMs(k),out=[];
+    for(let ms=d0;ms<d0+864e5;ms+=6e5){const c=driveKind(E,ms+3e5,sun),r=out[out.length-1];if(r&&r.c===c)r.b=ms+6e5;else out.push({c,a:ms,b:ms+6e5});}
+    return out;}
+  function renderDrive(k){
+    const D=state.loc.kind==="full"&&state.loc.drive,sec=$("driveSec");sec.hidden=!D;
+    const jl=document.querySelector('.jump a[href="#driveh"]');if(jl)jl.hidden=!D;
+    if(!D)return;
+    let src=state.data&&state.data.scraped;
+    if(D.tides){src=driveData[D.tides];
+      if(src===undefined){driveData[D.tides]=null;
+        fetch(SRC+"data/"+D.tides+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():false).catch(()=>false)
+          .then(j=>{driveData[D.tides]=j;if(state.loc.drive===D&&state.data)renderDrive(dates()[state.sel]);});}}
+    const mw=driveWater(src),sel=state.sel,ks=dates(),dt=new Date(k+"T12:00:00");
+    $("drivet").textContent="Beach driving · "+(sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
+    const spot=mw&&(mw.tides_place||mw.spot);
+    $("dwhere").innerHTML=`<b>${esc(D.beach)}</b>${spot?" · tides at "+esc(spot):""}${D.note?". "+esc(D.note)+".":""}`;
+    if(!mw){$("dnow").className="dnow";$("dnow").innerHTML=`<div class="dicon">${ui("car")}</div><div class="dverd">${src===null?"Loading tide times…":"No tide times right now"}<small>Tap Refresh to try again.</small></div>`;
+      $("dswell").hidden=true;$("dstrip").innerHTML="";$("dweek").innerHTML="";return;}
+    const E=tideTurns(mw.tides),runs=driveRuns(E,k),d0=dayMs(k),sun=sunMs(k),now=wallMs(new Date());
+    const good=runs.filter(usable),range=r=>clock(r.a)+" to "+clock(r.b);
+    const turns=E.filter(e=>e.ms>=d0&&e.ms<d0+864e5),list=h=>turns.filter(e=>e.high===h).map(e=>`${clock(e.ms)} (${e.m} m)`).join(" and ")||"none";
+    const tideLine=`Low tide <b>${list(false)}</b> · high <b>${list(true)}</b>`;
+    // The headline: what to do right now (today), or the day's good times
+    let cls,head,sub;
+    if(sel===0&&now>=d0&&now<d0+864e5){const c=driveKind(E,now,sun),cur=runs.find(r=>now>=r.a&&now<r.b),next=good.find(r=>r.a>now);
+      let after=next?`Next good time ${range(next)}.`:"";
+      if(!next){const t=ks[1]&&driveRuns(E,ks[1]).find(usable);after=t?`Next good time tomorrow ${range(t)}.`:"No more good times today.";}
+      cls=c==="dark"?"":c;
+      head=c==="good"?`Good to drive now, until ${clock(cur.b)}`:c==="bad"?"Avoid the beach now":c==="mid"?"Mid tide now: take care":"Dark now: beach driving not advised";
+      sub=(c==="good"?"":after+" ")+tideLine+".";}
+    else{cls=good.length?"good":"bad";
+      head=good.length?"Good to drive "+good.map(range).join(" and "):"No good time in daylight";
+      sub=tideLine+".";}
+    $("dnow").className="dnow "+cls;
+    $("dnow").innerHTML=`<div class="dicon">${ui("car")}</div><div class="dverd">${esc(head)}<small>${sub}</small></div>`;
+    const sw=mw.swell&&mw.swell[k]?parseFloat(mw.swell[k].max_m):null;
+    $("dswell").hidden=!(isNum(sw)&&sw>=2);
+    if(isNum(sw)&&sw>=2)$("dswell").innerHTML=ui("wave")+`<span>Swell up to ${sw} m: waves run further up the beach, so give the water more room even near low tide.</span>`;
+    // The day as a strip: good, mid, avoid and dark, with the tide turns above and the time below
+    const el=$("dstrip"),W=Math.max(300,Math.min(900,Math.round(el.clientWidth||720))),every=W<560?6:3,L=4,R=4,top=24,bh=26,H=top+bh+20;
+    const x=ms=>L+(ms-d0)/864e5*(W-L-R);
+    const fill={good:"var(--good)",mid:"var(--warn)",bad:"var(--bad)",dark:"var(--drive-dark)"},op={good:.85,mid:.55,bad:.7,dark:1};
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Beach driving through the day: ${esc(good.length?"good "+good.map(range).join(" and "):"no good time in daylight")}">`;
+    s+=`<rect x="${L}" y="${top}" width="${W-L-R}" height="${bh}" rx="7" style="fill:var(--line)"/>`;
+    s+=`<clipPath id="dclip"><rect x="${L}" y="${top}" width="${W-L-R}" height="${bh}" rx="7"/></clipPath><g clip-path="url(#dclip)">`;
+    runs.forEach(r=>{s+=`<rect x="${x(r.a).toFixed(1)}" y="${top}" width="${(x(r.b)-x(r.a)).toFixed(1)}" height="${bh}" style="fill:${fill[r.c]};opacity:${op[r.c]}"/>`;});
+    s+=`</g>`;
+    turns.forEach(e=>{const X=x(e.ms),tx=Math.min(Math.max(X,L+34),W-R-34);
+      s+=`<line x1="${X}" x2="${X}" y1="${top-6}" y2="${top+bh}" style="stroke:var(--fg);stroke-width:1;opacity:.35"/><circle cx="${X}" cy="${top-6}" r="3.5" style="fill:${e.high?"var(--bad)":"var(--good)"}"/><text class="tl" x="${tx}" y="${top-12}" text-anchor="middle">${e.high?"High":"Low"} ${clock(e.ms).replace(" ","")}</text>`;});
+    for(let h=0;h<=24;h+=every)s+=`<text class="ax" x="${x(d0+h*36e5)+(h===0?2:h===24?-2:0)}" y="${H-4}" text-anchor="${h===0?"start":h===24?"end":"middle"}">${hh12(h)}</text>`;
+    if(now>=d0&&now<=d0+864e5)s+=`<line x1="${x(now)}" x2="${x(now)}" y1="${top-2}" y2="${top+bh+2}" style="stroke:var(--fg);stroke-width:2.5"/><circle cx="${x(now)}" cy="${top+bh+2}" r="3.5" style="fill:var(--fg)"/>`;
+    el.innerHTML=s+"</svg>";
+    // The week: each day's good daylight times and the swell; tap a day to see it
+    $("dweek").innerHTML=ks.map((d,j)=>{const g=driveRuns(E,d).filter(usable),sv=mw.swell&&mw.swell[d]?parseFloat(mw.swell[d].max_m):null;
+      const nm=j===0?"Today":j===1?"Tomorrow":new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric"});
+      const wins=g.length?g.map(r=>`<span>${clock(r.a)} – ${clock(r.b)}</span>`).join(""):(mw.tides[d]?"<em>No good time in daylight</em>":"<em>No tide times yet</em>");
+      return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="dd">${nm}</span><span class="dw">${wins}</span><span class="ds${isNum(sv)&&sv>=2?" big":""}">${isNum(sv)?"Swell "+sv+" m":""}</span></button>`;}).join("");
+  }
+  $("dweek").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;const d=document.querySelector(`.day[data-i="${b.dataset.i}"]`);if(d)d.click();});
   function renderPanel(k,sel){
     const S=state.data?.scraped,errs=(S&&S.errors)||{};
     const dt=new Date(k+"T12:00:00");
