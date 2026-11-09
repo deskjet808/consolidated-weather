@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-09T02:12:37Z",
+ "generated": "2026-11-09T02:09:11Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-09T02:12:12Z"
+   "fetched": "2026-11-09T02:08:44Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-09T02:12:14Z"
+   "fetched": "2026-11-09T02:08:46Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-09T02:12:26Z"
+   "fetched": "2026-11-09T02:09:00Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-09T02:12:32Z"
+   "fetched": "2026-11-09T02:09:06Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Heavy drizzle"
     ]
    },
-   "fetched": "2026-11-09T02:12:33Z"
+   "fetched": "2026-11-09T02:09:07Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-09T02:12:34Z"
+   "fetched": "2026-11-09T02:09:07Z"
   },
   {
    "source": "foreca",
@@ -3621,7 +3621,7 @@
    "hourly": {
     "start": "2026-11-09T12",
     "temp": [
-     22,
+     24,
      24,
      23,
      23,
@@ -3773,7 +3773,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-09T02:12:37Z"
+   "fetched": "2026-11-09T02:09:11Z"
   }
  ],
  "observations": {
@@ -3788,7 +3788,7 @@
   "wind_kmh": 20,
   "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-09T02:11:52Z"
+  "fetched": "2026-11-09T02:08:23Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4313,7 +4313,7 @@
     "windfinder_place": "Ungowa"
    }
   ],
-  "fetched": "2026-11-09T02:12:11Z"
+  "fetched": "2026-11-09T02:08:43Z"
  },
  "errors": {}
 }
