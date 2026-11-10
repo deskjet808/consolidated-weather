@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-10T00:11:36Z",
+ "generated": "2026-11-10T00:15:18Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T00:09:11Z"
+   "fetched": "2026-11-10T00:12:53Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T00:09:13Z"
+   "fetched": "2026-11-10T00:12:55Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T00:09:24Z"
+   "fetched": "2026-11-10T00:13:06Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T00:09:31Z"
+   "fetched": "2026-11-10T00:13:13Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Fog"
     ]
    },
-   "fetched": "2026-11-10T00:11:32Z"
+   "fetched": "2026-11-10T00:15:14Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-10T00:11:33Z"
+   "fetched": "2026-11-10T00:15:14Z"
   },
   {
    "source": "foreca",
@@ -3781,7 +3781,7 @@
      "Overcast and light rain"
     ]
    },
-   "fetched": "2026-11-10T00:11:36Z"
+   "fetched": "2026-11-10T00:15:18Z"
   }
  ],
  "observations": {
@@ -3796,7 +3796,7 @@
   "wind_kmh": 13,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-10T00:09:02Z"
+  "fetched": "2026-11-10T00:12:45Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3852,7 +3852,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-10T00:09:10Z"
+  "fetched": "2026-11-10T00:12:52Z"
  },
  "errors": {}
 }
