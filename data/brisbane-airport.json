@@ -1,6 +1,6 @@
 {
  "id": "brisbane-airport",
- "generated": "2026-11-10T07:40:38Z",
+ "generated": "2026-11-10T07:52:49Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T07:39:13Z"
+   "fetched": "2026-11-10T07:50:23Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:39:15Z"
+   "fetched": "2026-11-10T07:50:25Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:39:26Z"
+   "fetched": "2026-11-10T07:50:37Z"
   },
   {
    "source": "windy",
@@ -1260,7 +1260,7 @@
     {
      "date": "2026-11-11",
      "tmax": 27.6,
-     "tmin": 20.9,
+     "tmin": 21,
      "rain_min": 6.3,
      "rain_max": 6.3,
      "rain_text": "6.3 mm",
@@ -1327,26 +1327,26 @@
      24.5,
      25,
      25.5,
-     25.2,
+     25.3,
      25,
-     24.7,
-     24.3,
+     24.8,
+     24.5,
+     24.2,
      23.9,
-     23.5,
+     23.6,
      23.2,
      22.9,
-     22.6,
-     22.3,
-     21.9,
-     21.6,
-     21.4,
-     21.1,
-     20.9,
-     21.9,
-     23,
-     24,
+     22.5,
+     22.2,
+     21.8,
+     21.5,
+     21.3,
+     21,
+     22,
+     22.9,
+     23.9,
      24.9,
-     25.9,
+     25.8,
      26.8,
      27.1,
      27.3,
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:39:33Z"
+   "fetched": "2026-11-10T07:50:44Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-10T07:40:34Z"
+   "fetched": "2026-11-10T07:52:45Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-10T07:40:34Z"
+   "fetched": "2026-11-10T07:52:45Z"
   },
   {
    "source": "foreca",
@@ -3810,22 +3810,22 @@
      "Partly cloudy and showers"
     ]
    },
-   "fetched": "2026-11-10T07:40:38Z"
+   "fetched": "2026-11-10T07:52:49Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 0.4,
-  "time": "2026-11-10T17:30:00+10:00",
-  "temp": 23.7,
-  "feels_like": 20.9,
-  "humidity": 81,
+  "time": "2026-11-10T17:40:00+10:00",
+  "temp": 23.6,
+  "feels_like": 21.2,
+  "humidity": 82,
   "wind_dir": "NNE",
   "wind_kmh": 35,
   "gust_kmh": 43,
   "rain_since_9am": 0,
-  "fetched": "2026-11-10T07:39:12Z"
+  "fetched": "2026-11-10T07:50:22Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "moreton-island",
- "generated": "2026-11-10T07:39:12Z",
+ "generated": "2026-11-10T07:50:22Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T07:38:45Z"
+   "fetched": "2026-11-10T07:49:55Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:38:47Z"
+   "fetched": "2026-11-10T07:49:56Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:39:00Z"
+   "fetched": "2026-11-10T07:50:10Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:39:06Z"
+   "fetched": "2026-11-10T07:50:18Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-10T07:39:07Z"
+   "fetched": "2026-11-10T07:50:19Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-10T07:39:08Z"
+   "fetched": "2026-11-10T07:50:19Z"
   },
   {
    "source": "foreca",
@@ -3810,22 +3810,22 @@
      "Cloudy and showers"
     ]
    },
-   "fetched": "2026-11-10T07:39:12Z"
+   "fetched": "2026-11-10T07:50:22Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Moreton",
   "distance_km": 11.6,
-  "time": "2026-11-10T17:30:00+10:00",
-  "temp": 22.7,
-  "feels_like": 21.6,
+  "time": "2026-11-10T17:40:00+10:00",
+  "temp": 22.6,
+  "feels_like": 21.9,
   "humidity": 82,
   "wind_dir": "NNE",
-  "wind_kmh": 24,
-  "gust_kmh": 37,
+  "wind_kmh": 22,
+  "gust_kmh": 33,
   "rain_since_9am": 0,
-  "fetched": "2026-11-10T07:38:22Z"
+  "fetched": "2026-11-10T07:49:35Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4345,7 +4345,7 @@
     "windfinder_place": "Tangalooma Point"
    }
   ],
-  "fetched": "2026-11-10T07:38:43Z"
+  "fetched": "2026-11-10T07:49:54Z"
  },
  "errors": {}
 }

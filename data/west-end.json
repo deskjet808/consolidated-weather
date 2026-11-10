@@ -1,6 +1,6 @@
 {
  "id": "west-end",
- "generated": "2026-11-10T07:49:01Z",
+ "generated": "2026-11-10T08:03:16Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T07:47:34Z"
+   "fetched": "2026-11-10T08:01:51Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:47:36Z"
+   "fetched": "2026-11-10T08:01:53Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:47:49Z"
+   "fetched": "2026-11-10T08:02:06Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:47:55Z"
+   "fetched": "2026-11-10T08:02:12Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-10T07:47:56Z"
+   "fetched": "2026-11-10T08:03:13Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-10T07:48:56Z"
+   "fetched": "2026-11-10T08:03:13Z"
   },
   {
    "source": "foreca",
@@ -3676,14 +3676,13 @@
     }
    ],
    "hourly": {
-    "start": "2026-11-10T17",
+    "start": "2026-11-10T18",
     "temp": [
-     25,
-     24,
      24,
      23,
      23,
      23,
+     22,
      22,
      21,
      21,
@@ -3711,7 +3710,6 @@
      22
     ],
     "chance": [
-     58,
      37,
      16,
      13,
@@ -3744,7 +3742,6 @@
      96
     ],
     "mm": [
-     0.01,
      0,
      0,
      0,
@@ -3780,7 +3777,6 @@
      "Clear",
      "Clear",
      "Clear",
-     "Clear",
      "Mostly clear",
      "Mostly clear",
      "Partly cloudy",
@@ -3810,22 +3806,22 @@
      "Partly cloudy and showers"
     ]
    },
-   "fetched": "2026-11-10T07:49:01Z"
+   "fetched": "2026-11-10T08:03:16Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane",
   "distance_km": 2.7,
-  "time": "2026-11-10T17:40:00+10:00",
-  "temp": 24.4,
-  "feels_like": 25.8,
-  "humidity": 74,
+  "time": "2026-11-10T17:50:00+10:00",
+  "temp": 24.2,
+  "feels_like": 25.6,
+  "humidity": 75,
   "wind_dir": "NNE",
   "wind_kmh": 11,
-  "gust_kmh": 24,
+  "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-10T07:47:34Z"
+  "fetched": "2026-11-10T08:01:51Z"
  },
  "errors": {}
 }

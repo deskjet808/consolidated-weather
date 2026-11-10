@@ -1,6 +1,6 @@
 {
  "id": "bargara",
- "generated": "2026-11-10T07:43:46Z",
+ "generated": "2026-11-10T07:59:04Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T07:43:18Z"
+   "fetched": "2026-11-10T07:57:38Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:43:21Z"
+   "fetched": "2026-11-10T07:57:40Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:43:33Z"
+   "fetched": "2026-11-10T07:57:53Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:43:40Z"
+   "fetched": "2026-11-10T07:58:00Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-10T07:43:40Z"
+   "fetched": "2026-11-10T07:59:00Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-10T07:43:42Z"
+   "fetched": "2026-11-10T07:59:01Z"
   },
   {
    "source": "foreca",
@@ -3810,22 +3810,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-10T07:43:46Z"
+   "fetched": "2026-11-10T07:59:04Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Bundaberg",
   "distance_km": 17.4,
-  "time": "2026-11-10T17:30:00+10:00",
-  "temp": 24.8,
-  "feels_like": 25.3,
-  "humidity": 84,
-  "wind_dir": "NNE",
-  "wind_kmh": 22,
-  "gust_kmh": 30,
+  "time": "2026-11-10T17:50:00+10:00",
+  "temp": 24.7,
+  "feels_like": 25.7,
+  "humidity": 86,
+  "wind_dir": "NE",
+  "wind_kmh": 20,
+  "gust_kmh": 26,
   "rain_since_9am": 1.4,
-  "fetched": "2026-11-10T07:42:58Z"
+  "fetched": "2026-11-10T07:57:19Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4345,7 +4345,7 @@
     "windfinder_place": "Bundaberg (Tide)"
    }
   ],
-  "fetched": "2026-11-10T07:43:18Z"
+  "fetched": "2026-11-10T07:57:37Z"
  },
  "errors": {}
 }

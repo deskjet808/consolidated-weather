@@ -1,6 +1,6 @@
 {
  "id": "agnes-water",
- "generated": "2026-11-10T07:47:33Z",
+ "generated": "2026-11-10T08:01:50Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-10T07:44:06Z"
+   "fetched": "2026-11-10T07:59:24Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:44:09Z"
+   "fetched": "2026-11-10T07:59:26Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:44:21Z"
+   "fetched": "2026-11-10T07:59:39Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-10T07:44:27Z"
+   "fetched": "2026-11-10T07:59:46Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Heavy drizzle"
     ]
    },
-   "fetched": "2026-11-10T07:45:28Z"
+   "fetched": "2026-11-10T07:59:46Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-10T07:47:29Z"
+   "fetched": "2026-11-10T08:01:47Z"
   },
   {
    "source": "foreca",
@@ -3676,9 +3676,8 @@
     }
    ],
    "hourly": {
-    "start": "2026-11-10T17",
+    "start": "2026-11-10T18",
     "temp": [
-     25,
      24,
      23,
      23,
@@ -3711,7 +3710,6 @@
      24
     ],
     "chance": [
-     74,
      70,
      66,
      51,
@@ -3744,7 +3742,6 @@
      11
     ],
     "mm": [
-     0.02,
      0.03,
      0.05,
      0.04,
@@ -3777,7 +3774,6 @@
      0
     ],
     "text": [
-     "Partly cloudy",
      "Mostly clear",
      "Mostly clear",
      "Cloudy",
@@ -3810,22 +3806,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-10T07:47:33Z"
+   "fetched": "2026-11-10T08:01:50Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone",
   "distance_km": 76.1,
-  "time": "2026-11-10T17:30:00+10:00",
-  "temp": 25.8,
-  "feels_like": 28.2,
-  "humidity": 81,
+  "time": "2026-11-10T17:50:00+10:00",
+  "temp": 25.3,
+  "feels_like": 27.3,
+  "humidity": 83,
   "wind_dir": "ENE",
-  "wind_kmh": 13,
+  "wind_kmh": 15,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-10T07:43:47Z"
+  "fetched": "2026-11-10T07:59:05Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4345,7 +4341,7 @@
     "windfinder_place": "Town of 1770 / Agnes Water"
    }
   ],
-  "fetched": "2026-11-10T07:44:06Z"
+  "fetched": "2026-11-10T07:59:24Z"
  },
  "errors": {}
 }
