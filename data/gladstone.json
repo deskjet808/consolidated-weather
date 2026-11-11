@@ -1,6 +1,6 @@
 {
  "id": "gladstone",
- "generated": "2026-11-11T23:39:05Z",
+ "generated": "2026-11-11T23:41:01Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T23:38:37Z"
+   "fetched": "2026-11-11T23:40:34Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T23:38:40Z"
+   "fetched": "2026-11-11T23:40:37Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-11T23:38:54Z"
+   "fetched": "2026-11-11T23:40:49Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T23:39:01Z"
+   "fetched": "2026-11-11T23:40:55Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T23:39:01Z"
+   "fetched": "2026-11-11T23:40:56Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-11T23:39:02Z"
+   "fetched": "2026-11-11T23:40:56Z"
   },
   {
    "source": "foreca",
@@ -3783,7 +3783,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-11T23:39:05Z"
+   "fetched": "2026-11-11T23:41:01Z"
   }
  ],
  "observations": {
@@ -3798,7 +3798,7 @@
   "wind_kmh": 15,
   "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-11T23:38:27Z"
+  "fetched": "2026-11-11T23:40:24Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4040,7 +4040,7 @@
     "windfinder_place": "Gladstone (Tide)"
    }
   ],
-  "fetched": "2026-11-11T23:38:37Z"
+  "fetched": "2026-11-11T23:40:34Z"
  },
  "errors": {}
 }

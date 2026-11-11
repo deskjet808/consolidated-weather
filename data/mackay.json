@@ -1,6 +1,6 @@
 {
  "id": "mackay",
- "generated": "2026-11-11T23:39:52Z",
+ "generated": "2026-11-11T23:42:45Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T23:39:26Z"
+   "fetched": "2026-11-11T23:41:21Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T23:39:28Z"
+   "fetched": "2026-11-11T23:41:23Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-11T23:39:40Z"
+   "fetched": "2026-11-11T23:41:34Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T23:39:47Z"
+   "fetched": "2026-11-11T23:41:41Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-11T23:39:47Z"
+   "fetched": "2026-11-11T23:42:41Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-11T23:39:48Z"
+   "fetched": "2026-11-11T23:42:42Z"
   },
   {
    "source": "foreca",
@@ -3783,7 +3783,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-11T23:39:52Z"
+   "fetched": "2026-11-11T23:42:45Z"
   }
  ],
  "observations": {
@@ -3798,7 +3798,7 @@
   "wind_kmh": 13,
   "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-11T23:39:06Z"
+  "fetched": "2026-11-11T23:41:01Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4309,7 +4309,7 @@
     "windfinder_place": "Mackay Outer Harbour"
    }
   ],
-  "fetched": "2026-11-11T23:39:25Z"
+  "fetched": "2026-11-11T23:41:20Z"
  },
  "errors": {}
 }
