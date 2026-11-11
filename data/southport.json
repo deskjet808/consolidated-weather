@@ -1,6 +1,6 @@
 {
  "id": "southport",
- "generated": "2026-11-11T09:17:55Z",
+ "generated": "2026-11-11T09:29:04Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T09:16:29Z"
+   "fetched": "2026-11-11T09:26:41Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:16:31Z"
+   "fetched": "2026-11-11T09:26:44Z"
   },
   {
    "source": "weatherzone",
@@ -1236,7 +1236,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-11T09:16:43Z"
+   "fetched": "2026-11-11T09:26:53Z"
   },
   {
    "source": "windy",
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:16:50Z"
+   "fetched": "2026-11-11T09:27:00Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-11T09:17:50Z"
+   "fetched": "2026-11-11T09:27:00Z"
   },
   {
    "source": "icon",
@@ -3566,7 +3566,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-11T09:17:50Z"
+   "fetched": "2026-11-11T09:29:01Z"
   },
   {
    "source": "foreca",
@@ -3713,30 +3713,30 @@
      9,
      4,
      12,
-     74,
-     76,
-     73,
-     70,
-     66,
-     46,
-     25,
-     5,
-     4,
-     4,
-     4,
-     21,
-     39,
-     56,
-     64,
+     19,
+     27,
+     49,
      72,
-     80,
-     75,
-     70,
-     65,
-     58,
-     51,
+     95,
+     68,
+     41,
+     14,
+     11,
+     8,
+     5,
+     25,
      44,
-     45
+     64,
+     70,
+     76,
+     82,
+     71,
+     60,
+     49,
+     45,
+     41,
+     37,
+     36
     ],
     "mm": [
      0,
@@ -3746,25 +3746,25 @@
      0,
      0,
      0,
-     0.01,
-     3.52,
-     0.65,
-     0.08,
      0,
-     0,
-     0,
-     0,
-     0,
-     0.01,
-     0.08,
-     0.22,
-     0.37,
-     0.44,
-     0.34,
-     0.08,
-     0.16,
-     0.01,
+     3.46,
+     0.73,
      0.02,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0.06,
+     0.72,
+     0.97,
+     0.25,
+     0.17,
+     0.08,
+     0.01,
+     0.01,
+     0,
      0,
      0,
      0
@@ -3775,48 +3775,48 @@
      "Overcast",
      "Overcast",
      "Overcast",
-     "Mostly clear",
-     "Mostly clear",
+     "Partly cloudy",
+     "Partly cloudy",
      "Cloudy",
-     "Partly cloudy and showers",
-     "Partly cloudy and showers",
-     "Partly cloudy and light rain",
-     "Mostly clear",
-     "Clear",
-     "Clear",
-     "Clear",
-     "Clear",
-     "Mostly clear",
-     "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
-     "Cloudy, thunderstorms with rain",
-     "Partly cloudy and showers",
+     "Overcast and rain",
      "Cloudy and showers",
+     "Clear",
+     "Clear",
+     "Clear",
+     "Clear",
+     "Clear",
+     "Clear",
+     "Clear",
+     "Cloudy and light rain",
+     "Partly cloudy and showers",
+     "Cloudy, thunderstorms with rain",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
      "Clear",
      "Clear",
      "Clear",
+     "Mostly clear",
      "Clear",
      "Clear"
     ]
    },
-   "fetched": "2026-11-11T09:17:55Z"
+   "fetched": "2026-11-11T09:29:04Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gold Coast Seaway",
   "distance_km": 3.8,
-  "time": "2026-11-11T19:10:00+10:00",
-  "temp": 21.7,
-  "feels_like": 24.7,
-  "humidity": 86,
-  "wind_dir": "W",
-  "wind_kmh": 2,
+  "time": "2026-11-11T19:20:00+10:00",
+  "temp": 21.4,
+  "feels_like": 23.4,
+  "humidity": 87,
+  "wind_dir": "NW",
+  "wind_kmh": 7,
   "gust_kmh": 11,
   "rain_since_9am": 2.2,
-  "fetched": "2026-11-11T09:16:10Z"
+  "fetched": "2026-11-11T09:26:23Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4336,7 +4336,7 @@
     "windfinder_place": "Narrow Neck"
    }
   ],
-  "fetched": "2026-11-11T09:16:29Z"
+  "fetched": "2026-11-11T09:26:41Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "lake-maraboon",
- "generated": "2026-11-11T09:13:35Z",
+ "generated": "2026-11-11T09:25:49Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T09:11:09Z"
+   "fetched": "2026-11-11T09:22:56Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:11:11Z"
+   "fetched": "2026-11-11T09:22:58Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-11T09:11:24Z"
+   "fetched": "2026-11-11T09:23:09Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:11:31Z"
+   "fetched": "2026-11-11T09:23:15Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-11T09:13:31Z"
+   "fetched": "2026-11-11T09:24:16Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T09:13:32Z"
+   "fetched": "2026-11-11T09:25:16Z"
   },
   {
    "source": "foreca",
@@ -3710,10 +3710,7 @@
      26
     ],
     "chance": [
-     10,
-     7,
-     5,
-     3,
+     2,
      3,
      4,
      5,
@@ -3747,9 +3744,8 @@
      0,
      0,
      0,
-     0,
-     0,
-     0,
+     0.06,
+     0.03,
      0,
      0,
      0,
@@ -3772,8 +3768,14 @@
      0
     ],
     "text": [
-     "Partly cloudy",
-     "Partly cloudy",
+     "Mostly clear",
+     "Mostly clear",
+     "Cloudy",
+     "Cloudy",
+     "Cloudy",
+     "Overcast",
+     "Overcast and light rain",
+     "Cloudy",
      "Mostly clear",
      "Partly cloudy",
      "Partly cloudy",
@@ -3803,22 +3805,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-11T09:13:35Z"
+   "fetched": "2026-11-11T09:25:49Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Emerald",
   "distance_km": 12.7,
-  "time": "2026-11-11T19:00:00+10:00",
-  "temp": 30.8,
-  "feels_like": 30.7,
-  "humidity": 46,
+  "time": "2026-11-11T19:10:00+10:00",
+  "temp": 30.5,
+  "feels_like": 30,
+  "humidity": 47,
   "wind_dir": "ENE",
-  "wind_kmh": 15,
-  "gust_kmh": 20,
+  "wind_kmh": 17,
+  "gust_kmh": 26,
   "rain_since_9am": 0,
-  "fetched": "2026-11-11T09:11:01Z"
+  "fetched": "2026-11-11T09:22:49Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3856,7 +3858,7 @@
     }
    }
   ],
-  "fetched": "2026-11-11T09:11:08Z"
+  "fetched": "2026-11-11T09:22:55Z"
  },
  "errors": {}
 }

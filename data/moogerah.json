@@ -1,6 +1,6 @@
 {
  "id": "moogerah",
- "generated": "2026-11-11T09:16:09Z",
+ "generated": "2026-11-11T09:26:22Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T09:13:43Z"
+   "fetched": "2026-11-11T09:25:58Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:13:46Z"
+   "fetched": "2026-11-11T09:26:00Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-11T09:13:58Z"
+   "fetched": "2026-11-11T09:26:11Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:14:05Z"
+   "fetched": "2026-11-11T09:26:18Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T09:16:06Z"
+   "fetched": "2026-11-11T09:26:18Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-11T09:16:06Z"
+   "fetched": "2026-11-11T09:26:18Z"
   },
   {
    "source": "foreca",
@@ -3578,85 +3578,75 @@
      "date": "2026-11-11",
      "tmax": 27,
      "tmin": 19,
-     "rain_min": 11.8,
-     "rain_max": 11.8,
-     "rain_text": "11.8 mm",
+     "rain_min": 5.1,
+     "rain_max": 5.1,
+     "rain_text": "5.1 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
     {
      "date": "2026-11-12",
      "tmax": 29,
-     "tmin": 18,
-     "rain_min": 17.2,
-     "rain_max": 17.2,
-     "rain_text": "17.2 mm",
+     "tmin": 17,
+     "rain_min": 11.8,
+     "rain_max": 11.8,
+     "rain_text": "11.8 mm",
      "chance": null,
      "text": "Partly cloudy, possible thunderstorms with rain"
     },
     {
      "date": "2026-11-13",
-     "tmax": 28,
+     "tmax": 29,
      "tmin": 18,
-     "rain_min": 2.5,
-     "rain_max": 2.5,
-     "rain_text": "2.5 mm",
-     "chance": null,
-     "text": "Cloudy and showers"
-    },
-    {
-     "date": "2026-11-14",
-     "tmax": 26,
-     "tmin": 19,
-     "rain_min": 32.5,
-     "rain_max": 32.5,
-     "rain_text": "32.5 mm",
+     "rain_min": 2.7,
+     "rain_max": 2.7,
+     "rain_text": "2.7 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
     {
+     "date": "2026-11-14",
+     "tmax": 23,
+     "tmin": 20,
+     "rain_min": 19,
+     "rain_max": 19,
+     "rain_text": "19 mm",
+     "chance": null,
+     "text": "Overcast, thunderstorms with rain"
+    },
+    {
      "date": "2026-11-15",
-     "tmax": 30,
+     "tmax": 31,
      "tmin": 19,
-     "rain_min": 15,
-     "rain_max": 15,
-     "rain_text": "15 mm",
+     "rain_min": 13,
+     "rain_max": 13,
+     "rain_text": "13 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
     {
      "date": "2026-11-16",
-     "tmax": 29,
-     "tmin": 17,
-     "rain_min": 13.7,
-     "rain_max": 13.7,
-     "rain_text": "13.7 mm",
+     "tmax": 30,
+     "tmin": 19,
+     "rain_min": 6.9,
+     "rain_max": 6.9,
+     "rain_text": "6.9 mm",
      "chance": null,
      "text": "Cloudy, thunderstorms with rain"
     },
     {
      "date": "2026-11-17",
-     "tmax": 24,
+     "tmax": 26,
      "tmin": 17,
-     "rain_min": 10.1,
-     "rain_max": 10.1,
-     "rain_text": "10.1 mm",
+     "rain_min": 0.6,
+     "rain_max": 0.6,
+     "rain_text": "0.6 mm",
      "chance": null,
-     "text": "Cloudy, thunderstorms with rain"
+     "text": "Mostly clear"
     },
     {
      "date": "2026-11-18",
-     "tmax": 25,
-     "tmin": 15,
-     "rain_min": 1.3,
-     "rain_max": 1.3,
-     "rain_text": "1.3 mm",
-     "chance": null,
-     "text": "Partly cloudy and showers"
-    },
-    {
-     "date": "2026-11-19",
-     "tmax": 25,
+     "tmax": 27,
      "tmin": 15,
      "rain_min": 0.7,
      "rain_max": 0.7,
@@ -3665,14 +3655,24 @@
      "text": "Partly cloudy and showers"
     },
     {
-     "date": "2026-11-20",
-     "tmax": 24,
-     "tmin": 16,
-     "rain_min": 0.8,
-     "rain_max": 0.8,
-     "rain_text": "0.8 mm",
+     "date": "2026-11-19",
+     "tmax": 26,
+     "tmin": 15,
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-20",
+     "tmax": 25,
+     "tmin": 16,
+     "rain_min": 1.9,
+     "rain_max": 1.9,
+     "rain_text": "1.9 mm",
+     "chance": null,
+     "text": "Cloudy and showers"
     }
    ],
    "hourly": {
@@ -3688,136 +3688,137 @@
      18,
      18,
      18,
-     18,
+     17,
      19,
      22,
-     25,
+     24,
+     26,
+     28,
      27,
      29,
-     29,
-     29,
-     24,
-     25,
+     28,
      26,
+     28,
+     28,
+     28,
      26,
-     25,
-     24,
+     23,
      22,
      21,
      21,
-     20,
      20
     ],
     "chance": [
-     83,
-     71,
-     58,
-     46,
-     47,
-     44,
-     32,
-     29,
-     26,
-     23,
-     19,
-     15,
-     11,
-     15,
-     20,
-     24,
-     42,
-     61,
-     79,
-     79,
-     79,
-     79,
-     83,
-     87,
-     91,
-     70,
+     95,
+     86,
+     77,
+     68,
+     56,
+     48,
      49,
-     28,
-     26
+     64,
+     80,
+     95,
+     74,
+     53,
+     32,
+     27,
+     23,
+     18,
+     43,
+     68,
+     93,
+     93,
+     93,
+     93,
+     86,
+     79,
+     72,
+     61,
+     51,
+     41,
+     31
     ],
     "mm": [
+     0.15,
+     0,
+     0.04,
+     0,
+     0.01,
+     0,
+     0.38,
+     0.04,
+     1.12,
+     3.44,
+     0.3,
+     0.15,
+     0.05,
+     0,
+     0,
+     0,
+     0.06,
+     0.86,
+     0.54,
+     0.54,
+     2.82,
+     0.81,
+     0.82,
+     0.06,
+     0.03,
+     0.01,
+     0.1,
      0.07,
-     0.16,
-     0,
-     0.01,
-     0,
-     0.01,
-     0,
-     0,
-     5.02,
-     1.55,
-     0.23,
-     0.5,
-     0.01,
-     0,
-     0,
-     0.01,
-     0.6,
-     0.71,
-     1.11,
-     0.83,
-     1.84,
-     0.74,
-     1.29,
-     2.58,
-     0.17,
-     0.02,
-     0,
      0,
      0
     ],
     "text": [
      "Cloudy and light rain",
-     "Cloudy and light rain",
+     "Cloudy",
      "Cloudy",
      "Mostly clear",
      "Partly cloudy",
-     "Clear",
-     "Clear",
-     "Partly cloudy",
-     "Overcast and rain",
-     "Overcast and rain",
+     "Partly cloudy and showers",
+     "Mostly clear",
+     "Cloudy, thunderstorms with rain",
+     "Partly cloudy and showers",
      "Partly cloudy and light rain",
-     "Partly cloudy and showers",
-     "Clear",
-     "Clear",
-     "Clear",
-     "Clear",
-     "Partly cloudy and showers",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Mostly clear",
+     "Mostly clear",
+     "Mostly clear",
+     "Partly cloudy, possible thunderstorms with rain",
      "Cloudy, thunderstorms with rain",
      "Cloudy, thunderstorms with rain",
      "Cloudy, thunderstorms with rain",
-     "Partly cloudy and showers",
-     "Partly cloudy and showers",
+     "Cloudy, thunderstorms with rain",
      "Cloudy, thunderstorms with rain",
      "Partly cloudy and showers",
      "Partly cloudy and light rain",
      "Clear",
+     "Clear",
+     "Cloudy and light rain",
+     "Partly cloudy and light rain",
      "Mostly clear",
-     "Mostly clear",
-     "Mostly clear"
+     "Clear"
     ]
    },
-   "fetched": "2026-11-11T09:16:09Z"
+   "fetched": "2026-11-11T09:26:22Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Warwick",
   "distance_km": 44.2,
-  "time": "2026-11-11T19:00:00+10:00",
-  "temp": 21.1,
-  "feels_like": 20.3,
-  "humidity": 68,
+  "time": "2026-11-11T19:20:00+10:00",
+  "temp": 20.6,
+  "feels_like": 20.4,
+  "humidity": 74,
   "wind_dir": "NE",
-  "wind_kmh": 13,
-  "gust_kmh": 17,
+  "wind_kmh": 11,
+  "gust_kmh": 13,
   "rain_since_9am": 2,
-  "fetched": "2026-11-11T09:13:35Z"
+  "fetched": "2026-11-11T09:25:50Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3858,7 +3859,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-11T09:13:43Z"
+  "fetched": "2026-11-11T09:25:57Z"
  },
  "errors": {}
 }

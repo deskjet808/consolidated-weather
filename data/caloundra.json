@@ -1,6 +1,6 @@
 {
  "id": "caloundra",
- "generated": "2026-11-11T09:09:16Z",
+ "generated": "2026-11-11T09:21:25Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T09:08:51Z"
+   "fetched": "2026-11-11T09:21:00Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:08:54Z"
+   "fetched": "2026-11-11T09:21:03Z"
   },
   {
    "source": "weatherzone",
@@ -938,9 +938,8 @@
     }
    ],
    "hourly": {
-    "start": "2026-11-11T19",
+    "start": "2026-11-11T20",
     "temp": [
-     25.1,
      24.3,
      23.7,
      23.1,
@@ -1011,10 +1010,10 @@
      26.5,
      26.2,
      25.6,
-     24.9
+     24.9,
+     24.5
     ],
     "chance": [
-     63,
      63,
      50,
      50,
@@ -1085,10 +1084,10 @@
      57,
      43,
      43,
+     43,
      43
     ],
     "mm": [
-     1.3,
      2.7,
      0.4,
      0.3,
@@ -1159,10 +1158,10 @@
      0.2,
      0.2,
      0.2,
+     0.2,
      0.2
     ],
     "text": [
-     "Chance shower or storm",
      "Intermittent rain",
      "Intermittent rain",
      "Intermittent rain",
@@ -1233,10 +1232,11 @@
      "Chance shower",
      "Slight chance shower",
      "Slight chance shower",
+     "Slight chance shower",
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-11T09:09:05Z"
+   "fetched": "2026-11-11T09:21:12Z"
   },
   {
    "source": "windy",
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:09:12Z"
+   "fetched": "2026-11-11T09:21:19Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-11T09:09:12Z"
+   "fetched": "2026-11-11T09:21:19Z"
   },
   {
    "source": "icon",
@@ -3566,7 +3566,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T09:09:12Z"
+   "fetched": "2026-11-11T09:21:20Z"
   },
   {
    "source": "foreca",
@@ -3708,11 +3708,11 @@
      22
     ],
     "chance": [
-     97,
-     96,
-     96,
-     95,
-     94,
+     79,
+     68,
+     56,
+     44,
+     30,
      93,
      92,
      75,
@@ -3739,11 +3739,11 @@
      81
     ],
     "mm": [
-     0.83,
-     1.99,
-     2.67,
-     0.62,
-     0.9,
+     0.02,
+     0.05,
+     0,
+     0,
+     0,
      0.18,
      0,
      0,
@@ -3770,11 +3770,11 @@
      0.23
     ],
     "text": [
-     "Overcast and showers",
-     "Overcast, thunderstorms with rain",
-     "Overcast and rain",
-     "Overcast and showers",
-     "Overcast and showers",
+     "Cloudy",
+     "Cloudy and light rain",
+     "Partly cloudy",
+     "Partly cloudy",
+     "Clear",
      "Cloudy and light rain",
      "Mostly clear",
      "Mostly clear",
@@ -3801,22 +3801,22 @@
      "Cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-11T09:09:16Z"
+   "fetched": "2026-11-11T09:21:25Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 23.1,
-  "time": "2026-11-11T19:00:00+10:00",
-  "temp": 24.3,
-  "feels_like": 26.8,
-  "humidity": 89,
-  "wind_dir": "WSW",
-  "wind_kmh": 13,
-  "gust_kmh": 19,
-  "rain_since_9am": 0.8,
-  "fetched": "2026-11-11T09:08:30Z"
+  "time": "2026-11-11T19:10:00+10:00",
+  "temp": 24.1,
+  "feels_like": 26.2,
+  "humidity": 90,
+  "wind_dir": "SW",
+  "wind_kmh": 15,
+  "gust_kmh": 20,
+  "rain_since_9am": 1.2,
+  "fetched": "2026-11-11T09:20:41Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4336,7 +4336,7 @@
     "windfinder_place": "Caloundra Head"
    }
   ],
-  "fetched": "2026-11-11T09:08:51Z"
+  "fetched": "2026-11-11T09:21:00Z"
  },
  "errors": {}
 }

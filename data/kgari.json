@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-11T09:19:31Z",
+ "generated": "2026-11-11T09:29:38Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-11T09:18:05Z"
+   "fetched": "2026-11-11T09:29:16Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:18:07Z"
+   "fetched": "2026-11-11T09:29:18Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-11T09:18:20Z"
+   "fetched": "2026-11-11T09:29:28Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-11T09:18:26Z"
+   "fetched": "2026-11-11T09:29:35Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T09:19:27Z"
+   "fetched": "2026-11-11T09:29:35Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-11T09:19:27Z"
+   "fetched": "2026-11-11T09:29:35Z"
   },
   {
    "source": "foreca",
@@ -3577,7 +3577,7 @@
     {
      "date": "2026-11-11",
      "tmax": 26,
-     "tmin": 23,
+     "tmin": 22,
      "rain_min": 1.5,
      "rain_max": 1.5,
      "rain_text": "1.5 mm",
@@ -3586,8 +3586,8 @@
     },
     {
      "date": "2026-11-12",
-     "tmax": 28,
-     "tmin": 23,
+     "tmax": 29,
+     "tmin": 22,
      "rain_min": 1.9,
      "rain_max": 1.9,
      "rain_text": "1.9 mm",
@@ -3616,18 +3616,18 @@
     },
     {
      "date": "2026-11-15",
-     "tmax": 28,
-     "tmin": 21,
+     "tmax": 27,
+     "tmin": 22,
      "rain_min": 15.8,
      "rain_max": 15.8,
      "rain_text": "15.8 mm",
      "chance": null,
-     "text": "Cloudy, thunderstorms with rain"
+     "text": "Cloudy and showers"
     },
     {
      "date": "2026-11-16",
      "tmax": 30,
-     "tmin": 22,
+     "tmin": 21,
      "rain_min": 6.9,
      "rain_max": 6.9,
      "rain_text": "6.9 mm",
@@ -3637,17 +3637,17 @@
     {
      "date": "2026-11-17",
      "tmax": 26,
-     "tmin": 21,
+     "tmin": 22,
      "rain_min": 3.3,
      "rain_max": 3.3,
      "rain_text": "3.3 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy, possible thunderstorms with rain"
     },
     {
      "date": "2026-11-18",
      "tmax": 26,
-     "tmin": 22,
+     "tmin": 21,
      "rain_min": 0.4,
      "rain_max": 0.4,
      "rain_text": "0.4 mm",
@@ -3709,11 +3709,11 @@
      23
     ],
     "chance": [
-     16,
-     37,
-     59,
-     80,
-     77,
+     9,
+     30,
+     49,
+     70,
+     51,
      32,
      13,
      10,
@@ -3740,11 +3740,11 @@
      51
     ],
     "mm": [
-     0.02,
-     0.1,
-     0.13,
-     0.19,
-     0.61,
+     0,
+     0.03,
+     0.27,
+     0,
+     0,
      0,
      0,
      0,
@@ -3772,10 +3772,10 @@
     ],
     "text": [
      "Cloudy",
+     "Cloudy",
      "Cloudy and light rain",
-     "Cloudy and light rain",
-     "Cloudy and light rain",
-     "Overcast and showers",
+     "Cloudy",
+     "Cloudy",
      "Overcast",
      "Partly cloudy",
      "Partly cloudy",
@@ -3802,22 +3802,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-11T09:19:31Z"
+   "fetched": "2026-11-11T09:29:38Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hervey Bay",
   "distance_km": 32.1,
-  "time": "2026-11-11T19:10:00+10:00",
+  "time": "2026-11-11T19:20:00+10:00",
   "temp": 25,
-  "feels_like": 25.7,
-  "humidity": 81,
+  "feels_like": 25,
+  "humidity": 82,
   "wind_dir": "N",
   "wind_kmh": 20,
   "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-11T09:17:55Z"
+  "fetched": "2026-11-11T09:29:05Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4086,7 +4086,7 @@
     "seabreeze_place": "Eurong"
    }
   ],
-  "fetched": "2026-11-11T09:18:04Z"
+  "fetched": "2026-11-11T09:29:15Z"
  },
  "errors": {}
 }
