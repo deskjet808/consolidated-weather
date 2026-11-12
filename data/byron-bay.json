@@ -1,6 +1,6 @@
 {
  "id": "byron-bay",
- "generated": "2026-11-12T22:11:44Z",
+ "generated": "2026-11-12T22:19:34Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-12T22:09:20Z"
+   "fetched": "2026-11-12T22:17:09Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-12T22:09:22Z"
+   "fetched": "2026-11-12T22:17:10Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-12T22:09:33Z"
+   "fetched": "2026-11-12T22:17:22Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-12T22:09:39Z"
+   "fetched": "2026-11-12T22:17:28Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-12T22:11:40Z"
+   "fetched": "2026-11-12T22:19:29Z"
   },
   {
    "source": "icon",
@@ -3512,7 +3512,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-12T22:11:40Z"
+   "fetched": "2026-11-12T22:19:30Z"
   },
   {
    "source": "foreca",
@@ -3787,22 +3787,22 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-12T22:11:44Z"
+   "fetched": "2026-11-12T22:19:34Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Byron",
   "distance_km": 0.3,
-  "time": "2026-11-13T09:00:00+11:00",
-  "temp": 25,
-  "feels_like": 28.2,
-  "humidity": 85,
-  "wind_dir": "ENE",
-  "wind_kmh": 9,
-  "gust_kmh": 13,
+  "time": "2026-11-13T09:10:00+11:00",
+  "temp": 25.4,
+  "feels_like": 28.3,
+  "humidity": 84,
+  "wind_dir": "NE",
+  "wind_kmh": 11,
+  "gust_kmh": 15,
   "rain_since_9am": 0,
-  "fetched": "2026-11-12T22:09:09Z"
+  "fetched": "2026-11-12T22:16:59Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4086,7 +4086,7 @@
     "windfinder_place": "Cape Byron Light"
    }
   ],
-  "fetched": "2026-11-12T22:09:19Z"
+  "fetched": "2026-11-12T22:17:08Z"
  },
  "errors": {}
 }
