@@ -1,6 +1,6 @@
 {
  "id": "jindalee",
- "generated": "2026-11-13T10:46:59Z",
+ "generated": "2026-11-13T11:00:57Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-13T10:44:33Z"
+   "fetched": "2026-11-13T10:58:30Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-13T10:44:36Z"
+   "fetched": "2026-11-13T10:58:32Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Chance shower or storm"
     ]
    },
-   "fetched": "2026-11-13T10:44:48Z"
+   "fetched": "2026-11-13T10:58:45Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-13T10:44:55Z"
+   "fetched": "2026-11-13T10:58:52Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-13T10:46:55Z"
+   "fetched": "2026-11-13T10:59:52Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-13T10:46:55Z"
+   "fetched": "2026-11-13T11:00:53Z"
   },
   {
    "source": "foreca",
@@ -3676,9 +3676,8 @@
     }
    ],
    "hourly": {
-    "start": "2026-11-13T20",
+    "start": "2026-11-13T21",
     "temp": [
-     24,
      24,
      23,
      23,
@@ -3708,7 +3707,6 @@
      22
     ],
     "chance": [
-     63,
      71,
      79,
      81,
@@ -3738,7 +3736,6 @@
      33
     ],
     "mm": [
-     0.01,
      0.08,
      2.41,
      0.83,
@@ -3768,7 +3765,6 @@
      0
     ],
     "text": [
-     "Cloudy",
      "Partly cloudy, possible thunderstorms with rain",
      "Partly cloudy and showers",
      "Cloudy and showers",
@@ -3798,22 +3794,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-13T10:46:59Z"
+   "fetched": "2026-11-13T11:00:57Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 8.2,
-  "time": "2026-11-13T20:40:00+10:00",
-  "temp": 24.4,
-  "feels_like": 24.7,
-  "humidity": 80,
+  "time": "2026-11-13T20:50:00+10:00",
+  "temp": 24.2,
+  "feels_like": 25,
+  "humidity": 81,
   "wind_dir": "NNE",
-  "wind_kmh": 20,
+  "wind_kmh": 17,
   "gust_kmh": 26,
   "rain_since_9am": 0,
-  "fetched": "2026-11-13T10:44:25Z"
+  "fetched": "2026-11-13T10:58:22Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4002,7 +3998,7 @@
     }
    }
   ],
-  "fetched": "2026-11-13T10:44:33Z"
+  "fetched": "2026-11-13T10:58:30Z"
  },
  "errors": {}
 }

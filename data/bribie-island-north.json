@@ -1,6 +1,6 @@
 {
  "id": "bribie-island-north",
- "generated": "2026-11-13T10:49:47Z",
+ "generated": "2026-11-13T11:03:44Z",
  "sources": [
   {
    "source": "bom",
@@ -55,7 +55,7 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 40,
-     "text": "Possible shower or storm."
+     "text": "Showers. Possible late storm."
     },
     {
      "date": "2026-11-18",
@@ -65,7 +65,7 @@
      "rain_max": 1,
      "rain_text": "0-1 mm",
      "chance": 40,
-     "text": "Possible shower."
+     "text": "Partly cloudy."
     },
     {
      "date": "2026-11-19",
@@ -85,7 +85,7 @@
      "rain_max": null,
      "rain_text": "0 mm",
      "chance": 20,
-     "text": "Partly cloudy."
+     "text": "Cloudy."
     },
     {
      "date": "2026-11-21",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-13T10:47:21Z"
+   "fetched": "2026-11-13T11:01:17Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-13T10:47:24Z"
+   "fetched": "2026-11-13T11:01:20Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Chance shower"
     ]
    },
-   "fetched": "2026-11-13T10:47:36Z"
+   "fetched": "2026-11-13T11:01:32Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-13T10:47:43Z"
+   "fetched": "2026-11-13T11:01:39Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-13T10:49:43Z"
+   "fetched": "2026-11-13T11:01:39Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-13T10:49:44Z"
+   "fetched": "2026-11-13T11:03:40Z"
   },
   {
    "source": "foreca",
@@ -3677,9 +3677,8 @@
    ],
    "point": "Welsby",
    "hourly": {
-    "start": "2026-11-13T20",
+    "start": "2026-11-13T21",
     "temp": [
-     24,
      23,
      23,
      22,
@@ -3709,7 +3708,6 @@
      22
     ],
     "chance": [
-     16,
      17,
      18,
      25,
@@ -3739,7 +3737,6 @@
      31
     ],
     "mm": [
-     0,
      0,
      0,
      0.04,
@@ -3775,7 +3772,6 @@
      "Cloudy",
      "Cloudy",
      "Cloudy",
-     "Cloudy",
      "Overcast and rain",
      "Partly cloudy and showers",
      "Overcast and rain",
@@ -3799,22 +3795,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-13T10:49:47Z"
+   "fetched": "2026-11-13T11:03:44Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Beerburrum",
   "distance_km": 18.1,
-  "time": "2026-11-13T20:40:00+10:00",
-  "temp": 23.2,
-  "feels_like": 26.5,
-  "humidity": 86,
-  "wind_dir": "NE",
-  "wind_kmh": 4,
+  "time": "2026-11-13T20:50:00+10:00",
+  "temp": 23,
+  "feels_like": 26.8,
+  "humidity": 88,
+  "wind_dir": "NNE",
+  "wind_kmh": 2,
   "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-13T10:47:00Z"
+  "fetched": "2026-11-13T11:00:57Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4334,7 +4330,7 @@
     "windfinder_place": "Pelican Waters"
    }
   ],
-  "fetched": "2026-11-13T10:47:20Z"
+  "fetched": "2026-11-13T11:01:17Z"
  },
  "errors": {}
 }
