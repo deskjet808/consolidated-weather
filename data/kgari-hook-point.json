@@ -1,6 +1,6 @@
 {
  "id": "kgari-hook-point",
- "generated": "2026-11-14T18:40:02Z",
+ "generated": "2026-11-14T18:51:45Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-14T18:38:37Z"
+   "fetched": "2026-11-14T18:51:19Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-14T18:38:39Z"
+   "fetched": "2026-11-14T18:51:22Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-14T18:38:51Z"
+   "fetched": "2026-11-14T18:51:35Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-14T18:38:58Z"
+   "fetched": "2026-11-14T18:51:42Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-14T18:39:58Z"
+   "fetched": "2026-11-14T18:51:42Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-14T18:39:58Z"
+   "fetched": "2026-11-14T18:51:42Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-14T18:40:02Z"
+   "fetched": "2026-11-14T18:51:45Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Tin Can Bay (Defence)",
   "distance_km": 18.3,
-  "time": "2026-11-15T04:30:00+10:00",
-  "temp": 20.3,
-  "feels_like": 23.3,
+  "time": "2026-11-15T04:40:00+10:00",
+  "temp": 20.4,
+  "feels_like": 23.5,
   "humidity": 99,
   "wind_dir": "NW",
   "wind_kmh": 4,
-  "gust_kmh": 6,
+  "gust_kmh": 7,
   "rain_since_9am": 3.2,
-  "fetched": "2026-11-14T18:38:26Z"
+  "fetched": "2026-11-14T18:51:08Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4103,7 +4103,7 @@
     "windfinder_place": "Rainbow Beach"
    }
   ],
-  "fetched": "2026-11-14T18:38:37Z"
+  "fetched": "2026-11-14T18:51:19Z"
  },
  "errors": {}
 }

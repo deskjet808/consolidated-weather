@@ -1,6 +1,6 @@
 {
  "id": "graceville",
- "generated": "2026-11-14T18:50:35Z",
+ "generated": "2026-11-14T18:55:19Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-14T18:50:10Z"
+   "fetched": "2026-11-14T18:54:57Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-14T18:50:12Z"
+   "fetched": "2026-11-14T18:54:59Z"
   },
   {
    "source": "weatherzone",
@@ -903,7 +903,7 @@
      "rain_min": 0,
      "rain_max": 1,
      "rain_text": "< 1mm",
-     "chance": 70,
+     "chance": 60,
      "text": "Clearing shower"
     },
     {
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-14T18:50:24Z"
+   "fetched": "2026-11-14T18:55:09Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-14T18:50:31Z"
+   "fetched": "2026-11-14T18:55:16Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-14T18:50:31Z"
+   "fetched": "2026-11-14T18:55:16Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-14T18:50:31Z"
+   "fetched": "2026-11-14T18:55:16Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-14T18:50:35Z"
+   "fetched": "2026-11-14T18:55:19Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Archerfield",
   "distance_km": 6,
-  "time": "2026-11-15T04:40:00+10:00",
+  "time": "2026-11-15T04:50:00+10:00",
   "temp": 19.8,
-  "feels_like": 22.4,
+  "feels_like": 22.8,
   "humidity": 92,
-  "wind_dir": "N",
-  "wind_kmh": 2,
-  "gust_kmh": 7,
+  "wind_dir": "CALM",
+  "wind_kmh": 0,
+  "gust_kmh": 0,
   "rain_since_9am": 0.2,
-  "fetched": "2026-11-14T18:50:10Z"
+  "fetched": "2026-11-14T18:54:56Z"
  },
  "errors": {}
 }
