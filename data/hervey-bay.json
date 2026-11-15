@@ -1,6 +1,6 @@
 {
  "id": "hervey-bay",
- "generated": "2026-11-15T21:40:19Z",
+ "generated": "2026-11-15T21:43:44Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-15T21:39:56Z"
+   "fetched": "2026-11-15T21:43:20Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-15T21:39:58Z"
+   "fetched": "2026-11-15T21:43:22Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-15T21:40:09Z"
+   "fetched": "2026-11-15T21:43:33Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-15T21:40:16Z"
+   "fetched": "2026-11-15T21:43:40Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-15T21:40:16Z"
+   "fetched": "2026-11-15T21:43:40Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-15T21:40:16Z"
+   "fetched": "2026-11-15T21:43:40Z"
   },
   {
    "source": "foreca",
@@ -3791,7 +3791,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-15T21:40:19Z"
+   "fetched": "2026-11-15T21:43:44Z"
   }
  ],
  "observations": {
@@ -3806,7 +3806,7 @@
   "wind_kmh": 24,
   "gust_kmh": 35,
   "rain_since_9am": 1,
-  "fetched": "2026-11-15T21:39:47Z"
+  "fetched": "2026-11-15T21:43:10Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4048,7 +4048,7 @@
     "windfinder_place": "Hervey Bay / Urangan Pier"
    }
   ],
-  "fetched": "2026-11-15T21:39:56Z"
+  "fetched": "2026-11-15T21:43:19Z"
  },
  "errors": {}
 }

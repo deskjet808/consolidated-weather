@@ -1,6 +1,6 @@
 {
  "id": "kgari-kingfisher-bay",
- "generated": "2026-11-15T21:39:09Z",
+ "generated": "2026-11-15T21:42:35Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-15T21:38:42Z"
+   "fetched": "2026-11-15T21:42:12Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-15T21:38:45Z"
+   "fetched": "2026-11-15T21:42:15Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-15T21:38:58Z"
+   "fetched": "2026-11-15T21:42:24Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-15T21:39:05Z"
+   "fetched": "2026-11-15T21:42:31Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-15T21:39:05Z"
+   "fetched": "2026-11-15T21:42:31Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-15T21:39:05Z"
+   "fetched": "2026-11-15T21:42:31Z"
   },
   {
    "source": "foreca",
@@ -3792,7 +3792,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-15T21:39:09Z"
+   "fetched": "2026-11-15T21:42:35Z"
   }
  ],
  "observations": {
@@ -3807,7 +3807,7 @@
   "wind_kmh": 24,
   "gust_kmh": 35,
   "rain_since_9am": 1,
-  "fetched": "2026-11-15T21:38:32Z"
+  "fetched": "2026-11-15T21:42:02Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4049,7 +4049,7 @@
     "windfinder_place": "Ungowa"
    }
   ],
-  "fetched": "2026-11-15T21:38:42Z"
+  "fetched": "2026-11-15T21:42:12Z"
  },
  "errors": {}
 }
