@@ -1,6 +1,6 @@
 {
  "id": "kgari",
- "generated": "2026-11-17T02:39:22Z",
+ "generated": "2026-11-17T02:56:34Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T02:38:55Z"
+   "fetched": "2026-11-17T02:56:09Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T02:38:58Z"
+   "fetched": "2026-11-17T02:56:11Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-17T02:39:11Z"
+   "fetched": "2026-11-17T02:56:23Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T02:39:18Z"
+   "fetched": "2026-11-17T02:56:30Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-17T02:39:18Z"
+   "fetched": "2026-11-17T02:56:31Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-17T02:39:18Z"
+   "fetched": "2026-11-17T02:56:31Z"
   },
   {
    "source": "foreca",
@@ -3772,22 +3772,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-17T02:39:22Z"
+   "fetched": "2026-11-17T02:56:34Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Hervey Bay",
   "distance_km": 32.1,
-  "time": "2026-11-17T12:30:00+10:00",
-  "temp": 26.8,
-  "feels_like": 26.9,
+  "time": "2026-11-17T12:50:00+10:00",
+  "temp": 26.3,
+  "feels_like": 25.8,
   "humidity": 68,
-  "wind_dir": "SE",
-  "wind_kmh": 20,
+  "wind_dir": "ESE",
+  "wind_kmh": 22,
   "gust_kmh": 32,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T02:38:43Z"
+  "fetched": "2026-11-17T02:55:57Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3954,7 +3954,7 @@
       "period_s": 5
      },
      "2026-11-18": {
-      "max_m": 1.9,
+      "max_m": 1.8,
       "dir": "SSE",
       "period_s": 8
      },
@@ -3964,7 +3964,7 @@
       "period_s": 6
      },
      "2026-11-20": {
-      "max_m": 1.6,
+      "max_m": 1.7,
       "dir": "ESE",
       "period_s": 7
      },
@@ -4056,7 +4056,7 @@
     "seabreeze_place": "Eurong"
    }
   ],
-  "fetched": "2026-11-17T02:38:55Z"
+  "fetched": "2026-11-17T02:56:08Z"
  },
  "errors": {}
 }

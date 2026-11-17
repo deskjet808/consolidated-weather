@@ -1,6 +1,6 @@
 {
  "id": "rainbow-beach",
- "generated": "2026-11-17T02:42:07Z",
+ "generated": "2026-11-17T02:59:21Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T02:39:42Z"
+   "fetched": "2026-11-17T02:56:57Z"
   },
   {
    "source": "willyweather",
@@ -355,9 +355,9 @@
      5,
      5,
      5,
-     0,
-     0,
-     0,
+     10,
+     10,
+     10,
      5,
      5,
      5,
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T02:39:44Z"
+   "fetched": "2026-11-17T02:57:00Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-17T02:39:57Z"
+   "fetched": "2026-11-17T02:57:10Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T02:40:04Z"
+   "fetched": "2026-11-17T02:57:16Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-17T02:42:04Z"
+   "fetched": "2026-11-17T02:59:17Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-17T02:42:04Z"
+   "fetched": "2026-11-17T02:59:17Z"
   },
   {
    "source": "foreca",
@@ -3771,22 +3771,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-17T02:42:07Z"
+   "fetched": "2026-11-17T02:59:21Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Double Island  Point",
   "distance_km": 10.7,
-  "time": "2026-11-17T12:30:00+10:00",
-  "temp": 23.8,
-  "feels_like": 20,
-  "humidity": 78,
+  "time": "2026-11-17T12:50:00+10:00",
+  "temp": 23.7,
+  "feels_like": 19.7,
+  "humidity": 77,
   "wind_dir": "SSE",
   "wind_kmh": 39,
   "gust_kmh": 48,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T02:39:23Z"
+  "fetched": "2026-11-17T02:56:37Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3948,18 +3948,18 @@
     },
     "swell": {
      "2026-11-17": {
-      "max_m": 1.7,
+      "max_m": 1.6,
       "dir": "SSE",
       "period_s": 6
      },
      "2026-11-18": {
       "max_m": 1.8,
       "dir": "SSE",
-      "period_s": 7
+      "period_s": 8
      },
      "2026-11-19": {
-      "max_m": 1.7,
-      "dir": "ESE",
+      "max_m": 1.6,
+      "dir": "SE",
       "period_s": 6
      },
      "2026-11-20": {
@@ -3968,17 +3968,17 @@
       "period_s": 6
      },
      "2026-11-21": {
-      "max_m": 1.2,
+      "max_m": 1.3,
       "dir": "E",
-      "period_s": 6
+      "period_s": 7
      },
      "2026-11-22": {
       "max_m": 1.1,
       "dir": "E",
-      "period_s": 7
+      "period_s": 6
      },
      "2026-11-23": {
-      "max_m": 1.2,
+      "max_m": 1.1,
       "dir": "E",
       "period_s": 7
      },
@@ -4306,7 +4306,7 @@
     "windfinder_place": "Rainbow Beach"
    }
   ],
-  "fetched": "2026-11-17T02:39:41Z"
+  "fetched": "2026-11-17T02:56:56Z"
  },
  "errors": {}
 }
