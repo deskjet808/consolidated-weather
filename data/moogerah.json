@@ -1,6 +1,6 @@
 {
  "id": "moogerah",
- "generated": "2026-11-17T20:44:36Z",
+ "generated": "2026-11-17T20:53:08Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T20:43:12Z"
+   "fetched": "2026-11-17T20:51:43Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T20:43:14Z"
+   "fetched": "2026-11-17T20:51:45Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-17T20:43:25Z"
+   "fetched": "2026-11-17T20:51:56Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T20:43:32Z"
+   "fetched": "2026-11-17T20:52:03Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-17T20:44:33Z"
+   "fetched": "2026-11-17T20:53:04Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-17T20:44:33Z"
+   "fetched": "2026-11-17T20:53:04Z"
   },
   {
    "source": "foreca",
@@ -3796,22 +3796,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-17T20:44:36Z"
+   "fetched": "2026-11-17T20:53:08Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Warwick",
   "distance_km": 44.2,
-  "time": "2026-11-18T06:30:00+10:00",
-  "temp": 17.7,
-  "feels_like": 17.9,
-  "humidity": 83,
-  "wind_dir": "ENE",
+  "time": "2026-11-18T06:40:00+10:00",
+  "temp": 18.2,
+  "feels_like": 18.3,
+  "humidity": 79,
+  "wind_dir": "E",
   "wind_kmh": 7,
-  "gust_kmh": 11,
+  "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T20:43:04Z"
+  "fetched": "2026-11-17T20:51:35Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3852,7 +3852,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-17T20:43:11Z"
+  "fetched": "2026-11-17T20:51:42Z"
  },
  "errors": {}
 }

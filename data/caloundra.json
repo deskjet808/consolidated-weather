@@ -1,6 +1,6 @@
 {
  "id": "caloundra",
- "generated": "2026-11-17T20:39:09Z",
+ "generated": "2026-11-17T20:47:37Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T20:38:43Z"
+   "fetched": "2026-11-17T20:47:10Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T20:38:45Z"
+   "fetched": "2026-11-17T20:47:13Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-17T20:38:57Z"
+   "fetched": "2026-11-17T20:47:26Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T20:39:04Z"
+   "fetched": "2026-11-17T20:47:32Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Drizzle"
     ]
    },
-   "fetched": "2026-11-17T20:39:04Z"
+   "fetched": "2026-11-17T20:47:33Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Light showers"
     ]
    },
-   "fetched": "2026-11-17T20:39:04Z"
+   "fetched": "2026-11-17T20:47:33Z"
   },
   {
    "source": "foreca",
@@ -3795,22 +3795,22 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-17T20:39:09Z"
+   "fetched": "2026-11-17T20:47:37Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 23.1,
-  "time": "2026-11-18T06:30:00+10:00",
+  "time": "2026-11-18T06:40:00+10:00",
   "temp": 22.8,
-  "feels_like": 21.2,
-  "humidity": 65,
+  "feels_like": 21.6,
+  "humidity": 66,
   "wind_dir": "ESE",
-  "wind_kmh": 19,
-  "gust_kmh": 26,
+  "wind_kmh": 17,
+  "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T20:38:23Z"
+  "fetched": "2026-11-17T20:46:51Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4330,7 +4330,7 @@
     "windfinder_place": "Caloundra Head"
    }
   ],
-  "fetched": "2026-11-17T20:38:43Z"
+  "fetched": "2026-11-17T20:47:10Z"
  },
  "errors": {}
 }
