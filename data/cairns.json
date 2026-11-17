@@ -1,22 +1,12 @@
 {
  "id": "cairns",
- "generated": "2026-11-17T12:24:55Z",
+ "generated": "2026-11-17T15:44:49Z",
  "sources": [
   {
    "source": "bom",
    "name": "BOM official",
    "url": "https://www.bom.gov.au/",
    "days": [
-    {
-     "date": "2026-11-17",
-     "tmax": 33,
-     "tmin": null,
-     "rain_min": 0,
-     "rain_max": null,
-     "rain_text": "0 mm",
-     "chance": 20,
-     "text": "Partly cloudy."
-    },
     {
      "date": "2026-11-18",
      "tmax": 32,
@@ -98,23 +88,13 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T12:22:28Z"
+   "fetched": "2026-11-17T15:38:52Z"
   },
   {
    "source": "willyweather",
    "name": "WillyWeather",
    "url": "https://www.willyweather.com.au/qld/far-north/cairns.html",
    "days": [
-    {
-     "date": "2026-11-17",
-     "tmax": 33,
-     "tmin": 24,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1 mm",
-     "chance": 15,
-     "text": "Partly cloudy"
-    },
     {
      "date": "2026-11-18",
      "tmax": 32,
@@ -174,55 +154,41 @@
      "rain_text": "1–5 mm",
      "chance": 60,
      "text": "Shower or two"
+    },
+    {
+     "date": "2026-11-24",
+     "tmax": 32,
+     "tmin": 23,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1 mm",
+     "chance": 40,
+     "text": "Possible shower"
     }
    ],
    "hourly": {
-    "start": "2026-11-17T00",
+    "start": "2026-11-18T00",
     "temp": [
-     25,
-     24.8,
-     24.5,
-     24.3,
-     24.1,
-     24.3,
-     24.6,
-     26.4,
-     28.6,
-     30.2,
-     31.4,
-     32.1,
-     32.5,
-     32.7,
-     32.5,
-     31.9,
-     31.2,
-     30.3,
-     29,
-     28,
-     27.4,
-     26.9,
-     26.6,
-     26.5,
      26.2,
      25.9,
      25.8,
-     25.7,
-     25.4,
-     25.2,
+     25.6,
      25.3,
+     25.1,
+     25.2,
      26.8,
      28.4,
      29.4,
      30.2,
      31.1,
      31.8,
-     32.3,
-     32.3,
-     31.9,
-     31.2,
+     32.2,
+     32.2,
+     31.8,
+     31.1,
      30.1,
      28.6,
-     27.6,
+     27.5,
      27,
      26.6,
      26.2,
@@ -241,11 +207,11 @@
      30.2,
      30.9,
      31.4,
-     31.2,
-     30.7,
-     29.8,
-     29,
-     27.6,
+     31.3,
+     30.8,
+     29.9,
+     29.1,
+     27.7,
      26.8,
      26.4,
      26,
@@ -265,11 +231,11 @@
      30.4,
      31,
      31.3,
-     31,
-     30.3,
-     29.3,
-     28.6,
-     27.5,
+     31.1,
+     30.4,
+     29.4,
+     28.7,
+     27.6,
      26.9,
      26.4,
      26.1,
@@ -283,13 +249,13 @@
      24.5,
      24.6,
      26.4,
-     28.4,
-     29.6,
-     30.6,
-     31.1,
-     31.5,
-     31.7,
-     31.5,
+     28.5,
+     29.7,
+     30.7,
+     31.2,
+     31.6,
+     31.8,
+     31.6,
      31,
      30.2,
      29.4,
@@ -300,25 +266,25 @@
      26.3,
      26.1,
      25.8,
-     25.7,
-     25.5,
-     25.2,
-     24.9,
+     25.6,
+     25.3,
+     25.1,
      24.7,
-     24.8,
-     26.7,
+     24.5,
+     24.5,
+     26.5,
      28.7,
-     30,
-     31,
-     31.6,
+     30.2,
+     31.2,
      31.9,
      32.1,
      32.1,
-     31.8,
-     31,
+     32.1,
+     31.6,
+     30.8,
      30,
-     28.6,
-     27.7,
+     28.5,
+     27.6,
      26.9,
      26.5,
      26.1,
@@ -329,63 +295,63 @@
      24.7,
      24.4,
      24.3,
-     24.4,
-     26.2,
-     28.3,
-     29.6,
-     30.6,
-     31.4,
-     31.9,
-     32.2,
-     32.2,
-     31.8,
-     31,
-     29.8,
-     28.1,
-     26.8,
+     24.3,
      26.1,
-     25.6,
-     25.2,
-     24.8
+     28.1,
+     29.4,
+     30.4,
+     31.1,
+     31.6,
+     32,
+     31.8,
+     31.3,
+     30.6,
+     29.5,
+     27.9,
+     26.8,
+     26.2,
+     25.7,
+     25.3,
+     24.9,
+     24.5,
+     24.2,
+     24,
+     23.7,
+     23.4,
+     23.4,
+     23.7,
+     25.7,
+     28,
+     29.5,
+     30.5,
+     31.4,
+     32,
+     32.4,
+     32.3,
+     31.8,
+     31.1,
+     30,
+     28.3,
+     26.9,
+     26.1,
+     25.4,
+     24.9,
+     24.6
     ],
     "chance": [
      null,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
      10,
      10,
      10,
-     0,
-     0,
-     0,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     15,
-     15,
-     15,
-     25,
-     25,
-     25,
-     30,
-     30,
-     30,
      20,
      20,
      20,
+     30,
+     30,
+     30,
+     25,
+     25,
+     25,
      15,
      15,
      15,
@@ -395,9 +361,9 @@
      30,
      30,
      30,
-     40,
-     40,
-     40,
+     35,
+     35,
+     35,
      35,
      35,
      35,
@@ -446,12 +412,12 @@
      25,
      25,
      25,
-     15,
-     15,
-     15,
      20,
      20,
      20,
+     15,
+     15,
+     15,
      20,
      20,
      20,
@@ -461,15 +427,15 @@
      40,
      40,
      40,
-     25,
-     25,
-     25,
+     30,
+     30,
+     30,
      20,
      20,
      20,
-     25,
-     25,
-     25,
+     20,
+     20,
+     20,
      20,
      20,
      20,
@@ -479,12 +445,12 @@
      20,
      20,
      20,
-     30,
-     30,
-     30,
-     30,
-     30,
-     30,
+     35,
+     35,
+     35,
+     35,
+     35,
+     35,
      20,
      20,
      20,
@@ -494,15 +460,15 @@
      20,
      20,
      20,
+     15,
+     15,
+     15,
+     15,
+     15,
+     15,
      20,
      20,
      20,
-     25,
-     25,
-     25,
-     25,
-     25,
-     25,
      25,
      25,
      25,
@@ -516,7 +482,31 @@
      10,
      10,
      10,
-     10
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     15,
+     15,
+     15,
+     15,
+     15,
+     15,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
     ],
     "mm": [
      null,
@@ -859,23 +849,13 @@
      null
     ]
    },
-   "fetched": "2026-11-17T12:22:30Z"
+   "fetched": "2026-11-17T15:38:54Z"
   },
   {
    "source": "weatherzone",
    "name": "Weatherzone",
    "url": "https://www.weatherzone.com/au/qld/north-coast-and-tableland/cairns",
    "days": [
-    {
-     "date": "2026-11-17",
-     "tmax": 33,
-     "tmin": 24,
-     "rain_min": 0,
-     "rain_max": 1,
-     "rain_text": "< 1mm",
-     "chance": 30,
-     "text": "Mostly sunny"
-    },
     {
      "date": "2026-11-18",
      "tmax": 32,
@@ -935,14 +915,21 @@
      "rain_text": "< 1mm",
      "chance": 60,
      "text": "Possible shower"
+    },
+    {
+     "date": "2026-11-24",
+     "tmax": 32,
+     "tmin": 23,
+     "rain_min": 0,
+     "rain_max": 1,
+     "rain_text": "< 1mm",
+     "chance": 30,
+     "text": "Mostly sunny"
     }
    ],
    "hourly": {
-    "start": "2026-11-17T23",
+    "start": "2026-11-18T02",
     "temp": [
-     25.2,
-     24.8,
-     24.9,
      24.7,
      24.5,
      24.3,
@@ -1011,12 +998,12 @@
      25.7,
      25.2,
      24.9,
-     24.7
+     24.7,
+     24.5,
+     24.4,
+     24.3
     ],
     "chance": [
-     5,
-     6,
-     5,
      5,
      11,
      27,
@@ -1085,16 +1072,16 @@
      58,
      59,
      61,
-     70
+     70,
+     52,
+     34,
+     60
     ],
     "mm": [
      0,
      0,
      0,
      0,
-     0,
-     0,
-     0,
      0.1,
      0,
      0,
@@ -1159,16 +1146,16 @@
      0.1,
      0.1,
      0.1,
-     0.1
+     0.1,
+     0.1,
+     0.1,
+     0.2
     ],
     "text": [
      "Mostly cloudy",
      "Mostly cloudy",
      "Mostly cloudy",
      "Mostly cloudy",
-     "Mostly cloudy",
-     "Mostly cloudy",
-     "Mostly cloudy",
      "Slight chance storm",
      "Mostly cloudy",
      "Mostly cloudy",
@@ -1233,10 +1220,13 @@
      "Shower. Chance storm",
      "Shower. Chance storm",
      "Chance shower or storm",
-     "Chance shower or storm"
+     "Chance shower or storm",
+     "Shower. Chance storm",
+     "Mostly clear",
+     "Chance shower"
     ]
    },
-   "fetched": "2026-11-17T12:22:44Z"
+   "fetched": "2026-11-17T15:39:07Z"
   },
   {
    "source": "windy",
@@ -1244,22 +1234,9 @@
    "url": "https://www.windy.com/-16.919/145.779",
    "days": [
     {
-     "date": "2026-11-17",
-     "tmax": 30.9,
-     "tmin": 23.7,
-     "rain_min": 2,
-     "rain_max": 2,
-     "rain_text": "2 mm",
-     "chance": null,
-     "text": null,
-     "wind_max": 14,
-     "gust_max": 23,
-     "wind_dir": "NNE"
-    },
-    {
      "date": "2026-11-18",
      "tmax": 30.4,
-     "tmin": 25.1,
+     "tmin": 24.4,
      "rain_min": 0,
      "rain_max": 0,
      "rain_text": "0 mm",
@@ -1292,7 +1269,7 @@
      "chance": null,
      "text": null,
      "wind_max": 16,
-     "gust_max": 30,
+     "gust_max": 32,
      "wind_dir": "ESE"
     },
     {
@@ -1307,45 +1284,34 @@
      "wind_max": 14,
      "gust_max": 32,
      "wind_dir": "ESE"
+    },
+    {
+     "date": "2026-11-22",
+     "tmax": 30.9,
+     "tmin": 23.5,
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
+     "chance": null,
+     "text": null,
+     "wind_max": 15,
+     "gust_max": 36,
+     "wind_dir": "ESE"
     }
    ],
    "point": "mblue model",
    "hourly": {
-    "start": "2026-11-17T01",
+    "start": "2026-11-18T01",
     "temp": [
-     24.3,
-     24.1,
-     23.9,
-     23.7,
-     24.6,
      25.5,
-     26.4,
-     27.7,
-     29.1,
-     30.4,
-     30.6,
-     30.7,
-     30.9,
-     30.6,
-     30.4,
-     30.1,
-     29.3,
-     28.4,
-     27.6,
-     27.7,
-     27.9,
-     28,
-     27.5,
-     27,
-     26.5,
-     26,
-     25.6,
      25.1,
-     25.5,
-     25.8,
-     26.2,
-     27.4,
-     28.7,
+     24.8,
+     24.4,
+     24.9,
+     25.4,
+     25.9,
+     27.2,
+     28.6,
      29.9,
      30.1,
      30.2,
@@ -1431,8 +1397,32 @@
      26.7,
      26.1,
      25.6,
-     25.6,
-     25.6
+     25.2,
+     24.8,
+     24.4,
+     24.1,
+     23.8,
+     23.5,
+     24.2,
+     24.8,
+     25.5,
+     27,
+     28.4,
+     29.9,
+     30.2,
+     30.6,
+     30.9,
+     30.5,
+     30.2,
+     29.8,
+     29,
+     28.2,
+     27.4,
+     26.8,
+     26.1,
+     25.5,
+     25.5,
+     25.5
     ],
     "chance": [
      null,
@@ -1572,30 +1562,6 @@
      0,
      0,
      0,
-     0.13,
-     0.13,
-     0.13,
-     0.4,
-     0.4,
-     0.4,
-     0.13,
-     0.13,
-     0.13,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
      0,
      0,
      0,
@@ -1674,6 +1640,30 @@
      0.03,
      0.03,
      0.03,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0.17,
+     0.17,
+     0.17,
+     0.07,
+     0.07,
+     0.07,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
      0,
      0,
      0
@@ -1801,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T12:22:50Z"
+   "fetched": "2026-11-17T15:39:13Z"
   },
   {
    "source": "ecmwf",
@@ -3574,68 +3564,48 @@
    "url": "https://www.foreca.com/en/102172797/cairns/10-day-forecast",
    "days": [
     {
-     "date": "2026-11-17",
-     "tmax": 31,
-     "tmin": 26,
-     "rain_min": null,
-     "rain_max": null,
-     "rain_text": null,
-     "chance": null,
-     "text": "Partly cloudy"
-    },
-    {
      "date": "2026-11-18",
      "tmax": 31,
      "tmin": 25,
-     "rain_min": 4.7,
-     "rain_max": 4.7,
-     "rain_text": "4.7 mm",
+     "rain_min": 3.5,
+     "rain_max": 3.5,
+     "rain_text": "3.5 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
     {
      "date": "2026-11-19",
-     "tmax": 31,
-     "tmin": 25,
-     "rain_min": 6.2,
-     "rain_max": 6.2,
-     "rain_text": "6.2 mm",
+     "tmax": 32,
+     "tmin": 24,
+     "rain_min": 8.8,
+     "rain_max": 8.8,
+     "rain_text": "8.8 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
     {
      "date": "2026-11-20",
      "tmax": 30,
-     "tmin": 25,
+     "tmin": 24,
      "rain_min": 5.5,
      "rain_max": 5.5,
      "rain_text": "5.5 mm",
      "chance": null,
-     "text": "Partly cloudy and showers"
+     "text": "Partly cloudy, possible thunderstorms with rain"
     },
     {
      "date": "2026-11-21",
      "tmax": 31,
      "tmin": 25,
-     "rain_min": 5.4,
-     "rain_max": 5.4,
-     "rain_text": "5.4 mm",
-     "chance": null,
-     "text": "Cloudy and showers"
-    },
-    {
-     "date": "2026-11-22",
-     "tmax": 31,
-     "tmin": 25,
-     "rain_min": 4.6,
-     "rain_max": 4.6,
-     "rain_text": "4.6 mm",
+     "rain_min": 3.5,
+     "rain_max": 3.5,
+     "rain_text": "3.5 mm",
      "chance": null,
      "text": "Partly cloudy and showers"
     },
     {
-     "date": "2026-11-23",
-     "tmax": 30,
+     "date": "2026-11-22",
+     "tmax": 31,
      "tmin": 25,
      "rain_min": 1.4,
      "rain_max": 1.4,
@@ -3644,49 +3614,66 @@
      "text": "Partly cloudy and showers"
     },
     {
+     "date": "2026-11-23",
+     "tmax": 30,
+     "tmin": 25,
+     "rain_min": 1,
+     "rain_max": 1,
+     "rain_text": "1 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
+    },
+    {
      "date": "2026-11-24",
      "tmax": 31,
      "tmin": 23,
-     "rain_min": 0.2,
-     "rain_max": 0.2,
-     "rain_text": "0.2 mm",
+     "rain_min": 0.3,
+     "rain_max": 0.3,
+     "rain_text": "0.3 mm",
      "chance": null,
      "text": "Mostly clear"
     },
     {
      "date": "2026-11-25",
      "tmax": 31,
-     "tmin": 23,
-     "rain_min": 0.1,
-     "rain_max": 0.1,
-     "rain_text": "0.1 mm",
+     "tmin": 24,
+     "rain_min": 0.2,
+     "rain_max": 0.2,
+     "rain_text": "0.2 mm",
      "chance": null,
-     "text": "Mostly clear"
+     "text": "Partly cloudy"
     },
     {
      "date": "2026-11-26",
      "tmax": 31,
      "tmin": 24,
-     "rain_min": 0.8,
-     "rain_max": 0.8,
-     "rain_text": "0.8 mm",
+     "rain_min": 0.7,
+     "rain_max": 0.7,
+     "rain_text": "0.7 mm",
      "chance": null,
      "text": "Partly cloudy"
+    },
+    {
+     "date": "2026-11-27",
+     "tmax": 31,
+     "tmin": 24,
+     "rain_min": 1.4,
+     "rain_max": 1.4,
+     "rain_text": "1.4 mm",
+     "chance": null,
+     "text": "Partly cloudy and showers"
     }
    ],
    "hourly": {
-    "start": "2026-11-17T22",
+    "start": "2026-11-18T01",
     "temp": [
-     27,
-     26,
      26,
      26,
      26,
      25,
      25,
      25,
-     25,
-     27,
+     26,
      28,
      29,
      31,
@@ -3698,16 +3685,37 @@
      31,
      30,
      28,
+     28,
      27,
      27,
+     26,
+     26,
+     26,
+     25,
+     25,
+     25,
+     25,
+     24,
+     25,
+     26,
+     27,
+     29,
+     29,
+     29,
+     30,
+     31,
+     32,
+     31,
+     30,
+     29,
+     28,
+     27,
+     26,
      26,
      26,
      26
     ],
     "chance": [
-     4,
-     6,
-     7,
      8,
      12,
      15,
@@ -3730,46 +3738,110 @@
      59,
      68,
      77,
-     80
+     80,
+     82,
+     85,
+     85,
+     85,
+     85,
+     85,
+     85,
+     85,
+     88,
+     91,
+     94,
+     90,
+     87,
+     83,
+     75,
+     67,
+     60,
+     66,
+     73,
+     80,
+     84,
+     87,
+     91,
+     90
     ],
     "mm": [
-     0,
-     0.02,
-     0.03,
-     0.04,
-     0,
-     0.02,
-     0.04,
-     0.07,
-     0.13,
      0.11,
-     0.26,
-     0.24,
-     0.06,
-     0.33,
-     0.6,
-     0.56,
+     0.05,
+     0.05,
+     0.04,
+     0.03,
+     0.05,
+     0.11,
      0.27,
-     0.09,
-     0.08,
-     0.08,
-     0.17,
-     0.07,
-     0.1,
+     0.33,
+     0.22,
      0.2,
-     0.39,
-     0.5
+     0.32,
+     0.3,
+     0.31,
+     0.18,
+     0.05,
+     0.03,
+     0.1,
+     0.18,
+     0.04,
+     0.06,
+     0.14,
+     0.16,
+     0.19,
+     0.17,
+     0.21,
+     0.34,
+     0.24,
+     0.16,
+     0.12,
+     0.16,
+     0.2,
+     0.44,
+     0.66,
+     0.79,
+     0.53,
+     0.27,
+     0.04,
+     0.01,
+     0.25,
+     0.22,
+     0.16,
+     0.17,
+     0.73,
+     1.68,
+     0.59,
+     0.52
     ],
     "text": [
-     "Partly cloudy",
-     "Partly cloudy",
+     "Cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
      "Partly cloudy",
      "Mostly clear",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Partly cloudy and showers",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Partly cloudy and showers",
+     "Partly cloudy and light rain",
+     "Partly cloudy and showers",
+     "Partly cloudy and light rain",
+     "Clear",
      "Mostly clear",
-     "Partly cloudy",
-     "Partly cloudy",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
+     "Mostly clear",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Partly cloudy and light rain",
+     "Cloudy and light rain",
+     "Cloudy and showers",
+     "Cloudy and light rain",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
@@ -3777,34 +3849,36 @@
      "Partly cloudy and showers",
      "Partly cloudy and showers",
      "Partly cloudy and showers",
+     "Partly cloudy and showers",
+     "Partly cloudy and light rain",
+     "Clear",
+     "Clear",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
      "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
-     "Partly cloudy and light rain",
+     "Overcast and light rain",
      "Overcast and showers",
-     "Partly cloudy and showers"
+     "Overcast and rain",
+     "Overcast and showers",
+     "Cloudy and showers"
     ]
    },
-   "fetched": "2026-11-17T12:24:55Z"
+   "fetched": "2026-11-17T15:44:49Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cairns Racecourse",
   "distance_km": 3.8,
-  "time": "2026-11-17T22:10:00+10:00",
-  "temp": 26,
-  "feels_like": 31.5,
-  "humidity": 89,
-  "wind_dir": "SSW",
+  "time": "2026-11-18T01:30:00+10:00",
+  "temp": 25.2,
+  "feels_like": 30.4,
+  "humidity": 91,
+  "wind_dir": "S",
   "wind_kmh": 2,
   "gust_kmh": 7,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T12:22:07Z"
+  "fetched": "2026-11-17T15:38:32Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3814,28 +3888,6 @@
     "kind": "inlet",
     "spot": "Cairns Boat Ramp (Fearnley Street)",
     "tides": {
-     "2026-11-17": [
-      {
-       "type": "high",
-       "time": "4:54 am",
-       "height_m": 1.64
-      },
-      {
-       "type": "low",
-       "time": "9:30 am",
-       "height_m": 1.45
-      },
-      {
-       "type": "high",
-       "time": "4:45 pm",
-       "height_m": 2.4
-      },
-      {
-       "type": "low",
-       "time": "11:36 pm",
-       "height_m": 1.17
-      }
-     ],
      "2026-11-18": [
       {
        "type": "high",
@@ -3962,14 +4014,31 @@
        "time": "7:44 pm",
        "height_m": 2.48
       }
+     ],
+     "2026-11-24": [
+      {
+       "type": "low",
+       "time": "2:06 am",
+       "height_m": 0.27
+      },
+      {
+       "type": "high",
+       "time": "8:54 am",
+       "height_m": 3.06
+      },
+      {
+       "type": "low",
+       "time": "2:45 pm",
+       "height_m": 1.06
+      },
+      {
+       "type": "high",
+       "time": "8:21 pm",
+       "height_m": 2.37
+      }
      ]
     },
     "windy": {
-     "2026-11-17": {
-      "wind_max": 14,
-      "gust_max": 26,
-      "wind_dir": "NNE"
-     },
      "2026-11-18": {
       "wind_max": 15,
       "gust_max": 29,
@@ -3989,14 +4058,14 @@
       "wind_max": 14,
       "gust_max": 32,
       "wind_dir": "ESE"
+     },
+     "2026-11-22": {
+      "wind_max": 15,
+      "gust_max": 38,
+      "wind_dir": "ESE"
      }
     },
     "seabreeze": {
-     "2026-11-17": {
-      "wind_max": 17,
-      "wind_dir": "NNE",
-      "wave_m": 0.5
-     },
      "2026-11-18": {
       "wind_max": 20,
       "wind_dir": "E",
@@ -4026,21 +4095,26 @@
       "wind_max": 20,
       "wind_dir": "ESE",
       "wave_m": 1.2
+     },
+     "2026-11-24": {
+      "wind_max": 19,
+      "wind_dir": "ESE",
+      "wave_m": 0.9
      }
     },
     "seabreeze_place": "Cairns",
     "windfinder": {
-     "2026-11-17": {
-      "wind_max": 11,
-      "gust_max": 14,
-      "wind_dir": "NNE",
-      "wave_m": 0.5
-     },
      "2026-11-18": {
       "wind_max": 14,
       "gust_max": 18,
       "wind_dir": "E",
       "wave_m": 0.6
+     },
+     "2026-11-19": {
+      "wind_max": 18,
+      "gust_max": 25,
+      "wind_dir": "ESE",
+      "wave_m": 1.0
      }
     },
     "windfinder_place": "Cairns (Tide)"
@@ -4050,28 +4124,6 @@
     "kind": "ocean",
     "spot": "Cairns Harbour",
     "tides": {
-     "2026-11-17": [
-      {
-       "type": "high",
-       "time": "4:50 am",
-       "height_m": 1.64
-      },
-      {
-       "type": "low",
-       "time": "9:28 am",
-       "height_m": 1.45
-      },
-      {
-       "type": "high",
-       "time": "4:41 pm",
-       "height_m": 2.4
-      },
-      {
-       "type": "low",
-       "time": "11:34 pm",
-       "height_m": 1.17
-      }
-     ],
      "2026-11-18": [
       {
        "type": "high",
@@ -4198,14 +4250,31 @@
        "time": "7:40 pm",
        "height_m": 2.48
       }
+     ],
+     "2026-11-24": [
+      {
+       "type": "low",
+       "time": "2:04 am",
+       "height_m": 0.27
+      },
+      {
+       "type": "high",
+       "time": "8:50 am",
+       "height_m": 3.06
+      },
+      {
+       "type": "low",
+       "time": "2:43 pm",
+       "height_m": 1.06
+      },
+      {
+       "type": "high",
+       "time": "8:17 pm",
+       "height_m": 2.37
+      }
      ]
     },
     "swell": {
-     "2026-11-17": {
-      "max_m": 0.5,
-      "dir": "E",
-      "period_s": 6
-     },
      "2026-11-18": {
       "max_m": 0.5,
       "dir": "E",
@@ -4224,19 +4293,24 @@
      "2026-11-21": {
       "max_m": 1.1,
       "dir": "E",
-      "period_s": 8
+      "period_s": 7
      },
      "2026-11-22": {
-      "max_m": 1,
+      "max_m": 1.1,
       "dir": "E",
       "period_s": 8
      },
      "2026-11-23": {
-      "max_m": 0.9,
+      "max_m": 1,
       "dir": "E",
       "period_s": 7
      },
      "2026-11-24": {
+      "max_m": 0.9,
+      "dir": "E",
+      "period_s": 7
+     },
+     "2026-11-25": {
       "max_m": 0.8,
       "dir": "E",
       "period_s": 7
@@ -4244,38 +4318,33 @@
     },
     "swell_place": "Gribble Point",
     "windy": {
-     "2026-11-17": {
-      "wind_max": 18,
-      "gust_max": 29,
-      "wind_dir": "NNE"
-     },
      "2026-11-18": {
       "wind_max": 20,
-      "gust_max": 34,
+      "gust_max": 35,
       "wind_dir": "ESE"
      },
      "2026-11-19": {
       "wind_max": 22,
-      "gust_max": 38,
+      "gust_max": 37,
       "wind_dir": "ESE"
      },
      "2026-11-20": {
       "wind_max": 21,
-      "gust_max": 37,
+      "gust_max": 38,
       "wind_dir": "ESE"
      },
      "2026-11-21": {
       "wind_max": 19,
       "gust_max": 38,
       "wind_dir": "ESE"
+     },
+     "2026-11-22": {
+      "wind_max": 21,
+      "gust_max": 43,
+      "wind_dir": "ESE"
      }
     },
     "seabreeze": {
-     "2026-11-17": {
-      "wind_max": 17,
-      "wind_dir": "NNE",
-      "wave_m": 0.5
-     },
      "2026-11-18": {
       "wind_max": 20,
       "wind_dir": "E",
@@ -4305,27 +4374,35 @@
       "wind_max": 20,
       "wind_dir": "ESE",
       "wave_m": 1.2
+     },
+     "2026-11-24": {
+      "wind_max": 19,
+      "wind_dir": "ESE",
+      "wave_m": 0.9
      }
     },
     "seabreeze_place": "Cairns",
     "windfinder": {
-     "2026-11-17": {
-      "wind_max": 11,
-      "gust_max": 14,
-      "wind_dir": "NNE",
-      "wave_m": 0.5
-     },
      "2026-11-18": {
       "wind_max": 14,
       "gust_max": 18,
       "wind_dir": "E",
       "wave_m": 0.6
+     },
+     "2026-11-19": {
+      "wind_max": 18,
+      "gust_max": 25,
+      "wind_dir": "ESE",
+      "wave_m": 1.0
      }
     },
     "windfinder_place": "Cairns (Tide)"
    }
   ],
-  "fetched": "2026-11-17T12:22:27Z"
+  "fetched": "2026-11-17T15:38:52Z"
  },
- "errors": {}
+ "errors": {
+  "ecmwf": "ReadTimeout: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Read timed out. (read timeout=45)",
+  "icon": "ReadTimeout: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Read timed out. (read timeout=45)"
+ }
 }
