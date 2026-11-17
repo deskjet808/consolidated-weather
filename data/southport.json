@@ -1,6 +1,6 @@
 {
  "id": "southport",
- "generated": "2026-11-17T11:46:09Z",
+ "generated": "2026-11-17T11:50:26Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T11:45:44Z"
+   "fetched": "2026-11-17T11:48:01Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T11:45:46Z"
+   "fetched": "2026-11-17T11:48:03Z"
   },
   {
    "source": "weatherzone",
@@ -1236,7 +1236,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-17T11:45:58Z"
+   "fetched": "2026-11-17T11:48:15Z"
   },
   {
    "source": "windy",
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T11:46:06Z"
+   "fetched": "2026-11-17T11:48:22Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-17T11:46:06Z"
+   "fetched": "2026-11-17T11:50:22Z"
   },
   {
    "source": "icon",
@@ -3566,7 +3566,7 @@
      "Light showers"
     ]
    },
-   "fetched": "2026-11-17T11:46:06Z"
+   "fetched": "2026-11-17T11:50:22Z"
   },
   {
    "source": "foreca",
@@ -3793,7 +3793,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-17T11:46:09Z"
+   "fetched": "2026-11-17T11:50:26Z"
   }
  ],
  "observations": {
@@ -3808,7 +3808,7 @@
   "wind_kmh": 11,
   "gust_kmh": 17,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T11:45:25Z"
+  "fetched": "2026-11-17T11:47:43Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4328,7 +4328,7 @@
     "windfinder_place": "Narrow Neck"
    }
   ],
-  "fetched": "2026-11-17T11:45:44Z"
+  "fetched": "2026-11-17T11:48:01Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "moogerah",
- "generated": "2026-11-17T11:45:24Z",
+ "generated": "2026-11-17T11:47:42Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-17T11:44:51Z"
+   "fetched": "2026-11-17T11:47:15Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T11:44:53Z"
+   "fetched": "2026-11-17T11:47:17Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-17T11:45:13Z"
+   "fetched": "2026-11-17T11:47:29Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-17T11:45:20Z"
+   "fetched": "2026-11-17T11:47:36Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-17T11:45:20Z"
+   "fetched": "2026-11-17T11:47:38Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Light showers"
     ]
    },
-   "fetched": "2026-11-17T11:45:20Z"
+   "fetched": "2026-11-17T11:47:38Z"
   },
   {
    "source": "foreca",
@@ -3794,7 +3794,7 @@
      "Overcast and light rain"
     ]
    },
-   "fetched": "2026-11-17T11:45:24Z"
+   "fetched": "2026-11-17T11:47:42Z"
   }
  ],
  "observations": {
@@ -3809,7 +3809,7 @@
   "wind_kmh": 13,
   "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-17T11:44:43Z"
+  "fetched": "2026-11-17T11:47:07Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3850,7 +3850,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-17T11:44:50Z"
+  "fetched": "2026-11-17T11:47:15Z"
  },
  "errors": {}
 }
