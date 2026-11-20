@@ -1,6 +1,6 @@
 {
  "id": "gladstone",
- "generated": "2026-11-20T17:22:13Z",
+ "generated": "2026-11-20T17:38:31Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-20T17:19:47Z"
+   "fetched": "2026-11-20T17:37:05Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-20T17:19:49Z"
+   "fetched": "2026-11-20T17:37:07Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-20T17:20:02Z"
+   "fetched": "2026-11-20T17:37:21Z"
   },
   {
    "source": "windy",
@@ -1236,7 +1236,7 @@
     {
      "date": "2026-11-21",
      "tmax": 25.8,
-     "tmin": 19.9,
+     "tmin": 19.8,
      "rain_min": 0.3,
      "rain_max": 0.3,
      "rain_text": "0.3 mm",
@@ -1305,21 +1305,21 @@
     "temp": [
      20.2,
      20.1,
-     20,
      19.9,
-     20.6,
-     21.2,
-     21.9,
-     23.1,
-     24.2,
-     25.4,
+     19.8,
+     20.5,
+     21.1,
+     21.8,
+     23,
+     24.1,
+     25.3,
      25.5,
-     25.7,
+     25.6,
      25.8,
-     25.5,
+     25.4,
      25.1,
-     24.8,
-     24.4,
+     24.7,
+     24.3,
      24,
      23.6,
      23.2,
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-20T17:20:09Z"
+   "fetched": "2026-11-20T17:37:27Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-20T17:20:09Z"
+   "fetched": "2026-11-20T17:38:28Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-20T17:22:10Z"
+   "fetched": "2026-11-20T17:38:28Z"
   },
   {
    "source": "foreca",
@@ -3807,22 +3807,22 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-20T17:22:13Z"
+   "fetched": "2026-11-20T17:38:31Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone Airport",
   "distance_km": 0.1,
-  "time": "2026-11-21T03:10:00+10:00",
-  "temp": 20.2,
-  "feels_like": 22.1,
-  "humidity": 92,
-  "wind_dir": "S",
-  "wind_kmh": 7,
-  "gust_kmh": 11,
+  "time": "2026-11-21T03:30:00+10:00",
+  "temp": 20,
+  "feels_like": 21.5,
+  "humidity": 93,
+  "wind_dir": "SSW",
+  "wind_kmh": 9,
+  "gust_kmh": 13,
   "rain_since_9am": 2.4,
-  "fetched": "2026-11-20T17:19:38Z"
+  "fetched": "2026-11-20T17:36:55Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4069,7 +4069,7 @@
     "windfinder_place": "Gladstone (Tide)"
    }
   ],
-  "fetched": "2026-11-20T17:19:47Z"
+  "fetched": "2026-11-20T17:37:04Z"
  },
  "errors": {}
 }
