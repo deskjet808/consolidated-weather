@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-21T04:14:52Z",
+ "generated": "2026-11-21T04:31:06Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-21T04:12:14Z"
+   "fetched": "2026-11-21T04:30:40Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:12:16Z"
+   "fetched": "2026-11-21T04:30:42Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-21T04:12:42Z"
+   "fetched": "2026-11-21T04:30:53Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:12:49Z"
+   "fetched": "2026-11-21T04:31:00Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Fog"
     ]
    },
-   "fetched": "2026-11-21T04:14:49Z"
+   "fetched": "2026-11-21T04:31:00Z"
   },
   {
    "source": "icon",
@@ -3557,7 +3557,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:14:49Z"
+   "fetched": "2026-11-21T04:31:01Z"
   },
   {
    "source": "foreca",
@@ -3813,22 +3813,22 @@
      "Overcast"
     ]
    },
-   "fetched": "2026-11-21T04:14:52Z"
+   "fetched": "2026-11-21T04:31:06Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-21T14:00:00+10:00",
-  "temp": 33,
-  "feels_like": 32.4,
-  "humidity": 40,
-  "wind_dir": "SE",
-  "wind_kmh": 17,
-  "gust_kmh": 24,
+  "time": "2026-11-21T14:20:00+10:00",
+  "temp": 32.5,
+  "feels_like": 31.6,
+  "humidity": 43,
+  "wind_dir": "SSE",
+  "wind_kmh": 20,
+  "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-21T04:12:06Z"
+  "fetched": "2026-11-21T04:30:32Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3884,7 +3884,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-21T04:12:14Z"
+  "fetched": "2026-11-21T04:30:40Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "byron-bay",
- "generated": "2026-11-21T04:12:05Z",
+ "generated": "2026-11-21T04:30:32Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-21T04:09:39Z"
+   "fetched": "2026-11-21T04:30:05Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:09:41Z"
+   "fetched": "2026-11-21T04:30:08Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:09:54Z"
+   "fetched": "2026-11-21T04:30:21Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:10:01Z"
+   "fetched": "2026-11-21T04:30:27Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-21T04:12:02Z"
+   "fetched": "2026-11-21T04:30:27Z"
   },
   {
    "source": "icon",
@@ -3560,7 +3560,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:12:02Z"
+   "fetched": "2026-11-21T04:30:27Z"
   },
   {
    "source": "foreca",
@@ -3811,22 +3811,22 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:12:05Z"
+   "fetched": "2026-11-21T04:30:32Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Cape Byron",
   "distance_km": 0.3,
-  "time": "2026-11-21T15:00:00+11:00",
-  "temp": 22,
-  "feels_like": 22.1,
-  "humidity": 80,
+  "time": "2026-11-21T15:20:00+11:00",
+  "temp": 22.6,
+  "feels_like": 23.3,
+  "humidity": 79,
   "wind_dir": "N",
-  "wind_kmh": 15,
-  "gust_kmh": 22,
+  "wind_kmh": 13,
+  "gust_kmh": 19,
   "rain_since_9am": 0,
-  "fetched": "2026-11-21T04:09:28Z"
+  "fetched": "2026-11-21T04:29:55Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4079,17 +4079,17 @@
      "2026-11-25": {
       "wind_max": 22,
       "wind_dir": "ESE",
-      "wave_m": 2.0
+      "wave_m": 2.3
      },
      "2026-11-26": {
       "wind_max": 26,
       "wind_dir": "ESE",
-      "wave_m": 2.2
+      "wave_m": 2.3
      },
      "2026-11-27": {
       "wind_max": 26,
       "wind_dir": "SE",
-      "wave_m": 1.7
+      "wave_m": 1.6
      }
     },
     "seabreeze_place": "Byron Bay",
@@ -4110,7 +4110,7 @@
     "windfinder_place": "Cape Byron Light"
    }
   ],
-  "fetched": "2026-11-21T04:09:39Z"
+  "fetched": "2026-11-21T04:30:05Z"
  },
  "errors": {}
 }

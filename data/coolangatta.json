@@ -1,6 +1,6 @@
 {
  "id": "coolangatta",
- "generated": "2026-11-21T04:25:53Z",
+ "generated": "2026-11-21T04:33:59Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-21T04:23:24Z"
+   "fetched": "2026-11-21T04:33:34Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:23:27Z"
+   "fetched": "2026-11-21T04:33:36Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Mostly cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:23:41Z"
+   "fetched": "2026-11-21T04:33:47Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:23:47Z"
+   "fetched": "2026-11-21T04:33:54Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-21T04:25:48Z"
+   "fetched": "2026-11-21T04:33:54Z"
   },
   {
    "source": "icon",
@@ -3556,7 +3556,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:25:48Z"
+   "fetched": "2026-11-21T04:33:54Z"
   },
   {
    "source": "foreca",
@@ -3811,22 +3811,22 @@
      "Overcast and light rain"
     ]
    },
-   "fetched": "2026-11-21T04:25:53Z"
+   "fetched": "2026-11-21T04:33:59Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Coolangatta",
   "distance_km": 0.2,
-  "time": "2026-11-21T14:10:00+10:00",
-  "temp": 23.9,
-  "feels_like": 23.9,
-  "humidity": 74,
-  "wind_dir": "NNE",
+  "time": "2026-11-21T14:20:00+10:00",
+  "temp": 23.8,
+  "feels_like": 23.7,
+  "humidity": 73,
+  "wind_dir": "NE",
   "wind_kmh": 17,
-  "gust_kmh": 20,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-21T04:23:05Z"
+  "fetched": "2026-11-21T04:33:15Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4351,7 +4351,7 @@
     "windfinder_place": "Point Danger (Tide)"
    }
   ],
-  "fetched": "2026-11-21T04:23:24Z"
+  "fetched": "2026-11-21T04:33:34Z"
  },
  "errors": {}
 }

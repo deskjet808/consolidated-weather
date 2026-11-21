@@ -1,6 +1,6 @@
 {
  "id": "maroochydore",
- "generated": "2026-11-21T04:20:16Z",
+ "generated": "2026-11-21T04:32:22Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-21T04:17:50Z"
+   "fetched": "2026-11-21T04:31:58Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:17:52Z"
+   "fetched": "2026-11-21T04:32:00Z"
   },
   {
    "source": "weatherzone",
@@ -931,9 +931,9 @@
     "start": "2026-11-21T15",
     "temp": [
      22.9,
-     22.8,
-     22.4,
-     22.1,
+     22.9,
+     22.5,
+     22.2,
      21.7,
      21.8,
      21.8,
@@ -1004,10 +1004,10 @@
      26.1
     ],
     "chance": [
-     10,
+     11,
      5,
-     18,
-     13,
+     20,
+     11,
      5,
      13,
      5,
@@ -1226,7 +1226,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-21T04:18:05Z"
+   "fetched": "2026-11-21T04:32:12Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-21T04:18:12Z"
+   "fetched": "2026-11-21T04:32:19Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:20:13Z"
+   "fetched": "2026-11-21T04:32:19Z"
   },
   {
    "source": "icon",
@@ -3556,7 +3556,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-21T04:20:13Z"
+   "fetched": "2026-11-21T04:32:19Z"
   },
   {
    "source": "foreca",
@@ -3811,22 +3811,22 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-21T04:20:16Z"
+   "fetched": "2026-11-21T04:32:22Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 6.3,
-  "time": "2026-11-21T14:10:00+10:00",
+  "time": "2026-11-21T14:20:00+10:00",
   "temp": 23.3,
-  "feels_like": 24.7,
+  "feels_like": 25,
   "humidity": 75,
-  "wind_dir": "NNE",
-  "wind_kmh": 9,
+  "wind_dir": "NE",
+  "wind_kmh": 7,
   "gust_kmh": 11,
   "rain_since_9am": 5,
-  "fetched": "2026-11-21T04:17:31Z"
+  "fetched": "2026-11-21T04:31:40Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4047,7 +4047,7 @@
      "2026-11-26": {
       "wind_max": 30,
       "wind_dir": "ESE",
-      "wave_m": 1.7
+      "wave_m": 1.6
      },
      "2026-11-27": {
       "wind_max": 26,
@@ -4325,7 +4325,7 @@
      "2026-11-26": {
       "wind_max": 30,
       "wind_dir": "ESE",
-      "wave_m": 1.7
+      "wave_m": 1.6
      },
      "2026-11-27": {
       "wind_max": 26,
@@ -4351,7 +4351,7 @@
     "windfinder_place": "Mooloolaba (Tide)"
    }
   ],
-  "fetched": "2026-11-21T04:17:49Z"
+  "fetched": "2026-11-21T04:31:58Z"
  },
  "errors": {}
 }
