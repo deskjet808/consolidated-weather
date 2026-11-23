@@ -154,6 +154,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .results button span{font:400 .8rem var(--mono);color:var(--muted);white-space:nowrap}
 .results .full{color:var(--accent)}
 
+/* No-signal notice: a quiet line under the header; it says everything the "couldn't reach" message would */
+.netnote{margin:-12px 0 0;padding:8px 12px;border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:12px;background:var(--surface);color:var(--muted);font-size:.88rem;line-height:1.4}
+.netnote b{color:var(--fg);font-weight:600}
+html.offline #err{display:none}
+
 /* Right now */
 .now{--sky:var(--sky-cloud);background:linear-gradient(140deg,var(--sky) 0%,var(--surface) 78%);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px}
 .now[data-sky="sun"]{--sky:var(--sky-sun)} .now[data-sky="rain"]{--sky:var(--sky-rain)} .now[data-sky="storm"]{--sky:var(--sky-storm)} .now[data-sky="night"]{--sky:var(--sky-night)}
@@ -635,6 +640,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       <span class="status" id="status">Loading forecasts…</span>
     </div>
   </header>
+  <p class="netnote" id="netNote" role="status" hidden></p>
   <button class="stick" id="stick" type="button" tabindex="-1" aria-hidden="true"><img src="img/icon-192.png" alt="" width="30" height="30"><b id="stickName"></b><span class="sc" id="stickCond"></span><span class="st" id="stickTemp"></span></button>
 
   <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
@@ -2094,22 +2100,82 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   document.addEventListener("pointerdown",e=>{if(!e.target.closest(".finder"))closeSearch();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSearch();});
 
+  // Offline mode: the page, its icons and fonts are kept by the service worker (sw.js); each place's figures and the
+  // list of locations are kept here, so any place opened before (or saved) still opens with no signal.
+  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+  const RECENT_KEY="aus-forecast-recent",LIST_KEY="aus-forecast-list",KEEP_RECENT=8;
+  // Places opened on this device, newest first, with their details so a searched place can still open from a link
+  function getRecent(){try{const r=JSON.parse(localStorage.getItem(RECENT_KEY)||"[]");return Array.isArray(r)?r:[];}catch(e){return[];}}
+  function noteRecent(L){const r=getRecent();if(r[0]&&r[0].id===L.id)return;
+    try{localStorage.setItem(RECENT_KEY,JSON.stringify([{id:L.id,t:Date.now(),L},...r.filter(x=>x.id!==L.id)].slice(0,40)));}catch(e){}}
+  const recentPlace=g7=>(getRecent().find(x=>x.L&&x.L.g7===g7)||{}).L||null;
+  // The saved figures take about 150-300 KB a place and the browser allows about 5 MB for the whole site (shared with
+  // the Fraser and Aero apps), so only the last few places opened and the ones in My places are kept
+  function savedKeys(){const out=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(CACHE+":"))out.push(k);}}catch(e){}return out;}
+  function keepRoom(){
+    const r=getRecent(),keep=new Set([...r.slice(0,KEEP_RECENT).map(x=>x.id),...getSaved().map(p=>p.id),state.loc&&state.loc.id].filter(Boolean).map(id=>CACHE+":"+id));
+    savedKeys().filter(k=>!keep.has(k)).forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});}
+  // Places' saved figures, the longest unopened first (any this device has no record of opening count as oldest)
+  function oldestFirst(but){const r=getRecent(),when=k=>{const x=r.find(x=>CACHE+":"+x.id===k);return x?x.t:0;};
+    return savedKeys().filter(k=>k!==but).sort((a,b)=>when(a)-when(b));}
+  // After each draw: make sure this place's figures really were saved. The core save gives up quietly when storage is
+  // full, so drop the longest unopened places one at a time until it fits (or nothing is left to drop).
+  function keepFigures(){const L=state.loc,d=state.data;if(!L||!d)return;
+    noteRecent(L);keepRoom();
+    const key=cacheKey();let s=null,have=null;try{s=JSON.stringify(d);have=localStorage.getItem(key);}catch(e){}
+    if(s==null||have===s)return;
+    try{localStorage.setItem(key,s);return;}catch(e){}
+    for(const k of oldestFirst(key)){try{localStorage.removeItem(k);localStorage.setItem(key,s);return;}catch(e){}}
+  }
+  PLUG.render.push(keepFigures);
+  // With no signal at all, don't try to fetch: a try where only the forecast sites' older copy is at hand would save
+  // over the place's full figures with the Bureau's part missing. The saved copy is already on screen (setLoc).
+  const loadOnline=load;
+  load=function(){if(navigator.onLine||!state.loc)return loadOnline();
+    if(!state.data){$("status").textContent="No data yet";renderSites();}else renderNet();
+    return Promise.resolve();};
+
+  // The no-signal notice under the header, kept up to date as the connection comes and goes
+  function renderNet(){const el=$("netNote"),off=!navigator.onLine;
+    document.documentElement.classList.toggle("offline",off);  // hides the generic "couldn't reach" message meanwhile
+    if(!off){el.hidden=true;return;}
+    const t=state.data&&state.data.fetched;
+    let msg;
+    if(t){const when=new Date(t).toLocaleString("en-AU",{weekday:"short",hour:"numeric",minute:"2-digit"});
+      msg=`<b>No signal.</b> Showing the forecast saved ${Date.now()-t<60e3?"just now":ago(new Date(t).toISOString())} (${esc(when)}). It updates when you're back online.`;}
+    else if(state.loc)msg=`<b>No signal.</b> Nothing is saved on this device for ${esc(state.loc.name)} yet. It loads when you're back online.`;
+    else msg=`<b>No signal.</b> The app needs a connection the first time it opens on this device.`;
+    el.innerHTML=msg;el.hidden=false;}
+  addEventListener("offline",renderNet);
+  // Connection back: fresh figures (and the location list, if start-up had to do without it)
+  addEventListener("online",()=>{renderNet();if(!LOCS.length)start();else if(state.loc&&!$("refresh").disabled)load();});
+  // The status line changes whenever figures start loading or arrive, so the notice follows it; and each minute, for "2 h ago"
+  new MutationObserver(renderNet).observe($("status"),{childList:true,characterData:true,subtree:true});
+  setInterval(renderNet,60e3);
+
   // Fill the icon placeholders in the page markup
   document.querySelectorAll("[data-ui]").forEach(e=>e.outerHTML=ui(e.dataset.ui));
   document.querySelectorAll("[data-wx]").forEach(e=>e.outerHTML=wx(e.dataset.wx,false,"Consolidated Weather"));
   $("now").innerHTML=`<div class="nowtop">${wx("partly_cloudy")}<div><div class="temp num">–</div><div class="feels">Loading…</div></div></div>`;
 
-  // Start: from the link (?loc= or ?place=), else the last place used on this device, else Oxley
-  fetch(SRC+"locations.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(async list=>{
+  // Start: from the link (?loc= or ?place=), else the last place used on this device, else Oxley.
+  // The list of locations comes from GitHub, or the copy saved on this device when there's no signal.
+  function start(){
+    fetch(SRC+"locations.json",timed({cache:"no-cache"})).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(list=>{try{localStorage.setItem(LIST_KEY,JSON.stringify(list));}catch(e){}return list;})
+      .catch(e=>{let list=null;try{list=JSON.parse(localStorage.getItem(LIST_KEY)||"null");}catch(_){}if(Array.isArray(list)&&list.length)return list;throw e;})
+      .then(async list=>{
     LOCS=list.map(full);
     const u=new URL(location.href),loc=u.searchParams.get("loc"),place=u.searchParams.get("place");
     let last=null;try{last=JSON.parse(localStorage.getItem(LOC_KEY)||"null");}catch(e){}
     let L=null;
     if(loc)L=LOCS.find(l=>l.id===loc);
-    else if(place)L=getSaved().find(p=>p.g7===place)||(last&&last.g7===place?last:null)||await bomPlace(place).catch(()=>null);
+    else if(place)L=getSaved().find(p=>p.g7===place)||(last&&last.g7===place?last:null)||recentPlace(place)||await bomPlace(place).catch(()=>null);
     else if(last)L=last.kind==="full"?LOCS.find(l=>l.id===last.id):last;
     setLoc(L||LOCS.find(l=>l.id==="oxley")||LOCS[0]);
-  }).catch(()=>{$("err").textContent="Couldn't load the list of locations. Check your internet connection, then reload the page.";$("err").hidden=false;$("status").textContent="No data yet";});
+  }).catch(()=>{$("err").textContent="Couldn't load the list of locations. Check your internet connection, then reload the page.";$("err").hidden=false;$("status").textContent="No data yet";renderNet();});
+  }
+  start();
 })();
 </script>
 </body>
