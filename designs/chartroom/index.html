@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consolidated Weather — Chart Room</title>
+<script>if (/[?&]phone\b/.test(location.search)) document.documentElement.classList.add('phone');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   CONSOLIDATED WEATHER — "OLD BUREAU / SHIP'S CHART ROOM"  (design sample)
+   --------------------------------------------------------------------------
+   PALETTE   Chart paper #ECE2CB (lighter #F4EDDC, foxed #DCCDAA)
+             Admiralty ink #1D2731 · faded ink #3E4A52 / #5F5B4D
+             Compass-rose magenta #8C2453 (Admiralty lights & roses)
+             Instrument brass #A47A2C (hi #D9B865, lo #5E4314)
+             Aniline barograph-pen violet #54377E · sounding blue #2E5A70
+             Signal red #A2311F (gusts, warmest) · chart-table walnut #241C16
+   TYPE      IM Fell English / SC — engraved chart titles & small caps
+             Libre Caslon Display & Text — readings and body (lining, tabular)
+             Courier Prime — typewritten labels, logs, telegrams, tide tables
+   REFERENCES  Admiralty chart neat-line & graduated border, compass roses
+             in magenta; aneroid barometer faces with brass set-hand;
+             Short & Mason barograph / thermograph drum paper; ship's
+             deck log ruling (blue rules, red margin); PMG telegram forms
+             with pasted ticker tape; Australian National Tide Tables.
+   ========================================================================== */
+
+:root{
+  /* colour */
+  --paper:#ECE2CB; --paper-lt:#F4EDDC; --paper-dk:#DCCDAA; --tape:#F8F3E4;
+  --ink:#1D2731; --ink-2:#3E4A52; --ink-3:#5F5B4D;
+  --rule:rgba(29,39,49,.58); --rule-lt:rgba(29,39,49,.2); --rule-sea:rgba(46,90,112,.34);
+  --magenta:#8C2453; --magenta-wash:rgba(140,36,83,.10);
+  --brass:#A47A2C; --brass-lt:#D9B865; --brass-dk:#5E4314;
+  --violet:#54377E; --sea:#2E5A70; --sea-wash:rgba(46,90,112,.14);
+  --signal:#A2311F; --desk:#241C16;
+  /* type */
+  --f-eng:"IM Fell English SC","IM Fell English",Georgia,serif;
+  --f-fell:"IM Fell English",Georgia,serif;
+  --f-disp:"Libre Caslon Display","Libre Caslon Text",Georgia,serif;
+  --f-text:"Libre Caslon Text",Georgia,serif;
+  --f-type:"Courier Prime","Courier New",monospace;
+  --fs-2xs:10.5px; --fs-xs:11.5px; --fs-s:13px; --fs-m:15px; --fs-l:18px;
+  --fs-xl:24px; --fs-2xl:32px; --fs-3xl:46px; --fs-4xl:60px;
+  /* space */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  --pad:var(--s4);
+  --ease-instrument:cubic-bezier(.25,.8,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#1a140f}
+body{
+  margin:0; min-height:100vh; color:var(--ink); background:var(--desk);
+  font:400 var(--fs-m)/1.5 var(--f-text);
+  font-variant-numeric:lining-nums tabular-nums;
+  -webkit-font-smoothing:antialiased;
+  /* walnut chart table */
+  background-image:
+    repeating-linear-gradient(91deg,rgba(255,255,255,.018) 0 2px,transparent 2px 7px),
+    repeating-linear-gradient(89.3deg,rgba(0,0,0,.12) 0 1px,transparent 1px 13px),
+    radial-gradient(120% 80% at 50% 0%,#3a2d22 0%,#241C16 60%,#1a140f 100%);
+}
+::selection{background:var(--magenta);color:var(--paper-lt)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- desk + sheet --------------------------------------------------- */
+.desk{padding:var(--s2) var(--s2) var(--s5)}
+.sheet{max-width:1320px;margin:0 auto;container:sheet/inline-size}
+html.phone body{min-height:100vh}
+html.phone .desk{padding:var(--s5) 0}
+html.phone .sheet{width:390px;max-width:390px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+
+.graticule{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);
+  font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.08em;color:var(--paper-dk);
+  padding:0 2px var(--s2)}
+.graticule b{font-weight:400;color:var(--brass-lt)}
+.graticule .mid{display:none}
+
+/* Admiralty neat line: outer rule + graduated (latitude ladder) border + inner rule */
+.neatline{
+  --bar:5px;
+  border:1.5px solid var(--ink); padding:var(--bar);
+  background-color:var(--paper);
+  background-image:
+    repeating-linear-gradient(90deg,var(--ink) 0 28px,transparent 28px 56px),
+    repeating-linear-gradient(90deg,var(--ink) 0 28px,transparent 28px 56px),
+    repeating-linear-gradient(180deg,var(--ink) 0 28px,transparent 28px 56px),
+    repeating-linear-gradient(180deg,var(--ink) 0 28px,transparent 28px 56px);
+  background-size:100% var(--bar),100% var(--bar),var(--bar) 100%,var(--bar) 100%;
+  background-position:top left,bottom left,top left,top right;
+  background-repeat:no-repeat;
+  box-shadow:0 1px 0 rgba(255,255,255,.06),0 20px 60px rgba(0,0,0,.45);
+}
+.plate{
+  position:relative; border:1px solid var(--ink);
+  background-color:var(--paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .25  0 0 0 0 .14  0 0 0 .55 -.18'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .42  0 0 0 0 .2  0 0 0 .9 -.42'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
+    radial-gradient(140% 90% at 50% 40%,transparent 55%,rgba(120,90,40,.16) 100%);
+}
+
+/* ---------- shared typographic parts -------------------------------------- */
+.sh{display:flex;align-items:baseline;gap:var(--s2);margin:0 0 var(--s4);
+  font:400 var(--fs-xl)/1.1 var(--f-eng);letter-spacing:.03em;color:var(--ink)}
+.sh .num{font-family:var(--f-fell);font-style:italic;color:var(--magenta);font-size:.8em;min-width:1.2em}
+.sh::after{content:"";flex:1;align-self:center;height:3px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-left:var(--s2)}
+.sh .note{order:3;font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.sh .note{display:none}
+.kick{font:400 var(--fs-2xs)/1.3 var(--f-type);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0}
+.type{font-family:var(--f-type)}
+.muted{color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.deg{font-feature-settings:normal}
+
+/* ---------- masthead ------------------------------------------------------- */
+.masthead{padding:var(--s5) var(--pad) var(--s4);text-align:center;border-bottom:1px solid var(--ink)}
+.cartouche{display:flex;flex-direction:column;align-items:center;gap:var(--s2)}
+.emblem{width:64px;height:64px;flex:none}
+.cartouche h1{margin:0;font:400 34px/1 var(--f-eng);letter-spacing:.05em;color:var(--ink)}
+.cartouche h1 .amp{font-family:var(--f-fell);font-style:italic}
+.cartouche .sub{margin:var(--s1) 0 0;font:italic 400 var(--fs-s)/1.45 var(--f-fell);color:var(--ink-2);max-width:34em}
+.flourish{display:block;width:180px;height:10px;margin:var(--s2) auto 0;color:var(--ink)}
+
+.controls{display:grid;grid-template-columns:1fr;gap:var(--s3);margin-top:var(--s4);text-align:left}
+.field{display:grid;gap:3px}
+.field>span{font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.select-wrap{position:relative}
+.select-wrap svg{position:absolute;right:8px;top:50%;width:12px;height:12px;transform:translateY(-50%);pointer-events:none;color:var(--ink)}
+select,input[type=search]{
+  appearance:none;-webkit-appearance:none;width:100%;margin:0;
+  font:400 var(--fs-l)/1.2 var(--f-eng);letter-spacing:.04em;color:var(--ink);
+  background:var(--paper-lt);border:1px solid var(--ink);border-radius:0;
+  box-shadow:inset 0 0 0 2px var(--paper-lt),inset 0 0 0 3px var(--rule-lt);
+  padding:8px 30px 7px 10px;min-height:42px;transition:box-shadow .2s,background-color .2s}
+input[type=search]{font:400 var(--fs-m)/1.2 var(--f-type);letter-spacing:0;padding-right:10px}
+input::placeholder{color:var(--ink-3);opacity:1;font-style:italic}
+select:hover,input[type=search]:hover{background:#fff9ea}
+select:focus-visible,input[type=search]:focus-visible{outline:2px solid var(--magenta);outline-offset:1px}
+.searchrow{display:flex}
+.searchrow input{border-right:0}
+.btn{appearance:none;border:1px solid var(--ink);border-radius:0;background:var(--ink);color:var(--paper-lt);
+  font:700 var(--fs-xs)/1 var(--f-type);letter-spacing:.14em;text-transform:uppercase;padding:0 14px;min-height:42px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;transition:background-color .2s,color .2s}
+.btn svg{width:14px;height:14px}
+.btn:hover{background:var(--magenta);border-color:var(--magenta)}
+
+.issue{display:flex;flex-wrap:wrap;justify-content:center;gap:2px var(--s4);padding:7px var(--pad);
+  border-bottom:3px double var(--ink);font:400 var(--fs-2xs)/1.4 var(--f-type);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.issue b{font-weight:700;color:var(--ink)}
+
+/* ---------- grid of sections ---------------------------------------------- */
+.board{display:grid;grid-template-columns:minmax(0,1fr)}
+.panel{padding:var(--s5) var(--pad);border-top:1px solid var(--rule)}
+.board>.panel:first-child{border-top:0}
+
+/* ---------- I. right now -------------------------------------------------- */
+.headline{display:flex;align-items:center;gap:var(--s3);margin:-4px 0 var(--s4)}
+.headline svg{width:46px;height:46px;flex:none;color:var(--ink)}
+.headline p{margin:0;font:italic 400 var(--fs-xl)/1.15 var(--f-fell);color:var(--ink)}
+.headline small{display:block;margin-top:3px;font:400 var(--fs-2xs)/1.3 var(--f-type);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
+.instruments{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4) var(--s3)}
+.instrument{margin:0;display:flex;flex-direction:column;align-items:center;min-width:0}
+.dial{width:100%;max-width:236px;height:auto;display:block;filter:drop-shadow(0 3px 2px rgba(60,40,10,.28))}
+.readout{margin-top:var(--s2);text-align:center;width:100%}
+.readout .lbl{display:block;font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.readout .val{display:block;font:400 var(--fs-3xl)/1 var(--f-disp);letter-spacing:-.01em;margin:4px 0 2px;color:var(--ink)}
+.readout .val sup{font-size:.45em;vertical-align:.95em;margin-left:1px;font-family:var(--f-text)}
+.readout .val .u{font:400 var(--fs-s)/1 var(--f-type);letter-spacing:.04em;margin-left:4px;color:var(--ink-2)}
+.readout .val .dir{font:400 .5em/1 var(--f-eng);letter-spacing:.06em;margin-left:6px;color:var(--magenta);vertical-align:.25em}
+.readout .aux{display:block;font:400 var(--fs-xs)/1.35 var(--f-type);color:var(--ink-2)}
+.readout .aux i{font-style:normal;color:var(--brass-dk)}
+
+/* deck-log ruling */
+.log{grid-column:1/-1;margin:var(--s2) 0 0;position:relative;background:
+  linear-gradient(90deg,transparent 0 37px,rgba(162,49,31,.55) 37px 38px,transparent 38px 40px,rgba(162,49,31,.55) 40px 41px,transparent 41px)}
+.log-head{display:flex;justify-content:space-between;gap:var(--s2);padding:0 0 5px 50px;border-bottom:1.5px solid var(--sea);
+  font:700 var(--fs-2xs)/1 var(--f-type);letter-spacing:.14em;text-transform:uppercase;color:var(--sea)}
+.log dl{margin:0}
+.log .row{display:grid;grid-template-columns:38px 96px 1fr;align-items:baseline;border-bottom:1px solid var(--rule-sea);min-height:34px;padding:7px 0 5px}
+.log .row:hover{background:var(--sea-wash)}
+.log .no{font:400 var(--fs-2xs)/1 var(--f-type);color:var(--ink-3);text-align:right;padding-right:10px}
+.log dt{font:400 var(--fs-2xs)/1.2 var(--f-type);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding-left:12px}
+.log dd{margin:0;font:400 var(--fs-m)/1.3 var(--f-type);color:var(--ink)}
+.log dd b{font-weight:700}
+.log .nw{white-space:nowrap}
+.log dd small{font-size:var(--fs-xs);color:var(--ink-3)}
+.log dd .uv{display:inline-block;padding:0 5px;margin-left:2px;border:1px solid var(--signal);color:var(--signal);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;vertical-align:1px}
+.log dd svg{width:16px;height:12px;vertical-align:-1px;margin-right:3px;color:var(--brass-dk)}
+
+/* ---------- telegram ------------------------------------------------------ */
+.telegram{position:relative;background:#E9DDBF;border:1px solid var(--rule);padding:var(--s3) var(--s3) var(--s4);
+  box-shadow:inset 0 0 0 3px #E9DDBF,inset 0 0 0 4px rgba(46,90,112,.45)}
+.tg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s2);padding:0 var(--s1) var(--s2);border-bottom:1px solid rgba(46,90,112,.55)}
+.tg-title{font:400 23px/1 var(--f-eng);letter-spacing:.2em;color:var(--sea);margin:0}
+.tg-meta{white-space:nowrap;font:400 var(--fs-2xs)/1.35 var(--f-type);color:var(--sea);text-align:right;letter-spacing:.04em}
+.tg-fields{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid rgba(46,90,112,.55);margin-bottom:var(--s3)}
+.tg-fields div{padding:5px var(--s1);font:400 9.5px/1.2 var(--f-type);letter-spacing:.08em;text-transform:uppercase;color:var(--sea)}
+.tg-fields div+div{border-left:1px solid rgba(46,90,112,.4)}
+.tg-fields b{display:block;font:700 var(--fs-xs)/1.3 var(--f-type);letter-spacing:.02em;color:var(--ink)}
+.tg-body{margin:0;padding:0 var(--s1);font:700 var(--fs-s)/2.05 var(--f-type);letter-spacing:.03em;text-transform:uppercase;color:#20242a}
+.tape{background:var(--tape);padding:3px 7px 2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  box-shadow:0 1px 0 rgba(80,60,20,.25),0 0 0 .5px rgba(80,60,20,.12)}
+.tg-body .stop{color:var(--magenta)}
+.tg-sign{margin:var(--s3) var(--s1) 0;display:flex;justify-content:space-between;align-items:flex-end;font:italic 400 var(--fs-s)/1.2 var(--f-fell);color:var(--sea)}
+.stamp{display:inline-block;transform:rotate(-6deg);border:2px solid var(--magenta);color:var(--magenta);padding:3px 8px 2px;
+  font:400 var(--fs-xs)/1.1 var(--f-eng);letter-spacing:.14em;text-align:center;opacity:.82;filter:url(#rough);mix-blend-mode:multiply}
+.stamp small{display:block;font:400 9px/1.2 var(--f-type);letter-spacing:.1em}
+
+/* ---------- tides ---------------------------------------------------------- */
+.tidebox{margin-top:var(--s1)}
+.tide-chart{width:100%;display:block}
+.tidetable{width:100%;border-collapse:collapse;margin-top:var(--s3);font-family:var(--f-type)}
+.tidetable th{font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 0 5px;border-bottom:1px solid var(--rule)}
+.tidetable th:last-child,.tidetable td:last-child{text-align:right}
+.tidetable td{padding:6px 0 5px;border-bottom:1px solid var(--rule-lt);font-size:var(--fs-m)}
+.tidetable td.t{font-weight:700;letter-spacing:.04em}
+.tidetable td.k{font:400 var(--fs-s)/1 var(--f-eng);letter-spacing:.06em}
+.tidetable tr.hw td.k{color:var(--sea)}
+.tidetable tr.next td{background:var(--sea-wash)}
+.tidetable tr.next td.k::after{content:"next";margin-left:6px;font:700 9px/1 var(--f-type);letter-spacing:.12em;text-transform:uppercase;color:var(--paper-lt);background:var(--sea);padding:2px 4px;vertical-align:2px}
+.baynote{margin:var(--s3) 0 0;font:400 var(--fs-xs)/1.45 var(--f-type);color:var(--ink-2)}
+.baynote b{color:var(--ink)}
+
+/* ---------- III. seven days (tide-table print) ---------------------------- */
+.week{width:100%;border-collapse:collapse}
+.week caption{text-align:left}
+.week th{font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 4px 6px;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+.week td{padding:8px 4px 7px;border-bottom:1px solid var(--rule-lt);vertical-align:middle}
+.week tbody tr{transition:background-color .2s}
+.week tbody tr:hover{background:var(--magenta-wash)}
+.week tr.today td{background:rgba(164,122,44,.10)}
+.week .day b{display:block;font:400 var(--fs-l)/1 var(--f-eng);letter-spacing:.06em}
+.week .day b span{font-family:var(--f-type);font-size:var(--fs-xs);letter-spacing:0;color:var(--ink-3);margin-left:3px}
+.week .day i{display:block;font:italic 400 var(--fs-xs)/1.2 var(--f-fell);color:var(--ink-2);margin-top:2px;white-space:nowrap}
+.week .sym svg{width:34px;height:34px;display:block;color:var(--ink)}
+.week .hl{white-space:nowrap;font-family:var(--f-disp)}
+.week .hl b{font-weight:400;font-size:var(--fs-xl)}
+.week .hl span{font-size:var(--fs-m);color:var(--ink-3);margin-left:3px}
+.week .rain{white-space:nowrap;font-family:var(--f-type)}
+.week .rain b{font-size:var(--fs-m)}
+.week .rain small{display:block;font-size:var(--fs-2xs);color:var(--ink-3);letter-spacing:.02em}
+.gauge{display:block;width:44px;height:5px;margin-top:3px;border:1px solid var(--sea);background:var(--paper-lt)}
+.gauge i{display:block;height:100%;background:repeating-linear-gradient(135deg,var(--sea) 0 1.4px,transparent 1.4px 3px)}
+.week .agree{min-width:0}
+.agree svg{display:block;width:100%;max-width:128px;height:18px}
+.agree span{display:block;font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-top:2px}
+.agree em{font-style:normal;display:none}
+.agree span.split{color:var(--signal);font-weight:700}
+.week .col-text,.week .col-sym-w{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:var(--s1) var(--s4);margin:var(--s3) 0 0;padding:0;list-style:none;font:400 var(--fs-2xs)/1.4 var(--f-type);letter-spacing:.04em;color:var(--ink-3)}
+.legend li{display:flex;align-items:center;gap:6px}
+.legend svg{width:26px;height:10px;flex:none}
+
+/* ---------- IV. hourly ----------------------------------------------------- */
+.chartbox{position:relative}
+.chartbox>svg{display:block;width:100%}
+.chart-tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper-lt);font:400 var(--fs-xs)/1.35 var(--f-type);padding:5px 8px;white-space:nowrap;opacity:0;transition:opacity .15s;transform:translate(-50%,-110%)}
+.chart-tip b{color:var(--brass-lt);font-weight:700}
+.hourly .hit{fill:transparent;cursor:crosshair}
+.hourly .hit:hover{fill:rgba(140,36,83,.07)}
+
+/* ---------- V. station tiles ---------------------------------------------- */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.tile{position:relative;padding:var(--s3) var(--s3) var(--s3);background:var(--paper-lt);border:1px solid var(--ink);
+  box-shadow:inset 0 0 0 3px var(--paper-lt),inset 0 0 0 4px var(--rule-lt);transition:box-shadow .25s,transform .25s;min-width:0}
+.tile:hover{box-shadow:inset 0 0 0 3px var(--paper-lt),inset 0 0 0 4px var(--brass),0 2px 0 var(--brass)}
+.tile.official{grid-column:1/-1}
+.tile .no{font:400 var(--fs-2xs)/1 var(--f-type);letter-spacing:.12em;color:var(--ink-3)}
+.tile h3{margin:6px 0 1px;font:400 var(--fs-l)/1.05 var(--f-eng);letter-spacing:.04em}
+.tile .kind{margin:0;font:italic 400 var(--fs-xs)/1.25 var(--f-fell);color:var(--ink-2);min-height:2.5em}
+.tile .fig{display:flex;align-items:baseline;gap:var(--s2);margin:var(--s2) 0 6px;padding-top:var(--s2);border-top:1px solid var(--rule-lt);font-family:var(--f-disp)}
+.tile .fig b{font-weight:400;font-size:var(--fs-2xl);line-height:1}
+.tile .fig span{font-size:var(--fs-l);color:var(--ink-3)}
+.tile .fig em{font:400 var(--fs-2xs)/1 var(--f-type);font-style:normal;letter-spacing:.1em;color:var(--ink-3);margin-right:-4px}
+.tile .meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 var(--s2);font:400 var(--fs-xs)/1.3 var(--f-type);color:var(--ink-2)}
+.tile .meta .dv.warm{color:var(--signal)} .tile .meta .dv.cool{color:var(--sea)}
+.tile .stamp{position:absolute;right:10px;top:12px}
+.tile.official .kind{min-height:0}
+
+/* ---------- VI. site by site ---------------------------------------------- */
+.ledger{width:100%;border-collapse:collapse;table-layout:fixed}
+.ledger th,.ledger td{text-align:center;padding:6px 1px;border-bottom:1px solid var(--rule-lt)}
+.ledger thead th{font:400 var(--fs-2xs)/1.1 var(--f-type);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--ink);vertical-align:bottom}
+.ledger thead th b{display:block;font:400 var(--fs-m)/1 var(--f-eng);letter-spacing:.04em;text-transform:none;color:var(--ink);margin-bottom:2px}
+.ledger thead th.today b{color:var(--magenta)}
+.ledger tbody th{text-align:left;font:400 var(--fs-s)/1.1 var(--f-eng);letter-spacing:.03em;padding-left:2px;width:76px}
+.ledger col.site{width:76px}
+.ledger td{font-family:var(--f-type);line-height:1.15}
+.ledger td b{display:block;font-size:var(--fs-m)}
+.ledger td span{display:block;font-size:var(--fs-xs);color:var(--ink-3)}
+.ledger td i{display:block;font-style:normal;font-size:var(--fs-2xs);color:var(--sea);margin-top:2px}
+.ledger td b.warm{color:var(--signal)}
+.ledger td b.cool{color:var(--sea)}
+.ledger td b.warm,.ledger td b.cool{text-decoration:underline 1.5px;text-underline-offset:2px}
+.ledger tbody tr:hover th,.ledger tbody tr:hover td{background:var(--magenta-wash)}
+.ledger tr.bom th{color:var(--magenta)}
+.ledger td.na{color:var(--ink-3)}
+.ledger .today{background:rgba(164,122,44,.10)}
+
+/* ---------- footer --------------------------------------------------------- */
+.colophon{border-top:3px double var(--ink);padding:var(--s5) var(--pad) var(--s5);display:grid;gap:var(--s4);align-items:center}
+.colophon p{margin:0;font:400 var(--fs-xs)/1.55 var(--f-type);color:var(--ink-2)}
+.colophon p.imprint{font:italic 400 var(--fs-s)/1.5 var(--f-fell);color:var(--ink-2)}
+.colophon .stamp{justify-self:start;transform:rotate(-3deg);font-size:var(--fs-s)}
+.scalebar{display:flex;align-items:center;gap:6px;font:400 var(--fs-2xs)/1 var(--f-type);color:var(--ink-3)}
+.scalebar svg{width:150px;height:14px}
+
+/* ---------- motion --------------------------------------------------------- */
+.needle{transform-box:view-box;transform-origin:120px 120px;transform:rotate(var(--to));animation:settle 2.6s var(--ease-instrument) .35s both}
+@keyframes settle{
+  0%{transform:rotate(var(--from))}
+  55%{transform:rotate(calc(var(--to) + 7deg))}
+  75%{transform:rotate(calc(var(--to) - 2.5deg))}
+  90%{transform:rotate(calc(var(--to) + .8deg))}
+  100%{transform:rotate(var(--to))}
+}
+.pen{stroke-dasharray:1;stroke-dashoffset:0;animation:pen 2.8s cubic-bezier(.45,.05,.4,1) .4s both}
+@keyframes pen{from{stroke-dashoffset:1}}
+.fade-in{animation:fade 1s ease 1.8s both}
+@keyframes fade{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .needle,.pen,.fade-in{animation:none!important}
+  .pen{stroke-dashoffset:0}
+  .fade-in{opacity:1}
+  *{transition:none!important}
+}
+
+/* ---------- container-driven layout --------------------------------------- */
+@container sheet (min-width:600px){
+  .graticule .mid{display:inline}
+  .sh .note{display:inline}
+  :root{--pad:var(--s5)}
+  .cartouche h1{font-size:46px}
+  .controls{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);max-width:640px;margin-inline:auto}
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .tile.official{grid-column:auto}
+  .tile.official .kind{min-height:2.5em}
+  .week .col-text{display:table-cell}
+  .agree em{display:inline}
+  .tg-title{font-size:28px}
+  .ledger tbody th{width:auto}
+  .ledger col.site{width:120px}
+  .colophon{grid-template-columns:1fr auto}
+}
+@container sheet (min-width:1000px){
+  .desk{padding:var(--s5) var(--s6) var(--s7)}
+  .masthead{display:grid;grid-template-columns:1fr auto;align-items:center;text-align:left;gap:var(--s6);padding:var(--s6) var(--s6) var(--s5)}
+  .cartouche{flex-direction:row;gap:var(--s5)}
+  .emblem{width:92px;height:92px}
+  .cartouche h1{font-size:var(--fs-4xl)}
+  .flourish{margin-left:0}
+  .controls{grid-template-columns:200px 300px;margin:0;max-width:none}
+  .board{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .panel{padding:var(--s5) var(--s6) var(--s6)}
+  .p-now{grid-column:1/9;grid-row:1}
+  .p-tele{grid-column:9/13;grid-row:1;border-top:0;border-left:1px solid var(--rule)}
+  .p-week{grid-column:1/9;grid-row:2}
+  .p-tide{grid-column:9/13;grid-row:2;border-left:1px solid var(--rule)}
+  .p-hour{grid-column:1/13;grid-row:3}
+  .agree svg{max-width:200px}
+  .week .day i{font-size:var(--fs-s)}
+  .p-sites{grid-column:1/13;grid-row:4}
+  .p-table{grid-column:1/13;grid-row:5}
+  .instruments{grid-template-columns:230px 230px minmax(0,1fr);gap:var(--s5)}
+  .log{margin:0;grid-column:3;grid-row:1}
+  .tiles{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .ledger col.site{width:200px}
+  .ledger tbody th{font-size:var(--fs-l)}
+  .ledger td b{font-size:var(--fs-l)}
+  .ledger td span{font-size:var(--fs-s)}
+  .ledger td i{font-size:var(--fs-xs)}
+  .ledger td{padding:7px 2px}
+  .colophon{padding:var(--s5) var(--s6) var(--s6)}
+}
+@container sheet (min-width:1000px) and (max-width:1199px){
+  .instruments{grid-template-columns:1fr 1fr}
+  .log{grid-column:1/-1;grid-row:auto;margin-top:var(--s4)}
+}
+</style>
+</head>
+<body>
+
+<!-- Symbol sprite + shared defs (kept rendered at 0×0 so patterns resolve) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 1.5h3" stroke="currentColor" stroke-width=".7"/></pattern>
+    <pattern id="hatch-dense" width="2.2" height="2.2" patternUnits="userSpaceOnUse"><path d="M0 1.1h2.2" stroke="currentColor" stroke-width=".9"/></pattern>
+    <pattern id="hatch-sea" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 2h4" stroke="#2E5A70" stroke-width="1.1"/></pattern>
+    <pattern id="hatch-tide" width="4" height="3" patternUnits="userSpaceOnUse"><path d="M0 1.5h4" stroke="#2E5A70" stroke-width=".7" opacity=".7"/></pattern>
+    <filter id="rough" x="-5%" y="-10%" width="110%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="1.6"/>
+      <feComponentTransfer><feFuncA type="discrete" tableValues="0 .85 1 1"/></feComponentTransfer>
+    </filter>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F3DD95"/><stop offset=".22" stop-color="#C9A24A"/>
+      <stop offset=".5" stop-color="#8A6420"/><stop offset=".72" stop-color="#D2AE5A"/>
+      <stop offset="1" stop-color="#5E4314"/>
+    </linearGradient>
+    <linearGradient id="brass-in" x1="1" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#E9CF80"/><stop offset=".45" stop-color="#9C7428"/><stop offset="1" stop-color="#4E3810"/>
+    </linearGradient>
+    <radialGradient id="face" cx=".45" cy=".4" r=".7">
+      <stop offset="0" stop-color="#F8F2E2"/><stop offset=".75" stop-color="#EEE4CC"/><stop offset="1" stop-color="#D9CBA8"/>
+    </radialGradient>
+    <radialGradient id="boss" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#FBE9AE"/><stop offset=".5" stop-color="#B8903C"/><stop offset="1" stop-color="#4E3810"/>
+    </radialGradient>
+    <linearGradient id="glare" x1="0" y1="0" x2=".6" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- engraved weather symbols, 48×48 -->
+  <symbol id="i-sun" viewBox="0 0 48 48">
+    <g stroke="currentColor" stroke-linecap="round" fill="none">
+      <g stroke-width="1.5">
+        <path d="M24 4v7M24 37v7M4 24h7M37 24h7M9.9 9.9l4.9 4.9M33.2 33.2l4.9 4.9M9.9 38.1l4.9-4.9M33.2 14.8l4.9-4.9"/>
+      </g>
+      <g stroke-width="1">
+        <path d="M16.3 5.5l1.7 4.1M30 38.4l1.7 4.1M5.5 31.7l4.1-1.7M38.4 18l4.1-1.7M5.5 16.3l4.1 1.7M38.4 30l4.1 1.7M16.3 42.5l1.7-4.1M30 9.6l1.7-4.1"/>
+      </g>
+      <circle cx="24" cy="24" r="9" stroke-width="1.6" fill="var(--paper-lt)"/>
+      <circle cx="24" cy="24" r="9" fill="url(#hatch)" stroke="none" opacity=".45"/>
+      <circle cx="24" cy="24" r="5.4" stroke-width=".7"/>
+    </g>
+  </symbol>
+  <symbol id="i-moon" viewBox="0 0 48 48">
+    <g stroke="currentColor" fill="none">
+      <path d="M30 8a16 16 0 1 0 10 27A13.5 13.5 0 0 1 30 8z" stroke-width="1.6" fill="var(--paper-lt)"/>
+      <path d="M30 8a16 16 0 1 0 10 27A13.5 13.5 0 0 1 30 8z" fill="url(#hatch)" stroke="none" opacity=".55"/>
+      <g stroke-width="1.1" stroke-linecap="round"><path d="M38 9v5M35.5 11.5h5M42 20v3M40.5 21.5h3"/></g>
+    </g>
+  </symbol>
+  <symbol id="i-cloud" viewBox="0 0 48 48">
+    <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="var(--paper-lt)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="url(#hatch)" opacity=".7"/>
+  </symbol>
+  <symbol id="i-suncloud" viewBox="0 0 48 48">
+    <g transform="translate(-6 -7) scale(.78)"><use href="#i-sun"/></g>
+    <g transform="translate(6 6) scale(.86)"><use href="#i-cloud"/></g>
+  </symbol>
+  <symbol id="i-showersun" viewBox="0 0 48 48">
+    <g transform="translate(-6 -9) scale(.74)"><use href="#i-sun"/></g>
+    <g transform="translate(6 -1) scale(.86)"><use href="#i-cloud"/></g>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 35l-2 5M27 35l-2 5M34 35l-2 5"/></g>
+  </symbol>
+  <symbol id="i-storm" viewBox="0 0 48 48">
+    <g transform="translate(2 -4) scale(.92)">
+      <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="var(--paper-lt)" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="url(#hatch-dense)" opacity=".75"/>
+    </g>
+    <path d="M25.5 30l-5 8.2h4.2l-2.6 7.3 7.6-9.6h-4.3l3-5.9z" fill="currentColor"/>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 34l-2 5M36 34l-2 5"/></g>
+  </symbol>
+  <symbol id="i-rain" viewBox="0 0 48 48">
+    <g transform="translate(2 -5) scale(.92)">
+      <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="var(--paper-lt)" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="M12.5 35h24a7.5 7.5 0 0 0 .6-15 10 10 0 0 0-19.3-2.2A8.6 8.6 0 0 0 12.5 35z" fill="url(#hatch-dense)" opacity=".85"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 32l-2.6 6.5M20.5 32l-2.6 6.5M27 32l-2.6 6.5M33.5 32l-2.6 6.5M17 40l-1.4 3.6M24 40l-1.4 3.6M31 40l-1.4 3.6"/></g>
+  </symbol>
+  <symbol id="i-rise" viewBox="0 0 16 12"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M1 11h14M4 11a4 4 0 0 1 8 0"/><path d="M8 1v4M6 3l2-2 2 2"/></g></symbol>
+  <symbol id="i-set" viewBox="0 0 16 12"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M1 11h14M4 11a4 4 0 0 1 8 0"/><path d="M8 1v4M6 3l2 2 2-2"/></g></symbol>
+</svg>
+
+<div class="desk">
+  <main class="sheet">
+    <div class="graticule" aria-hidden="true">
+      <span><b>27°33′</b> S</span>
+      <span class="mid">Queensland — Moreton District — Oxley &amp; Approaches</span>
+      <span><b>152°58′</b> E</span>
+    </div>
+
+    <div class="neatline">
+      <div class="plate">
+
+        <header class="masthead">
+          <div class="cartouche">
+            <svg class="emblem" id="emblem" viewBox="0 0 240 240" role="img" aria-label="Compass rose"></svg>
+            <div>
+              <p class="kick">Chart of Forecasts · Sheet OX-1</p>
+              <h1>Consolidated Weather</h1>
+              <p class="sub">The Bureau of Meteorology’s forecast set beside six other observers — for the boat, the jet ski and the four-wheel drive.</p>
+            </div>
+          </div>
+          <form class="controls" role="search" onsubmit="return false">
+            <label class="field"><span>Station</span>
+              <span class="select-wrap">
+                <select aria-label="Choose a place">
+                  <option selected>Oxley</option><option>Manly</option><option>Brisbane</option><option>Redcliffe</option><option>Bribie Island</option><option>Tewantin</option>
+                </select>
+                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 4l4.5 4.5L10.5 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+              </span>
+            </label>
+            <label class="field"><span>Find a place</span>
+              <span class="searchrow">
+                <input type="search" placeholder="Town or postcode" aria-label="Search for a place">
+                <button class="btn" type="submit"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="5.8" cy="5.8" r="4.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Search</button>
+              </span>
+            </label>
+          </form>
+        </header>
+
+        <div class="issue">
+          <span>Issued <b>9.21 pm AEST</b> Monday 23 November 2026</span>
+          <span>Obs. <b>Archerfield</b> No. 040211 · 3.2 km</span>
+          <span>Seven sites consulted · none failed</span>
+        </div>
+
+        <div class="board">
+
+          <!-- I. RIGHT NOW -->
+          <section class="panel p-now" aria-labelledby="h-now">
+            <h2 class="sh" id="h-now"><span class="num">I.</span>Right Now <span class="note">Oxley 4075 · obs. 9.20 pm</span></h2>
+            <div class="headline">
+              <svg aria-hidden="true"><use href="#i-moon"/></svg>
+              <p>A clear night, light north-north-easterly
+                <small>Archerfield 9.20 pm · 0 mm since 9 am</small></p>
+            </div>
+            <div class="instruments">
+              <figure class="instrument">
+                <svg class="dial" id="dial-temp" viewBox="0 0 240 240" role="img" aria-label="Thermometer dial reading 22.5 degrees; brass set-hand at today's forecast high of 29"></svg>
+                <figcaption class="readout">
+                  <span class="lbl">Temperature</span>
+                  <span class="val">22.5<sup>°C</sup></span>
+                  <span class="aux">Feels like 21.1°</span>
+                  <span class="aux"><i>Set-hand</i> · high 29° · low 19°</span>
+                </figcaption>
+              </figure>
+              <figure class="instrument">
+                <svg class="dial" id="dial-wind" viewBox="0 0 240 240" role="img" aria-label="Wind compass: wind from north-north-east at 19 kilometres an hour"></svg>
+                <figcaption class="readout">
+                  <span class="lbl">Wind</span>
+                  <span class="val">19<span class="u">km/h</span><span class="dir">NNE</span></span>
+                  <span class="aux">10 kn · gusts 28 km/h (15 kn)</span>
+                  <span class="aux"><i>Max gust</i> 37 km/h at 12.24 pm</span>
+                </figcaption>
+              </figure>
+              <div class="log">
+                <div class="log-head"><span>Deck log · Oxley</span><span>Mon 23 Nov</span></div>
+                <dl>
+                  <div class="row"><span class="no">1</span><dt>Weather</dt><dd><b>Clear</b> <small>(b.) cloudless</small></dd></div>
+                  <div class="row"><span class="no">2</span><dt>Today</dt><dd>H <b>29°</b> · L <b>19°</b><br><small>observed max 28.4° at 12.48 pm</small></dd></div>
+                  <div class="row"><span class="no">3</span><dt>Rain</dt><dd><b>5%</b> chance<br><small>0 mm since 9 am</small></dd></div>
+                  <div class="row"><span class="no">4</span><dt>Humidity</dt><dd><b>69%</b></dd></div>
+                  <div class="row"><span class="no">5</span><dt>Wind</dt><dd><b>NNE 19</b> km/h <small>· 10 kn</small></dd></div>
+                  <div class="row"><span class="no">6</span><dt>Gusts</dt><dd><b>28</b> km/h <small>· 15 kn</small></dd></div>
+                  <div class="row"><span class="no">7</span><dt>UV</dt><dd><b>0</b> now <small>· tomorrow</small> <b>12</b><span class="uv">Extreme</span><br><small>protect 7.20 am – 3.40 pm</small></dd></div>
+                  <div class="row"><span class="no">8</span><dt>Sun</dt><dd><span class="nw"><svg aria-hidden="true"><use href="#i-rise"/></svg><b>4.45</b> am</span> &nbsp; <span class="nw"><svg aria-hidden="true"><use href="#i-set"/></svg><b>6.23</b> pm</span></dd></div>
+                </dl>
+              </div>
+            </div>
+          </section>
+
+          <!-- II. TELEGRAM: tomorrow -->
+          <section class="panel p-tele" aria-labelledby="h-tele">
+            <h2 class="sh" id="h-tele"><span class="num">II.</span>Tomorrow</h2>
+            <article class="telegram">
+              <div class="tg-top">
+                <p class="tg-title">TELEGRAM</p>
+                <div class="tg-meta">Forecast Office<br>Brisbane, Q.</div>
+              </div>
+              <div class="tg-fields">
+                <div>To<b>OXLEY 4075</b></div>
+                <div>Words<b>48</b></div>
+                <div>Handed in<b>9.21 PM</b></div>
+              </div>
+              <p class="tg-body"><span class="tape">TUESDAY 24 NOVEMBER <span class="stop">STOP</span> MOSTLY SUNNY MORNING <span class="stop">STOP</span> SLIGHT CHANCE OF A SHOWER IN THE EVENING <span class="stop">STOP</span> LIGHT WINDS BECOMING NORTHEASTERLY 15 TO 20 KMH MIDDAY THEN LIGHT <span class="stop">STOP</span> MAX 31 MIN 19 <span class="stop">STOP</span> RAIN 30 PCT 0 TO 1 MM <span class="stop">STOP</span> UV 12 EXTREME</span></p>
+              <div class="tg-sign">
+                <span>— Bureau of Meteorology</span>
+                <span class="stamp">Received<small>23 NOV 26</small></span>
+              </div>
+            </article>
+          </section>
+
+          <!-- tides -->
+          <section class="panel p-tide" aria-labelledby="h-tide">
+            <h2 class="sh" id="h-tide"><span class="num">§</span>Tides at Manly <span class="note">Tue 24 Nov</span></h2>
+            <p class="kick">Manly Boat Harbour entrance · times AEST · heights in metres</p>
+            <div class="tidebox" id="tide-box"></div>
+            <table class="tidetable">
+              <thead><tr><th scope="col">Water</th><th scope="col">Time</th><th scope="col">Height</th></tr></thead>
+              <tbody>
+                <tr class="next"><td class="k">Low</td><td class="t">0244</td><td>0.27 m</td></tr>
+                <tr class="hw"><td class="k">High</td><td class="t">0904</td><td>2.64 m</td></tr>
+                <tr><td class="k">Low</td><td class="t">1544</td><td>0.53 m</td></tr>
+                <tr class="hw"><td class="k">High</td><td class="t">2106</td><td>2.00 m</td></tr>
+              </tbody>
+            </table>
+            <p class="baynote"><b>Moreton Bay tomorrow:</b> NNE 18–22 km/h, gusts to 30, sea 0.8–1.1 m <span class="muted">(Seabreeze, Windfinder, Windy)</span></p>
+          </section>
+
+          <!-- III. SEVEN DAYS -->
+          <section class="panel p-week" aria-labelledby="h-week">
+            <h2 class="sh" id="h-week"><span class="num">III.</span>Next Seven Days <span class="note">Bureau figures</span></h2>
+            <table class="week" id="week">
+              <thead><tr>
+                <th scope="col">Day</th><th scope="col"><span class="sr">Outlook</span></th><th scope="col">High · Low</th><th scope="col">Rain</th><th scope="col">Agree?</th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+            <ul class="legend" aria-hidden="true">
+              <li><svg viewBox="0 0 26 10"><line x1="2" y1="5" x2="24" y2="5" stroke="#1D2731" stroke-width="1"/><circle cx="7" cy="5" r="2.6" fill="#F4EDDC" stroke="#1D2731" stroke-width="1.1"/><circle cx="19" cy="5" r="3.2" fill="#8C2453"/></svg>each site’s high, Bureau in magenta (scale 25–32°)</li>
+            </ul>
+          </section>
+
+          <!-- IV. HOURLY -->
+          <section class="panel p-hour hourly" aria-labelledby="h-hour">
+            <h2 class="sh" id="h-hour"><span class="num">IV.</span>Hour by Hour <span class="note">Mon 9 pm → Tue 8 pm</span></h2>
+            <div class="chartbox" id="hour-box"><div class="chart-tip" id="tip"></div></div>
+            <ul class="legend" aria-hidden="true">
+              <li><svg viewBox="0 0 26 10"><path d="M1 7 C7 1, 14 9, 25 3" fill="none" stroke="#54377E" stroke-width="2"/></svg>Temperature (pen)</li>
+              <li><svg viewBox="0 0 26 10"><line x1="1" y1="6" x2="25" y2="6" stroke="#2E5A70" stroke-width="1.4"/></svg>Wind</li>
+              <li><svg viewBox="0 0 26 10"><line x1="1" y1="5" x2="25" y2="5" stroke="#A2311F" stroke-width="1.6" stroke-dasharray="4 2.5"/></svg>Gusts</li>
+              <li><svg viewBox="0 0 26 10"><rect x="6" y="1" width="14" height="8" fill="url(#hatch-sea)" stroke="#2E5A70" stroke-width="1"/></svg>Chance of rain</li>
+            </ul>
+          </section>
+
+          <!-- V. SITES -->
+          <section class="panel p-sites" aria-labelledby="h-sites">
+            <h2 class="sh" id="h-sites"><span class="num">V.</span>Your Weather Sites <span class="note">Today · Mon 23 Nov</span></h2>
+            <div class="tiles" id="tiles"></div>
+          </section>
+
+          <!-- VI. SITE BY SITE -->
+          <section class="panel p-table" aria-labelledby="h-table">
+            <h2 class="sh" id="h-table"><span class="num">VI.</span>Site by Site <span class="note">High · low · rain</span></h2>
+            <table class="ledger" id="ledger"></table>
+            <ul class="legend" aria-hidden="true">
+              <li><span style="color:#A2311F;font-weight:700">31</span> high 2° or more above the sites’ median</li>
+              <li><span style="color:#2E5A70;font-weight:700">25</span> 2° or more below</li>
+              <li>% chance of rain · mm where a site gives no chance</li>
+              <li>— not issued</li>
+            </ul>
+          </section>
+        </div>
+
+        <footer class="colophon">
+          <div>
+            <p class="imprint">Compiled at Oxley from the Bureau of Meteorology, WillyWeather, Weatherzone, Windy, ECMWF and ICON (via Open-Meteo) and Foreca. Forecast data remain the property of their publishers.</p>
+            <p>Consolidated Weather · Sheet OX-1 · Corrected to 23.11.26 · Design sample</p>
+          </div>
+          <span class="stamp">Not to be used<br>for navigation</span>
+        </footer>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ---- snapshot: BOM API + consolidated-weather/data/oxley.json, fetched 9.33 pm AEST 23 Nov 2026 ---- */
+const DATA = {
+  obs:{temp:22.5,dirDeg:22.5},
+  today:{hi:29,lo:19},
+  week:[
+    {d:'Mon',n:23,today:true,sym:'sun',text:'Clear',hi:29,lo:19,chance:5,mm:'0 mm',agree:'Close',hs:{bom:29,willyweather:29,weatherzone:29,windy:28.3,ecmwf:27.4,icon:28,foreca:28}},
+    {d:'Tue',n:24,sym:'suncloud',text:'Partly cloudy',hi:31,lo:19,chance:30,mm:'0–1 mm',agree:'Split',hs:{bom:31,willyweather:31,weatherzone:31,windy:28.9,ecmwf:27.4,icon:29.3,foreca:28}},
+    {d:'Wed',n:25,sym:'storm',text:'Showers, storm risk',hi:27,lo:21,chance:80,mm:'7–20 mm',agree:'Good',hs:{bom:27,willyweather:27,weatherzone:28,windy:25.2,ecmwf:25.2,icon:26.4,foreca:26}},
+    {d:'Thu',n:26,sym:'showersun',text:'Possible shower',hi:29,lo:20,chance:50,mm:'0–2 mm',agree:'Good',hs:{bom:29,willyweather:29,weatherzone:29,windy:28.4,ecmwf:27.3,icon:27,foreca:28}},
+    {d:'Fri',n:27,sym:'storm',text:'Shower or two',hi:29,lo:20,chance:70,mm:'2–9 mm',agree:'Fair',hs:{bom:29,willyweather:29,weatherzone:28,windy:26.9,ecmwf:27.5,icon:26.9,foreca:28}},
+    {d:'Sat',n:28,sym:'storm',text:'Showers, storm risk',hi:29,lo:21,chance:80,mm:'6–20 mm',agree:'Fair',hs:{bom:29,willyweather:29,weatherzone:29,ecmwf:27.2,icon:28.2,foreca:28}},
+    {d:'Sun',n:29,sym:'rain',text:'Showers',hi:29,lo:22,chance:90,mm:'15–30 mm',agree:'Split',hs:{bom:29,willyweather:30,weatherzone:30,ecmwf:25.3,icon:29.6,foreca:26}}
+  ],
+  /* BOM hourly, 9 pm Mon → 8 pm Tue */
+  hours:['9pm','10pm','11pm','12am','1am','2am','3am','4am','5am','6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm'],
+  temp:[23,22,22,21,20,20,19,19,19,20,23,25,26,28,29,30,31,30,29,29,27,26,26,25],
+  chance:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,20,20],
+  wind:[11,9,9,7,7,6,6,6,6,6,6,7,7,7,9,11,15,15,15,17,15,15,11,11],
+  gust:[19,19,17,15,15,13,13,13,11,11,13,13,15,15,17,20,24,26,26,28,26,24,20,19],
+  dir:['NNE','NNE','N','NNW','N','N','NNW','NNW','NW','NW','NW','NNW','NNW','N','NNE','NNE','NE','NE','NE','NE','NE','NE','NE','NE'],
+  /* sites: [high, low, chance %, rain mm] per day Mon→Sun; null = not issued */
+  sites:[
+    {id:'bom',name:'Bureau of Meteorology',short:'BOM',kind:'Official forecast, Oxley',official:true,
+      days:[[29,null,5,'0'],[31,19,30,'0–1'],[27,21,80,'7–20'],[29,20,50,'0–2'],[29,20,70,'2–9'],[29,21,80,'6–20'],[29,22,90,'15–30']]},
+    {id:'willyweather',name:'WillyWeather',short:'Willy',kind:'Forecast service, Oxley',
+      days:[[29,19,5,'<1'],[31,19,30,'<1'],[27,21,80,'5–20'],[29,20,45,'<2'],[29,20,65,'1–10'],[29,21,80,'5–20'],[30,21,90,'15–30']]},
+    {id:'weatherzone',name:'Weatherzone',short:'W’zone',kind:'Forecast service, Archerfield point',
+      days:[[29,19,40,'<1'],[31,19,80,'1–5'],[28,20,50,'1–5'],[29,20,50,'1–5'],[28,20,80,'5–10'],[29,21,90,'5–10'],[30,22,90,'20–40']]},
+    {id:'windy',name:'Windy',short:'Windy',kind:'Meteoblue model point',
+      days:[[28.3,17.8,null,'0'],[28.9,19.8,null,'2.2'],[25.2,20.8,null,'10.8'],[28.4,20.1,null,'0.2'],[26.9,20.3,null,'3.2'],null,null]},
+    {id:'ecmwf',name:'ECMWF',short:'ECMWF',kind:'European model, via Open-Meteo',
+      days:[[27.4,17.9,4,'0'],[27.4,18.7,18,'0'],[25.2,20.3,90,'12.9'],[27.3,19,39,'0'],[27.5,19.9,65,'2.2'],[27.2,21.5,92,'2.6'],[25.3,19.8,97,'36.6']]},
+    {id:'icon',name:'ICON',short:'ICON',kind:'German model, via Open-Meteo',
+      days:[[28,19.2,0,'0'],[29.3,20.1,23,'0.4'],[26.4,21.2,50,'9.1'],[27,20.5,13,'0'],[26.9,20,39,'3.5'],[28.2,22.2,38,'17.2'],[29.6,21.5,49,'12.4']]},
+    {id:'foreca',name:'Foreca',short:'Foreca',kind:'Forecast service, Oxley',
+      days:[[28,22,null,null],[28,20,null,'0'],[26,21,null,'15.4'],[28,20,null,null],[28,20,null,'2.3'],[28,22,null,'8.1'],[26,22,null,'32.3']]}
+  ],
+  /* Manly tide extremes, minutes from 00:00 Tue 24 Nov (neighbouring days included for the curve) */
+  tide:[[-224,2.05,'H'],[164,0.27,'L'],[544,2.64,'H'],[944,0.53,'L'],[1266,2.00,'H'],[1646,0.24,'L']]
+};
+
+const C = {ink:'#1D2731',ink2:'#3E4A52',ink3:'#5F5B4D',paper:'#ECE2CB',paperLt:'#F4EDDC',magenta:'#8C2453',brass:'#A47A2C',brassDk:'#5E4314',violet:'#54377E',sea:'#2E5A70',signal:'#A2311F'};
+const R = n => Math.round(n*100)/100;
+const pol = (cx,cy,r,deg) => { const a=(deg-90)*Math.PI/180; return [R(cx+r*Math.cos(a)), R(cy+r*Math.sin(a))]; };
+const COMPASS = {N:0,NNE:22.5,NE:45,ENE:67.5,E:90,ESE:112.5,SE:135,SSE:157.5,S:180,SSW:202.5,SW:225,WSW:247.5,W:270,WNW:292.5,NW:315,NNW:337.5};
+
+/* brass bezel shared by both instruments */
+function bezel(){
+  return `<circle cx="120" cy="120" r="117" fill="url(#brass)"/>
+  <circle cx="120" cy="120" r="117" fill="none" stroke="#3b2a0c" stroke-width="1"/>
+  <circle cx="120" cy="120" r="109" fill="url(#brass-in)"/>
+  <circle cx="120" cy="120" r="103" fill="url(#face)" stroke="#4E3810" stroke-width="1.2"/>
+  <circle cx="120" cy="120" r="100" fill="none" stroke="${C.ink}" stroke-width=".5" opacity=".6"/>`;
+}
+function glass(){
+  return `<path d="M44 92 A80 80 0 0 1 150 40 A92 92 0 0 0 52 120 Z" fill="url(#glare)" opacity=".5"/>
+  <circle cx="120" cy="120" r="9" fill="url(#boss)" stroke="#3b2a0c" stroke-width=".8"/>
+  <circle cx="120" cy="120" r="2.2" fill="#3b2a0c"/>`;
+}
+
+/* ---- I. thermometer dial in the manner of an aneroid barometer ---- */
+function tempDial(el){
+  const MIN=0, MAX=45, A = v => -135 + (v-MIN)/(MAX-MIN)*270;
+  let s = bezel();
+  const [ax,ay]=pol(120,120,93,A(MIN)), [bx,by]=pol(120,120,93,A(MAX));
+  s += `<path d="M${ax} ${ay} A93 93 0 1 1 ${bx} ${by}" fill="none" stroke="${C.ink}" stroke-width=".9"/>`;
+  // today's forecast range band
+  const [rx1,ry1]=pol(120,120,97.5,A(DATA.today.lo)), [rx2,ry2]=pol(120,120,97.5,A(DATA.today.hi));
+  s += `<path d="M${rx1} ${ry1} A97.5 97.5 0 0 1 ${rx2} ${ry2}" fill="none" stroke="${C.magenta}" stroke-width="3.2" opacity=".7"/>`;
+  for(let v=MIN; v<=MAX; v+=0.5){
+    const major=v%10===0, mid=v%5===0, whole=v%1===0;
+    const r2 = major?82:mid?85.5:whole?88.5:90.5;
+    const [x1,y1]=pol(120,120,93,A(v)), [x2,y2]=pol(120,120,r2,A(v));
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${C.ink}" stroke-width="${major?1.5:mid?1.05:whole?.65:.4}"/>`;
+  }
+  for(let v=0; v<=40; v+=10){
+    const [x,y]=pol(120,120,71,A(v));
+    s += `<text x="${x}" y="${y+4.5}" text-anchor="middle" font-family="Libre Caslon Text, Georgia, serif" font-size="13" fill="${C.ink}">${v}</text>`;
+  }
+  [[5,'COLD'],[14,'COOL'],[22.5,'MILD'],[31,'WARM'],[40,'HOT']].forEach(([v,w])=>{
+    s += `<text transform="rotate(${A(v)} 120 120)" x="120" y="${120-50}" text-anchor="middle" font-family="IM Fell English SC, Georgia, serif" font-size="9.5" letter-spacing="1.6" fill="${C.ink2}">${w}</text>`;
+  });
+  s += `<text x="120" y="158" text-anchor="middle" font-family="Courier Prime, monospace" font-size="6.6" letter-spacing="2.2" fill="${C.ink3}">THERMOMETER</text>
+        <text x="120" y="201" text-anchor="middle" font-family="IM Fell English, Georgia, serif" font-style="italic" font-size="15" fill="${C.ink}">°C</text>
+        `;
+  // brass set-hand: forecast high
+  s += `<g transform="rotate(${A(DATA.today.hi)} 120 120)">
+          <line x1="120" y1="120" x2="120" y2="26" stroke="#7a5a1c" stroke-width="1.6"/>
+          <path d="M120 22 l3.4 8 -3.4 3.2 -3.4 -3.2z" fill="${C.brass}" stroke="#5E4314" stroke-width=".6"/>
+        </g>`;
+  // blued-steel pointer
+  const to = A(DATA.obs.temp);
+  s += `<g class="needle" style="--from:${A(MIN)}deg;--to:${to}deg">
+          <path d="M120 30 l3.2 13 -1.8 1 0.4 76 h-3.6 l.4 -76 -1.8 -1z" fill="#1a2430"/>
+          <path d="M118.2 120 h3.6 l-.5 26 h-2.6z" fill="#1a2430"/>
+          <circle cx="120" cy="138" r="5.2" fill="none" stroke="#1a2430" stroke-width="2"/>
+        </g>`;
+  s += glass();
+  el.innerHTML = s;
+}
+
+/* ---- Admiralty compass rose (used for wind dial + emblem) ---- */
+function rose(opts){
+  const {numbers=true, arrow=null, bez=true} = opts||{};
+  let s = bez ? bezel() : `<circle cx="120" cy="120" r="104" fill="none" stroke="${C.ink}" stroke-width="1.6"/><circle cx="120" cy="120" r="99" fill="none" stroke="${C.ink}" stroke-width=".6"/>`;
+  const M = C.magenta;
+  // degree ring
+  s += `<circle cx="120" cy="120" r="94" fill="none" stroke="${M}" stroke-width=".8"/><circle cx="120" cy="120" r="72" fill="none" stroke="${M}" stroke-width=".8"/>`;
+  if(!bez) s = s.replace(/stroke-width="\.8"/g,'stroke-width="1.4"');
+  for(let d=0; d<360; d+=(bez?2.5:5)){
+    const ten=d%10===0, five=d%5===0;
+    const r2 = ten?86:five?89:91.2;
+    const [x1,y1]=pol(120,120,94,d),[x2,y2]=pol(120,120,r2,d);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${M}" stroke-width="${ten?1.1:five?.7:.45}"/>`;
+  }
+  if(numbers){
+    for(let d=0; d<360; d+=30){
+      s += `<text transform="rotate(${d} 120 120)" x="120" y="${120-78.5}" text-anchor="middle" font-family="Courier Prime, monospace" font-size="7.4" fill="${M}">${String(d).padStart(3,'0')}</text>`;
+    }
+  }
+  // 16-point star, by-points first
+  const pts=[]; for(let i=0;i<16;i++) pts.push(i*22.5);
+  const level = b => b%90===0 ? 0 : b%45===0 ? 1 : 2;
+  const spec = [{r:62,w:9,off:45},{r:44,w:7,off:22.5},{r:31,w:5,off:11.25}];
+  [2,1,0].forEach(L=>{
+    pts.filter(b=>level(b)===L).forEach(b=>{
+      const {r,w,off}=spec[L];
+      const tip=pol(120,120,r,b), sl=pol(120,120,w,b-off), sr=pol(120,120,w,b+off);
+      s += `<path d="M120 120 L${tip} L${sl}Z" fill="${M}" stroke="${M}" stroke-width=".7" stroke-linejoin="round"/>`;
+      s += `<path d="M120 120 L${tip} L${sr}Z" fill="${C.paperLt}" stroke="${M}" stroke-width=".7" stroke-linejoin="round"/>`;
+    });
+  });
+  s += `<circle cx="120" cy="120" r="${bez?4:5}" fill="${C.paperLt}" stroke="${M}" stroke-width=".8"/>`;
+  // cardinal letters
+  [['N',0],['E',90],['S',180],['W',270]].forEach(([t,b])=>{
+    const [x,y]=pol(120,120,66.5,b);
+    s += `<text x="${x}" y="${y+4}" text-anchor="middle" font-family="IM Fell English SC, Georgia, serif" font-size="${bez?11:15}" fill="${C.ink}">${t}</text>`;
+  });
+  if(!bez){ // emblem: fleur at north
+    s += `<path d="M120 2 l5 12 -5 -3 -5 3z" fill="${C.ink}"/>`;
+  }
+  if(arrow!==null){
+    s += `<g class="needle" style="--from:${arrow-200}deg;--to:${arrow}deg">
+      <line x1="120" y1="34" x2="120" y2="196" stroke="#1a2430" stroke-width="2.2"/>
+      <path d="M120 208 l-7 -17 7 4 7 -4z" fill="#1a2430"/>
+      <g stroke="#1a2430" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <path d="M120 40 l-7 -9 M120 40 l7 -9 M120 48 l-7 -9 M120 48 l7 -9 M120 56 l-7 -9 M120 56 l7 -9"/>
+      </g>
+    </g>`;
+    s += glass();
+  }
+  return s;
+}
+
+/* ---- III. week table ---- */
+function agreeStrip(hs){
+  const lo=25, hi=32, X=v=>R(6+(v-lo)/(hi-lo)*116);
+  const vals=Object.values(hs), mn=Math.min(...vals), mx=Math.max(...vals);
+  let s=`<svg viewBox="0 0 128 18" aria-hidden="true">`;
+  for(let v=lo; v<=hi; v++) s+=`<line x1="${X(v)}" y1="${v%5===0?3:5}" x2="${X(v)}" y2="${v%5===0?15:13}" stroke="${C.ink}" stroke-width="${v%5===0?.8:.45}" opacity=".55"/>`;
+  s+=`<line x1="${X(mn)}" y1="9" x2="${X(mx)}" y2="9" stroke="${C.ink}" stroke-width="1.3"/>`;
+  Object.entries(hs).forEach(([k,v])=>{ if(k!=='bom') s+=`<circle cx="${X(v)}" cy="9" r="2.6" fill="${C.paperLt}" stroke="${C.ink}" stroke-width="1.1"/>`; });
+  s+=`<circle cx="${X(hs.bom)}" cy="9" r="3.3" fill="${C.magenta}"/></svg>`;
+  return {svg:s, mn, mx};
+}
+function buildWeek(){
+  const tb=document.querySelector('#week tbody');
+  tb.innerHTML = DATA.week.map(w=>{
+    const a=agreeStrip(w.hs);
+    const rng = `${Math.round(a.mn)}–${Math.round(a.mx)}°`;
+    return `<tr class="${w.today?'today':''}">
+      <td class="day"><b>${w.today?'Today':w.d}<span>${w.n}</span></b><i>${w.text}</i></td>
+      <td class="sym"><svg role="img" aria-label="${w.text}"><use href="#i-${w.sym}"/></svg></td>
+      <td class="hl"><b>${w.hi}°</b><span>${w.lo}°</span></td>
+      <td class="rain"><b>${w.chance}%</b><small>${w.mm}</small><span class="gauge" aria-hidden="true"><i style="width:${w.chance}%"></i></span></td>
+      <td class="agree">${a.svg}<span class="${w.agree==='Split'?'split':''}">${w.agree}<em class="rng"> · ${rng}</em></span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ---- IV. meteorograph: three pens on drum paper ---- */
+function smoothPath(p){
+  let d=`M${p[0][0]} ${p[0][1]}`;
+  for(let i=0;i<p.length-1;i++){
+    const p0=p[i-1]||p[i], p1=p[i], p2=p[i+1], p3=p[i+2]||p2;
+    const c1=[R(p1[0]+(p2[0]-p0[0])/6), R(p1[1]+(p2[1]-p0[1])/6)];
+    const c2=[R(p2[0]-(p3[0]-p1[0])/6), R(p2[1]-(p3[1]-p1[1])/6)];
+    d+=` C${c1} ${c2} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+function hourly(){
+  const box=document.getElementById('hour-box');
+  const W=Math.max(300, Math.round(box.clientWidth));
+  const narrow = W<520;
+  const L=narrow?30:38, Rt=narrow?6:10, n=24, cw=(W-L-Rt)/n, X=i=>R(L+(i+.5)*cw);
+  const fs = narrow?9.5:10.5;
+  const A={top:22,bot:narrow?150:170,min:16,max:34}, B={top:A.bot+30,bot:A.bot+(narrow?96:110),min:0,max:40}, Cc={top:B.bot+24,bot:B.bot+(narrow?62:74),min:0,max:100};
+  const H=Cc.bot+26;
+  const Y=(band,v)=>R(band.bot-(v-band.min)/(band.max-band.min)*(band.bot-band.top));
+  const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-family="Courier Prime, monospace" font-size="${o.fs||fs}" fill="${o.fill||C.ink3}" text-anchor="${o.anchor||'start'}" ${o.ls?`letter-spacing="${o.ls}"`:''} ${o.w?'font-weight="700"':''}>${t}</text>`;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-labelledby="hr-t hr-d"><title id="hr-t">Hour by hour, Monday 9 pm to Tuesday 8 pm</title><desc id="hr-d">Temperature falls to 19 degrees around 3 to 5 am then climbs to 31 at 1 pm. Wind light overnight, north-easterly 15 to 17 km/h in the afternoon with gusts to 28. Rain chance 0 to 5 percent, rising to 20 percent after 7 pm.</desc>`;
+  // drum paper: bands with grid
+  const grid=(band,step,bold)=>{
+    let g=`<rect x="${L}" y="${band.top}" width="${W-L-Rt}" height="${band.bot-band.top}" fill="#F3ECD9" stroke="${C.sea}" stroke-width=".9"/>`;
+    for(let v=band.min; v<=band.max; v+=step){
+      const y=Y(band,v), b=(v-band.min)%bold===0;
+      g+=`<line x1="${L}" y1="${y}" x2="${W-Rt}" y2="${y}" stroke="${C.sea}" stroke-width="${b?.7:.35}" opacity="${b?.6:.45}"/>`;
+      if(b) g+=T(L-5,y+3.5,v,{anchor:'end'});
+    }
+    for(let i=0;i<=n;i++){
+      const x=R(L+i*cw), mid=(DATA.hours[i]==='12am'), three=i%3===0;
+      g+=`<line x1="${x}" y1="${band.top}" x2="${x}" y2="${band.bot}" stroke="${mid?C.ink:C.sea}" stroke-width="${mid?1.1:three?.6:.3}" opacity="${mid?.8:three?.55:.4}"/>`;
+    }
+    return g;
+  };
+  s+=grid(A,1,4)+grid(B,5,10)+grid(Cc,25,50);
+  // band captions
+  const cap=(band,t)=>`<rect x="${L+1}" y="${band.top-14}" width="${t.length*6.4+10}" height="13" fill="none"/>`+T(L,band.top-5,t,{fill:C.ink2,ls:1.2,fs:fs-0.5,w:1});
+  s+=cap(A,'TEMPERATURE °C')+cap(B,'WIND & GUSTS km/h')+cap(Cc,'CHANCE OF RAIN %');
+  // day labels
+  const midX=R(L+3*cw);
+  s+=T(midX+4,A.top+13,'TUE 24',{fill:C.ink,ls:1,w:1});
+  s+=T(L+4,A.top+13,'MON',{fill:C.ink,ls:1,w:1});
+  // rain bars
+  DATA.chance.forEach((c,i)=>{
+    if(c<=0) return;
+    const y=Y(Cc,c), bw=R(cw*.62);
+    s+=`<rect x="${R(X(i)-bw/2)}" y="${y}" width="${bw}" height="${R(Cc.bot-y)}" fill="url(#hatch-sea)" stroke="${C.sea}" stroke-width=".9"/>`;
+  });
+  [16,22].forEach(i=>{ s+=T(X(i),Y(Cc,DATA.chance[i])-4,DATA.chance[i]+'%',{anchor:'middle',fill:C.sea,fs:fs-1}); });
+  // wind band: area between wind and gust
+  const wp=DATA.wind.map((v,i)=>[X(i),Y(B,v)]), gp=DATA.gust.map((v,i)=>[X(i),Y(B,v)]);
+  const area = smoothPath(gp)+' L'+wp.slice().reverse().map(p=>p.join(' ')).join(' L')+'Z';
+  s+=`<path d="${area}" fill="${C.signal}" opacity=".08"/>`;
+  s+=`<path d="${smoothPath(wp)}" fill="none" stroke="${C.sea}" stroke-width="1.5"/>`;
+  s+=`<path d="${smoothPath(gp)}" fill="none" stroke="${C.signal}" stroke-width="1.6" stroke-dasharray="5 3"/>`;
+  const gmax=DATA.gust.indexOf(Math.max(...DATA.gust));
+  s+=`<circle cx="${X(gmax)}" cy="${Y(B,DATA.gust[gmax])}" r="2.4" fill="${C.signal}"/>`+T(X(gmax),Y(B,DATA.gust[gmax])-6,`${DATA.gust[gmax]}`,{anchor:'middle',fill:C.signal,w:1});
+  // direction arrows (fly with the wind) along wind band top
+  const every = narrow?3:2;
+  for(let i=0;i<n;i+=every){
+    const b=COMPASS[DATA.dir[i]]+180, x=X(i), y=B.top+11;
+    s+=`<g transform="translate(${x} ${y}) rotate(${b})"><line x1="0" y1="-6" x2="0" y2="5" stroke="${C.ink}" stroke-width="1.1"/><path d="M0 7 l-3 -5 h6z" fill="${C.ink}"/></g>`;
+    if(!narrow) s+=T(x,B.top+29,DATA.dir[i],{anchor:'middle',fs:8.5,fill:C.ink3});
+  }
+  // temperature pen
+  const tp=DATA.temp.map((v,i)=>[X(i),Y(A,v)]);
+  s+=`<path class="pen" pathLength="1" d="${smoothPath(tp)}" fill="none" stroke="${C.violet}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const tmax=DATA.temp.indexOf(31), tmin=DATA.temp.indexOf(19);
+  s+=`<g class="fade-in"><circle cx="${X(tmax)}" cy="${Y(A,31)}" r="3" fill="${C.violet}"/>${T(X(tmax),Y(A,31)-8,'31°',{anchor:'middle',fill:C.violet,w:1,fs:fs+1})}
+     <circle cx="${X(tmin+1)}" cy="${Y(A,19)}" r="3" fill="${C.violet}"/>${T(X(tmin+1),Y(A,19)+16,'19°',{anchor:'middle',fill:C.violet,w:1,fs:fs+1})}</g>`;
+  // now marker
+  s+=`<line x1="${X(0)}" y1="${A.top}" x2="${X(0)}" y2="${Cc.bot}" stroke="${C.magenta}" stroke-width="1" stroke-dasharray="2 2"/>`;
+  // hour axis
+  for(let i=0;i<n;i+=3) s+=T(X(i),Cc.bot+15,DATA.hours[i],{anchor:'middle',fill:C.ink2});
+  // hit areas for tooltip
+  for(let i=0;i<n;i++) s+=`<rect class="hit" data-i="${i}" x="${R(L+i*cw)}" y="${A.top}" width="${R(cw)}" height="${R(Cc.bot-A.top)}"/>`;
+  s+='</svg>';
+  const tip=document.getElementById('tip');
+  box.querySelectorAll('svg').forEach(n=>n.remove());
+  box.insertAdjacentHTML('afterbegin',s);
+  box.querySelectorAll('.hit').forEach(r=>{
+    const show=()=>{ const i=+r.dataset.i;
+      tip.innerHTML=`<b>${DATA.hours[i]}</b> ${DATA.temp[i]}° · ${DATA.dir[i]} ${DATA.wind[i]} g${DATA.gust[i]} · rain ${DATA.chance[i]}%`;
+      const x=Math.min(Math.max(X(i)/W*box.clientWidth,90),box.clientWidth-90);
+      tip.style.left=x+'px'; tip.style.top=(Y(A,DATA.temp[i])/H*box.clientHeight)+'px'; tip.style.opacity=1; };
+    r.addEventListener('mouseenter',show); r.addEventListener('mouseleave',()=>tip.style.opacity=0);
+  });
+}
+
+/* ---- tide curve (cosine between extremes) ---- */
+function tides(){
+  const box=document.getElementById('tide-box');
+  const W=Math.max(260, Math.round(box.clientWidth)), H=150, L=26, Rt=6, top=18, bot=H-22;
+  const X=m=>R(L+m/1440*(W-L-Rt)), Y=h=>R(bot-h/3*(bot-top));
+  const ex=DATA.tide;
+  const hAt=m=>{ for(let i=0;i<ex.length-1;i++){ const [m1,h1]=ex[i],[m2,h2]=ex[i+1]; if(m>=m1&&m<=m2){ const f=(m-m1)/(m2-m1); return h1+(h2-h1)*(1-Math.cos(Math.PI*f))/2; } } return 0; };
+  const pts=[]; for(let m=0;m<=1440;m+=10) pts.push([X(m),Y(hAt(m))]);
+  const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-family="Courier Prime, monospace" font-size="${o.fs||10}" fill="${o.fill||C.ink3}" text-anchor="${o.anchor||'start'}" ${o.w?'font-weight="700"':''}>${t}</text>`;
+  let s=`<svg class="tide-chart" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Tide curve for Manly, Tuesday: low 2.44 am, high 9.04 am, low 3.44 pm, high 9.06 pm">`;
+  s+=`<rect x="${L}" y="${top}" width="${W-L-Rt}" height="${bot-top}" fill="#F3ECD9" stroke="${C.sea}" stroke-width=".9"/>`;
+  for(let h=0;h<=3;h+=.5){ const y=Y(h); s+=`<line x1="${L}" y1="${y}" x2="${W-Rt}" y2="${y}" stroke="${C.sea}" stroke-width="${h%1===0?.6:.3}" opacity=".5"/>`; if(h%1===0) s+=T(L-5,y+3.5,h,{anchor:'end'}); }
+  for(let hr=0;hr<=24;hr+=3){ const x=X(hr*60); s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${bot}" stroke="${C.sea}" stroke-width="${hr%6===0?.6:.3}" opacity=".5"/>`; if(hr%6===0) s+=T(x,bot+14,String(hr).padStart(2,'0')+'00',{anchor:hr===0?'start':hr===24?'end':'middle'}); }
+  const line=smoothPath(pts);
+  s+=`<path d="${line} L${X(1440)} ${bot} L${X(0)} ${bot}Z" fill="url(#hatch-tide)"/>`;
+  s+=`<path class="pen" pathLength="1" d="${line}" fill="none" stroke="${C.sea}" stroke-width="2"/>`;
+  ex.filter(e=>e[0]>=0&&e[0]<=1440).forEach(([m,h,k])=>{
+    const x=X(m), y=Y(h);
+    s+=`<circle cx="${x}" cy="${y}" r="3" fill="${k==='H'?C.sea:C.paperLt}" stroke="${C.sea}" stroke-width="1.3"/>`;
+    s+=T(x,k==='H'?y-7:y-8,h.toFixed(2),{anchor:'middle',fill:C.ink,w:1,fs:10});
+  });
+  s+='</svg>';
+  box.innerHTML=s;
+}
+
+/* ---- V. tiles ---- */
+function buildTiles(){
+  const hs=DATA.sites.map(s=>s.days[0][0]); const mean=hs.reduce((a,b)=>a+b,0)/hs.length;
+  document.getElementById('tiles').innerHTML = DATA.sites.map((s,i)=>{
+    const [h,l,c,mm]=s.days[0]; const dv=h-mean; const dvt=(dv>=0?'+':'−')+Math.abs(dv).toFixed(1)+'°';
+    const rain = c!=null ? `${c}%` : (mm!=null?`${mm} mm`:'—');
+    return `<article class="tile${s.official?' official':''}">
+      <span class="no">No. ${i+1}</span>
+      ${s.official?'<span class="stamp">Official</span>':''}
+      <h3>${s.name}</h3>
+      <p class="kind">${s.kind}</p>
+      <div class="fig"><em>H</em><b>${Math.round(h)}°</b><em>L</em><span>${l==null?'—':Math.round(l)+'°'}</span></div>
+      <div class="meta"><span>Rain ${rain}</span><span class="dv ${dv>0.2?'warm':dv<-0.2?'cool':''}" title="Against the mean of all seven sites">${dvt}</span></div>
+    </article>`;
+  }).join('');
+}
+
+/* ---- VI. ledger ---- */
+function buildLedger(){
+  const days=DATA.week;
+  let h=`<caption class="sr">Each site's forecast high, low and rain for the next seven days</caption><colgroup><col class="site">${days.map(()=>'<col>').join('')}</colgroup>`;
+  h+=`<thead><tr><th scope="col" style="text-align:left">Site</th>${days.map(d=>`<th scope="col" class="${d.today?'today':''}"><b>${d.d}</b>${d.n}</th>`).join('')}</tr></thead><tbody>`;
+  const med = days.map((_,j)=>{ const v=DATA.sites.map(s=>s.days[j]&&s.days[j][0]).filter(x=>x!=null).sort((a,b)=>a-b); const k=v.length>>1; return v.length%2?v[k]:(v[k-1]+v[k])/2; });
+  DATA.sites.forEach(s=>{
+    h+=`<tr class="${s.id}"><th scope="row">${s.short}</th>`;
+    s.days.forEach((d,j)=>{
+      const td=days[j].today?' today':'';
+      if(!d){ h+=`<td class="na${td}">—</td>`; return; }
+      const [hi,lo,c,mm]=d, H=Math.round(hi);
+      const off=hi-med[j]; const cls = off>=2?'warm':off<=-2?'cool':'';
+      const mmr = mm==null?null:(/^[\d.]+$/.test(mm)?String(Math.round(+mm)):mm); const rain = c!=null?`${c}%`:(mmr!=null?`${mmr} mm`:'—');
+      h+=`<td class="${td.trim()}"><b class="${cls}">${H}</b><span>${lo==null?'—':Math.round(lo)}</span><i>${rain}</i></td>`;
+    });
+    h+='</tr>';
+  });
+  document.getElementById('ledger').innerHTML=h+'</tbody>';
+}
+
+function init(){
+  tempDial(document.getElementById('dial-temp'));
+  document.getElementById('dial-wind').innerHTML = rose({arrow:DATA.obs.dirDeg});
+  document.getElementById('emblem').innerHTML = rose({numbers:false,bez:false});
+  buildWeek(); buildTiles(); buildLedger(); hourly(); tides();
+  let t; addEventListener('resize',()=>{ clearTimeout(t); t=setTimeout(()=>{hourly();tides();},120); });
+}
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(init);
+</script>
+<!-- Saved design sample: a way back to the working app, in the same corner as its design switcher -->
+<a href="../../" style="position:fixed;z-index:9999;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));font:600 13px/1 Tahoma,Verdana,sans-serif;color:#000;background:#D4D0C8;padding:8px 12px;text-decoration:none;box-shadow:inset -1px -1px #404040,inset 1px 1px #fff,inset -2px -2px #808080,inset 2px 2px #dfdfdf">Sample only &middot; Back to the app</a>
+</body>
+</html>

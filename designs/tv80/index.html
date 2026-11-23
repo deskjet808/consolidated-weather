@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consolidated Weather · Oxley</title>
+<script>if (location.search.indexOf('phone') > -1) document.documentElement.classList.add('is-phone');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   CONSOLIDATED WEATHER  -  "EVENING NEWS WEATHER, 1984"  design sample
+   --------------------------------------------------------------------------
+   PALETTE
+     Chroma-key blue   #06124A / #0D2A8A / #1747C8   studio backdrop + map sea
+     Board navy        #081650                      graphic "boards"
+     Ink               #0B0E24                      outlines, hard drop shadows
+     Chalk / Mist      #EEF3FF / #B8C8F2            primary / secondary text
+     CG yellow         #FFE14A                      character-generator captions
+     Sun orange        #FFD31A + #FF9E1B            sun discs and rays
+     Hot / Warm        #D42A1C / #E0541A            maximum-temperature squares
+     Cool              #0A6FC2                      minimum-temperature squares
+     Rain cyan         #46C8FF   Gust orange #FF8A3D   Land green #3F9A3C
+   TYPE
+     Archivo (variable width 62-125%, weight 400-900): compressed black caps
+       stand in for the Helvetica Compressed / Univers Condensed used on
+       '80s news supers; expanded black for the station ident.
+     VT323: the 8-line character-generator / teletext face for timecodes,
+       captions, crawls and small data labels.
+   REFERENCES
+     BBC "Mitchell" magnetic weather symbols (1975-85): flat fills, heavy
+       black outline, temperatures in red/blue squares, wind in a circle.
+     Australian commercial-network 6 pm weather maps of the '80s: green
+       land on a chroma-key blue sea, white CG town labels.
+     Quantel Paintbox studio graphics: chrome-horizon wordmarks, triple
+       speed-stripes, slanted lower-third "supers", SMPTE colour bars.
+   ========================================================================== */
+
+:root{
+  /* colour */
+  --key-900:#06124a; --key-700:#0d2a8a; --key-500:#1747c8; --key-300:#4f7ef0;
+  --board:#081650; --board-2:#0a1c63; --edge:#2f52bf; --edge-hi:#6f93ff;
+  --ink:#0b0e24; --chalk:#eef3ff; --mist:#b8c8f2; --dim:#8aa0dc;
+  --cg:#ffe14a; --sun:#ffd31a; --amber:#ff9e1b; --hot:#d42a1c; --warm:#e0541a;
+  --cool:#0a6fc2; --rain:#46c8ff; --gust:#ff8a3d; --land:#3f9a3c; --land-dk:#2b6f29;
+  --sea:#1747c8; --night:rgba(2,6,30,.42);
+  /* type */
+  --f-sans:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-cg:"VT323","Courier New",monospace;
+  --cond:68%; --xcond:62%; --wide:125%;
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-base:1rem; --fs-md:1.25rem; --fs-lg:1.75rem;
+  --fs-xl:2.5rem; --fs-2xl:3.5rem; --fs-hero:clamp(5.5rem, 20cqi, 9.5rem);
+  /* space (4px base) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --gutter:16px;
+  /* chrome */
+  --stripes:linear-gradient(var(--cg) 0 2px, transparent 2px 4px, var(--amber) 4px 6px, transparent 6px 8px, var(--hot) 8px 10px);
+  --shadow-hard:3px 3px 0 var(--ink);
+  --ease-wipe:cubic-bezier(.65,0,.35,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--key-900)}
+body{
+  margin:0; color:var(--chalk); font-family:var(--f-sans); font-size:var(--fs-base); line-height:1.4;
+  font-variant-numeric:tabular-nums lining-nums;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #2a5be0 0%, rgba(23,71,200,0) 60%),
+    radial-gradient(140% 90% at 50% 40%, var(--key-500) 0%, var(--key-700) 55%, var(--key-900) 100%) fixed;
+  background-color:var(--key-700);
+  min-height:100vh; overflow-x:hidden;
+}
+/* video scanlines + tube vignette, purely decorative */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:50;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,20,.10) 2px 3px),
+    radial-gradient(120% 100% at 50% 50%, rgba(0,0,0,0) 62%, rgba(0,0,18,.38) 100%);
+}
+.is-phone body{background:#02061c}
+.is-phone .app{
+  width:390px; margin:0 auto; position:relative; overflow:hidden;
+  background:radial-gradient(140% 70% at 50% 10%, var(--key-500) 0%, var(--key-700) 55%, var(--key-900) 100%);
+  box-shadow:0 0 0 1px #1d3aa0, 0 0 60px rgba(0,0,0,.6);
+}
+
+.app{container:app / inline-size; min-height:100vh}
+.wrap{max-width:1320px; margin:0 auto; padding:0 var(--gutter)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+a{color:var(--cg)}
+:focus-visible{outline:3px solid var(--cg); outline-offset:2px}
+
+/* ---------- motion: video "wipe" reveal ---------- */
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+@keyframes blink{0%,49%{opacity:1} 50%,100%{opacity:.15}}
+@keyframes crawl{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+@keyframes twinkle{0%,100%{opacity:1} 50%{opacity:.35}}
+.reveal{animation:wipe .7s var(--ease-wipe) both; animation-delay:calc(var(--i,0) * 90ms + 150ms)}
+
+/* ==========================  HEADER / IDENT  ========================== */
+.masthead{position:relative; padding:var(--sp-4) 0 0}
+.masthead__row{display:grid; grid-template-columns:1fr auto; grid-template-areas:"ident clock" "picker picker" "search search"; gap:var(--sp-3) var(--sp-3); align-items:center}
+.ident{grid-area:ident; display:flex; align-items:center; gap:var(--sp-3); text-decoration:none; color:inherit; min-width:0}
+.ident__disc{width:46px; height:46px; flex:none; filter:drop-shadow(2px 2px 0 var(--ink))}
+.ident__words{display:flex; flex-direction:column; line-height:.86; min-width:0}
+.ident__top{font-weight:800; font-stretch:var(--cond); font-size:var(--fs-sm); letter-spacing:.32em; color:var(--cg); text-transform:uppercase; padding-left:.08em}
+.ident__main{
+  font-weight:900; font-stretch:var(--wide); font-size:1.75rem; letter-spacing:.02em; text-transform:uppercase;
+  background:linear-gradient(180deg,#ffffff 0%,#d9e8ff 38%,#7fa6ff 49%,#13307f 50%,#ffcf6a 53%,#fff4d6 78%,#ffffff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(2px 2px 0 var(--ink));
+}
+.clock{grid-area:clock; justify-self:end; text-align:right; font-family:var(--f-cg); line-height:.9; color:var(--chalk)}
+.clock__time{font-size:2rem; color:#fff; text-shadow:2px 2px 0 var(--ink)}
+.clock__time b{font-weight:400; animation:blink 1s steps(1) infinite}
+.clock__date{font-size:1.05rem; color:var(--cg); letter-spacing:.06em}
+.clock__live{display:inline-flex; align-items:center; gap:6px; font-size:1rem; color:var(--mist)}
+.clock__live i{width:8px; height:8px; background:var(--hot); border:1px solid var(--ink); display:inline-block; animation:blink 1.6s steps(1) infinite}
+
+.picker{
+  grid-area:picker; display:flex; align-items:stretch; width:100%; min-height:48px; padding:0; cursor:pointer;
+  border:2px solid var(--ink); background:var(--ink); color:#fff; font:inherit; text-align:left;
+  box-shadow:var(--shadow-hard);
+}
+.picker__k{display:grid; place-items:center; padding:0 var(--sp-3); background:var(--cg); color:var(--ink); font-family:var(--f-cg); font-size:1.25rem; line-height:1}
+.picker__v{flex:1; display:flex; align-items:center; gap:var(--sp-2); padding:0 var(--sp-3); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-lg); letter-spacing:.03em; text-transform:uppercase; line-height:1}
+.picker__v small{font-weight:600; font-size:var(--fs-sm); color:var(--mist); letter-spacing:.06em; font-stretch:var(--cond)}
+.picker__chev{display:grid; place-items:center; width:44px; border-left:2px solid #1f2a5c; color:var(--cg)}
+.picker:hover .picker__v, .picker:focus-visible .picker__v{background:#151b45}
+.picker:hover .picker__chev{background:var(--cg); color:var(--ink)}
+
+.search{grid-area:search; position:relative; display:flex; align-items:center; min-height:48px; border:2px solid var(--edge-hi); background:rgba(4,10,40,.6); box-shadow:inset 0 0 0 1px var(--ink)}
+.search svg{position:absolute; left:12px; color:var(--mist); pointer-events:none}
+.search input{
+  flex:1; min-width:0; height:44px; padding:0 var(--sp-3) 0 42px; border:0; background:transparent; color:#fff;
+  font-family:var(--f-cg); font-size:1.35rem; letter-spacing:.04em;
+}
+.search input::placeholder{color:var(--dim); opacity:1}
+.search input:focus{outline:none}
+.search:focus-within{border-color:var(--cg)}
+.search__cursor{position:absolute; right:12px; width:10px; height:20px; background:var(--cg); animation:blink 1s steps(1) infinite; pointer-events:none}
+.search:focus-within .search__cursor{display:none}
+
+.lower{margin-top:var(--sp-4); display:flex; align-items:stretch; height:30px; overflow:hidden}
+.lower::after{content:""; flex:1; background:var(--stripes); background-size:100% 10px; background-repeat:no-repeat; background-position:0 10px}
+.lower__tag{display:flex; align-items:center; padding:0 var(--sp-3) 0 var(--sp-3); background:var(--hot); color:#fff; font-weight:900; font-stretch:var(--cond); letter-spacing:.12em; font-size:var(--fs-sm); text-transform:uppercase; border:2px solid var(--ink)}
+.lower__txt{display:flex; align-items:center; padding:0 22px 0 var(--sp-3); background:#fff; color:var(--ink); font-weight:800; font-stretch:var(--cond); font-size:var(--fs-sm); letter-spacing:.06em; text-transform:uppercase; clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%); white-space:nowrap; margin-right:var(--sp-2)}
+
+/* ==========================  LAYOUT  ========================== */
+main{display:grid; gap:var(--sp-5); padding:var(--sp-5) 0 var(--sp-6)}
+.panel{
+  position:relative; padding:var(--sp-4); padding-top:0; min-width:0;
+  background:linear-gradient(180deg, rgba(10,28,99,.94), rgba(6,18,74,.94));
+  border:1px solid var(--edge); box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 6px 6px 0 rgba(2,6,30,.45);
+}
+.panel::before{content:""; position:absolute; left:0; right:0; top:12px; height:10px; background:var(--stripes); opacity:.95}
+.super{position:relative; display:flex; align-items:stretch; margin:0 calc(var(--sp-4) * -1) var(--sp-4); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-md); line-height:1; text-transform:uppercase; letter-spacing:.04em; min-height:34px}
+.super__no{display:grid; place-items:center; min-width:44px; padding:0 var(--sp-2); background:var(--cg); color:var(--ink); font-family:var(--f-cg); font-weight:400; font-size:1.45rem; letter-spacing:0}
+.super__t{display:flex; align-items:center; padding:0 30px 0 var(--sp-3); background:var(--ink); color:#fff; clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%); white-space:nowrap}
+.super__aside{margin:0 var(--sp-4) 0 auto; align-self:center; padding:3px 8px 2px; background:var(--ink); border:1px solid var(--edge); font-family:var(--f-cg); font-weight:400; font-size:1.05rem; letter-spacing:.04em; color:var(--mist); text-transform:uppercase; line-height:1; white-space:nowrap; position:relative}
+
+.cg{font-family:var(--f-cg); letter-spacing:.03em}
+.label{font-family:var(--f-cg); font-size:1.1rem; line-height:1; color:var(--cg); text-transform:uppercase; letter-spacing:.06em}
+
+/* ---------- temperature squares (Mitchell style) ---------- */
+.tbox{
+  display:inline-grid; place-items:center; min-width:2.1em; height:1.9em; padding:0 .18em;
+  font-weight:900; font-stretch:var(--cond); line-height:1; color:#fff;
+  background:var(--warm); border:2px solid var(--ink); box-shadow:var(--shadow-hard);
+  text-shadow:1px 1px 0 rgba(11,14,36,.55);
+}
+.tbox--hot{background:var(--hot)}
+.tbox--lo{background:var(--cool)}
+.tbox--nil{background:#24306b; color:var(--mist); text-shadow:none}
+
+.wx{display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(3px 3px 0 rgba(11,14,36,.55))}
+
+/* ==========================  01 RIGHT NOW  ========================== */
+.now__top{display:grid; grid-template-columns:1fr auto; align-items:end; gap:var(--sp-3)}
+.now__temp{font-weight:900; font-stretch:var(--cond); font-size:var(--fs-hero); line-height:.8; letter-spacing:-.02em; color:#fff; text-shadow:5px 5px 0 var(--ink); margin:var(--sp-2) 0 0; white-space:nowrap}
+.now__temp sup{font-size:.42em; vertical-align:top; position:relative; top:.08em; margin-left:.04em; color:var(--cg)}
+.now__temp .dec{font-size:.55em; letter-spacing:0}
+.now__cond{text-align:center; width:clamp(96px, 26cqi, 140px)}
+.now__cond .wx{width:100%}
+.now__condtxt{display:block; margin-top:var(--sp-1); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-lg); text-transform:uppercase; letter-spacing:.04em; line-height:1}
+.now__feels{margin:var(--sp-3) 0 0; font-weight:700; font-stretch:var(--cond); font-size:var(--fs-md); color:var(--mist); letter-spacing:.02em}
+.now__feels b{color:#fff; font-weight:900}
+
+.hilo{display:grid; grid-template-columns:1fr; gap:var(--sp-3); margin:var(--sp-4) 0 var(--sp-4); padding:var(--sp-3) 0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge)}
+.hilo__item{display:grid; grid-template-columns:auto 1fr; gap:var(--sp-1) var(--sp-3); align-items:center}
+.hilo__item .tbox{grid-row:span 2; font-size:1.9rem}
+.hilo__k{font-weight:800; font-stretch:var(--cond); font-size:var(--fs-base); text-transform:uppercase; letter-spacing:.06em; line-height:1.05}
+.hilo__s{font-family:var(--f-cg); font-size:1.05rem; color:var(--mist); line-height:1}
+
+.stats{display:grid; grid-template-columns:1fr 1fr; gap:0; margin:0; border-left:1px solid var(--edge)}
+.stat{padding:var(--sp-3) var(--sp-3) var(--sp-3); border-right:1px solid var(--edge); border-bottom:1px solid var(--edge); min-width:0}
+.stat:nth-child(-n+2){border-top:1px solid var(--edge)}
+.stat dt{display:flex; align-items:center; gap:6px}
+.stat dt svg{flex:none}
+.stat dd{margin:var(--sp-1) 0 0}
+.stat__v{display:block; font-weight:900; font-stretch:var(--cond); font-size:var(--fs-xl); line-height:.95; color:#fff}
+.stat__v small{font-size:.5em; font-weight:800; color:var(--mist); margin-left:.12em; letter-spacing:.02em}
+.stat__s{display:block; margin-top:2px; font-family:var(--f-cg); font-size:1.05rem; line-height:1.05; color:var(--mist)}
+.uvchip{display:inline-block; padding:1px 5px; margin-left:4px; background:#7a2bd0; color:#fff; border:1px solid var(--ink); font-family:var(--f-sans); font-weight:800; font-stretch:var(--cond); font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; vertical-align:2px}
+
+.sunline{margin-top:var(--sp-4); display:grid; grid-template-columns:auto 1fr auto; gap:var(--sp-3); align-items:center}
+.sunline__t{font-family:var(--f-cg); line-height:1}
+.sunline__t span{display:block; font-size:1rem; color:var(--cg); letter-spacing:.06em}
+.sunline__t b{font-family:var(--f-sans); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-lg); color:#fff}
+.sunline__t:last-child{text-align:right}
+.sunline svg{width:100%; height:56px; display:block}
+
+/* ==========================  MAP BOARD  ========================== */
+.map{padding-bottom:var(--sp-4)}
+.map__frame{position:relative; border:2px solid var(--ink); box-shadow:0 0 0 1px var(--edge-hi)}
+.map__frame svg{display:block; width:100%; height:auto}
+.overnight{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-2); margin-top:var(--sp-3)}
+.ov{display:grid; grid-template-columns:auto 1fr; grid-template-areas:'t t' 's v'; align-items:center; gap:2px var(--sp-2); padding:6px var(--sp-2); background:#050f3e; border:2px solid #22389a}
+.ov__t{grid-area:t; font-family:var(--f-cg); font-size:1.05rem; color:var(--cg); line-height:1}
+.ov svg{grid-area:s; width:34px}
+.ov .tbox{grid-area:v; justify-self:end; font-size:1.05rem}
+.s-map .super__aside{display:none}
+.map__title{display:none; position:absolute; left:10px; top:10px; flex-direction:column; gap:3px; pointer-events:none}
+.map__title span{align-self:flex-start; padding:3px 8px 2px; background:var(--ink); color:#fff; font-weight:900; font-stretch:var(--cond); font-size:var(--fs-sm); letter-spacing:.1em; text-transform:uppercase; line-height:1.1}
+.map__title span + span{background:var(--cg); color:var(--ink); font-family:var(--f-cg); font-weight:400; font-size:1.05rem; letter-spacing:.05em; text-transform:none}
+.overnight{list-style:none; padding:0}
+.map__legend{display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4); margin-top:var(--sp-3); font-family:var(--f-cg); font-size:1.05rem; color:var(--mist); line-height:1}
+.map__legend span{display:inline-flex; align-items:center; gap:6px}
+.map__legend i{display:inline-block; width:14px; height:14px; border:2px solid var(--ink)}
+.map-lbl{font-family:var(--f-sans); font-weight:800; font-stretch:68%; font-size:17px; letter-spacing:.06em; fill:#fff; paint-order:stroke; stroke:var(--ink); stroke-width:4px; stroke-linejoin:round; text-transform:uppercase}
+.map-lbl--key{fill:var(--cg); font-weight:900; font-size:21px}
+.map-sea{font-family:var(--f-cg); font-size:19px; letter-spacing:.35em; fill:rgba(220,232,255,.6)}
+.map-grid{font-family:var(--f-cg); font-size:15px; fill:rgba(220,232,255,.55)}
+
+/* ==========================  02 NEXT 7 DAYS  ========================== */
+.days__list{list-style:none; margin:0; padding:0; display:grid; gap:0; border-top:1px solid var(--edge)}
+.day{
+  position:relative; display:grid; grid-template-columns:50px 40px 84px 1fr 54px; align-items:center; gap:6px;
+  padding:var(--sp-2) var(--sp-1); border-bottom:1px solid var(--edge); outline:none;
+  transition:background-color .15s;
+}
+.day:hover, .day:focus-visible{background:rgba(255,225,74,.08)}
+.day:focus-visible{box-shadow:inset 0 0 0 3px var(--cg)}
+.day__name{line-height:.9}
+.day__name b{display:block; font-weight:900; font-stretch:var(--cond); font-size:var(--fs-lg); letter-spacing:.02em}
+.day__name span{font-family:var(--f-cg); font-size:1.05rem; color:var(--mist)}
+.day--today .day__name b{color:var(--cg); font-size:var(--fs-md)}
+.agree__p{display:none}
+.day__sym{width:40px}
+.day__temps{display:flex; gap:6px; font-size:1.1rem}
+.day__rain{line-height:1}
+.day__rain b{display:inline-flex; align-items:center; gap:4px; font-weight:900; font-stretch:var(--cond); font-size:var(--fs-md); color:#fff}
+.day__rain span{display:block; margin-top:2px; font-family:var(--f-cg); font-size:1rem; color:var(--mist)}
+.day__txt{display:none}
+.agree{display:flex; flex-direction:column; align-items:flex-end; gap:4px; line-height:1}
+.meter{display:flex; gap:3px; padding-right:3px}
+.meter i{width:7px; height:14px; transform:skewX(-18deg); border:1.5px solid var(--mist); background:transparent}
+.meter i.on{background:var(--cg); border-color:var(--ink); box-shadow:1px 1px 0 var(--ink)}
+.meter--2 i.on{background:var(--amber)}
+.agree__w{font-weight:800; font-stretch:var(--cond); font-size:var(--fs-xs); letter-spacing:.12em; text-transform:uppercase; color:var(--mist)}
+.agree__d{display:none}
+.days__foot{margin:var(--sp-3) 0 0; font-family:var(--f-cg); font-size:1.05rem; color:var(--mist); line-height:1.15}
+.days__foot b{color:var(--cg); font-weight:400}
+
+/* ==========================  03 HOUR BY HOUR  ========================== */
+.readout{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:2px var(--sp-3); min-height:30px; margin:0 0 var(--sp-2);
+  padding:4px var(--sp-2); background:var(--ink); border-left:6px solid var(--cg);
+  font-family:var(--f-cg); font-size:1.2rem; line-height:1.1; color:var(--mist)
+}
+.readout b{font-weight:400; color:#fff}
+.readout .r-t{color:var(--cg)}
+.readout .r-rain b{color:var(--rain)} .readout .r-gust b{color:var(--gust)}
+.chart{position:relative; touch-action:pan-y; cursor:crosshair; outline:none}
+.chart:focus-visible{box-shadow:0 0 0 3px var(--cg)}
+.chart svg{display:block; width:100%}
+.c-axis{font-family:var(--f-cg); font-size:15px; fill:var(--mist)}
+.c-time{font-family:var(--f-cg); font-size:16px; fill:var(--chalk)}
+.c-val{font-family:var(--f-sans); font-weight:900; font-stretch:68%; font-size:15px; fill:#fff; paint-order:stroke; stroke:var(--ink); stroke-width:3.5px; stroke-linejoin:round}
+.c-gust{font-family:var(--f-cg); font-size:15px; fill:var(--gust)}
+.c-band{font-family:var(--f-sans); font-weight:800; font-stretch:68%; font-size:11px; letter-spacing:.14em; fill:var(--mist)}
+.keyrow{display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4); margin-top:var(--sp-3); font-family:var(--f-cg); font-size:1.05rem; color:var(--mist); line-height:1}
+.keyrow span{display:inline-flex; align-items:center; gap:6px}
+.keyrow i{display:inline-block}
+.k-temp{width:18px; height:5px; background:var(--cg); box-shadow:0 0 0 1.5px var(--ink)}
+.k-rain{width:10px; height:14px; background:var(--rain); border:1.5px solid var(--ink)}
+.k-gust{width:18px; height:0; border-top:3px solid var(--gust)}
+.k-night{width:14px; height:14px; background:#0a1446; border:1px solid var(--edge)}
+
+/* ==========================  WIND ON THE WATER  ========================== */
+.wind__list{list-style:none; margin:0; padding:0; border-top:1px solid var(--edge)}
+.wrow{display:grid; grid-template-columns:52px 46px 1fr auto; gap:var(--sp-3); align-items:center; padding:var(--sp-2) 0; border-bottom:1px solid var(--edge)}
+.wrow__d{font-weight:900; font-stretch:var(--cond); font-size:var(--fs-md); line-height:.9}
+.wrow__d span{display:block; font-family:var(--f-cg); font-weight:400; font-size:1rem; color:var(--mist)}
+.wrow__a{width:46px; height:46px}
+.wrow__v{line-height:1}
+.wrow__v b{font-weight:900; font-stretch:var(--cond); font-size:var(--fs-lg); color:#fff}
+.wrow__v small{font-weight:800; font-stretch:var(--cond); font-size:var(--fs-sm); color:var(--mist); margin-left:2px}
+.wrow__v span{display:block; white-space:nowrap; font-family:var(--f-cg); font-size:1rem; color:var(--gust); margin-top:2px}
+.bft{justify-self:end; padding:3px 7px 2px; border:2px solid var(--ink); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-xs); letter-spacing:.1em; text-transform:uppercase; line-height:1.1; box-shadow:2px 2px 0 var(--ink)}
+.bft--3{background:#2fa84f; color:#fff}
+.bft--4{background:var(--cg); color:var(--ink)}
+.wind__note{margin:var(--sp-3) 0 0; font-family:var(--f-cg); font-size:1.02rem; color:var(--mist); line-height:1.15}
+
+/* ==========================  04 YOUR WEATHER SITES  ========================== */
+.sites__grid{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-3)}
+.site{position:relative; display:flex; flex-direction:column; min-width:0; background:#050f3e; border:2px solid #22389a; transition:border-color .15s, transform .15s}
+.site:first-child{grid-column:1 / -1}
+.site:hover, .site:focus-within{border-color:var(--cg); transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink)}
+.site__head{display:flex; align-items:stretch; background:var(--ink); min-height:28px}
+.site__ch{display:grid; place-items:center; min-width:34px; background:#1d2c78; color:var(--cg); font-family:var(--f-cg); font-size:1.15rem; line-height:1}
+.site:hover .site__ch, .site:focus-within .site__ch{background:var(--cg); color:var(--ink)}
+.site__name{flex:1; display:flex; align-items:center; padding:0 var(--sp-2); font-weight:900; font-stretch:var(--cond); font-size:var(--fs-base); letter-spacing:.06em; text-transform:uppercase; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.site__kind{display:flex; align-items:center; padding:0 var(--sp-2); font-family:var(--f-cg); font-size:.95rem; color:var(--dim); text-transform:uppercase}
+.site__kind--off{color:var(--cg)}
+.site__kind--d{display:none}
+.site:not(:first-child) .site__head .site__kind{display:none}
+.site__body{display:grid; grid-template-columns:44px 1fr; gap:var(--sp-2); align-items:center; padding:var(--sp-3) var(--sp-2) var(--sp-2)}
+.site__temps{display:flex; gap:6px; font-size:1.2rem; justify-content:flex-end}
+.site__foot{display:flex; justify-content:space-between; align-items:baseline; gap:var(--sp-2); padding:0 var(--sp-2) var(--sp-2); margin-top:auto}
+.site__rain{font-weight:900; font-stretch:var(--cond); font-size:var(--fs-md); color:var(--rain); white-space:nowrap; line-height:1}
+.site__rain small{font-size:.62em; color:var(--mist); font-weight:800; letter-spacing:.06em; margin-left:2px}
+.site__txt{font-family:var(--f-cg); font-size:1rem; color:var(--mist); text-align:right; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.site__link{position:absolute; inset:0; z-index:1}
+.site__link:focus-visible{outline:3px solid var(--cg); outline-offset:-3px}
+
+/* ==========================  05 SITE BY SITE  ========================== */
+.tbl{width:100%; border-collapse:collapse; table-layout:fixed}
+.tbl th, .tbl td{padding:5px 2px; text-align:center; border-bottom:1px solid #1f3590}
+.tbl thead th{padding:6px 2px; background:var(--ink); color:#fff; font-weight:900; font-stretch:var(--cond); font-size:var(--fs-sm); letter-spacing:.06em; text-transform:uppercase; line-height:1}
+.tbl thead th span{display:block; font-family:var(--f-cg); font-weight:400; font-size:.95rem; color:var(--cg); letter-spacing:0; margin-top:2px}
+.tbl thead th.is-today{box-shadow:inset 0 -3px 0 var(--cg)}
+.tbl thead th:first-child{background:var(--cg); color:var(--ink); text-align:left; padding-left:6px}
+.tbl th[scope=row]{text-align:left; padding-left:4px; font-weight:900; font-stretch:var(--xcond); font-size:var(--fs-sm); letter-spacing:.04em; text-transform:uppercase; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tbl col.c-name{width:62px}
+.tbl tbody tr:hover td, .tbl tbody tr:hover th{background:rgba(255,225,74,.07)}
+.cell{display:flex; flex-direction:column; align-items:center; line-height:1; gap:2px}
+.cell__hi{font-weight:900; font-stretch:var(--cond); font-size:1.05rem; color:#fff}
+.cell__lo{font-weight:700; font-stretch:var(--cond); font-size:.8rem; color:#8fc6ff}
+.cell__r{font-family:var(--f-cg); font-size:.98rem; color:var(--rain)}
+.cell__r.mm{color:#9fe3c4}
+.cell__nil{font-family:var(--f-cg); color:#5a6db0; font-size:1rem}
+mark.off{font:inherit}
+.off{position:relative; padding:0 3px; background:var(--gust); color:var(--ink)!important; box-shadow:1px 1px 0 var(--ink)}
+.tbl tr.cons th, .tbl tr.cons td{background:rgba(255,225,74,.1); border-top:2px solid var(--cg); border-bottom:0}
+.tbl tr.cons th{color:var(--cg)}
+.tbl__key{display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4); margin-top:var(--sp-3); font-family:var(--f-cg); font-size:1.02rem; color:var(--mist); line-height:1}
+.tbl__key span{display:inline-flex; gap:6px; align-items:center}
+.tbl__key i{font-style:normal}
+
+/* ==========================  CRAWL + FOOTER  ========================== */
+.crawl{position:relative; display:flex; align-items:stretch; height:34px; background:var(--ink); border-top:2px solid var(--cg); border-bottom:2px solid var(--cg); overflow:hidden}
+.crawl__tag{position:relative; z-index:1; display:flex; align-items:center; padding:0 var(--sp-3); background:var(--cg); color:var(--ink); font-weight:900; font-stretch:var(--cond); letter-spacing:.12em; font-size:var(--fs-sm); text-transform:uppercase; white-space:nowrap}
+.crawl__win{flex:1; overflow:hidden; display:flex; align-items:center}
+.crawl__track{display:flex; white-space:nowrap; animation:crawl 60s linear infinite; font-family:var(--f-cg); font-size:1.3rem; color:#fff}
+.crawl__track span{padding-right:2.5rem}
+.crawl__track em{font-style:normal; color:var(--cg)}
+.foot{padding:var(--sp-5) 0 var(--sp-7)}
+.bars{display:grid; grid-template-columns:repeat(7,1fr); height:16px; border:2px solid var(--ink); margin-bottom:var(--sp-4)}
+.bars i:nth-child(1){background:#c0c0c0}.bars i:nth-child(2){background:#c0c000}.bars i:nth-child(3){background:#00c0c0}.bars i:nth-child(4){background:#00c000}.bars i:nth-child(5){background:#c000c0}.bars i:nth-child(6){background:#c00000}.bars i:nth-child(7){background:#0000c0}
+.foot__grid{display:grid; gap:var(--sp-3); font-family:var(--f-cg); font-size:1.05rem; color:var(--mist); line-height:1.2}
+.foot__grid b{color:#fff; font-weight:400}
+.foot__mark{font-weight:900; font-stretch:var(--wide); font-family:var(--f-sans); font-size:var(--fs-sm); letter-spacing:.14em; color:#fff; text-transform:uppercase}
+
+/* ==========================  TABLET  ========================== */
+@container app (min-width: 640px){
+  :root{--gutter:24px}
+  .masthead__row{grid-template-columns:auto 1fr auto; grid-template-areas:"ident ident clock" "picker search search"}
+  .picker{width:auto; min-width:260px}
+  .sites__grid{grid-template-columns:repeat(4,1fr)}
+  .site:first-child{grid-column:auto}
+  .site:not(:first-child) .site__head .site__kind{display:flex}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .hilo{grid-template-columns:1fr 1fr}
+  .overnight{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .map__title{display:flex}
+  .s-map .super__aside{display:block}
+  .agree__p{display:inline}
+  .stat:nth-child(-n+3){border-top:1px solid var(--edge)}
+  .day{grid-template-columns:72px 56px 120px 1fr 1fr 110px}
+  .day__txt{display:block; font-weight:700; font-stretch:var(--cond); font-size:var(--fs-base); color:var(--mist)}
+  .day__sym{width:56px}
+  .day__temps{font-size:1.25rem}
+  .meter i{width:9px; height:15px}
+  .agree__d{display:block; font-family:var(--f-cg); font-size:.95rem; color:var(--dim)}
+  .tbl col.c-name{width:110px}
+  .tbl th[scope=row]{font-stretch:var(--cond); font-size:var(--fs-base)}
+  .cell__hi{font-size:1.25rem} .cell__lo{font-size:.9rem}
+  .foot__grid{grid-template-columns:1.2fr 1fr 1fr}
+}
+
+/* ==========================  DESKTOP  ========================== */
+@container app (min-width: 1000px){
+  :root{--fs-hero:9.5rem}
+  .masthead__row{grid-template-columns:auto 1fr minmax(280px,380px) auto; grid-template-areas:"ident picker search clock"; gap:var(--sp-5)}
+  .picker{justify-self:end}
+  .ident__main{font-size:2.15rem}
+  .ident__disc{width:56px; height:56px}
+  main{grid-template-columns:repeat(12,minmax(0,1fr)); gap:var(--sp-5)}
+  .s-now{grid-column:8 / span 5; grid-row:1}
+  .s-map{grid-column:1 / span 7; grid-row:1}
+  .s-days, .s-sites, .s-table{grid-column:1 / -1}
+  .s-map{display:flex; flex-direction:column}
+  .map__frame{flex:1; min-height:0}
+  .map__frame svg{position:absolute; inset:0; height:100%}
+  .s-hours{grid-column:1 / span 8}
+  .s-wind{grid-column:9 / span 4}
+  .panel{padding:var(--sp-5); padding-top:0}
+  .super{margin:0 calc(var(--sp-5) * -1) var(--sp-5); font-size:1.4rem; min-height:40px}
+  .super__no{min-width:52px; font-size:1.7rem}
+  .super__aside{margin-right:var(--sp-5); font-size:1.2rem}
+  .panel::before{top:15px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(3){border-top:0}
+
+  /* seven presenter boards side by side */
+  .days__list{grid-template-columns:repeat(7,minmax(0,1fr)); gap:var(--sp-3); border-top:0}
+  .day{grid-template-columns:1fr; grid-template-areas:"name" "sym" "temps" "rain" "txt" "agree"; justify-items:center; text-align:center; gap:var(--sp-3); padding:0 0 var(--sp-4); border:2px solid #22389a; background:#050f3e}
+  .day:hover, .day:focus-visible{border-color:var(--cg); background:#071451}
+  .day--today{border-color:var(--cg)}
+  .day__name{grid-area:name; width:100%; display:flex; align-items:baseline; justify-content:space-between; padding:7px var(--sp-3) 6px; background:var(--ink)}
+  .day--today .day__name{background:var(--cg)}
+  .day--today .day__name b, .day--today .day__name span{color:var(--ink)}
+  .day__name b, .day--today .day__name b{font-size:1.6rem}
+  .day__name span{font-size:1.25rem}
+  .day__sym{grid-area:sym; width:96px; margin-top:var(--sp-1)}
+  .day__temps{grid-area:temps; font-size:1.7rem; gap:10px}
+  .day__rain{grid-area:rain; text-align:center}
+  .day__rain b{font-size:var(--fs-lg)}
+  .day__txt{grid-area:txt; min-height:2.4em; padding:0 var(--sp-2); line-height:1.15}
+  .agree{grid-area:agree; align-items:center; width:calc(100% - 24px); padding-top:var(--sp-3); border-top:1px dashed #2c46a8}
+  .meter i{width:12px; height:18px}
+
+  .sites__grid{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .site .site__head .site__kind, .site:not(:first-child) .site__head .site__kind{display:none}
+  .site__kind--d{display:block; position:absolute; right:8px; top:34px; padding:0}
+  .site__body{grid-template-columns:1fr; justify-items:center; padding-top:var(--sp-4)}
+  .site__body .wx{width:64px}
+  .site__temps{justify-content:center; font-size:1.45rem}
+  .site__foot{flex-direction:column; align-items:center; gap:4px; text-align:center}
+  .site__txt{text-align:center; max-width:100%}
+
+  .tbl th, .tbl td{padding:8px 4px}
+  .tbl col.c-name{width:170px}
+  .tbl th[scope=row]{padding-left:var(--sp-3)}
+  .cell{flex-direction:row; justify-content:center; align-items:baseline; gap:8px}
+  .cell__hi{font-size:1.45rem} .cell__lo{font-size:1.05rem} .cell__r{font-size:1.15rem; min-width:3.2em; text-align:left}
+  .foot__grid{grid-template-columns:1.4fr 1fr 1fr}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important; transition:none!important}
+  .crawl__track{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ======= WEATHER SYMBOL SPRITE (Mitchell-style, heavy outline) ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="drop" d="M0 -10 C3 -4 7 0 7 4 A7 7 0 0 1 -7 4 C-7 0 -3 -4 0 -10Z" fill="#46c8ff" stroke="#0b0e24" stroke-width="3" stroke-linejoin="round"/>
+    <path id="star4" d="M0 -6 L1.6 -1.6 L6 0 L1.6 1.6 L0 6 L-1.6 1.6 L-6 0 L-1.6 -1.6Z" fill="#fff" stroke="#0b0e24" stroke-width="1.5" stroke-linejoin="round"/>
+    <g id="sun-sm">
+      <path d="M84.4 25.6 L97 30 L84.4 34.4ZM82.7 38.5 L88.5 50.5 L76.5 44.7ZM72.4 46.4 L68 59 L63.6 46.4ZM59.5 44.7 L47.5 50.5 L53.3 38.5ZM51.6 34.4 L39 30 L51.6 25.6ZM53.3 21.5 L47.5 9.5 L59.5 15.3ZM63.6 13.6 L68 1 L72.4 13.6ZM76.5 15.3 L88.5 9.5 L82.7 21.5Z" fill="#ff9e1b" stroke="#0b0e24" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="68" cy="30" r="13.5" fill="#ffd31a" stroke="#0b0e24" stroke-width="3.5"/>
+    </g>
+    <path id="cloud-up" d="M26 68 A12 12 0 1 1 28 44.2 A18 18 0 0 1 63.6 40.2 A14 14 0 1 1 66 68 Z" stroke="#0b0e24" stroke-width="4" stroke-linejoin="round"/>
+    <path id="cloud-back" d="M46 56 A10 10 0 1 1 49 36.5 A15 15 0 0 1 78.9 34.1 A11 11 0 1 1 80 56 Z" stroke="#0b0e24" stroke-width="3.5" stroke-linejoin="round"/>
+  </defs>
+  <symbol id="wx-sunny" viewBox="0 0 100 100">
+    <path d="M76.3 43.9 L96 50 L76.3 56.1ZM72.9 64.3 L82.5 82.5 L64.3 72.9ZM56.1 76.3 L50 96 L43.9 76.3ZM35.7 72.9 L17.5 82.5 L27.1 64.3ZM23.7 56.1 L4 50 L23.7 43.9ZM27.1 35.7 L17.5 17.5 L35.7 27.1ZM43.9 23.7 L50 4 L56.1 23.7ZM64.3 27.1 L82.5 17.5 L72.9 35.7Z" fill="#ff9e1b" stroke="#0b0e24" stroke-width="3.5" stroke-linejoin="round"/>
+    <circle cx="50" cy="50" r="22" fill="#ffd31a" stroke="#0b0e24" stroke-width="4"/>
+    <path d="M36 46 A15 15 0 0 1 46 35" fill="none" stroke="#fff6c4" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="wx-moon" viewBox="0 0 100 100">
+    <path d="M44.8 22.5 A30 30 0 1 0 78.4 61.6 A26 26 0 0 1 44.8 22.5Z" fill="#ffe9a0" stroke="#0b0e24" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M30 40 A22 22 0 0 0 33 66" fill="none" stroke="#fffbe6" stroke-width="4" stroke-linecap="round"/>
+    <use href="#star4" class="tw1" transform="translate(74 20) scale(1.35)"/>
+    <use href="#star4" class="tw2" transform="translate(88 40) scale(.9)"/>
+    <use href="#star4" class="tw1" transform="translate(64 6) scale(.7)"/>
+  </symbol>
+  <symbol id="wx-partly" viewBox="0 0 100 100">
+    <use href="#sun-sm" transform="translate(-14 2)"/>
+    <path d="M36 83 A11 11 0 1 1 39.1 61.4 A17 17 0 1 1 73 59 A12 12 0 1 1 73 83 Z" fill="#fff" stroke="#0b0e24" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M30 76 H80" stroke="#c9d4ea" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="wx-cloudy" viewBox="0 0 100 100">
+    <use href="#cloud-back" fill="#aeb9d0"/>
+    <path d="M28 80 A14 14 0 1 1 30 52.1 A22 22 0 0 1 73.6 48 A16 16 0 0 1 73 80 Z" fill="#fff" stroke="#0b0e24" stroke-width="4" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="wx-shower" viewBox="0 0 100 100">
+    <use href="#sun-sm"/>
+    <use href="#cloud-up" fill="#fff"/>
+    <path d="M22 62 H70" stroke="#c9d4ea" stroke-width="4" stroke-linecap="round"/>
+    <use href="#drop" transform="translate(34 84) rotate(14)"/>
+    <use href="#drop" transform="translate(56 88) rotate(14)"/>
+  </symbol>
+  <symbol id="wx-showers" viewBox="0 0 100 100">
+    <use href="#cloud-back" fill="#aeb9d0"/>
+    <use href="#cloud-up" fill="#fff"/>
+    <path d="M22 62 H70" stroke="#c9d4ea" stroke-width="4" stroke-linecap="round"/>
+    <use href="#drop" transform="translate(28 83) rotate(14)"/>
+    <use href="#drop" transform="translate(48 89) rotate(14)"/>
+    <use href="#drop" transform="translate(68 83) rotate(14)"/>
+  </symbol>
+  <symbol id="wx-storm" viewBox="0 0 100 100">
+    <use href="#cloud-back" fill="#4a5470"/>
+    <use href="#cloud-up" fill="#7d88a6"/>
+    <path d="M22 62 H44 M60 62 H70" stroke="#a3adc6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M55 56 L40 79 H50 L43 99 L66 72 H55 L62 56 Z" fill="#ffd31a" stroke="#0b0e24" stroke-width="3.5" stroke-linejoin="round"/>
+    <use href="#drop" transform="translate(26 84) rotate(14)"/>
+    <use href="#drop" transform="translate(76 82) rotate(14)"/>
+  </symbol>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__row">
+      <a class="ident" href="#top" id="top" aria-label="Consolidated Weather home">
+        <svg class="ident__disc" viewBox="0 0 56 56" aria-hidden="true">
+          <defs>
+            <linearGradient id="identG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff27a"/><stop offset=".45" stop-color="#ffc21a"/><stop offset="1" stop-color="#e8331c"/>
+            </linearGradient>
+            <clipPath id="identC"><circle cx="28" cy="28" r="25"/></clipPath>
+          </defs>
+          <circle cx="28" cy="28" r="26" fill="#0b0e24"/>
+          <g clip-path="url(#identC)">
+            <rect width="56" height="56" fill="url(#identG)"/>
+            <rect y="31" width="56" height="2.5" fill="#0b0e24"/>
+            <rect y="37" width="56" height="3.5" fill="#0b0e24"/>
+            <rect y="44" width="56" height="4.5" fill="#0b0e24"/>
+            <rect y="51.5" width="56" height="6" fill="#0b0e24"/>
+          </g>
+        </svg>
+        <span class="ident__words"><span class="ident__top">Consolidated</span><span class="ident__main">Weather</span></span>
+      </a>
+
+      <button class="picker" type="button" aria-haspopup="listbox" aria-label="Choose place, current place Oxley">
+        <span class="picker__k">PLACE</span>
+        <span class="picker__v">Oxley <small>QLD 4075</small></span>
+        <span class="picker__chev" aria-hidden="true"><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 2 L8 10 L15 2" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="miter"/></svg></span>
+      </button>
+
+      <label class="search">
+        <span class="sr">Search for a place</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12.5 12.5 L18.5 18.5" stroke="currentColor" stroke-width="3"/></svg>
+        <input type="search" placeholder="SEARCH TOWN OR POSTCODE" autocomplete="off">
+        <span class="search__cursor" aria-hidden="true"></span>
+      </label>
+
+      <div class="clock" aria-label="Snapshot taken 9:33 pm Monday 23 November">
+        <div class="clock__live"><i></i>SNAPSHOT</div>
+        <div class="clock__time">9<b>:</b>33 PM</div>
+        <div class="clock__date">MON 23 NOV</div>
+      </div>
+    </div>
+
+    <div class="lower" aria-hidden="true">
+      <span class="lower__tag">Weather</span>
+      <span class="lower__txt">Oxley · Brisbane district</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<main>
+
+  <!-- ===== 01 RIGHT NOW ===== -->
+  <section class="panel s-now reveal" style="--i:1" aria-labelledby="h-now">
+    <h2 class="super" id="h-now"><span class="super__no">01</span><span class="super__t">Right now</span><span class="super__aside">Obs 9:20 pm</span></h2>
+
+    <div class="now__top">
+      <p class="now__temp" aria-label="Temperature 22.5 degrees">22<span class="dec">.5</span><sup>°C</sup></p>
+      <div class="now__cond">
+        <svg class="wx" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-moon"/></svg>
+        <span class="now__condtxt">Clear</span>
+      </div>
+    </div>
+    <p class="now__feels">Feels like <b>21.1°</b> · clear night, light north-easterly</p>
+
+    <div class="hilo">
+      <div class="hilo__item">
+        <span class="tbox">29</span>
+        <span class="hilo__k">Today's high</span>
+        <span class="hilo__s">REACHED 28.4° 12:48 PM</span>
+      </div>
+      <div class="hilo__item">
+        <span class="tbox tbox--lo">19</span>
+        <span class="hilo__k">Overnight low</span>
+        <span class="hilo__s">TUE HIGH 31°</span>
+      </div>
+    </div>
+
+    <dl class="stats">
+      <div class="stat">
+        <dt class="label"><svg width="12" height="16" viewBox="-8 -11 16 22" aria-hidden="true"><use href="#drop"/></svg>Rain</dt>
+        <dd><span class="stat__v">5<small>%</small></span><span class="stat__s">0 MM SINCE 9 AM</span></dd>
+      </div>
+      <div class="stat">
+        <dt class="label">Humidity</dt>
+        <dd><span class="stat__v">69<small>%</small></span><span class="stat__s">DEW-SOFT NIGHT AIR</span></dd>
+      </div>
+      <div class="stat">
+        <dt class="label">
+          <svg width="16" height="16" viewBox="-10 -10 20 20" aria-hidden="true"><g transform="rotate(202.5)"><path d="M0 -9 L6 1 H2 V9 H-2 V1 H-6 Z" fill="#fff" stroke="#0b0e24" stroke-width="1.5" stroke-linejoin="round"/></g></svg>Wind</dt>
+        <dd><span class="stat__v">19<small>KM/H</small></span><span class="stat__s">FROM NNE · 10 KN</span></dd>
+      </div>
+      <div class="stat">
+        <dt class="label">Gusts</dt>
+        <dd><span class="stat__v">28<small>KM/H</small></span><span class="stat__s">15 KN · PEAK 37 @ 12:24</span></dd>
+      </div>
+      <div class="stat">
+        <dt class="label">UV index</dt>
+        <dd><span class="stat__v">0<small>NIGHT</small></span><span class="stat__s">TUE PEAK 12<span class="uvchip">Extreme</span></span></dd>
+      </div>
+      <div class="stat">
+        <dt class="label">Rain today</dt>
+        <dd><span class="stat__v">0.0<small>MM</small></span><span class="stat__s">DRY SINCE 9 AM</span></dd>
+      </div>
+    </dl>
+
+    <div class="sunline" aria-label="Sunrise 4:45 am, sunset 6:23 pm">
+      <div class="sunline__t"><span>SUNRISE</span><b>4:45</b><span style="color:var(--mist)">AM</span></div>
+      <svg viewBox="0 0 220 56" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="0" y="40" width="220" height="2" fill="#ffe14a"/>
+        <rect x="0" y="45" width="220" height="2" fill="#ff9e1b"/>
+        <rect x="0" y="50" width="220" height="2" fill="#d42a1c"/>
+        <path d="M10 40 Q110 -26 210 40" fill="none" stroke="#8aa0dc" stroke-width="2" stroke-dasharray="4 4"/>
+      </svg>
+      <div class="sunline__t"><span>SUNSET</span><b>6:23</b><span style="color:var(--mist)">PM</span></div>
+    </div>
+  </section>
+
+  <!-- ===== MAP BOARD ===== -->
+  <section class="panel s-map map reveal" style="--i:0" aria-labelledby="h-map">
+    <h2 class="super" id="h-map"><span class="super__no">TX</span><span class="super__t">South-east Queensland</span><span class="super__aside">Archerfield</span></h2>
+    <div class="map__frame">
+      <svg viewBox="0 0 585 405" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Map of south-east Queensland. At Oxley tonight: clear, 22.5 degrees, wind north-north-east 19 kilometres per hour.">
+        <defs>
+          <pattern id="seaScan" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#1747c8"/><rect width="6" height="1" y="5" fill="#1440b4"/></pattern>
+          <pattern id="landDot" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#3f9a3c"/><circle cx="2" cy="2" r=".9" fill="#57b250"/><circle cx="7" cy="7" r=".9" fill="#57b250"/></pattern>
+          <clipPath id="mapC"><rect width="585" height="405"/></clipPath>
+        </defs>
+        <g clip-path="url(#mapC)">
+          <rect width="585" height="405" fill="url(#seaScan)"/>
+          <!-- graticule -->
+          <g stroke="rgba(220,232,255,.22)" stroke-width="1" stroke-dasharray="3 5">
+            <path d="M26.6 0 V405 M159.7 0 V405 M292.7 0 V405 M425.8 0 V405 M558.8 0 V405 M0 30 H585 M0 180 H585 M0 330 H585"/>
+          </g>
+          <!-- mainland + islands -->
+          <g stroke="#0b0e24" stroke-width="3" stroke-linejoin="round" fill="url(#landDot)">
+            <path d="M314.0 0.0 L308.7 30.0 L314.0 54.0 L303.4 60.0 L298.0 72.0 L311.3 84.0 L324.6 90.0 L322.0 111.0 L308.7 120.0 L306.0 129.0 L319.3 138.0 L332.6 144.0 L337.9 156.0 L343.3 168.0 L359.2 180.0 L367.2 186.0 L364.6 204.0 L372.5 228.0 L380.5 255.0 L391.2 285.0 L399.1 309.0 L407.1 330.0 L412.5 354.0 L420.4 369.0 L439.1 381.0 L447.0 396.0 L452.4 420.0 L-26.6 420.0 L-26.6 -15.0 L314.0 -15.0 Z"/>
+            <path d="M324.6 6.0 L340.6 24.0 L348.6 51.0 L337.9 54.0 L327.3 36.0 L319.3 15.0 Z"/>
+            <path d="M391.2 39.0 L415.1 39.0 L407.1 90.0 L404.5 135.0 L399.1 138.0 L388.5 96.0 L385.8 60.0 Z"/>
+            <path d="M401.8 150.0 L433.7 156.0 L431.1 195.0 L412.5 246.0 L404.5 246.0 L399.1 195.0 L404.5 174.0 Z"/>
+            <path d="M407.1 252.0 L412.5 258.0 L407.1 315.0 L401.8 309.0 L404.5 270.0 Z"/>
+          </g>
+          <!-- coastal highlight -->
+          <path d="M314.0 0.0 L308.7 30.0 L314.0 54.0 L303.4 60.0 L298.0 72.0 L311.3 84.0 L324.6 90.0 L322.0 111.0 L308.7 120.0 L306.0 129.0 L319.3 138.0 L332.6 144.0 L337.9 156.0 L343.3 168.0 L359.2 180.0 L367.2 186.0 L364.6 204.0 L372.5 228.0 L380.5 255.0 L391.2 285.0 L399.1 309.0 L407.1 330.0 L412.5 354.0 L420.4 369.0 L439.1 381.0 L447.0 396.0 L452.4 420.0" fill="none" stroke="#8fe08a" stroke-width="1.2" transform="translate(-3 0)" opacity=".7"/>
+          <!-- Brisbane River -->
+          <path d="M332.6 144.0 L319.3 156.0 L311.3 162.0 L303.4 171.0 L298.0 177.0 L292.7 174.0 L290.0 186.0 L282.1 189.0 L284.7 198.0 L271.4 201.0 L260.8 195.0 L247.5 204.0 L234.2 210.0 L215 214" fill="none" stroke="#0b0e24" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M332.6 144.0 L319.3 156.0 L311.3 162.0 L303.4 171.0 L298.0 177.0 L292.7 174.0 L290.0 186.0 L282.1 189.0 L284.7 198.0 L271.4 201.0 L260.8 195.0 L247.5 204.0 L234.2 210.0 L215 214" fill="none" stroke="#4f86ff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+
+          <!-- grid labels -->
+          <text class="map-grid" x="296" y="398">153°E</text>
+          <text class="map-grid" x="429" y="398">153.5°E</text>
+          <text class="map-grid" x="530" y="176">27.5°S</text>
+          <text class="map-grid" x="540" y="326">28°S</text>
+          <text class="map-sea" x="446" y="250">CORAL</text>
+          <text class="map-sea" x="460" y="274">SEA</text>
+
+          <!-- towns -->
+          <g fill="#fff" stroke="#0b0e24" stroke-width="2">
+            <rect x="295" y="167" width="8" height="8"/>
+            <rect x="225" y="210.5" width="8" height="8"/>
+            <rect x="339.3" y="162.5" width="8" height="8"/>
+            <rect x="403" y="326" width="8" height="8"/>
+          </g>
+          <text class="map-lbl" x="307" y="168" text-anchor="start" dy="-2">Brisbane</text>
+          <text class="map-lbl" x="221" y="238" text-anchor="middle">Ipswich</text>
+          <text class="map-lbl" x="352" y="150" text-anchor="start" font-size="15">Manly</text>
+          <text class="map-lbl" x="417" y="352" text-anchor="start">Gold Coast</text>
+
+          <!-- Oxley: key location -->
+          <g transform="translate(286.6 195.6)">
+            <rect x="-8" y="-8" width="16" height="16" fill="#ffe14a" stroke="#0b0e24" stroke-width="3"/>
+            <rect x="-15" y="-15" width="30" height="30" fill="none" stroke="#ffe14a" stroke-width="2" stroke-dasharray="5 4"/>
+          </g>
+          <text class="map-lbl map-lbl--key" x="232" y="190" text-anchor="middle">Oxley</text><path d="M256 186 H268" stroke="#ffe14a" stroke-width="3"/>
+
+          <!-- presenter symbol + temperature square -->
+          <g transform="translate(64 36)">
+            <g style="filter:drop-shadow(4px 4px 0 rgba(11,14,36,.6))"><use href="#wx-moon" width="118" height="118"/></g>
+          </g>
+          <g transform="translate(172 118)" style="filter:drop-shadow(4px 4px 0 #0b0e24)">
+            <rect width="84" height="50" fill="#e0541a" stroke="#0b0e24" stroke-width="3"/>
+            <text x="42" y="40" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="68%" font-size="40" fill="#fff">22.5</text>
+          </g>
+          <!-- wind circle (BBC style): arrow points the way the wind blows -->
+          <g transform="translate(330 262)" style="filter:drop-shadow(3px 3px 0 #0b0e24)">
+            <g transform="rotate(202.5)">
+              <path d="M0 -52 L13 -30 H5 V-18 H-5 V-30 H-13 Z" fill="#fff" stroke="#0b0e24" stroke-width="3" stroke-linejoin="round"/>
+            </g>
+            <circle r="21" fill="#0b0e24" stroke="#fff" stroke-width="3"/>
+            <text y="9" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="68%" font-size="25" fill="#fff">19</text>
+          </g>
+          <text class="map-lbl" x="384" y="300" font-size="13" style="fill:var(--mist)" text-anchor="start" transform="translate(-24 0)">KM/H</text>
+        </g>
+      </svg>
+      <div class="map__title" aria-hidden="true"><span>Tonight</span><span>OBS 9:20 PM</span></div>
+    </div>
+    <div class="map__legend" aria-hidden="true">
+      <span><i style="background:#e0541a"></i>TEMP °C</span>
+      <span><i style="background:#0b0e24;border-color:#fff;border-radius:50%"></i>WIND KM/H, ARROW = HEADING</span>
+      <span><i style="background:#ffe14a"></i>YOUR PLACE</span>
+    </div>
+    <ol class="overnight" aria-label="Overnight at Oxley">
+      <li class="ov"><span class="ov__t">MIDNIGHT</span><svg class="wx" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-moon"/></svg><span class="tbox tbox--lo">21</span></li>
+      <li class="ov"><span class="ov__t">3 AM</span><svg class="wx" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-moon"/></svg><span class="tbox tbox--lo">19</span></li>
+      <li class="ov"><span class="ov__t">6 AM</span><svg class="wx" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-sunny"/></svg><span class="tbox tbox--lo">20</span></li>
+      <li class="ov"><span class="ov__t">9 AM</span><svg class="wx" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-partly"/></svg><span class="tbox">26</span></li>
+    </ol>
+  </section>
+
+  <!-- ===== 02 NEXT 7 DAYS ===== -->
+  <section class="panel s-days reveal" style="--i:2" aria-labelledby="h-days">
+    <h2 class="super" id="h-days"><span class="super__no">02</span><span class="super__t">Next 7 days</span><span class="super__aside">Middle of 7</span></h2>
+    <ol class="days__list" id="days"></ol>
+    <p class="days__foot"><b>AGREE</b> = how closely the seven sites match on the high and on rain chance. Five bars: they all say the same. Two bars: they're split, so plan for either.</p>
+  </section>
+
+  <!-- ===== 03 HOUR BY HOUR ===== -->
+  <section class="panel s-hours reveal" style="--i:3" aria-labelledby="h-hours">
+    <h2 class="super" id="h-hours"><span class="super__no">03</span><span class="super__t">Hour by hour</span><span class="super__aside">BOM · 24 hrs</span></h2>
+    <div class="readout" id="readout" aria-live="polite"></div>
+    <div class="chart" id="chart" tabindex="0" role="img" aria-label="Hourly chart from 9 pm Monday to 8 pm Tuesday. Temperature falls to 19 degrees around 3 to 5 am, then climbs to 31 at 1 pm. Rain chance stays at or below 5 percent until 7 pm Tuesday, then 20 percent. Gusts peak at 28 kilometres per hour at 4 pm."></div>
+    <div class="keyrow" aria-hidden="true">
+      <span><i class="k-temp"></i>TEMP °C</span>
+      <span><i class="k-rain"></i>RAIN CHANCE</span>
+      <span><i class="k-gust"></i>GUSTS KM/H</span>
+      <span><i class="k-night"></i>NIGHT</span>
+      <span>← → TO STEP HOURS</span>
+    </div>
+  </section>
+
+  <!-- ===== WIND ON THE WATER ===== -->
+  <section class="panel s-wind reveal" style="--i:4" aria-labelledby="h-wind">
+    <h2 class="super" id="h-wind"><span class="super__no">WX</span><span class="super__t">Wind for boating</span><span class="super__aside">Windy</span></h2>
+    <ul class="wind__list" id="wind"></ul>
+    <p class="wind__note">Model wind at Oxley, not the bay. Check the BOM coastal waters forecast before you launch at Manly.</p>
+  </section>
+
+  <!-- ===== 04 YOUR WEATHER SITES ===== -->
+  <section class="panel s-sites reveal" style="--i:5" aria-labelledby="h-sites">
+    <h2 class="super" id="h-sites"><span class="super__no">04</span><span class="super__t">Your weather sites</span><span class="super__aside">Today</span></h2>
+    <ul class="sites__grid" id="sites"></ul>
+  </section>
+
+  <!-- ===== 05 SITE BY SITE ===== -->
+  <section class="panel s-table reveal" style="--i:6" aria-labelledby="h-table">
+    <h2 class="super" id="h-table"><span class="super__no">05</span><span class="super__t">Site by site</span><span class="super__aside">7 sites</span></h2>
+    <table class="tbl" id="tbl">
+      <caption class="sr">Each site's high, low and rain chance (or modelled millimetres) for the next seven days</caption>
+    </table>
+    <div class="tbl__key" aria-hidden="true">
+      <span><i style="color:#fff;font-family:var(--f-sans);font-weight:900">29</i>HIGH</span>
+      <span><i style="color:#8fc6ff;font-family:var(--f-sans);font-weight:700">19</i>LOW</span>
+      <span><i style="color:var(--rain)">40%</i>RAIN CHANCE</span>
+      <span><i style="color:#9fe3c4">2.2</i>MODEL MM</span>
+      <span><i class="off" style="font-family:var(--f-sans);font-weight:900">26</i>ODD ONE OUT</span>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<div class="crawl" aria-hidden="true">
+  <span class="crawl__tag">Latest</span>
+  <div class="crawl__win"><div class="crawl__track" id="crawl"></div></div>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="foot__grid">
+      <div><span class="foot__mark">Consolidated Weather</span><br>One place, seven forecasts, the Bureau as the anchor.</div>
+      <div><b>DATA</b> Bureau of Meteorology (forecast issued 8:54 pm, next 3:10 am), Weatherzone, WillyWeather, Windy, ECMWF, ICON, Foreca.</div>
+      <div><b>SNAPSHOT</b> 9:33 pm AEST Mon 23 Nov 2026. Design sample: "1980s TV weather".</div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+/* ---------- snapshot data (fetched 23 Nov 2026, 9:33 pm AEST) ---------- */
+const DAYS = [
+  {d:'Mon',n:23,today:1,sym:'sunny',  txt:'Clear',           hi:28,lo:19,rain:5, mm:'0 mm',    ag:4,hr:'27–29°',rr:'0–40%'},
+  {d:'Tue',n:24,sym:'partly', txt:'Partly cloudy',   hi:29,lo:19,rain:30,mm:'0–1 mm',  ag:2,hr:'27–31°',rr:'18–80%'},
+  {d:'Wed',n:25,sym:'storm',  txt:'Showers, storms', hi:26,lo:21,rain:80,mm:'7–20 mm', ag:3,hr:'25–28°',rr:'50–90%'},
+  {d:'Thu',n:26,sym:'shower', txt:'Possible shower', hi:28,lo:20,rain:45,mm:'0–2 mm',  ag:4,hr:'27–29°',rr:'13–50%'},
+  {d:'Fri',n:27,sym:'shower', txt:'Shower or two',   hi:28,lo:20,rain:65,mm:'2–9 mm',  ag:4,hr:'27–29°',rr:'39–80%'},
+  {d:'Sat',n:28,sym:'showers',txt:'Showers',         hi:29,lo:21,rain:80,mm:'6–20 mm', ag:3,hr:'27–29°',rr:'38–92%'},
+  {d:'Sun',n:29,sym:'storm',  txt:'Showers, storms', hi:29,lo:22,rain:90,mm:'15–30 mm',ag:2,hr:'25–30°',rr:'49–97%'}
+];
+const MED_HI = [28.3,29.3,26.4,28.4,28,28.6,29.3], MED_RAIN = [5,30,80,45,65,80,90];
+/* [high, low, rain] ; rain is % or a string of modelled mm */
+const SITES = [
+  {id:'bom', name:'BOM', full:'BOM', kind:'Official', sym:'sunny', txt:'Clear', url:'https://www.bom.gov.au/',
+   d:[[29,null,5],[31,19,30],[27,21,80],[29,20,50],[29,20,70],[29,21,80],[29,22,90]]},
+  {id:'weatherzone', name:'W’zone', full:'Weatherzone', kind:'Site', sym:'shower', txt:'Clearing shower', url:'https://www.weatherzone.com.au/',
+   d:[[29,19,40],[31,19,80],[28,20,50],[29,20,50],[28,20,80],[29,21,90],[30,22,90]]},
+  {id:'willyweather', name:'Willy', full:'WillyWeather', kind:'Site', sym:'sunny', txt:'Clear', url:'https://www.willyweather.com.au/',
+   d:[[29,19,5],[31,19,30],[27,21,80],[29,20,45],[29,20,65],[29,21,80],[30,21,90]]},
+  {id:'windy', name:'Windy', full:'Windy', kind:'Model', sym:'cloudy', txt:'Dry, 0 mm', url:'https://www.windy.com/',
+   d:[[28,18,'0'],[29,20,'2.2'],[25,21,'10.8'],[28,20,'0.2'],[27,20,'3.2'],null,null]},
+  {id:'ecmwf', name:'ECMWF', full:'ECMWF', kind:'Model', sym:'cloudy', txt:'Cloudy', url:'https://www.ecmwf.int/',
+   d:[[27,18,4],[27,19,18],[25,20,90],[27,19,39],[28,20,65],[27,22,92],[25,20,97]]},
+  {id:'icon', name:'ICON', full:'ICON', kind:'Model', sym:'cloudy', txt:'Cloudy', url:'https://www.dwd.de/',
+   d:[[28,19,0],[29,20,23],[26,21,50],[27,21,13],[27,20,39],[28,22,38],[30,22,49]]},
+  {id:'foreca', name:'Foreca', full:'Foreca', kind:'Site', sym:'moon', txt:'Mostly clear', url:'https://www.foreca.com/',
+   d:[[28,22,null],[28,20,'0'],[26,21,'15.4'],[28,20,null],[28,20,'2.3'],[28,22,'8.1'],[26,22,'32.3']]}
+];
+const HOURS = {
+  t:   ['9 PM','10 PM','11 PM','12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM','7 AM','8 AM','9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM','5 PM','6 PM','7 PM','8 PM'],
+  tick:['9P','10P','11P','12A','1A','2A','3A','4A','5A','6A','7A','8A','9A','10A','11A','12P','1P','2P','3P','4P','5P','6P','7P','8P'],
+  temp:[23,22,22,21,20,20,19,19,19,20,23,25,26,28,29,30,31,30,29,29,27,26,26,25],
+  rain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,20,20],
+  wind:[11,9,9,7,7,6,6,6,6,6,6,7,7,7,9,11,15,15,15,17,15,15,11,11],
+  dir: ['NNE','NNE','N','NNW','N','N','NNW','NNW','NW','NW','NW','NNW','NNW','N','NNE','NNE','NE','NE','NE','NE','NE','NE','NE','NE'],
+  gust:[19,19,17,15,15,13,13,13,11,11,13,13,15,15,17,20,24,26,26,28,26,24,20,19],
+  sunrise:7.75, sunset:21.4
+};
+const WIND = [
+  {d:'Mon',n:'Tonight',dir:'NE', w:21,g:35},
+  {d:'Tue',n:'24 Nov', dir:'NE', w:20,g:31},
+  {d:'Wed',n:'25 Nov', dir:'E',  w:18,g:30},
+  {d:'Thu',n:'26 Nov', dir:'ESE',w:23,g:37},
+  {d:'Fri',n:'27 Nov', dir:'E',  w:19,g:31}
+];
+const DEG = {N:0,NNE:22.5,NE:45,ENE:67.5,E:90,ESE:112.5,SE:135,SSE:157.5,S:180,SSW:202.5,SW:225,WSW:247.5,W:270,WNW:292.5,NW:315,NNW:337.5};
+
+const $ = s => document.querySelector(s);
+const sym = (name, cls='wx') => `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true"><use href="#wx-${name}"/></svg>`;
+const hiCls = t => 'tbox' + (t >= 30 ? ' tbox--hot' : '');
+const drop = '<svg width="10" height="14" viewBox="-8 -11 16 22" aria-hidden="true"><use href="#drop"/></svg>';
+const WORD = {5:'Solid',4:'Good',3:'Fair',2:'Split',1:'All over'};
+
+/* ---- 02 seven presenter boards ---- */
+$('#days').innerHTML = DAYS.map(x => `
+  <li class="day${x.today ? ' day--today' : ''}" tabindex="0" aria-label="${x.today ? 'Today' : x.d} ${x.n}: ${x.txt}, high ${x.hi}, low ${x.lo}, rain ${x.rain} percent, ${x.mm}. Sites agree: ${WORD[x.ag]}, highs ${x.hr}, rain ${x.rr}.">
+    <div class="day__name"><b>${x.today ? 'Today' : x.d}</b><span>${x.today ? 'MON ' : ''}${x.n}</span></div>
+    <div class="day__sym">${sym(x.sym)}</div>
+    <div class="day__temps"><span class="${hiCls(x.hi)}">${x.hi}</span><span class="tbox tbox--lo">${x.lo}</span></div>
+    <div class="day__rain"><b>${drop}${x.rain}%</b><span>${x.mm}</span></div>
+    <div class="day__txt">${x.txt}</div>
+    <div class="agree">
+      <span class="meter${x.ag <= 2 ? ' meter--2' : ''}">${[1,2,3,4,5].map(k => `<i class="${k <= x.ag ? 'on' : ''}"></i>`).join('')}</span>
+      <span class="agree__w"><span class="agree__p">Agree: </span>${WORD[x.ag]}</span>
+      <span class="agree__d">HIGHS ${x.hr}<br>RAIN ${x.rr}</span>
+    </div>
+  </li>`).join('');
+
+/* ---- wind for boating ---- */
+const kn = k => Math.round(k / 1.852);
+const bft = k => kn(k) <= 10 ? [3,'Gentle'] : [4,'Moderate'];
+$('#wind').innerHTML = WIND.map(x => {
+  const b = bft(x.w);
+  return `<li class="wrow">
+    <div class="wrow__d">${x.d}<span>${x.n}</span></div>
+    <svg class="wrow__a" viewBox="-30 -30 60 60" aria-hidden="true"><g transform="rotate(${DEG[x.dir] + 180})"><path d="M0 -28 L9 -14 H3.5 V-8 H-3.5 V-14 H-9 Z" fill="#fff" stroke="#0b0e24" stroke-width="2.5" stroke-linejoin="round"/></g><circle r="14" fill="#0b0e24" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" font-family="VT323, monospace" font-size="15" fill="#ffe14a">${x.dir}</text></svg>
+    <div class="wrow__v"><b>${kn(x.w)}</b><small>KN</small> <small>(${x.w} km/h)</small><span>GUST ${kn(x.g)} KN · ${x.g} KM/H</span></div>
+    <span class="bft bft--${b[0]}">${b[1]}</span>
+  </li>`;
+}).join('');
+
+/* ---- 04 site tiles ---- */
+$('#sites').innerHTML = SITES.map((s, i) => {
+  const t = s.d[0]; const r = t[2];
+  const rain = r == null ? '<span class="site__rain" style="color:var(--dim)">—</span>'
+    : typeof r === 'string' ? `<span class="site__rain" style="color:#9fe3c4">${r}<small>MM</small></span>`
+    : `<span class="site__rain">${r}<small>%</small></span>`;
+  return `<li class="site">
+    <div class="site__head"><span class="site__ch">${String(i + 1).padStart(2, '0')}</span><span class="site__name">${s.full}</span><span class="site__kind${i === 0 ? ' site__kind--off' : ''}">${s.kind}</span></div><span class="site__kind site__kind--d${i === 0 ? ' site__kind--off' : ''}">${s.kind}</span>
+    <div class="site__body">${sym(s.sym)}<div class="site__temps"><span class="${hiCls(t[0])}">${t[0]}</span>${t[1] == null ? '<span class="tbox tbox--nil" title="Overnight minimum not issued after 6 pm">–</span>' : `<span class="tbox tbox--lo">${t[1]}</span>`}</div></div>
+    <div class="site__foot">${rain}<span class="site__txt">${s.txt}</span></div>
+    <a class="site__link" href="${s.url}" aria-label="${s.full}: today high ${t[0]}${t[1] == null ? '' : ', low ' + t[1]}, ${r == null ? 'no rain figure' : typeof r === 'string' ? r + ' millimetres' : r + ' percent rain'}. Open site"></a>
+  </li>`;
+}).join('');
+
+/* ---- 05 site-by-site table ---- */
+(function(){
+  let h = '<colgroup><col class="c-name">' + DAYS.map(() => '<col>').join('') + '</colgroup>';
+  h += '<thead><tr><th scope="col">Site</th>' + DAYS.map(x => `<th scope="col"${x.today ? ' class="is-today"' : ''}>${x.d}<span>${x.n}</span></th>`).join('') + '</tr></thead><tbody>';
+  SITES.forEach(s => {
+    h += `<tr><th scope="row" title="${s.full}">${s.name}</th>`;
+    s.d.forEach((c, j) => {
+      if (!c) { h += '<td><span class="cell__nil">··</span></td>'; return; }
+      const offHi = Math.abs(c[0] - MED_HI[j]) >= 3;
+      const r = c[2];
+      const offR = typeof r === 'number' && Math.abs(r - MED_RAIN[j]) > 30;
+      const rTxt = r == null ? '<span class="cell__r" style="color:#5a6db0">–</span>'
+        : typeof r === 'string' ? `<span class="cell__r mm">${r}</span>`
+        : `<span class="cell__r">${offR ? `<mark class="off">${r}%</mark>` : r + '%'}</span>`;
+      h += `<td><div class="cell"><span class="cell__hi${offHi ? ' off' : ''}">${c[0]}</span><span class="cell__lo">${c[1] == null ? '–' : c[1]}</span>${rTxt}</div></td>`;
+    });
+    h += '</tr>';
+  });
+  h += '<tr class="cons"><th scope="row">Middle</th>' + DAYS.map(x => `<td><div class="cell"><span class="cell__hi">${x.hi}</span><span class="cell__lo">${x.lo}</span><span class="cell__r">${x.rain}%</span></div></td>`).join('') + '</tr>';
+  h += '</tbody>';
+  $('#tbl').insertAdjacentHTML('beforeend', h);
+})();
+
+/* ---- crawl ---- */
+(function(){
+  const items = [
+    '<em>OXLEY</em> 22.5° CLEAR · WIND NNE 19 KM/H',
+    '<em>TUE</em> HOT AND MOSTLY SUNNY, 31° ON THE BUREAU, 29° ACROSS ALL SITES',
+    '<em>WED</em> SHOWERS AND POSSIBLE STORMS, 7–20 MM',
+    '<em>UV</em> EXTREME TOMORROW, PEAK 12',
+    '<em>WEEKEND</em> WET: SAT 80%, SUN 90%, SITES SPLIT ON SUNDAY',
+    '<em>BOM</em> NEXT ISSUE 3:10 AM'
+  ].map(t => `<span>${t}</span>`).join('');
+  $('#crawl').innerHTML = items + items;
+})();
+
+/* ---- 03 hour-by-hour chart ---- */
+(function(){
+  const el = $('#chart'), ro = $('#readout');
+  let cur = 0, geom = null;
+
+  function draw(){
+    const W = Math.max(300, Math.round(el.clientWidth));
+    const small = W < 560;
+    const padL = 30, padR = 34, top = 22;
+    const mainH = small ? 150 : 190, gap = 14, bandH = small ? 44 : 52, arrH = 28, timeH = 22;
+    const mainB = top + mainH, bandT = mainB + gap, bandB = bandT + bandH, arrY = bandB + arrH / 2 + 2, H = bandB + arrH + timeH;
+    const n = 24, cw = (W - padL - padR) / n;
+    const X = i => padL + (i + .5) * cw;
+    const tMin = 16, tMax = 34;
+    const Y = t => top + (tMax - t) / (tMax - tMin) * mainH;
+    const R = r => mainB - r / 100 * mainH;
+    const G = g => bandB - g / 35 * (bandH - 8);
+    geom = {X, cw, padL, n};
+    const step = small ? 3 : 2;
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">`;
+    // night bands
+    const xs = padL, xr = padL + (HOURS.sunrise + .5) * cw, xset = padL + (HOURS.sunset + .5) * cw, xe = W - padR;
+    s += `<rect x="${xs}" y="${top - 8}" width="${xr - xs}" height="${H - timeH - top + 8}" fill="#030a33" opacity=".7"/>`;
+    s += `<rect x="${xset}" y="${top - 8}" width="${xe - xset}" height="${H - timeH - top + 8}" fill="#030a33" opacity=".7"/>`;
+    // frame + grid
+    s += `<rect x="${padL}" y="${top}" width="${W - padL - padR}" height="${mainH}" fill="none" stroke="#2f52bf"/>`;
+    [20,25,30].forEach(t => { s += `<line x1="${padL}" x2="${W - padR}" y1="${Y(t)}" y2="${Y(t)}" stroke="#3a5fd0" stroke-dasharray="2 4"/><text class="c-axis" x="${padL - 5}" y="${Y(t) + 5}" text-anchor="end">${t}°</text>`; });
+    [50,100].forEach(r => { s += `<text class="c-axis" x="${W - padR + 4}" y="${R(r) + 5}" style="fill:var(--rain)">${r}%</text>`; });
+    // sunrise / sunset ticks
+    [[xr,small?'RISE 4:45':'SUNRISE 4:45'],[xset,small?'SET 6:24':'SUNSET 6:24']].forEach(([x, l], k) => {
+      s += `<line x1="${x}" x2="${x}" y1="${top - 8}" y2="${bandB}" stroke="#ffe14a" stroke-width="1.5" stroke-dasharray="3 3"/>`;
+      s += `<text class="c-axis" x="${x + (k ? -5 : 5)}" y="${top - 10}" text-anchor="${k ? 'end' : 'start'}" style="fill:var(--cg)">${l}</text>`;
+    });
+    // rain bars
+    HOURS.rain.forEach((r, i) => { if (r > 0) { const bw = Math.max(4, cw * .56); s += `<rect x="${X(i) - bw / 2}" y="${R(r)}" width="${bw}" height="${mainB - R(r)}" fill="#46c8ff" stroke="#0b0e24" stroke-width="1.5"/>`; } });
+    s += `<text class="c-axis" x="${X(22.5)}" y="${R(20) - 6}" text-anchor="middle" style="fill:var(--rain)">20%</text>`;
+    // temperature line (ink under-stroke, CG yellow)
+    const pts = HOURS.temp.map((t, i) => `${X(i).toFixed(1)},${Y(t).toFixed(1)}`).join(' ');
+    s += `<polyline points="${pts}" fill="none" stroke="#0b0e24" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<polyline points="${pts}" fill="none" stroke="#ffe14a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    HOURS.temp.forEach((t, i) => {
+      const key = i === 16 || i === 6;
+      if (i % step === 0 || key) {
+        s += `<rect x="${X(i) - 4}" y="${Y(t) - 4}" width="8" height="8" fill="${key ? '#e0541a' : '#fff'}" stroke="#0b0e24" stroke-width="2"/>`;
+      }
+      if ((i % (step * 2) === 0 && i > 0 && !(i === 18 || i === 4 || i === 8)) || key) s += `<text class="c-val" x="${X(i)}" y="${key && i === 6 ? Y(t) + 22 : Y(t) - 11}" text-anchor="middle">${t}°</text>`;
+    });
+    // gust band
+    s += `<rect x="${padL}" y="${bandT}" width="${W - padL - padR}" height="${bandH}" fill="rgba(3,8,40,.55)" stroke="#2f52bf"/>`;
+    s += `<text class="c-band" x="${padL + 6}" y="${bandT + 13}">GUSTS</text>`;
+    let gp = `M${padL} ${G(HOURS.gust[0])}`;
+    HOURS.gust.forEach((g, i) => { const x0 = padL + i * cw, x1 = x0 + cw; gp += ` L${x0} ${G(g)} L${x1} ${G(g)}`; });
+    s += `<path d="${gp} L${W - padR} ${bandB} L${padL} ${bandB} Z" fill="rgba(255,138,61,.22)"/>`;
+    s += `<path d="${gp}" fill="none" stroke="#ff8a3d" stroke-width="2.5"/>`;
+    HOURS.gust.forEach((g, i) => { if (i % 3 === 1) s += `<text class="c-gust" x="${X(i)}" y="${G(g) - 4}" text-anchor="middle">${g}</text>`; });
+    // wind arrows row
+    HOURS.dir.forEach((d, i) => {
+      if (i % 3 !== 1) return;
+      s += `<g transform="translate(${X(i)} ${arrY}) rotate(${DEG[d] + 180})"><path d="M0 -10 L6 -1 H2.2 V9 H-2.2 V-1 H-6 Z" fill="#fff" stroke="#0b0e24" stroke-width="1.6" stroke-linejoin="round"/></g>`;
+    });
+    // time axis
+    HOURS.tick.forEach((t, i) => { if (i % 3 === 0) s += `<text class="c-time" x="${X(i)}" y="${H - 5}" text-anchor="middle">${t}</text>`; });
+    s += `<text class="c-axis" x="${X(12)}" y="${H - 5}" dx="0" text-anchor="middle" opacity="0">.</text>`;
+    // day divider at midnight
+    const xm = padL + 3 * cw;
+    s += `<line x1="${xm}" x2="${xm}" y1="${top}" y2="${H - timeH}" stroke="#eef3ff" stroke-width="1" opacity=".35"/>`;
+    s += `<text class="c-band" x="${xm + 5}" y="${top + 14}" style="fill:#eef3ff">TUE</text>`;
+    // cursor
+    s += `<g id="cur"><line id="curL" y1="${top}" y2="${bandB}" stroke="#fff" stroke-width="1.5"/><rect id="curR" width="12" height="12" fill="#ffe14a" stroke="#0b0e24" stroke-width="2.5"/></g>`;
+    s += '</svg>';
+    el.innerHTML = s;
+    geom.Y = Y;
+    setCur(cur);
+  }
+  function setCur(i){
+    cur = Math.max(0, Math.min(23, i));
+    const x = geom.X(cur), y = geom.Y(HOURS.temp[cur]);
+    const L = el.querySelector('#curL'), Rc = el.querySelector('#curR');
+    L.setAttribute('x1', x); L.setAttribute('x2', x);
+    Rc.setAttribute('x', x - 6); Rc.setAttribute('y', y - 6);
+    const day = cur < 3 ? 'MON' : 'TUE';
+    ro.innerHTML = `<span class="r-t">${day} ${HOURS.t[cur]}</span><span><b>${HOURS.temp[cur]}°</b></span><span class="r-rain">RAIN <b>${HOURS.rain[cur]}%</b></span><span>WIND <b>${HOURS.wind[cur]} ${HOURS.dir[cur]}</b></span><span class="r-gust">GUST <b>${HOURS.gust[cur]}</b></span>`;
+  }
+  el.addEventListener('pointermove', e => {
+    const r = el.getBoundingClientRect();
+    setCur(Math.floor((e.clientX - r.left - geom.padL) / geom.cw));
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { setCur(cur + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { setCur(cur - 1); e.preventDefault(); }
+    if (e.key === 'Home') { setCur(0); e.preventDefault(); }
+    if (e.key === 'End') { setCur(23); e.preventDefault(); }
+  });
+  draw();
+  if (document.fonts) document.fonts.ready.then(draw);
+  let to; addEventListener('resize', () => { clearTimeout(to); to = setTimeout(draw, 80); });
+})();
+</script>
+<!-- Saved design sample: a way back to the working app, in the same corner as its design switcher -->
+<a href="../../" style="position:fixed;z-index:9999;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));font:600 13px/1 Tahoma,Verdana,sans-serif;color:#000;background:#D4D0C8;padding:8px 12px;text-decoration:none;box-shadow:inset -1px -1px #404040,inset 1px 1px #fff,inset -2px -2px #808080,inset 2px 2px #dfdfdf">Sample only &middot; Back to the app</a>
+</body>
+</html>

@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consolidated Weather - Teletext</title>
+<meta name="description" content="Consolidated Weather for Oxley, rendered as a set of Ceefax-style teletext pages P400-P405.">
+<script>
+  // ?phone wraps the whole service in a 390px frame (for headless screenshots)
+  if (/[?&]phone\b/.test(location.search)) document.documentElement.classList.add('phone');
+</script>
+<style>
+/* ==========================================================================
+   CONSOLIDATED WEATHER - TELETEXT / CEEFAX SAMPLE
+   --------------------------------------------------------------------------
+   Palette    The 8 "Level 1" teletext colours, full-strength RGB, no tints:
+              black #000, red #F00, green #0F0, yellow #FF0, blue #00F,
+              magenta #F0F, cyan #0FF, white #FFF. Blue is only ever used
+              as a background (blue text on black fails contrast), exactly
+              as Ceefax did; the 4th Fastext key is cyan, as on air.
+   Typeface   "CW Mode 7" - a TrueType font generated in the browser at load
+              time from hand-entered 5x9 dot matrices in the style of the
+              Mullard SAA5050 character generator, with its signature
+              half-dot "character rounding" on diagonals. The same font
+              carries all 64 contiguous and 64 separated 2x3 mosaic
+              (sixel) graphics, so text and block graphics share one grid.
+              Fallback: Courier New (same 0.6em advance, grid survives).
+   Grid       40 columns x 25 rows per page. Cell = 0.6em x 1em
+              (12 x 20 "half-dots"). Every colour change costs one cell,
+              as a teletext spacing attribute would.
+   References BBC Ceefax weather pages (P400s), ETS 300 706 Level 1
+              presentation, SAA5050 datasheet, BBC Micro Mode 7.
+   ========================================================================== */
+:root{
+  --tt-black:#000; --tt-red:#f00; --tt-green:#0f0; --tt-yellow:#ff0;
+  --tt-blue:#00f; --tt-magenta:#f0f; --tt-cyan:#0ff; --tt-white:#fff;
+  --cols:40; --rows:25;
+  --cw:.6em;           /* one character cell width  */
+  --rh:1em;            /* one character row height  */
+  --fs:min(24px, calc((100vw - 40px) / 24));  /* font-size = row height */
+  --bezel:20px;
+  --room:#0b0b0d;
+  --plastic-hi:#2b2b2e; --plastic-lo:#151517;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:radial-gradient(1200px 700px at 50% 0%, #19191d 0%, var(--room) 65%) fixed, var(--room);
+  color:var(--tt-white);
+  font-family:"CW Mode 7","Courier New",monospace;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px}
+
+/* ---------- the monitor wall ---------- */
+.wall{
+  display:grid; grid-template-columns:auto; justify-content:center;
+  gap:28px; padding:28px 16px 40px;
+}
+@media (min-width:1320px){
+  :root{--fs:24px}
+  .wall{grid-template-columns:auto auto; gap:32px 36px; padding:36px 24px 48px}
+}
+.tv{
+  background:linear-gradient(180deg,var(--plastic-hi),var(--plastic-lo));
+  border-radius:22px;
+  padding:var(--bezel) var(--bezel) 10px;
+  box-shadow:0 1px 0 #3a3a3e inset, 0 -1px 0 #0a0a0a inset, 0 18px 40px rgba(0,0,0,.55);
+}
+.scr{
+  position:relative; overflow:hidden;
+  font-size:var(--fs); line-height:1;
+  width:calc(var(--cols) * var(--cw)); height:calc(var(--rows) * var(--rh));
+  background:var(--tt-black);
+  border-radius:.45em;
+  box-shadow:0 0 0 2px #050505, 0 0 0 3px #303034;
+  /* very light phosphor bloom */
+  text-shadow:0 0 .14em rgb(from currentColor r g b / .35);
+}
+/* scanlines + tube vignette, kept faint and never on top of interaction */
+.scr::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:3;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 .065em, rgba(0,0,0,.16) .065em .1em),
+    radial-gradient(130% 120% at 50% 50%, transparent 62%, rgba(0,0,0,.42) 100%);
+  border-radius:inherit;
+}
+.tv-foot{
+  display:flex; align-items:center; justify-content:space-between;
+  height:24px; padding:0 4px;
+  font:11px/1 "CW Mode 7","Courier New",monospace; letter-spacing:.08em;
+  color:#77777d; text-shadow:none;
+}
+.tv-foot .led{width:6px;height:6px;border-radius:50%;background:#ff2a1a;box-shadow:0 0 6px #ff2a1a}
+.tv-foot .knobs{display:flex;gap:6px;align-items:center}
+.tv-foot .knobs i{width:14px;height:6px;border-radius:3px;background:#0e0e10;box-shadow:0 1px 0 #333 inset}
+
+/* phone frame used by ?phone */
+html.phone body{background:#1b1b1f}
+html.phone .wall{width:390px; margin:0 auto; padding:10px 0 24px; gap:14px; grid-template-columns:auto;
+  background:var(--room); --fs:calc(374px / 24)}
+html.phone .tv{--bezel:8px; border-radius:14px}
+@media (max-width:640px){
+  :root{--bezel:8px; --fs:calc((100vw - 16px) / 24)}
+  .wall{padding:8px 0 24px; gap:14px}
+  .tv{border-radius:14px}
+}
+
+/* ---------- character grid ---------- */
+.row{display:block; height:var(--rh); white-space:nowrap; width:calc(var(--cols)*var(--cw)); position:relative}
+.row.dh{height:calc(2*var(--rh))}
+.row span,.row a,.row button,.row input{
+  display:inline-block; vertical-align:top; height:var(--rh); white-space:pre;
+  font:inherit; line-height:var(--rh); margin:0; padding:0; border:0; letter-spacing:0;
+}
+.row.dh span{height:calc(2*var(--rh))}
+.row.dh span.x2{height:var(--rh); transform:scaleY(2); transform-origin:0 0}
+.row.dh a,.row.dh button{height:calc(2*var(--rh))}
+
+/* foreground: every fg class publishes --fc so hover can invert it */
+.f-k{--fc:var(--tt-black)} .f-r{--fc:var(--tt-red)} .f-g{--fc:var(--tt-green)}
+.f-y{--fc:var(--tt-yellow)} .f-b{--fc:var(--tt-blue)} .f-m{--fc:var(--tt-magenta)}
+.f-c{--fc:var(--tt-cyan)} .f-w{--fc:var(--tt-white)}
+[class*="f-"]{color:var(--fc)}
+.b-k{background:var(--tt-black)} .b-r{background:var(--tt-red)} .b-g{background:var(--tt-green)}
+.b-y{background:var(--tt-yellow)} .b-b{background:var(--tt-blue)} .b-m{background:var(--tt-magenta)}
+.b-c{background:var(--tt-cyan)} .b-w{background:var(--tt-white)}
+
+/* conceal / reveal */
+.cn{color:transparent!important; text-shadow:none}
+.revealed .cn{color:var(--fc)!important}
+
+/* flash: ~3:1 on/off like the SAA5050, only where motion is welcome */
+@media (prefers-reduced-motion:no-preference){
+  .fl{animation:tt-flash 1s step-end infinite}
+  .cursor{animation:tt-flash 1s step-end infinite}
+}
+@keyframes tt-flash{75%{color:transparent;text-shadow:none}}
+
+/* ---------- interactive cells: inverse video on hover, yellow block on focus ---------- */
+.row a,.row button{color:inherit; background:none; cursor:pointer; text-decoration:none}
+.row a:hover span,.row button:hover span{background:var(--fc); color:var(--tt-black); text-shadow:none}
+.row a:focus,.row button:focus{outline:none}
+.row a:focus-visible span,.row button:focus-visible span{background:var(--tt-yellow); color:var(--tt-black); text-shadow:none}
+.row button[aria-pressed="true"] span.f-w{color:var(--tt-yellow)}
+.row input{
+  color:var(--fc); caret-color:var(--tt-yellow);
+  outline:none; text-shadow:inherit;
+}
+.row input::placeholder{color:var(--tt-cyan); opacity:1}
+.row input:focus{color:var(--tt-white)}
+.row input:focus::placeholder{color:transparent}
+
+/* hourly chart probe: an inverse-video column cursor */
+.probe{position:absolute; z-index:2; outline:none; cursor:crosshair}
+.probe .col{position:absolute; top:0; bottom:0; width:var(--cw); background:#fff; mix-blend-mode:difference; display:none}
+.probe:hover .col,.probe:focus-visible .col,.probe.live .col{display:block}
+.probe:focus-visible{box-shadow:0 0 0 1px var(--tt-yellow)}
+.tv:focus{outline:none}
+.row input::-webkit-search-cancel-button{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .arrived .row:first-child{animation:tt-arrive .9s steps(3) 1}
+}
+@keyframes tt-arrive{0%,100%{filter:none}50%{filter:invert(1)}}
+</style>
+</head>
+<body>
+<main class="wall" id="wall" aria-label="Consolidated Weather teletext pages for Oxley"></main>
+<noscript><p style="color:#ff0;font-family:monospace;padding:20px">This teletext sample draws its pages with JavaScript.</p></noscript>
+
+<script>
+"use strict";
+/* ==========================================================================
+   1. CW MODE 7 - an SAA5050-style bitmap font, compiled to TrueType
+   ========================================================================== */
+const GLYPHS = `
+A ..#.. .#.#. #...# #...# ##### #...# #...#
+B ####. #...# #...# ####. #...# #...# ####.
+C .###. #...# #.... #.... #.... #...# .###.
+D ####. #...# #...# #...# #...# #...# ####.
+E ##### #.... #.... ####. #.... #.... #####
+F ##### #.... #.... ####. #.... #.... #....
+G .#### #.... #.... #..## #...# #...# .####
+H #...# #...# #...# ##### #...# #...# #...#
+I .###. ..#.. ..#.. ..#.. ..#.. ..#.. .###.
+J ....# ....# ....# ....# ....# #...# .###.
+K #...# #..#. #.#.. ##... #.#.. #..#. #...#
+L #.... #.... #.... #.... #.... #.... #####
+M #...# ##.## #.#.# #.#.# #...# #...# #...#
+N #...# #...# ##..# #.#.# #..## #...# #...#
+O .###. #...# #...# #...# #...# #...# .###.
+P ####. #...# #...# ####. #.... #.... #....
+Q .###. #...# #...# #...# #.#.# #..#. .##.#
+R ####. #...# #...# ####. #.#.. #..#. #...#
+S .###. #...# #.... .###. ....# #...# .###.
+T ##### ..#.. ..#.. ..#.. ..#.. ..#.. ..#..
+U #...# #...# #...# #...# #...# #...# .###.
+V #...# #...# #...# .#.#. .#.#. ..#.. ..#..
+W #...# #...# #...# #.#.# #.#.# #.#.# .#.#.
+X #...# #...# .#.#. ..#.. .#.#. #...# #...#
+Y #...# #...# .#.#. ..#.. ..#.. ..#.. ..#..
+Z ##### ....# ...#. ..#.. .#... #.... #####
+a ..... ..... .###. ....# .#### #...# .####
+b #.... #.... ####. #...# #...# #...# ####.
+c ..... ..... .#### #.... #.... #.... .####
+d ....# ....# .#### #...# #...# #...# .####
+e ..... ..... .###. #...# ##### #.... .###.
+f ..##. .#... .#... ###.. .#... .#... .#...
+g ..... ..... .#### #...# #...# #...# .#### ....# .###.
+h #.... #.... ####. #...# #...# #...# #...#
+i ..#.. ..... .##.. ..#.. ..#.. ..#.. .###.
+j ...#. ..... ...#. ...#. ...#. ...#. ...#. ...#. .##..
+k .#... .#... .#..# .#.#. .##.. .#.#. .#..#
+l .##.. ..#.. ..#.. ..#.. ..#.. ..#.. .###.
+m ..... ..... ##.#. #.#.# #.#.# #.#.# #.#.#
+n ..... ..... ####. #...# #...# #...# #...#
+o ..... ..... .###. #...# #...# #...# .###.
+p ..... ..... ####. #...# #...# #...# ####. #.... #....
+q ..... ..... .#### #...# #...# #...# .#### ....# ....#
+r ..... ..... .#.## .##.. .#... .#... .#...
+s ..... ..... .#### #.... .###. ....# ####.
+t .#... .#... ###.. .#... .#... .#... ..##.
+u ..... ..... #...# #...# #...# #...# .####
+v ..... ..... #...# #...# .#.#. .#.#. ..#..
+w ..... ..... #...# #...# #.#.# #.#.# .#.#.
+x ..... ..... #...# .#.#. ..#.. .#.#. #...#
+y ..... ..... #...# #...# #...# #...# .#### ....# .###.
+z ..... ..... ##### ...#. ..#.. .#... #####
+0 ..#.. .#.#. #...# #...# #...# .#.#. ..#..
+1 ..#.. .##.. ..#.. ..#.. ..#.. ..#.. .###.
+2 .###. #...# ....# ..##. .#... #.... #####
+3 ##### ....# ...#. ..##. ....# #...# .###.
+4 ...#. ..##. .#.#. #..#. ##### ...#. ...#.
+5 ##### #.... ####. ....# ....# #...# .###.
+6 ..##. .#... #.... ####. #...# #...# .###.
+7 ##### ....# ...#. ..#.. .#... .#... .#...
+8 .###. #...# #...# .###. #...# #...# .###.
+9 .###. #...# #...# .#### ....# ...#. .##..
+. ..... ..... ..... ..... ..... ..... ..#..
+, ..... ..... ..... ..... ..... ..#.. ..#.. .#...
+: ..... ..... ..#.. ..... ..... ..#.. .....
+; ..... ..... ..#.. ..... ..... ..#.. ..#.. .#...
+! ..#.. ..#.. ..#.. ..#.. ..#.. ..... ..#..
+? .###. #...# ...#. ..#.. ..#.. ..... ..#..
+' ..#.. ..#.. .#...
+" .#.#. .#.#. .#.#.
+- ..... ..... ..... .###.
++ ..... ..#.. ..#.. ##### ..#.. ..#.. .....
+/ ..... ....# ...#. ..#.. .#... #.... .....
+( ...#. ..#.. .#... .#... .#... ..#.. ...#.
+) .#... ..#.. ...#. ...#. ...#. ..#.. .#...
+% ##... ##..# ...#. ..#.. .#... #..## ...##
+& .#... #.#.. #.#.. .#... #.#.# #..#. .##.#
+# .#.#. .#.#. ##### .#.#. ##### .#.#. .#.#.
+* ..... ..#.. #.#.# .###. #.#.# ..#.. .....
+= ..... ..... ##### ..... ##### ..... .....
+< ...#. ..#.. .#... #.... .#... ..#.. ...#.
+> .#... ..#.. ...#. ....# ...#. ..#.. .#...
+[ .###. .#... .#... .#... .#... .#... .###.
+] .###. ...#. ...#. ...#. ...#. ...#. .###.
+| ..#.. ..#.. ..#.. ..#.. ..#.. ..#.. ..#..
+@ .###. #...# #.### #.#.# #.### #.... .###.
+_ ..... ..... ..... ..... ..... ..... ..... ..... #####
+° .##.. #..#. #..#. .##..
+· ..... ..... ..... ..#..
+± ..#.. ..#.. ##### ..#.. ..#.. ..... #####
+≥ #.... .#... ..#.. ...#. ..#.. .#... #####
+≤ ...#. ..#.. .#... #.... .#... ..#.. #####
+– ..... ..... ..... #####
+— ...... ...... ...... ######
+← ..... ..#.. .#... ##### .#... ..#.. .....
+→ ..... ..#.. ...#. ##### ...#. ..#.. .....
+↑ ..#.. .###. #.#.# ..#.. ..#.. ..#.. ..#..
+↓ ..#.. ..#.. ..#.. ..#.. #.#.# .###. ..#..
+▼ ..... ..... ##### .###. ..#..
+▶ #.... ##... ###.. ####. ###.. ##... #....
+`;
+
+/* Teletext mosaics: v = TL1 TR2 ML4 MR8 BL16 BR32; contiguous U+E000+v, separated U+E040+v */
+const MOS = v => String.fromCharCode(0xE000 + v);
+
+function buildFontBuffer(){
+  const U = 50;                       // one half-dot in font units (1000/em, cell = 12 x 20 half-dots)
+  const glyphs = [];                  // {code, rects:[[x0,y0,x1,y1]]}
+
+  // half-dot bitmap (20 rows x 12 cols) -> merged rectangles, y-up font units
+  function rectsFromHalf(H, bleed){
+    const runs = [];
+    for (let r=0;r<20;r++){
+      let c=0;
+      while(c<12){
+        if(!H[r][c]){c++;continue}
+        let e=c; while(e+1<12 && H[r][e+1]) e++;
+        runs.push({r0:r,r1:r,c0:c,c1:e}); c=e+1;
+      }
+    }
+    // merge vertically identical runs
+    const out=[];
+    for(const run of runs){
+      const m = out.find(o=>o.r1===run.r0-1 && o.c0===run.c0 && o.c1===run.c1);
+      if(m) m.r1=run.r0; else out.push({...run});
+    }
+    return out.map(o=>{
+      let x0=o.c0*U, x1=(o.c1+1)*U, y1=800-o.r0*U, y0=800-(o.r1+1)*U;
+      if(bleed){ // let mosaic blocks overlap neighbouring cells a hair -> no seams
+        if(o.c0===0) x0-=6; if(o.c1===11) x1+=6;
+        if(o.r0===0) y1+=6; if(o.r1===19) y0-=6;
+      }
+      return [x0,y0,x1,y1];
+    });
+  }
+
+  // text glyphs with SAA5050 character rounding
+  for(const line of GLYPHS.trim().split('\n')){
+    const parts=line.trim().split(/\s+/); const ch=parts.shift();
+    const D=Array.from({length:10},()=>Array(6).fill(0));
+    parts.forEach((row,i)=>{ for(let j=0;j<row.length;j++) if(row[j]==='#') D[i+1][j]=1; });
+    const H=Array.from({length:20},()=>Array(12).fill(0));
+    for(let r=0;r<10;r++)for(let c=0;c<6;c++) if(D[r][c]){H[2*r][2*c]=H[2*r][2*c+1]=H[2*r+1][2*c]=H[2*r+1][2*c+1]=1}
+    for(let r=0;r<9;r++)for(let c=0;c<5;c++){
+      const a=D[r][c],b=D[r][c+1],d=D[r+1][c],e=D[r+1][c+1];
+      if(a&&e&&!b&&!d){H[2*r+1][2*c+2]=1;H[2*r+2][2*c+1]=1}
+      if(b&&d&&!a&&!e){H[2*r+1][2*c+1]=1;H[2*r+2][2*c+2]=1}
+    }
+    glyphs.push({code:ch.codePointAt(0), rects:rectsFromHalf(H,false)});
+  }
+  // mosaics: 3 sixel rows of 6/8/6 half-dots, 2 columns of 6
+  const rowsY=[[0,5],[6,13],[14,19]];
+  for(let sep=0;sep<2;sep++) for(let v=0;v<64;v++){
+    const H=Array.from({length:20},()=>Array(12).fill(0));
+    for(let k=0;k<6;k++){
+      if(!(v>>k&1)) continue;
+      const [ra,rb]=rowsY[k>>1]; const ca=(k&1)?6:0, cb=ca+5;
+      for(let r=ra;r<=rb-(sep?2:0);r++)for(let c=ca+(sep?0:0);c<=cb-(sep?2:0);c++)H[r][c]=1;
+    }
+    glyphs.push({code:(sep?0xE040:0xE000)+v, rects:rectsFromHalf(H,!sep)});
+  }
+  glyphs.push({code:0x2588, rects:glyphs.find(g=>g.code===0xE03F).rects});
+  glyphs.push({code:0x20, rects:[]}); glyphs.push({code:0xA0, rects:[]});
+  glyphs.sort((a,b)=>a.code-b.code);
+  const all=[{code:-1,rects:[]},...glyphs];
+
+  // ---- binary writer
+  const bytes=[]; const u8=v=>bytes.push(v&255), u16=v=>{u8(v>>8);u8(v)}, i16=u16, u32=v=>{u16(v>>>16);u16(v&0xffff)};
+  const take=()=>bytes.splice(0,bytes.length);
+  const tables={};
+
+  // glyf + loca
+  const loca=[]; let glyf=[]; let maxPts=0,maxCon=0,bx0=0,by0=-200,bx1=600,by1=800;
+  const lsb=[];
+  for(const g of all){
+    loca.push(glyf.length);
+    if(!g.rects.length){lsb.push(0);continue}
+    const xs=g.rects.flatMap(r=>[r[0],r[2]]), ys=g.rects.flatMap(r=>[r[1],r[3]]);
+    const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+    bx0=Math.min(bx0,x0);by0=Math.min(by0,y0);bx1=Math.max(bx1,x1);by1=Math.max(by1,y1);
+    lsb.push(x0);
+    i16(g.rects.length);i16(x0);i16(y0);i16(x1);i16(y1);
+    g.rects.forEach((r,i)=>u16(i*4+3)); u16(0);
+    const pts=[]; for(const [a,b,c,d] of g.rects) pts.push([a,b],[a,d],[c,d],[c,b]);  // clockwise
+    pts.forEach(()=>u8(1));
+    let px=0; for(const p of pts){i16(p[0]-px);px=p[0]}
+    let py=0; for(const p of pts){i16(p[1]-py);py=p[1]}
+    while(bytes.length%4)u8(0);
+    maxPts=Math.max(maxPts,pts.length);maxCon=Math.max(maxCon,g.rects.length);
+    glyf=glyf.concat(take());
+  }
+  loca.push(glyf.length);
+  tables.glyf=glyf;
+  loca.forEach(o=>u32(o)); tables.loca=take();
+  const n=all.length;
+
+  u32(0x00010000);u32(0x00010000);u32(0);u32(0x5F0F3CF5);u16(0x000B);u16(1000);
+  u32(0);u32(0);u32(0);u32(0);i16(bx0);i16(by0);i16(bx1);i16(by1);u16(0);u16(8);i16(2);i16(1);i16(0);
+  tables.head=take();
+  u32(0x00010000);i16(800);i16(-200);i16(0);u16(600);i16(Math.min(...lsb));i16(-6);i16(606);i16(1);i16(0);i16(0);
+  i16(0);i16(0);i16(0);i16(0);i16(0);u16(n); tables.hhea=take();
+  u32(0x00010000);u16(n);u16(maxPts);u16(maxCon);u16(0);u16(0);u16(2);u16(0);u16(0);u16(0);u16(0);u16(0);u16(0);u16(0);u16(0);
+  tables.maxp=take();
+  for(let i=0;i<n;i++){u16(600);i16(lsb[i])} tables.hmtx=take();
+  // OS/2 v4
+  u16(4);i16(600);u16(400);u16(5);u16(0);
+  for(let i=0;i<10;i++) i16(i<4?300:200); i16(0);
+  [2,0,5,9,0,0,0,0,0,0].forEach(u8); u32(1);u32(0);u32(0);u32(0);
+  "CWTX".split('').forEach(c=>u8(c.charCodeAt(0)));
+  u16(0x40);u16(0x20);u16(0xFFFF);i16(800);i16(-200);i16(0);u16(800);u16(200);u32(1);u32(0);
+  i16(500);i16(700);u16(0);u16(32);u16(1); tables['OS/2']=take();
+  // cmap format 4
+  const map=all.map((g,i)=>[g.code,i]).filter(x=>x[0]>=0&&x[0]<=0xFFFF);
+  const segs=[];
+  for(const [c,gid] of map){
+    const s=segs[segs.length-1];
+    if(s && c===s.end+1 && gid-c===s.delta) s.end=c; else segs.push({start:c,end:c,delta:gid-c});
+  }
+  segs.push({start:0xFFFF,end:0xFFFF,delta:1});
+  const sc=segs.length, sr=2*2**Math.floor(Math.log2(sc));
+  u16(0);u16(2);u16(0);u16(3);u32(20);u16(3);u16(1);u32(20);
+  u16(4);u16(16+8*sc);u16(0);u16(sc*2);u16(sr);u16(Math.log2(sr/2));u16(sc*2-sr);
+  segs.forEach(s=>u16(s.end));u16(0);segs.forEach(s=>u16(s.start));segs.forEach(s=>u16(s.delta&0xffff));segs.forEach(()=>u16(0));
+  tables.cmap=take();
+  // name
+  const names=[[1,"CW Mode 7"],[2,"Regular"],[3,"CW Mode 7 Regular"],[4,"CW Mode 7"],[5,"Version 1.0"],[6,"CWMode7-Regular"]];
+  const strs=names.map(([,s])=>{const a=[];for(const ch of s){a.push(0,ch.charCodeAt(0))}return a});
+  u16(0);u16(names.length);u16(6+12*names.length);
+  let so=0; names.forEach(([id],i)=>{u16(3);u16(1);u16(0x409);u16(id);u16(strs[i].length);u16(so);so+=strs[i].length});
+  strs.forEach(a=>a.forEach(u8)); tables.name=take();
+  u32(0x00030000);u32(0);i16(-100);i16(50);u32(1);u32(0);u32(0);u32(0);u32(0); tables.post=take();
+
+  // ---- assemble sfnt
+  const tags=Object.keys(tables).sort();
+  const nt=tags.length, srch=16*2**Math.floor(Math.log2(nt));
+  const sum=arr=>{let s=0;for(let i=0;i<arr.length;i+=4)s=(s+((arr[i]<<24)|((arr[i+1]||0)<<16)|((arr[i+2]||0)<<8)|(arr[i+3]||0)))>>>0;return s};
+  u32(0x00010000);u16(nt);u16(srch);u16(Math.log2(srch/16));u16(nt*16-srch);
+  let off=12+16*nt; const body=[];
+  for(const t of tags){
+    const d=tables[t]; const len=d.length; while(d.length%4)d.push(0);
+    for(const c of t.padEnd(4)) u8(c.charCodeAt(0));
+    u32(sum(d));u32(off);u32(len); off+=d.length; for(const b of d) body.push(b);
+  }
+  const font=new Uint8Array([...take(),...body]);
+  return font.buffer;
+}
+
+/* ==========================================================================
+   2. SNAPSHOT DATA  (fetched Sun 23 Nov 2026, 9:33pm AEST)
+      BOM api.weather.bom.gov.au r7hg1p  +  consolidated-weather/data/oxley.json
+   ========================================================================== */
+const SNAP = {
+  place:"OXLEY", pc:"4075",
+  obs:{station:"Archerfield", km:3, time:"9:20pm", temp:22.5, feels:21.1, hum:69, wind:19, windKn:10, dir:"NNE",
+       gust:28, gustKn:15, maxGust:37, maxGustAt:"12:24pm", maxSoFar:28.4, rain9am:0},
+  today:{hi:29, lo:19, pc:5, uvNow:0, uvTmrw:12, rise:"4:45am", set:"6:23pm"},
+  bomText:["Tonight: clear, light winds.","Mon: mostly sunny, high 31, 30% rain,","slight chance of an evening shower."],
+  days:[ // consensus = median of the 7 sites; agree 1-5 from spread of highs + rain chance
+    {d:"Sun",n:"23",ic:"sun",   hi:28,lo:19,pc:5, mm:"0", ag:4,cond:"Clear",          rng:"27-29"},
+    {d:"Mon",n:"24",ic:"msun",  hi:29,lo:19,pc:30,mm:"1", ag:2,cond:"Mostly sunny",   rng:"27-31"},
+    {d:"Tue",n:"25",ic:"storm", hi:26,lo:21,pc:80,mm:"13",ag:3,cond:"Storms likely",  rng:"25-28",flash:true},
+    {d:"Wed",n:"26",ic:"shower",hi:28,lo:20,pc:45,mm:"1", ag:4,cond:"Possible shower",rng:"27-29"},
+    {d:"Thu",n:"27",ic:"shower",hi:28,lo:20,pc:65,mm:"4", ag:4,cond:"Shower or two",  rng:"27-29"},
+    {d:"Fri",n:"28",ic:"shower",hi:29,lo:21,pc:80,mm:"14",ag:3,cond:"Showers",        rng:"27-29"},
+    {d:"Sat",n:"29",ic:"storm", hi:29,lo:22,pc:90,mm:"31",ag:2,cond:"Storms, heavy",  rng:"25-30"},
+  ],
+  // BOM hourly, Sun 9pm -> Mon 8pm
+  hours:{
+    t:   [23,22,22,21,20,20,19,19,19,20,23,25,26,28,29,30,31,30,29,29,27,26,26,25],
+    pc:  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,20,20],
+    gust:[19,19,17,15,15,13,13,13,11,11,13,13,15,15,17,20,24,26,26,28,26,24,20,19],
+    wind:[11,9,9,7,7,6,6,6,6,6,6,7,7,7,9,11,15,15,15,17,15,15,11,11],
+    dir: ["NNE","NNE","N","NNW","N","N","NNW","NNW","NW","NW","NW","NNW","NNW","N","NNE","NNE","NE","NE","NE","NE","NE","NE","NE","NE"],
+  },
+  sites:[ // today (Sun 23)
+    {id:"bom",  name:"BOM official",col:"y",hi:29,lo:null,pc:5,   mm:"0",  dv:"+0.7",cond:"Clear.",           url:"https://www.bom.gov.au/"},
+    {id:"wz",   name:"Weatherzone", col:"c",hi:29,lo:19,  pc:40,  mm:"<1", dv:"+0.7",cond:"Clearing shower",  url:"https://www.weatherzone.com/au/qld/brisbane/oxley"},
+    {id:"ww",   name:"WillyWeather",col:"g",hi:29,lo:19,  pc:5,   mm:"<1", dv:"+0.7",cond:"Clear",            url:"https://www.willyweather.com.au/qld/brisbane/oxley.html"},
+    {id:"windy",name:"Windy",       col:"r",hi:28,lo:18,  pc:null,mm:"0",  dv:" 0.0",cond:"NE, gusts to 35",  url:"https://www.windy.com/-27.556/152.975"},
+    {id:"ecmwf",name:"ECMWF",       col:"m",hi:27,lo:18,  pc:4,   mm:"0",  dv:"-0.9",cond:"Cloudy, gusts 36", url:"https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=ecmwf_ifs"},
+    {id:"icon", name:"ICON",        col:"w",hi:28,lo:19,  pc:0,   mm:"0",  dv:"-0.3",cond:"Cloudy, gusts 37", url:"https://open-meteo.com/en/docs?latitude=-27.556&longitude=152.975&models=icon_seamless"},
+    {id:"foreca",name:"Foreca",     col:"b",hi:28,lo:22,  pc:null,mm:null, dv:"-0.3",cond:"Mostly clear",     url:"https://www.foreca.com/en/102154050/oxley/10-day-forecast"},
+  ],
+  // site by site, Sun 23 -> Sat 29. highs (raw) and rain mm (top of range)
+  grid:{
+    bom:   {s:"BOM",   h:[29,31,27,29,29,29,29],          r:[null,1,20,2,9,20,30],       bias:"+0.7"},
+    wz:    {s:"WZONE", h:[29,31,28,29,28,29,30],          r:[1,5,5,5,10,10,40],          bias:"+0.8"},
+    ww:    {s:"WILLY", h:[29,31,27,29,29,29,30],          r:[1,1,20,2,10,20,30],         bias:"+0.8"},
+    windy: {s:"WINDY", h:[28.3,28.9,25.2,28.4,26.9,null,null], r:[0,2.2,10.8,0.2,3.2,null,null], bias:"-0.5"},
+    ecmwf: {s:"ECMWF", h:[27.4,27.4,25.2,27.3,27.5,27.2,25.3], r:[0,0,12.9,0,2.2,2.6,36.6], bias:"-1.6"},
+    icon:  {s:"ICON",  h:[28,29.3,26.4,27,26.9,28.2,29.6],r:[0,0.4,9.1,0,3.5,17.2,12.4], bias:"-0.4"},
+    foreca:{s:"FORECA",h:[28,28,26,28,28,28,26],          r:[null,0,15.4,null,2.3,8.1,32.3], bias:"-0.9"},
+  },
+  median:{h:[28.3,29.3,26.4,28.4,28,28.6,29.3], r:[0,1,13,1,4,14,31]},
+};
+
+/* ==========================================================================
+   3. MOSAIC (SIXEL) GRAPHICS
+   ========================================================================== */
+const bmp = (w,h)=>Array.from({length:h},()=>Array(w).fill(0));
+function blit(B, art, x, y){ art.forEach((row,j)=>[...row].forEach((c,i)=>{ if(c==='#'&&B[y+j]&&x+i<B[0].length) B[y+j][x+i]=1; })); return B; }
+function toMosaic(B){ // -> array of strings, one per character row
+  const out=[];
+  for(let r=0;r<B.length;r+=3){
+    let s="";
+    for(let c=0;c<B[0].length;c+=2){
+      const g=(y,x)=>(B[r+y]&&B[r+y][c+x])?1:0;
+      s+=MOS(g(0,0)|g(0,1)<<1|g(1,0)<<2|g(1,1)<<3|g(2,0)<<4|g(2,1)<<5);
+    }
+    out.push(s);
+  }
+  return out;
+}
+const art = s => s.trim().split(/\s+/);
+const ART = {
+  sun14:art(`......##...... ..#...##...#.. ...#......#... .....####..... ....######.... ...########... ##.########.## ##.########.## ...########... ....######.... .....####..... ...#......#... ..#...##...#.. ......##......`),
+  moon:art(`....####.... ..#####....# .####....... .###......#. .###........ .###........ .####....... ..#####..... ....####....`),
+  sun:  art(`#..##..# ..####.. .######. .######. ..####.. #..##..#`),
+  msun: art(`#.#..... .###.... ###.##.. .#.#..#. ..#....# ...#####`),
+  shower:art(`...###.. .######. ######## ........ #..#..#. .#..#..#`),
+  storm:art(`...###.. .######. ######## ...##... ..##.... .#......`),
+  big:{ // 6 x 9 bold digits for headline temperatures
+    "0":art(`.####. ##..## ##..## ##..## ##..## ##..## ##..## ##..## .####.`),
+    "1":art(`..##.. .###.. ..##.. ..##.. ..##.. ..##.. ..##.. ..##.. .####.`),
+    "2":art(`.####. ##..## ....## ....## ..###. .##... ##.... ##.... ######`),
+    "3":art(`.####. ##..## ....## ....## ..###. ....## ....## ##..## .####.`),
+    "4":art(`...### ..#### .##.## ##..## ###### ....## ....## ....## ....##`),
+    "5":art(`###### ##.... ##.... #####. ....## ....## ....## ##..## .####.`),
+    "6":art(`.####. ##.... ##.... #####. ##..## ##..## ##..## ##..## .####.`),
+    "7":art(`###### ....## ....## ...##. ..##.. ..##.. .##... .##... .##...`),
+    "8":art(`.####. ##..## ##..## ##..## .####. ##..## ##..## ##..## .####.`),
+    "9":art(`.####. ##..## ##..## ##..## .##### ....## ....## ....## .####.`),
+    ".":art(`.. .. .. .. .. .. .. ## ##`),
+    "°":art(`.##. #..# #..# .##.`),
+  },
+  letters:{
+    W:art(`##....## ##....## ##....## ##.##.## ##.##.## ##.##.## ######## .##..##. .##..##.`),
+    E:art(`###### ##.... ##.... ##.... #####. ##.... ##.... ##.... ######`),
+    A:art(`.####. ##..## ##..## ##..## ###### ##..## ##..## ##..## ##..##`),
+    T:art(`###### ..##.. ..##.. ..##.. ..##.. ..##.. ..##.. ..##.. ..##..`),
+    H:art(`##..## ##..## ##..## ##..## ###### ##..## ##..## ##..## ##..##`),
+    R:art(`#####. ##..## ##..## ##..## #####. ##.##. ##..## ##..## ##..##`),
+  }
+};
+function bigText(str, gap=2){
+  const gl=[...str].map(c=>ART.big[c]);
+  const w=gl.reduce((a,g)=>a+g[0].length+gap,0)-gap;
+  const B=bmp(w+(w%2),9); let x=0;
+  gl.forEach(g=>{blit(B,g,x,0);x+=g[0].length+gap});
+  return toMosaic(B);
+}
+function icon(name){ const B=bmp(8,6); blit(B,ART[name],0,0); return toMosaic(B); }
+function hbar(len, cells){ // horizontal bar, top+middle sixels, len in sixels
+  const B=bmp(cells*2,3); for(let x=0;x<Math.min(len,cells*2);x++){B[0][x]=1;B[1][x]=1} return toMosaic(B)[0];
+}
+function columns(vals, rows, max){ // column chart: one value per cell, full cell width
+  const H=rows*3, B=bmp(vals.length*2,H);
+  vals.forEach((v,i)=>{ let h=Math.round(v*H/max); if(v>0&&h<1)h=1; for(let y=H-h;y<H;y++){B[y][2*i]=1;B[y][2*i+1]=1} });
+  return toMosaic(B);
+}
+const meter = n => MOS(63).repeat(n) + MOS(48).repeat(5-n);   // drawn in separated mode
+const SW = MOS(63)+MOS(63);
+
+/* ==========================================================================
+   4. PAGE BUILDER - a tiny Level 1 teletext encoder
+      {r}{g}{y}{b}{m}{c}{w} colour (set-after)   {n} new bg  {k} black bg (set-at)
+      {d} double height   {s}/{S} separated/contiguous   {f} flash   {h} conceal
+      every {code} occupies one cell, as a spacing attribute does.
+      <<tag attrs>> ... <</>> wraps cells in a link/button; <<input id w=N ...>> is an N-cell field
+   ========================================================================== */
+const WARN=[];
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const P=(s,n)=>String(s??"").padEnd(n).slice(0,n);
+const L=(s,n)=>String(s??"").padStart(n).slice(-n);
+
+function encodeRow(src, where){
+  const st={fg:"w",bg:"k",dh:false,sep:false,fl:false,cn:false};
+  const cells=[]; let wrap=null; let dhRow=false;
+  const push=(ch,extra)=>cells.push({ch,fg:st.fg,bg:st.bg,dh:st.dh,fl:st.fl,cn:st.cn,wrap,...extra});
+  for(const t of src.split(/(\{[a-zA-Z]\}|<<[^>]*>>)/)){
+    if(!t) continue;
+    if(/^\{[a-zA-Z]\}$/.test(t)){
+      const c=t[1];
+      if("rgybmcw".includes(c)){ push(" "); st.fg=c; st.cn=false; }
+      else if(c==="n"){ st.bg=st.fg; push(" "); }
+      else if(c==="k"){ st.bg="k"; push(" "); }
+      else if(c==="d"){ push(" "); st.dh=true; dhRow=true; }
+      else if(c==="s"){ push(" "); st.sep=true; }
+      else if(c==="S"){ push(" "); st.sep=false; }
+      else if(c==="f"){ push(" "); st.fl=true; }
+      else if(c==="F"){ st.fl=false; push(" "); }
+      else if(c==="h"){ push(" "); st.cn=true; }
+      continue;
+    }
+    if(t.startsWith("<<")){
+      const inner=t.slice(2,-2).trim();
+      if(inner==="/"){ wrap=null; continue; }
+      const m=inner.match(/^(\w+)\s*(.*)$/); const tag=m[1]; let attrs=m[2];
+      if(tag==="input"){
+        const w=+(attrs.match(/w=(\d+)/)[1]); attrs=attrs.replace(/w=\d+/,"");
+        push(" ",{input:{attrs,w}}); for(let i=1;i<w;i++) push(" ",{skip:true});
+        continue;
+      }
+      wrap={tag:tag==="x"?"span":tag, attrs:tag==="x"?`class="${attrs}"`:attrs, id:Math.random()};
+      continue;
+    }
+    for(const ch of t){
+      let c=ch.codePointAt(0);
+      if(st.sep && c>=0xE000 && c<0xE040) c+=0x40;
+      push(String.fromCodePoint(c));
+    }
+  }
+  if(cells.length>40) WARN.push(`${where}: ${cells.length} cells`);
+  while(cells.length<40) cells.push({ch:" ",fg:st.fg,bg:st.bg,dh:false,fl:false,cn:false,wrap:null});
+  cells.length=40;
+
+  // emit
+  let html="", i=0;
+  const spanFor=(run)=>{
+    const c=run[0]; const txt=run.map(x=>x.ch).join("");
+    const deco=/^[\s-█]*$/.test(txt) && /[-█]/.test(txt);
+    const cls=[`f-${c.fg}`,`b-${c.bg}`, c.dh?"x2":"", c.fl?"fl":"", c.cn?"cn":""].filter(Boolean).join(" ");
+    return `<span class="${cls}"${deco?' aria-hidden="true"':""}>${esc(txt)}</span>`;
+  };
+  while(i<40){
+    const w=cells[i].wrap; let j=i; while(j<40 && cells[j].wrap===w) j++;
+    const grp=cells.slice(i,j);
+    let inner=""; let k=0;
+    while(k<grp.length){
+      const c=grp[k];
+      if(c.input){ inner+=`<input ${c.input.attrs} class="f-${c.fg} b-${c.bg}" style="width:calc(${c.input.w} * var(--cw))">`; k+=c.input.w; continue; }
+      let e=k; while(e+1<grp.length && !grp[e+1].input && !grp[e+1].skip && ["fg","bg","dh","fl","cn"].every(p=>grp[e+1][p]===c[p])) e++;
+      inner+=spanFor(grp.slice(k,e+1)); k=e+1;
+    }
+    html+= w ? `<${w.tag} ${w.attrs}>${inner}</${w.tag}>` : inner;
+    i=j;
+  }
+  return {html, dh:dhRow};
+}
+
+const PAGES=[400,401,402,403,404,405];
+const NAMES={400:"Index",401:"Right now",402:"7 days",403:"Hourly",404:"Sites",405:"Compare"};
+const FT=["r","g","y","c"];
+function header(no){
+  return `<<x pno>>P${no}<</>> {c}C.WEATHER{w}${no} {y}<<x dt>>Sun 23 Nov<</>>{w}<<x clk>>21:33/07<</>>`;
+}
+function fastext(no){
+  const idx=PAGES.indexOf(no);
+  return FT.map((c,i)=>{ const t=PAGES[(idx+1+i)%PAGES.length];
+    return `{${c}}<<a href="#p${t}" data-page="${t}" aria-label="Page ${t} ${NAMES[t]}">>${P(NAMES[t],9)}<</>>`; }).join("");
+}
+function title(t,right){
+  const left=`{b}{n}{y}{d}${t}`; const used=4+t.length; const r=`{w}${right} `;
+  return left+" ".repeat(Math.max(1,40-used-(right.length+2)))+r;
+}
+function page(no, label, rows, extraSr=""){
+  const out=[header(no), ...rows];
+  let html="", count=0;
+  out.forEach((src,i)=>{ const r=encodeRow(src,`P${no} row ${count}`); html+=`<div class="row${r.dh?" dh":""}">${r.html}</div>`; count+=r.dh?2:1; });
+  if(count>24) WARN.push(`P${no}: ${count} rows before fastext`);
+  while(count<24){ html+=`<div class="row"><span class="f-w b-k">${" ".repeat(40)}</span></div>`; count++; }
+  html+=`<div class="row">${encodeRow(fastext(no),`P${no} fastext`).html}</div>`;
+  return `<section class="tv" id="p${no}" aria-label="Page ${no}: ${label}" tabindex="-1">
+    <div class="scr">${html}</div>${extraSr}
+    <div class="tv-foot" aria-hidden="true"><span class="knobs"><i></i><i></i></span><span>P${no} &middot; ${label.toUpperCase()}</span><span class="led"></span></div>
+  </section>`;
+}
+
+/* ==========================================================================
+   5. THE PAGES
+   ========================================================================== */
+const S=SNAP;
+const deg=v=>v==null?" --":L(Math.round(v),2)+"°";
+
+function p400(){
+  const B=bmp(74,15);
+  blit(B,ART.sun14,0,0);
+  let x=16; for(const ch of "WEATHER"){ const g=ART.letters[ch]; blit(B,g,x,3); x+=g[0].length+2; }
+  const ban=toMosaic(B).map(m=>`{b}{n}{y}${m}`);
+  const places=[
+    ["oxley",`${S.place} ${S.pc}`,"Brisbane SW",true],
+    ["manly","Manly boat harbour","Boating",false],
+    ["bribie","Bribie Island","Jet ski",false],
+    ["moreton","Moreton Is. beach","4WD",false],
+  ];
+  const pick=places.map(([id,n,tag,on],i)=> on
+    ? `{w}${i+1}<<button type="button" class="place" data-place="${id}" aria-pressed="true" aria-label="Place: ${n}, selected">>{b}{n}{y}${P(n,19)}{w}${P(tag,12)}▼ {k}<</>>`
+    : `{w}${i+1}<<button type="button" class="place" data-place="${id}" aria-pressed="false" aria-label="Place: ${n}">>  {c}${P(n,19)}{g}${P(tag,12)}  <</>>`);
+  const ix=(a,an,b,bn)=>`{w}<<a href="#p${a}" data-page="${a}">>${a}{c}${P(an,13)}<</>> {w}<<a href="#p${b}" data-page="${b}">>${b}{c}${P(bn,13)}<</>>`;
+  return page(400,"Index",[
+    ...ban,
+    `{b}{n}{w}{d}CONSOLIDATED WEATHER`,
+    `{b}{n}{c}Bureau of Met + 6 sites, side by side`,
+    ``,
+    `{y}PLACE{g}choose where you're heading`,
+    ...pick,
+    `{y}SEARCH`,
+    `{b}{n}{y}<<input id="q" type="search" w=31 placeholder="Suburb, beach or postcode" aria-label="Search for a place" autocomplete="off" spellcheck="false">>{k}{g}<<button type="button" id="go" aria-label="Search">>GO ▶<</>>`,
+    `{g}<<x stat>>${P("Or key a page number, eg 402",38)}<</>>`,
+    ``,
+    `{y}INDEX`,
+    ix(401,"Right now",402,"Next 7 days"),
+    ix(403,"Hour by hour",404,"Your sites"),
+    `{w}<<a href="#p405" data-page="405">>405{c}${P("Site by site",13)}<</>> {g}Snapshot Sun 9:33pm`,
+  ]);
+}
+
+function p401(){
+  const o=S.obs, t=S.today;
+  const big=bigText(String(o.temp)+"°");           // "22.5°"
+  const moon=toMosaic(blit(bmp(12,9),ART.moon,0,0));
+  const side=[`{w}${P("CLEAR NIGHT",14)}`,`{c}${P("Feels like "+Math.round(o.feels)+"°",14)}`,`{g}${P("Max today "+Math.round(o.maxSoFar)+"°",14)}`];
+  const bigRows=big.map((m,i)=>`{y}${P(m,16)} {w}${moon[i]}${side[i]}`);
+  const kv=(a,av,b,bv,bc="w")=>`{c}${P(a,8)}{w}${P(av,9)}{c}${P(b,8)}{${bc}}${P(bv,11)}`;
+  const bar=(lab,col,v,txt)=>`{c}${P(lab,5)}{${col}}${hbar(v,20)}{w}${P(txt,12)}`;
+  return page(401,"Right now",[
+    title("RIGHT NOW",S.place),
+    `{c}${o.station} ${o.km}km {w}observed ${o.time}`,
+    ``,
+    ...bigRows,
+    ``,
+    kv("High",t.hi+"°","Low",t.lo+"° tonight"),
+    kv("Rain",t.pc+"%","Humidity",o.hum+"%"),
+    kv("UV",t.uvNow+" now","Tomorrow",t.uvTmrw+" EXTREME","r"),
+    kv("Sunrise",t.rise,"Sunset",t.set),
+    ``,
+    `{y}WIND{w}${o.dir} ${o.wind}km/h {c}= ${o.windKn} knots`,
+    bar("Wind","g",o.wind,L(o.wind,2)+"  "+o.windKn+"kn"),
+    bar("Gust","y",o.gust,L(o.gust,2)+"  "+o.gustKn+"kn"),
+    bar("Peak","r",o.maxGust,L(o.maxGust,2)+" "+o.maxGustAt),
+    `      {c}0    10   20   30   40 km/h`,
+    ``,
+    `{y}BUREAU FORECAST`,
+    ...S.bomText.map(s=>`{w}${s}`),
+  ], `<p class="sr">Now ${o.temp} degrees at ${o.station}, feels like ${o.feels}. Clear night.</p>`);
+}
+
+function p402(){
+  const lab=["","LOW","MIX","FAIR","GOOD","HIGH"];
+  const agc=n=>n>=4?"g":n===3?"y":"r";
+  const icc={sun:"y",msun:"y",shower:"c",storm:"m"};
+  const rows=[`{c}Day     {y}Hi {c}Lo {w}Rain{g}   mm{c}Sites agree`];
+  for(const d of S.days){
+    const ic=icon(d.ic), c=icc[d.ic];
+    rows.push(`{w}${d.d}{${c}}${ic[0]}{y}${deg(d.hi)}{c}${deg(d.lo)}{w}${L(d.pc+"%",4)}{g}${L(d.mm+"mm",5)}{${agc(d.ag)}}{s}${meter(d.ag)} ${P(lab[d.ag],4)}`);
+    const cond = d.flash ? `{r}{f}${P(d.cond,16)}{F}` : `{g}${P(d.cond,18)}`;
+    rows.push(`{w}${L(d.n,3)}{${c}}${ic[1]}${cond}{c}${P("highs "+d.rng,11)}`);
+  }
+  return page(402,"Next 7 days",[
+    title("NEXT 7 DAYS",S.place),
+    ...rows,
+    ``,
+    `{y}THE WEEK AHEAD`,
+    `{w}Dry tonight and Monday, then wet from`,
+    `{w}Tuesday. Storms Tue and Sat; Saturday`,
+    `{w}the heaviest at 12-40mm across sites.`,
+  ]);
+}
+
+function p403(){
+  const h=S.hours;
+  const temp=columns(h.t.map(v=>v-16),6,16);
+  const rain=columns(h.pc,2,50);
+  const gust=columns(h.gust,3,36);
+  const axis=`{w}   {c}9pm   3am   9am   3pm   {w}`;
+  const tAnn=["Max 31°","Mon 1pm","","Min 19°","Mon 3am",""];
+  const tLab=["32°","","","","","16°"];
+  const gAnn=["Max 28","Mon 4pm","from NE"];
+  return page(403,"Hour by hour",[
+    title("HOUR BY HOUR","NEXT 24H"),
+    `{c}Sun 9pm to Mon 8pm{w}BOM hourly forecast`,
+    `{y}TEMPERATURE °C`,
+    ...temp.map((m,i)=>`{w}${L(tLab[i],3)}{y}${m}{w}${P(tAnn[i],10)}`),
+    axis,
+    `{c}RAIN CHANCE %`,
+    ...rain.map((m,i)=>`{w}${L(["50","0"][i],2)}{c}{s}${m}{w}${P(["Peak 20%","Mon 7pm"][i],10)}`),
+    ``,
+    `{g}GUSTS km/h`,
+    ...gust.map((m,i)=>`{w}${L(["36","","0"][i],3)}{g}${m}{w}${P(gAnn[i],10)}`),
+    axis,
+    ``,
+    `{g}<<x hstat>>${P("Point at, or arrow through, the chart",38)}<</>>`,
+  ]);
+}
+
+function p404(){
+  const rows=[`{c}   Site        {y}Hi {c}Lo {w}Rain{g}  mm {w}±avg`];
+  for(const s of S.sites){
+    const dv = s.dv.startsWith("+")?"r":s.dv.startsWith("-")&&parseFloat(s.dv)<=-0.8?"c":"w";
+    rows.push(`{${s.col}}${SW}{w}${P(s.name,12)}{y}${deg(s.hi)}{c}${deg(s.lo)}{w}${L(s.pc==null?"--":s.pc+"%",4)}{g}${L(s.mm==null?"--":s.mm+"mm",4)} {${dv}}${s.dv}`);
+    rows.push(`   {g}${P(s.cond,22)}{c}<<a href="${s.url}" target="_blank" rel="noopener" aria-label="Open ${s.name}">>${P("open site ▶",12)}<</>>`);
+  }
+  return page(404,"Your weather sites",[
+    title("YOUR SITES","TODAY"),
+    ...rows,
+    ``,
+    `{y}TODAY ACROSS 7 SITES`,
+    `{w}Highs 27-29°, lows 18-22°.`,
+    `{w}Rain 0-5%, but Weatherzone says 40%.`,
+  ]);
+}
+
+function p405(){
+  const G=S.grid, ids=["bom","wz","ww","windy","ecmwf","icon","foreca"];
+  const days="Su Mo Tu We Th Fr Sa".split(" ");
+  const head=lab=>`{c}${P(lab,6)}`+days.map(d=>`{w} ${d}`).join("")+`{c}${P(lab==="HIGHS"?"bias":"",4)}`;
+  const hiRow=id=>{ const g=G[id]; return `{w}${P(g.s,6)}`+g.h.map((v,i)=>{
+      if(v==null) return `{w} --`;
+      const d=v-S.median.h[i]; const c=d>=1.5?"r":d<=-1.5?"c":"w";
+      return `{${c}} ${L(Math.round(v),2)}`; }).join("")+`{${g.bias.startsWith("+")?"r":parseFloat(g.bias)<=-0.8?"c":"w"}}${g.bias}`; };
+  const rnRow=id=>{ const g=G[id]; return `{w}${P(g.s,6)}`+g.r.map(v=>{
+      if(v==null) return `{w} --`;
+      const c=v>=20?"y":v>=1?"c":"w"; return `{${c}} ${L(Math.round(v),2)}`; }).join(""); };
+  const med=(arr,col)=>`{y}${P("MEDIAN",6)}`+arr.map(v=>`{${col}} ${L(Math.round(v),2)}`).join("");
+  return page(405,"Site by site",[
+    title("SITE BY SITE","SUN-SAT"),
+    head("HIGHS"),
+    ...ids.map(hiRow),
+    med(S.median.h,"y"),
+    `{r}Warmer by 1.5°+ {c}Cooler by 1.5°+`,
+    head("RAIN"),
+    ...ids.map(rnRow),
+    med(S.median.r,"y"),
+    `{c}1mm+ {y}20mm+ {w}mm = top of each range`,
+    `{y}<<button type="button" id="reveal" aria-pressed="false">>? REVEAL<</>>{h}ECMWF runs cool, WZ runs wet`,
+  ]);
+}
+
+/* ==========================================================================
+   6. BOOT + BEHAVIOUR
+   ========================================================================== */
+async function boot(){
+  try{
+    const ff=new FontFace("CW Mode 7", buildFontBuffer());
+    await ff.load(); document.fonts.add(ff);
+  }catch(e){ WARN.push("font: "+e.message); }
+  const wall=document.getElementById("wall");
+  wall.innerHTML=[p400(),p401(),p402(),p403(),p404(),p405()].join("");
+  if(WARN.length){ console.warn(WARN.join("\n")); document.documentElement.dataset.warn=WARN.join(" | "); }
+  wire();
+}
+
+function wire(){
+  // live header clock, Brisbane time (Ceefax style "21:33/07")
+  const fmt=new Intl.DateTimeFormat("en-AU",{timeZone:"Australia/Brisbane",weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});
+  const tick=()=>{
+    const p=Object.fromEntries(fmt.formatToParts(new Date()).map(x=>[x.type,x.value]));
+    const dt=`${p.weekday} ${p.day} ${p.month}`.slice(0,10).padEnd(10), ck=`${p.hour}:${p.minute}/${p.second}`;
+    document.querySelectorAll(".dt span").forEach(s=>s.textContent=dt);
+    document.querySelectorAll(".clk span").forEach(s=>s.textContent=ck);
+  };
+  tick(); setInterval(tick,1000);
+
+  // status line on P400
+  const status=msg=>{ const s=document.querySelector(".stat span"); if(s) s.textContent=P(msg,38); };
+  document.querySelector(".stat").setAttribute("aria-live","polite");
+
+  // go to a page, the teletext way
+  const go=(no)=>{
+    const el=document.getElementById("p"+no); if(!el) return false;
+    el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    el.focus({preventScroll:true});
+    el.classList.remove("arrived"); void el.offsetWidth; el.classList.add("arrived");
+    return true;
+  };
+  document.addEventListener("click",e=>{
+    const a=e.target.closest("a[data-page]"); if(a){ e.preventDefault(); go(a.dataset.page); }
+  });
+
+  // page-number entry: key three digits anywhere
+  let buf="";
+  const showPno=s=>document.querySelectorAll(".pno span").forEach((sp,i)=>{
+    sp.textContent = s ? ("P"+s.padEnd(3,"-")) : "P"+PAGES[i];
+  });
+  document.addEventListener("keydown",e=>{
+    if(e.target.matches("input")||e.ctrlKey||e.metaKey||e.altKey) return;
+    if(/^\d$/.test(e.key)){
+      buf+=e.key; showPno(buf);
+      if(buf.length===3){ const ok=go(+buf); if(!ok) status(`PAGE ${buf} NOT IN THIS SERVICE`); const b=buf; buf=""; setTimeout(()=>showPno(""),ok?900:1500); }
+    }
+  });
+
+  // place picker
+  document.querySelectorAll("button.place").forEach(b=>b.addEventListener("click",()=>{
+    if(b.dataset.place==="oxley"){ status("OXLEY 4075 selected"); return; }
+    status("Sample holds Oxley data only");
+  }));
+
+  // search
+  const q=document.getElementById("q");
+  const search=()=>{
+    const v=q.value.trim(); if(!v){ status("Type a suburb, beach or postcode"); q.focus(); return; }
+    if(/^(oxley|4075)$/i.test(v)) status("FOUND: OXLEY 4075 - see P401");
+    else if(/^\d{3}$/.test(v) && PAGES.includes(+v)) go(+v);
+    else status(("NO MATCH IN SAMPLE: "+v.toUpperCase()).slice(0,38));
+  };
+  q.addEventListener("keydown",e=>{ if(e.key==="Enter") search(); });
+  document.getElementById("go").addEventListener("click",search);
+
+  // reveal / conceal
+  const rv=document.getElementById("reveal");
+  rv.addEventListener("click",()=>{
+    const on=rv.getAttribute("aria-pressed")!=="true";
+    rv.setAttribute("aria-pressed",on); document.getElementById("p405").classList.toggle("revealed",on);
+  });
+
+  // hourly chart probe (rows 4-20 of P403, columns 5-28)
+  const scr=document.querySelector("#p403 .scr");
+  const pr=document.createElement("div"); pr.className="probe"; pr.tabIndex=0; pr.setAttribute("role","slider");
+  pr.setAttribute("aria-label","Hour by hour chart"); pr.setAttribute("aria-valuemin",0); pr.setAttribute("aria-valuemax",23);
+  pr.style.cssText="left:calc(5 * var(--cw));top:calc(5 * var(--rh));width:calc(24 * var(--cw));height:calc(15 * var(--rh))";
+  const col=document.createElement("div"); col.className="col"; pr.appendChild(col); scr.appendChild(pr);
+  const hs=document.querySelector(".hstat"); hs.setAttribute("aria-live","polite");
+  const H=S.hours, lbl=i=>{ const hr=(21+i)%24; const day=i<3?"Sun":"Mon"; const h12=hr%12||12; return `${day} ${h12}${hr<12?"am":"pm"}`; };
+  let cur=16;
+  const show=i=>{
+    cur=Math.max(0,Math.min(23,i)); col.style.left=`calc(${cur} * var(--cw))`;
+    const txt=`${P(lbl(cur),8)}${L(H.t[cur],2)}° rain${L(H.pc[cur],3)}% gust${L(H.gust[cur],3)} ${H.dir[cur]}`;
+    hs.querySelector("span").textContent=P(txt,38);
+    pr.setAttribute("aria-valuenow",cur); pr.setAttribute("aria-valuetext",txt);
+  };
+  pr.addEventListener("mousemove",e=>{ const r=pr.getBoundingClientRect(); show(Math.floor((e.clientX-r.left)/(r.width/24))); });
+  pr.addEventListener("focus",()=>{ pr.classList.add("live"); show(cur); });
+  pr.addEventListener("blur",()=>pr.classList.remove("live"));
+  pr.addEventListener("keydown",e=>{
+    if(e.key==="ArrowRight"){show(cur+1);e.preventDefault()} else if(e.key==="ArrowLeft"){show(cur-1);e.preventDefault()}
+    else if(e.key==="Home"){show(0);e.preventDefault()} else if(e.key==="End"){show(23);e.preventDefault()}
+  });
+  // accessible data table
+  const tb=document.createElement("table"); tb.className="sr";
+  tb.innerHTML="<caption>Hourly forecast, Sun 9pm to Mon 8pm</caption><tr><th>Hour</th><th>Temp</th><th>Rain chance</th><th>Gust km/h</th></tr>"+
+    H.t.map((t,i)=>`<tr><td>${lbl(i)}</td><td>${t}</td><td>${H.pc[i]}%</td><td>${H.gust[i]} ${H.dir[i]}</td></tr>`).join("");
+  document.getElementById("p403").appendChild(tb);
+}
+boot();
+</script>
+<!-- Saved design sample: a way back to the working app, in the same corner as its design switcher -->
+<a href="../../" style="position:fixed;z-index:9999;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));font:600 13px/1 Tahoma,Verdana,sans-serif;color:#000;background:#D4D0C8;padding:8px 12px;text-decoration:none;box-shadow:inset -1px -1px #404040,inset 1px 1px #fff,inset -2px -2px #808080,inset 2px 2px #dfdfdf">Sample only &middot; Back to the app</a>
+</body>
+</html>

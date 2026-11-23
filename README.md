@@ -31,6 +31,11 @@ A weather app for boating and jet skiing in Queensland, with any place in Austra
   Windfinder's wind, gusts and waves at its nearest spot (today and tomorrow), and tide times at a
   WillyWeather spot on that water. Open-ocean reports add swell; lakes have wind only. Any Bureau warnings for the area show
   above the reports. The waters and their spots are listed under `waters` in `locations.json`.
+- **Which forecast is most accurate here:** a scoreboard ranking the sources at each featured location by
+  how far out their forecasts made 1, 2 or 3 days ahead were, against what the nearest Bureau station
+  recorded (average top and bottom temperature error, and how often they called rain of 1 mm or more right).
+  `scraper/history.py` keeps the forecasts and results in `data/history/<location>.json`, run hourly by its
+  own workflow (`.github/workflows/history.yml`); rankings start once a source has 7 days checked.
 
 ## How it works
 
