@@ -376,6 +376,17 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .whd h3{margin:0;display:flex;align-items:center;gap:7px;font:700 1.12rem/1.2 var(--display)}
 .whd h3 .ui{width:18px;height:18px;color:var(--accent)}
 .kind{font:500 .66rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 9px}
+/* How sure the forecast is: the model runs at the foot of each day card */
+.day .ens{width:100%;display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:4px;padding-top:7px;border-top:1px dashed var(--line);font:500 .72rem/1.1 var(--body);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.ens .erain{display:inline-flex;align-items:center;gap:4px;color:var(--rain)}
+.ens .erain .ui{width:12px;height:12px}
+.ens .erain.dry{color:var(--muted)}
+.ens .esure{display:inline-flex;align-items:center;gap:5px}
+.ens .sig{display:inline-flex;align-items:flex-end;gap:2px;height:10px}
+.ens .sig b{width:3px;border-radius:1px;background:color-mix(in srgb,var(--fg) 18%,transparent)}
+.ens .sig b:nth-child(1){height:4px} .ens .sig b:nth-child(2){height:7px} .ens .sig b:nth-child(3){height:10px}
+.about a[href*="open-meteo"]{color:var(--accent)}
+.esure.high .sig b{background:var(--good)} .esure.mid .sig b:nth-child(-n+2){background:var(--warn)} .esure.low .sig b:first-child{background:var(--bad)}
 /* Site by site table */
 .detail{display:flex;flex-direction:column;gap:12px}
 .summary{display:flex;flex-wrap:wrap;gap:8px}
@@ -639,7 +650,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   <section aria-labelledby="weekh">
     <h2 id="weekh"><i data-ui="cal"></i>Next 7 days</h2>
     <p class="note">The middle figure of all the forecasts. Tap a day to see it below.</p>
-    <details class="about"><summary>About this</summary><p>Each day shows the median of the Bureau of Meteorology and the forecast sites, with the Bureau's picture and chance of rain. The dot shows how closely they agree on the top temperature: green within 2°C, amber within 4°C, red beyond that.</p></details>
+    <details class="about"><summary>About this</summary><p>Each day shows the median of the Bureau of Meteorology and the forecast sites, with the Bureau's picture and chance of rain. The dot shows how closely they agree on the top temperature: green within 2°C, amber within 4°C, red beyond that. Below that, the ECMWF weather model is run 51 times, each from a slightly different start, to show how much the forecast could change: the umbrella counts the runs with 1 mm of rain or more, and the bars show how sure the top temperature is (high when most runs land within 2°C of each other, medium within 4°C, low beyond that). Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.</p></details>
     <div class="days" id="days" role="group" aria-label="Choose a day"></div>
   </section>
 
@@ -1242,7 +1253,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
         ${wx(ic)}
         <span class="dtemps"><b style="color:${tint(mx)}">${f0(mx)}°</b>${f0(mn)}°</span>
         <span class="drain">${isNum(ch)?`<span class="rbar"><i style="width:${f0(ch)}%"></i></span>${f0(ch)}%`:"–"}</span>
-        <span class="agree ${ag.cls}"><i></i>${ag.label}</span>${bar}</button>`;}).join("");
+        <span class="agree ${ag.cls}"><i></i>${ag.label}</span>${bar}${ensCard(k)}</button>`;}).join("");
     renderDay();renderChart();renderSites();runPlug(PLUG.render);
   }
 
@@ -1253,7 +1264,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     $("dayt").textContent="Site by site · "+dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long"});
     $("summary").innerHTML=(b&&b.text?`<span class="pill">BOM says <b>${esc(b.text)}</b></span>`:"")+`<span class="pill">Median <b>${f0(med.tmax)}° / ${f0(med.tmin)}°</b></span>
       <span class="pill">Top temp spread <b>${ag.spread==null?"–":f1(ag.spread)+"°C"}</b></span>
-      <span class="pill">Rain ≥1 mm <b>${wet} of ${rows.length} sources</b></span>`;
+      <span class="pill">Rain ≥1 mm <b>${wet} of ${rows.length} sources</b></span>`+ensPills(k);
     const out=(v,m)=>isNum(v)&&isNum(m)&&Math.abs(v-m)>=3?' class="out"':"";
     let html="";
     rows.forEach((r,i)=>{
@@ -1835,6 +1846,45 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       return "";
     }).join("");
   }
+
+  // ---- How sure the forecast is: the ECMWF model run 51 times from slightly different starting points ----
+  // Open-Meteo's ensemble gives every run hour by hour (temperature_2m, then _member01 to _member50, and the same for
+  // precipitation). Only a small summary is kept, as it's saved on the device: for each local date, how many runs
+  // give 1 mm or more of rain, how many runs there were, and the 10th and 90th percentile of the runs' top temperature.
+  const ENS_URL="https://ensemble-api.open-meteo.com/v1/ensemble";
+  const pctl=(a,p)=>{const i=(a.length-1)*p,j=Math.floor(i);return a[j]+(a[Math.ceil(i)]-a[j])*(i-j);};
+  function ensSummary(j,L){const h=j&&j.hourly;if(!h||!Array.isArray(h.time))return null;
+    const runs=Object.keys(h).filter(n=>/^temperature_2m(_member\d+)?$/.test(n)),byDay={},d={};
+    h.time.forEach((t,i)=>{const k=String(t).slice(0,10);(byDay[k]||(byDay[k]=[])).push(i);});
+    Object.entries(byDay).forEach(([k,ix])=>{if(ix.length<20)return;  // a part day would understate the top and the rain
+      let wet=0;const tops=[];
+      runs.forEach(n=>{const T=h[n],P=h[n.replace("temperature_2m","precipitation")];if(!Array.isArray(T)||!Array.isArray(P))return;
+        const t=ix.map(i=>T[i]),p=ix.map(i=>P[i]);if(!t.every(isNum)||!p.every(isNum))return;
+        tops.push(Math.max(...t));if(p.reduce((s,v)=>s+v,0)>=1)wet++;});
+      if(tops.length<10)return;tops.sort((x,y)=>x-y);
+      d[k]=[wet,tops.length,Math.round(pctl(tops,.1)*10)/10,Math.round(pctl(tops,.9)*10)/10];});
+    return Object.keys(d).length?{id:L.id,at:Date.now(),d}:null;}
+  PLUG.extras.push({key:"ensemble",load:async L=>{if(!isNum(L.lat)||!isNum(L.lon))return null;
+    const q=`?latitude=${L.lat}&longitude=${L.lon}&models=ecmwf_ifs025&hourly=temperature_2m,precipitation&timezone=${encodeURIComponent(L.tz||"auto")}&forecast_days=7`;
+    const r=await fetch(ENS_URL+q);if(!r.ok)return null;return ensSummary(await r.json(),L);}});
+  // The runs for date k, or null when there's nothing to show (no data yet, another place's, or over 3 days old).
+  // How sure: the middle 80% of runs' top temperatures within 2°C is high, within 4°C medium, wider than that low,
+  // the same steps as the sources' agreement dot.
+  function ensDay(k){const E=state.data&&state.data.ensemble;
+    if(!E||!E.d||E.id!==state.loc.id||!(Date.now()-E.at<3*864e5))return null;
+    const v=E.d[k];if(!v||!isNum(v[1])||v[1]<1)return null;
+    const [wet,n,lo,hi]=v,s=hi-lo;
+    return{wet,n,lo,hi,sure:s<=2?"high":s<=4?"mid":"low",word:s<=2?"Sure":s<=4?"Fairly sure":"Unsure"};}
+  const ensTemps=e=>f0(e.lo)===f0(e.hi)?f0(e.hi)+"°":f0(e.lo)+"–"+f0(e.hi)+"°";
+  // On a day card: an umbrella with the wet runs, and three signal bars for how sure the top temperature is
+  function ensCard(k){const e=ensDay(k);if(!e)return"";
+    const how={high:"high",mid:"medium",low:"low"}[e.sure];
+    const tip=`Model runs: rain in ${e.wet} of ${e.n}. How sure: ${how}, top temp ${ensTemps(e)} in most runs`;
+    return `<span class="ens" title="${esc(tip)}"><span class="erain${e.wet?"":" dry"}">${ui("umbrella")}${e.wet}/${e.n} runs</span>
+        <span class="esure ${e.sure}"><i class="sig" aria-hidden="true"><b></b><b></b><b></b></i>${e.word}</span></span>`;}
+  // In the chosen day's summary pills
+  function ensPills(k){const e=ensDay(k);if(!e)return"";
+    return `<span class="pill">Model runs: rain in <b>${e.wet} of ${e.n}</b></span><span class="pill">Top temp <b>${ensTemps(e)}</b> in most runs</span>`;}
 
   function renderChart(){
     const days=dates(),W=360,H=210,L=34,R=10,T=12,B=28,pw=W-L-R,ph=H-T-B;
