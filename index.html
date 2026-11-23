@@ -532,6 +532,61 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 .sites>div>span:last-child{font:400 .78rem var(--body);color:var(--muted)}
 .sites .stale>span:last-child{color:var(--warn)} .sites .failed>span:last-child{color:var(--bad)}
 .error{border:1px solid var(--bad);color:var(--bad);border-radius:12px;padding:10px 12px;font-size:.9rem;background:var(--surface)}
+/* Trip planner: the trip's stops as a timeline (time, a dot on the line, then the stop), with the form below */
+.trip{gap:14px}
+.tripbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px}
+.tripbar .tfield{flex:1 1 170px}
+.tfield{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tfield label{font:600 .8rem var(--body);color:var(--muted)}
+.trip :is(select,input){width:100%;min-width:0;min-height:40px;font:400 1rem var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+.trip :is(select,input):focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tbtns{display:flex;flex-wrap:wrap;gap:8px}
+.tripsum{margin:0;font:600 1rem/1.4 var(--body)}
+.tripsum .warn{color:var(--warn)} .tripsum .bad{color:var(--bad)} .tripsum .good{color:var(--good)}
+.tripline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tstop{--c:var(--good);--tw:4.8em;position:relative;display:grid;grid-template-columns:var(--tw) minmax(0,1fr);gap:0 26px;padding-bottom:16px}
+.tstop.warn{--c:var(--warn)} .tstop.bad{--c:var(--bad)} .tstop.wait{--c:var(--muted)}
+.tstop::before{content:"";position:absolute;left:calc(var(--tw) + 12px);top:12px;bottom:-6px;width:2px;background:var(--line)}
+.tstop:last-child::before{display:none}
+.tstop::after{content:"";position:absolute;left:calc(var(--tw) + 6px);top:5px;width:14px;height:14px;border-radius:50%;background:var(--c)}
+.twhen{display:flex;flex-direction:column;text-align:right;line-height:1.2;padding-top:2px}
+.twhen b{font:700 1.05rem var(--display);font-variant-numeric:tabular-nums}
+.twhen span{font-size:.78rem;color:var(--muted)}
+.tcard{min-width:0;display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:12px}
+.tleg{grid-column:2;margin:8px 0 0;font-size:.82rem;color:var(--muted)}
+.thd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 10px}
+.tcard h3{margin:0;font:700 1.15rem/1.2 var(--display);overflow-wrap:anywhere}
+.thd small{font-size:.8rem;color:var(--muted)}
+.twx{display:flex;align-items:center;gap:10px}
+.twx .wx{width:48px;height:48px}
+.twx .tt{font:700 2rem/1 var(--display);font-variant-numeric:tabular-nums}
+.twx .tcond{font-size:.92rem;color:var(--muted);min-width:0}
+.tfig{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.9rem;font-variant-numeric:tabular-nums}
+.tfig>span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.tfig .ui{color:var(--accent);width:15px;height:15px}
+.tfig .arrow{width:13px;height:13px}
+.tfig small{color:var(--muted);font-size:.82rem}
+.tsrc,.tmsg{margin:0;font-size:.78rem;color:var(--muted)}
+.tmsg{font-size:.9rem}
+.tline{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:.88rem}
+.tline .ui{width:17px;height:17px;flex:none;margin-top:2px;color:var(--accent)}
+.tline small{display:block;font-size:.76rem;color:var(--muted)}
+.tline.good .ui{color:var(--good)} .tline.mid .ui{color:var(--warn)} .tline.bad .ui{color:var(--bad)} .tline.dark .ui{color:var(--muted)}
+.tflags{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.tflags li{display:flex;gap:7px;align-items:flex-start;font:600 .88rem/1.35 var(--body);color:var(--warn)}
+.tflags li.bad{color:var(--bad)}
+.tflags .ui{width:16px;height:16px;flex:none;margin-top:1px}
+.tacts{display:flex;flex-wrap:wrap;gap:6px}
+.tacts .btn{padding:5px 10px;font-size:.82rem;box-shadow:none}
+.tacts .btn.icon{padding:5px 8px}
+.tacts .btn:disabled{opacity:.4;cursor:default}
+.tacts .btn:disabled .ui{animation:none}  /* the page spins icons in disabled buttons (busy); a first stop's "up" isn't busy */
+.tempty{margin:0;font-size:.9rem;color:var(--muted)}
+.tripform{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.tripform h3{margin:0;font:700 1.12rem/1.2 var(--display)}
+.tfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.tfields .tplace{grid-column:1/-1}
+@media (max-width:560px){.tstop{--tw:4.1em;gap:0 22px}.tstop::before{left:calc(var(--tw) + 10px)}.tstop::after{left:calc(var(--tw) + 4px)}.tcard{padding:10px}}
 footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:16px}
 
 /* Over the weather background, the panels are frosted glass: the sky and hills tint them, the blur keeps text readable */
@@ -734,6 +789,33 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
         <div class="sites" id="sites"></div>
       </div>
     </details>
+  </section>
+
+  <section aria-labelledby="triph" id="tripSec">
+    <h2 id="triph"><i data-ui="route"></i>Trip planner</h2>
+    <p class="note">Plan a trip stop by stop: where you'll be and when. Each stop shows the forecast for that place at that time, with the tide and beach driving where there are any. Trips are saved on this device only.</p>
+    <div class="hbox trip">
+      <div class="tripbar">
+        <div class="tfield"><label for="tripSel">Trip</label><select id="tripSel"></select></div>
+        <div class="tfield"><label for="tripName">Trip name</label><input id="tripName" type="text" maxlength="60" autocomplete="off"></div>
+        <div class="tbtns"><button class="btn" id="tripNew" type="button">New trip</button><button class="btn" id="tripDel" type="button">Delete trip</button></div>
+      </div>
+      <p class="tripsum" id="tripSum" role="status">Loading places…</p>
+      <ol class="tripline" id="tripLine"></ol>
+      <form class="tripform" id="tripForm" novalidate>
+        <h3 id="tripFormH">Add a stop</h3>
+        <div class="tfields">
+          <div class="tfield tplace"><label for="tsPlace">Place</label><select id="tsPlace" required><option value="">Choose a place</option></select></div>
+          <div class="tfield"><label for="tsDate">Date</label><input id="tsDate" type="date" required></div>
+          <div class="tfield"><label for="tsTime">Time there</label><input id="tsTime" type="time" step="300" required></div>
+          <div class="tfield"><label for="tsStay">Staying</label><select id="tsStay"><option value="0">Just passing</option><option value="30">30 min</option><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120">2 hours</option><option value="180">3 hours</option><option value="240">4 hours</option><option value="360">6 hours</option><option value="480">8 hours</option></select></div>
+        </div>
+        <p class="note" id="tsMsg" role="alert" hidden></p>
+        <div class="tbtns"><button class="btn" type="submit" id="tsSave">Add stop</button><button class="btn" type="button" id="tsCancel" hidden>Cancel</button></div>
+      </form>
+    </div>
+    <details class="about"><summary>About this</summary><p>Each stop's weather is for the hour you'll be there, in that place's local time. Where the Bureau of Meteorology's hourly forecast reaches (about the next 3 days), the picture, temperature, chance of rain, wind and gusts are the Bureau's own for the place. Further ahead they're the middle figure (median) of the forecast sites' hourly forecasts, as in Hour by hour, and the wind and gusts are the day's strongest from Windy, ECMWF and ICON. Places you saved yourself are Bureau only, so beyond its hourly forecast they show the Bureau's forecast for the whole day. Forecasts reach 7 days, so stops further ahead show no figures yet.</p>
+    <p>Tides are WillyWeather's high and low times for the spot named under the tide; the height in between follows the usual tide shape, so it's an estimate. Beach driving on K'gari uses the same rule as the Beach driving section: good within 2 hours of low tide in daylight, avoid within 2 hours of high tide, not after dark. Things to watch are flagged for any hour you're there: storms, a chance of rain of 60% or more, gusts of 40 km/h or more (or wind of 30 km/h), 35°C or hotter, high tide on a driving beach, a swell of 2 m or more there, and the Bureau's current warnings for the area (for stops today and tomorrow). Each place's figures are fetched when the trip is shown and kept for 10 minutes; with no signal, a place you've opened before shows the figures this device saved then. Trips stay in this browser on this device; nothing is sent anywhere.</p></details>
   </section>
 
   <footer>
@@ -1918,6 +2000,225 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     return{kind:"bom",id:"bom-"+g7,g7,bom:g7.slice(0,6),name:hint?.name||d.name||"Unknown place",state:hint?.state||d.state||"",
       postcode:hint?.postcode||"",tz:d.timezone||"Australia/Brisbane",lat:d.latitude,lon:d.longitude};
   }
+
+  // ---- Trip planner: trips the person plans themselves, stop by stop: a place (featured or saved), the date and
+  // time they expect to be there, and how long they stay. Each stop shows the forecast for that place at that
+  // hour, its tide and, on K'gari, the beach driving, with anything to watch for spelt out. Trips are kept on this
+  // device only. Each place's figures come from the same feeds as its own page, kept in memory for 10 minutes so
+  // editing a trip doesn't fetch them all again.
+  UI.route='<circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/>';
+  const TRIP_KEY="aus-forecast-trips",TRIP_TTL=10*60e3;
+  const trip={store:null,edit:null,data:{},places:"",ready:false};
+  const tripId=()=>"t"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  // Saved as {cur, trips:[{id, name, stops:[{p:"loc:<id>" or "place:<geohash>", date, time, stay (minutes), place}]}]};
+  // a saved place's details are kept with its stop, so the trip still works if the place is later unsaved
+  function tripStore(){if(trip.store)return trip.store;let s=null;try{s=JSON.parse(localStorage.getItem(TRIP_KEY)||"null");}catch(e){}
+    if(!s||!Array.isArray(s.trips))s={cur:null,trips:[]};
+    if(!s.trips.length)s.trips.push({id:tripId(),name:"My trip",stops:[]});
+    if(!s.trips.some(t=>t.id===s.cur))s.cur=s.trips[0].id;
+    return trip.store=s;}
+  function tripSave(){try{localStorage.setItem(TRIP_KEY,JSON.stringify(trip.store));}catch(e){}}
+  const curTrip=()=>{const s=tripStore();return s.trips.find(t=>t.id===s.cur);};
+  function tripPlace(st){const [k,v]=String(st.p||"").split(/:(.*)/);
+    if(k==="loc")return LOCS.find(l=>l.id===v)||null;
+    return getSaved().find(p=>p.g7===v)||st.place||null;}
+  const tripName=st=>{const L=tripPlace(st);return L?L.name:st.place?.name||"Unknown place";};
+  // A stop's arrival and leaving times, as the place's wall-clock time written as if UTC (like the tide code)
+  function stopMs(st){const [h,m]=String(st.time||"0:0").split(":").map(Number),a=dayMs(st.date)+((h||0)*60+(m||0))*6e4;return{arr:a,dep:a+(+st.stay||0)*6e4};}
+  const tripDay=(k,ks)=>k===ks[0]?"Today":k===ks[1]?"Tomorrow":new Date(k+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"});
+  // Run f as if place L (with figures D) were the one on screen, so the page's own helpers read its figures
+  function asPlace(L,D,f){const l0=state.loc,d0=state.data;state.loc=L;state.data=D;try{return f();}finally{state.loc=l0;state.data=d0;}}
+  // A place's figures: the page's own when it's the place on screen, else fetched here and kept for 10 minutes.
+  // With no signal, the figures this device saved the last time the place's page was opened, if any.
+  function tripData(L){
+    if(state.loc&&state.loc.id===L.id&&state.data)return{D:state.data};
+    const c=trip.data[L.id];
+    if(!c||(!c.busy&&Date.now()-c.t>(c.err?60e3:TRIP_TTL)))tripFetch(L);
+    return trip.data[L.id];}
+  async function tripFetch(L){const old=trip.data[L.id];trip.data[L.id]={...(old||{}),busy:true,t:Date.now()};
+    let v=null;
+    try{const [bom,scr]=await Promise.all([loadBom(L).catch(()=>null),loadScraped(L).catch(()=>({state:"error"}))]);
+      const bomOk=bom&&(bom.ok||bom.obs||bom.hourly.length),scraped=scr.state==="ok"?scr.data:null;
+      if(bomOk||scraped)v={D:{bom:bomOk?bom:null,scraped,fetched:Date.now()},t:Date.now()};}catch(e){}
+    if(!v){let saved=null;try{saved=JSON.parse(localStorage.getItem(CACHE+":"+L.id)||"null");}catch(e){}
+      v=old&&old.D&&!old.old?{D:old.D,t:Date.now(),stale:true}:saved?{D:saved,t:Date.now(),old:true}:{err:true,t:Date.now()};}
+    trip.data[L.id]=v;renderTrip();}
+  // Tide times borrowed from another location (Kingfisher Bay drives Eurong's beach), shared with Beach driving
+  function tripTides(id){const v=driveData[id];
+    if(v===undefined){driveData[id]=null;
+      fetch(SRC+"data/"+id+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{driveData[id]=j;renderTrip();});}
+    return v;}
+  // Everything for one stop, worked out with the place's figures in place of the page's (run inside asPlace)
+  function stopInfo(st,L,D,prevDep){
+    const k=st.date,{arr,dep}=stopMs(st),ks=dates(),now=wallMs(new Date()),I={arr,dep,ks,flags:[]};
+    const flag=(c,t)=>{if(!I.flags.some(f=>f.t===t))I.flags.push({c,t});};
+    const dk=ms=>new Date(ms).toISOString().slice(0,10);
+    // A time, with its weekday when it isn't on the stop's own day
+    const tm=ms=>clock(ms)+(dk(ms)===k?"":" "+new Date(dk(ms)+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short"}));
+    I.tm=tm;
+    if(prevDep!=null&&arr<prevDep)flag("warn","Earlier than the stop before: check the order or the times");
+    if(k>ks[6]){I.far=true;return I;}
+    if(k<ks[0]){I.gone=true;return I;}
+    if(dep<now-30*6e4)flag("warn","This time has already passed");
+    // Each clock hour you're there: the Bureau's hourly forecast where it reaches, else the sites' hourly median
+    const bh={};((D.bom&&D.bom.hourly)||[]).forEach(x=>{if(x.time)bh[Math.floor(wallMs(new Date(x.time))/36e5)*36e5]=x;});
+    const HF={};
+    const at=t=>{const b=bh[t];
+      if(b&&isNum(b.temp))return{bom:true,pic:b.icon==="clear"?"sunny":b.icon,night:b.night,temp:b.temp,chance:b.chance,wind:b.wind,gust:b.gust,dir:b.dir,storm:b.icon==="storm"};
+      const d=dk(t);if(!ks.includes(d))return null;
+      const x=(HF[d]||(HF[d]=hoursFor(d)))[new Date(t).getUTCHours()];
+      return x&&isNum(x.temp)?{n:x.names.length,pic:x.pic,temp:x.temp,chance:x.chance,storm:x.pic==="storm"}:null;};
+    const h0=Math.floor(arr/36e5)*36e5,W=[];
+    for(let t=h0;t<=Math.max(h0,dep-1);t+=36e5){const v=at(t);if(v)W.push({t,v});}
+    const sun=sunMs(k);I.night=arr<sun.rise||arr>=sun.set;
+    const a=W.length&&W[0].t===h0?W[0].v:null;
+    if(a)I.wx=a;
+    else{const b=bomDay(k);if(b&&(isNum(b.tmax)||b.text))I.day={pic:b.icon||classify(b.text),tmax:b.tmax,tmin:b.tmin,chance:b.chance,text:b.text};}
+    // Wind beyond the Bureau's hourly forecast: the day's strongest from the sites that give it (Windy, ECMWF, ICON)
+    if(!(a&&a.bom)){const v=["windy","ecmwf","icon"].map(id=>siteDay(id,k)).filter(d=>d&&isNum(d.wind_max));
+      if(v.length)I.dwind={wind:median(v.map(d=>d.wind_max)),gust:median(v.map(d=>d.gust_max)),dir:v[0].wind_dir,n:v.length};}
+    // What to watch for, from arriving until leaving
+    const big=f=>Math.max(-99,...W.map(x=>f(x.v)).filter(isNum));
+    const s0=W.find(x=>x.v.storm);
+    if(s0)flag("bad","Storm likely"+(s0.t>h0?" from "+tm(s0.t):""));
+    else if(!W.length&&I.day&&I.day.pic==="storm")flag("bad","Storms possible during the day");
+    const ch=W.length?big(v=>v.chance):I.day&&isNum(I.day.chance)?I.day.chance:-1;
+    if(!s0&&ch>=60)flag("warn",`Rain likely: ${f0(ch)}% chance${W.length?"":" during the day"}`);
+    const gu=big(v=>v.gust),wi=big(v=>v.wind);
+    if(gu>=40)flag(gu>=60?"bad":"warn",`Gusts ${f0(gu)} km/h`);
+    else if(wi>=30)flag("warn",`Strong wind: ${f0(wi)} km/h`);
+    else if(!(a&&a.bom)&&I.dwind&&isNum(I.dwind.gust)&&I.dwind.gust>=40)flag("warn",`Gusts up to ${f0(I.dwind.gust)} km/h during the day`);
+    const hot=W.length?big(v=>v.temp):I.day&&isNum(I.day.tmax)?I.day.tmax:-99;
+    if(hot>=35)flag("warn",`Hot: ${f0(hot)}°C`);
+    if(k<=ks[1]&&D.bom&&Array.isArray(D.bom.warnings))D.bom.warnings.forEach(w=>flag("warn","Bureau warning: "+w.title));
+    if(L.kind!=="full")return I;
+    // The tide: the place's first water with tide times (as the Tides section starts on)
+    const T=tideWaters();
+    if(T.length){const {w,mw}=T[0],E=tideTurns(mw.tides),lv=tideAt(E,arr),spot=(mw.tides_place||w.spot||w.name)+(T.length>1?" ("+w.name+")":"");
+      I.tide=lv==null?{spot,none:true}:{spot,lv,up:tideRising(E,arr),next:[E.find(e=>e.high&&e.ms>arr),E.find(e=>!e.high&&e.ms>arr)].filter(Boolean).sort((x,y)=>x.ms-y.ms)};}
+    // Beach driving (K'gari): what the sand is like on arrival, and any high tide while you're there
+    if(L.drive){const src=L.drive.tides?tripTides(L.drive.tides):D.scraped,mw=driveWater(src);
+      if(!mw)I.drive={beach:L.drive.beach,c:"dark",txt:src===null?"Loading tide times…":"No tide times right now"};
+      else if(!mw.tides[k])I.drive={beach:L.drive.beach,c:"dark",txt:"No tide times for this day yet"};
+      else{const E=tideTurns(mw.tides),k1=dk(dayMs(k)+864e5),hiNear=ms=>E.filter(e=>e.high).reduce((m,e)=>!m||Math.abs(e.ms-ms)<Math.abs(m.ms-ms)?e:m,null);
+        const runs=[...driveRuns(E,k),...(mw.tides[k1]?driveRuns(E,k1):[])].reduce((o,r)=>{const p=o[o.length-1];if(p&&p.c===r.c&&p.b===r.a)p.b=r.b;else o.push({...r});return o;},[]);
+        const ci=Math.max(0,runs.findIndex(r=>arr>=r.a&&arr<r.b)),cur=runs[ci],after=runs[ci+1],next=runs.find(r=>usable(r)&&r.a>arr);
+        const until=r=>tm(r.b)+(runs[runs.indexOf(r)+1]?.c==="dark"?", and it's dark after that":"");
+        const c=cur.c,nx=next?` Good from ${tm(next.a)} to ${tm(next.b)}.`:"";
+        const txt=c==="good"?`Good for beach driving until ${tm(cur.b)}`+(after&&after.c==="dark"?" (dark after that)":"")
+          :c==="bad"?"Avoid the beach: high tide":c==="mid"?"Mid tide: softer sand, take care":"Dark: beach driving not advised";
+        if(c==="bad"){const h=hiNear(arr);flag("bad",`High tide at ${tm(h.ms)}: avoid the beach until ${until(cur)}`);}
+        runs.filter(r=>r.c==="bad"&&r.a>arr&&r.a<dep).forEach(r=>{const h=hiNear((r.a+r.b)/2);flag("bad",`High tide at ${tm(h.ms)}: avoid the beach from ${tm(r.a)} to ${until(r)}`);});
+        const sw=mw.swell&&mw.swell[k]?parseFloat(mw.swell[k].max_m):null;
+        if(isNum(sw)&&sw>=2)flag("warn",`Swell up to ${sw} m: waves run further up the beach`);
+        I.drive={beach:L.drive.beach,c,txt,more:c==="good"?"":nx,spot:mw.tides_place||mw.spot};}}
+    return I;}
+  // One stop on the timeline
+  function stopHtml(st,i,n,ks,prevDep){
+    const L=tripPlace(st),name=tripName(st),{arr,dep}=stopMs(st);
+    const stay=+st.stay>0?$("tsStay").querySelector(`option[value="${+st.stay}"]`)?.textContent||span(+st.stay):"";
+    let body="",cls="",flags=[],note="";
+    if(!L)body=`<p class="tmsg">This place isn't on the list any more. Edit the stop to choose another.</p>`;
+    else{const R=tripData(L);
+      if(!R||!R.D){cls="wait";body=R&&R.err?`<p class="tmsg">No signal: couldn't reach the forecasts for ${esc(name)}.</p><div class="tacts"><button class="btn" type="button" data-a="retry" data-i="${i}">Try again</button></div>`:`<p class="tmsg">Loading the forecast…</p>`;}
+      else{let I=null;try{I=asPlace(L,R.D,()=>stopInfo(st,L,R.D,prevDep));}catch(e){console.error(e);}
+        if(R.old||R.stale)note=`<small>No signal: figures from ${esc(isNum(R.D.fetched)?ago(new Date(R.D.fetched).toISOString()):"earlier")}</small>`;
+        if(!I)body=`<p class="tmsg">Couldn't work out the forecast for this stop.</p>`;
+        else{flags=I.flags;const tm=I.tm;
+          const fig=(icon,label,val)=>`<span>${ui(icon)}<small>${label}</small> ${val}</span>`;
+          const windTxt=(w,d)=>`${f0(w)} km/h ${arrow(d)}${esc(d||"")}`;
+          if(I.far)body=`<p class="tmsg">Too far ahead: forecasts reach 7 days, to ${esc(new Date(I.ks[6]+"T12:00:00").toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long"}))}.</p>`;
+          else if(I.gone)body=`<p class="tmsg">This day has passed.</p>`;
+          else if(I.wx){const v=I.wx,night=v.bom?v.night:I.night,lab=v.pic?(night&&v.pic==="sunny"?"Clear":WX_LABEL[v.pic]||""):"";
+            body=`<div class="twx">${wx(v.pic,night)}<span class="tt" style="color:${tint(v.temp)}">${f0(v.temp)}°</span><span class="tcond">${esc(lab)}</span></div>
+              <div class="tfig">${fig("umbrella","Rain",isNum(v.chance)?f0(v.chance)+"%":"–")}${v.bom?fig("wind","Wind",windTxt(v.wind,v.dir))+fig("gust","Gusts",f0(v.gust)+" km/h")
+                :I.dwind?fig("wind","Wind","up to "+windTxt(I.dwind.wind,I.dwind.dir))+fig("gust","Gusts","up to "+f0(I.dwind.gust)+" km/h"):fig("wind","Wind","no forecast yet")}</div>
+              <p class="tsrc">${v.bom?"Bureau of Meteorology hourly forecast":"Middle of "+v.n+" hourly forecast"+(v.n===1?"":"s")+(I.dwind?"; wind and gusts are the day's strongest":"")}</p>`;}
+          else if(I.day){const v=I.day;
+            body=`<div class="twx">${wx(v.pic)}<span class="tt" style="color:${tint(v.tmax)}">${f0(v.tmax)}°</span><span class="tcond">${esc(v.text||WX_LABEL[v.pic]||"")}${isNum(v.tmin)?" · low "+f0(v.tmin)+"°":""}</span></div>
+              <div class="tfig">${fig("umbrella","Rain",isNum(v.chance)?f0(v.chance)+"%":"–")}${I.dwind?fig("wind","Wind","up to "+windTxt(I.dwind.wind,I.dwind.dir))+fig("gust","Gusts","up to "+f0(I.dwind.gust)+" km/h"):fig("wind","Wind","no hourly forecast this far ahead")}</div>
+              <p class="tsrc">The Bureau of Meteorology's forecast for the whole day: no hourly forecast reaches this time yet</p>`;}
+          else body=`<p class="tmsg">No forecast for this time yet.</p>`;
+          if(I.tide)body+=I.tide.none?`<p class="tline">${ui("tide")}<span>No tide times this far ahead<small>Tide at ${esc(I.tide.spot)}</small></span></p>`
+            :`<p class="tline">${ui(I.tide.up?"up":"down")}<span><b>${I.tide.up?"Rising":"Falling"}</b>, about ${I.tide.lv.toFixed(1)} m${I.tide.next.map(e=>` · ${e.high?"high":"low"} ${esc(tm(e.ms))} (${e.m} m)`).join("")}<small>Tide at ${esc(I.tide.spot)}</small></span></p>`;
+          if(I.drive)body+=`<p class="tline ${I.drive.c}">${ui("car")}<span><b>${esc(I.drive.txt)}${I.drive.more?".":""}</b>${esc(I.drive.more||"")}<small>${esc(I.drive.beach)}${I.drive.spot?" · tides at "+esc(I.drive.spot):""}</small></span></p>`;
+          cls=flags.some(f=>f.c==="bad")?"bad":flags.length?"warn":"";}}}
+    const btn=(a,label,inner,dis)=>`<button class="btn${inner?" icon":""}" type="button" data-a="${a}" data-i="${i}"${inner?` aria-label="${esc(label)}" title="${esc(label)}"`:""}${dis?" disabled":""}>${inner||label}</button>`;
+    return {cls,flags,html:`<li class="tstop ${cls}"><div class="twhen"><b>${clock(arr)}</b><span>${esc(tripDay(st.date,ks))}</span></div>
+      <div class="tcard"><div class="thd"><h3>${esc(name)}</h3>${stay?`<small>Staying ${esc(stay)}, until ${clock(dep)}</small>`:""}${note}</div>${body}
+      ${flags.length?`<ul class="tflags">${flags.map(f=>`<li class="${f.c}">${ui("alert")}<span>${esc(f.t)}</span></li>`).join("")}</ul>`:""}
+      <div class="tacts">${btn("edit","Edit")}${btn("up","Move "+name+" up",ui("up"),i===0)}${btn("down","Move "+name+" down",ui("down"),i===n-1)}${btn("del","Remove")}</div></div></li>`};
+  }
+  function renderTrip(){
+    if(!LOCS.length||!state.loc)return;
+    const s=tripStore(),T=curTrip(),ks=dates();
+    $("tripSel").innerHTML=s.trips.map(t=>`<option value="${esc(t.id)}"${t.id===s.cur?" selected":""}>${esc(t.name)} (${t.stops.length} stop${t.stops.length===1?"":"s"})</option>`).join("");
+    if(document.activeElement!==$("tripName"))$("tripName").value=T.name;
+    // Places: the featured locations by region, then the ones saved on this device (rebuilt only when they change,
+    // so a dropdown that's open isn't closed by figures arriving)
+    const saved=getSaved(),regions=[...new Set(LOCS.map(l=>l.region||"Featured"))];
+    const ph=`<option value="">Choose a place</option>`+regions.map(r=>`<optgroup label="${esc(r)}">${LOCS.filter(l=>(l.region||"Featured")===r).map(l=>`<option value="loc:${esc(l.id)}">${esc(l.name)}</option>`).join("")}</optgroup>`).join("")
+      +(saved.length?`<optgroup label="My places (Bureau only)">${saved.map(p=>`<option value="place:${esc(p.g7)}">${esc(p.name)}${p.state?", "+esc(p.state):""}</option>`).join("")}</optgroup>`:"");
+    if(ph!==trip.places){const pv=$("tsPlace").value;trip.places=ph;$("tsPlace").innerHTML=ph;$("tsPlace").value=pv;if($("tsPlace").value!==pv)$("tsPlace").value="";}
+    if(!trip.ready){trip.ready=true;tripDefaults();}
+    // The stops, each with the time since leaving the one before
+    let prevDep=null,nf=0,nb=0,nw=0;
+    const parts=T.stops.map((st,i)=>{const r=stopHtml(st,i,T.stops.length,ks,prevDep);prevDep=stopMs(st).dep;nf+=r.flags.length;nb+=r.flags.some(f=>f.c==="bad")?1:0;nw+=r.cls==="wait"?1:0;return r.html;});
+    // Time between leaving one stop and reaching the next, in days and hours once it's a day or more
+    const gap=m=>m<1440?span(m):Math.floor(m/1440)+" day"+(m>=2880?"s":"")+(Math.round(m%1440/60)?" "+Math.round(m%1440/60)+" h":"");
+    const legs=T.stops.map((st,i)=>{const nx=T.stops[i+1];if(!nx)return"";const d=(stopMs(nx).arr-stopMs(st).dep)/6e4;
+      return d>0?`<p class="tleg">Then ${gap(d)} to ${esc(tripName(nx))}</p>`:"";});
+    $("tripLine").innerHTML=parts.length?parts.map((h,i)=>h.replace(/<\/li>$/,"")+legs[i]+"</li>").join("")
+      :`<li><p class="tempty">No stops yet. Add the first one below: where you'll be and when.</p></li>`;
+    // The summary: how many stops, from the earliest to the latest, and how many things to watch
+    const by=[...T.stops].sort((x,y)=>stopMs(x).arr-stopMs(y).arr),a=by[0],z=by[by.length-1],when=st=>tripDay(st.date,ks)+" "+clock(stopMs(st).arr);
+    $("tripSum").innerHTML=!a?"":`${T.stops.length} stop${T.stops.length===1?"":"s"}, ${esc(when(a))}${T.stops.length>1?" to "+esc(when(z)):""} · `+
+      (nf?`<span class="${nb?"bad":"warn"}">${nf} thing${nf===1?"":"s"} to watch</span>`:nw?"":`<span class="good">nothing flagged</span>`)+
+      (nw?(nf?" · ":"")+`${nw} without figures yet`:"");
+  }
+  // The form: a new stop starts 2 hours after leaving the last one (or at the next hour), or edits a stop
+  function tripDefaults(){const T=curTrip(),z=T.stops[T.stops.length-1];
+    let ms=z?Math.round((stopMs(z).dep+2*36e5)/9e5)*9e5:Math.ceil(wallMs(new Date())/36e5)*36e5;
+    const iso=new Date(ms).toISOString();$("tsDate").value=iso.slice(0,10);$("tsTime").value=iso.slice(11,16);$("tsStay").value="0";$("tsPlace").value="";}
+  function tripEditEnd(){trip.edit=null;$("tripFormH").textContent="Add a stop";$("tsSave").textContent="Add stop";$("tsCancel").hidden=true;$("tsMsg").hidden=true;tripDefaults();}
+  function tripEdit(i){const st=curTrip().stops[i];if(!st)return;trip.edit=i;
+    const sel=$("tsPlace");if(![...sel.options].some(o=>o.value===st.p)){const o=document.createElement("option");o.value=st.p;o.textContent=tripName(st);sel.appendChild(o);trip.places="";}
+    sel.value=st.p;$("tsDate").value=st.date;$("tsTime").value=st.time;$("tsStay").value=String(+st.stay||0);
+    $("tripFormH").textContent="Edit stop "+(i+1)+": "+tripName(st);$("tsSave").textContent="Save changes";$("tsCancel").hidden=false;$("tsMsg").hidden=true;
+    $("tripForm").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"nearest"});sel.focus({preventScroll:true});}
+  $("tripForm").addEventListener("submit",e=>{e.preventDefault();
+    const p=$("tsPlace").value,d=$("tsDate").value,t=$("tsTime").value,msg=$("tsMsg");
+    if(!p||!/^\d{4}-\d\d-\d\d$/.test(d)||!/^\d\d:\d\d/.test(t)){msg.textContent="Choose a place, a date and a time.";msg.hidden=false;(!p?$("tsPlace"):!d?$("tsDate"):$("tsTime")).focus();return;}
+    const T=curTrip(),old=trip.edit!=null?T.stops[trip.edit]:null,st={p,date:d,time:t.slice(0,5),stay:+$("tsStay").value||0};
+    if(p.startsWith("place:")){const pl=getSaved().find(x=>x.g7===p.slice(6))||(old&&old.p===p?old.place:null);if(pl)st.place=pl;}
+    if(old)T.stops[trip.edit]=st;else T.stops.push(st);
+    tripSave();tripEditEnd();renderTrip();});
+  $("tsCancel").addEventListener("click",()=>{tripEditEnd();});
+  $("tripLine").addEventListener("click",e=>{const b=e.target.closest("button[data-a]");if(!b)return;
+    const T=curTrip(),i=+b.dataset.i,a=b.dataset.a,S=T.stops;
+    if(a==="edit")return tripEdit(i);
+    if(a==="retry"){const L=tripPlace(S[i]);if(L)delete trip.data[L.id];return renderTrip();}
+    if(a==="del")S.splice(i,1);
+    else if(a==="up"&&i>0)S.splice(i-1,0,S.splice(i,1)[0]);
+    else if(a==="down"&&i<S.length-1)S.splice(i+1,0,S.splice(i,1)[0]);
+    else return;
+    if(trip.edit!=null)tripEditEnd();
+    tripSave();renderTrip();
+    // Keep the keyboard on the stop that moved
+    if(a!=="del"){const j=a==="up"?i-1:i+1,nb=$("tripLine").querySelector(`button[data-a="${a}"][data-i="${j}"]`);(nb&&!nb.disabled?nb:$("tripLine").querySelector(`button[data-a="edit"][data-i="${j}"]`))?.focus();}});
+  $("tripSel").addEventListener("change",e=>{tripStore().cur=e.target.value;tripSave();tripEditEnd();renderTrip();});
+  $("tripName").addEventListener("input",e=>{curTrip().name=e.target.value.trim()||"Untitled trip";tripSave();
+    const o=$("tripSel").selectedOptions[0],T=curTrip();if(o)o.textContent=`${T.name} (${T.stops.length} stop${T.stops.length===1?"":"s"})`;});
+  $("tripName").addEventListener("change",()=>renderTrip());
+  $("tripNew").addEventListener("click",()=>{const s=tripStore(),t={id:tripId(),name:"Trip "+(s.trips.length+1),stops:[]};
+    s.trips.push(t);s.cur=t.id;tripSave();tripEditEnd();renderTrip();$("tripName").focus();$("tripName").select();});
+  $("tripDel").addEventListener("click",()=>{const s=tripStore(),T=curTrip();
+    if(!confirm(`Delete the trip “${T.name}”${T.stops.length?" and its "+T.stops.length+" stop"+(T.stops.length===1?"":"s"):""}? This can't be undone.`))return;
+    s.trips=s.trips.filter(t=>t!==T);if(!s.trips.length)s.trips.push({id:tripId(),name:"My trip",stops:[]});
+    s.cur=s.trips[0].id;tripSave();tripEditEnd();renderTrip();});
+  // Drawn with the page's figures, and whenever the place list is filled (the start, and saving a place)
+  PLUG.render.push(renderTrip);
+  new MutationObserver(()=>renderTrip()).observe($("loc"),{childList:true});
 
   // The dropdown: featured locations, then the places saved on this device
   function renderPicker(){
