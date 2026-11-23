@@ -33,6 +33,8 @@
   --g-d1:#a9b6be; --g-d2:#5d6e78; --g-drop1:#8fd0ff; --g-drop2:#1f7fd6;
   --sky-sun:#fff1cf; --sky-cloud:#e3ecf0; --sky-rain:#d8e8f6; --sky-storm:#e1e0f0; --sky-night:#dfe5f6; --storm:#7a5cc4; --dayA:#d6e9f7; --dayB:#bcd9ef; --rainbar:#1b6db5;
   --shadow:0 1px 2px rgb(18 36 44/.05),0 6px 18px rgb(18 36 44/.06);
+  /* Frosted cards over the weather background */
+  --glass:rgb(255 255 255/.66); --glass-line:rgb(255 255 255/.75);
   --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -49,6 +51,7 @@
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
   --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5; --dayA:#1a364b; --dayB:#0f2131; --rainbar:#7cc4ff;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
+  --glass:rgb(14 26 31/.58); --glass-line:rgb(255 255 255/.1);
   color-scheme:dark;}}
 :root[data-theme="dark"]{
   --bg:#0d171b; --surface:#152329; --fg:#e4eef1; --muted:#93a8af; --line:#26383f;
@@ -61,6 +64,7 @@
   --g-c2:#b4c3cb; --g-d1:#9aa8b0; --g-d2:#4f5f69;
   --sky-sun:#3a2f15; --sky-cloud:#1f2e35; --sky-rain:#15304a; --sky-storm:#2a2740; --sky-night:#1b2342; --storm:#b39cf5; --dayA:#1a364b; --dayB:#0f2131; --rainbar:#7cc4ff;
   --shadow:0 1px 2px rgb(0 0 0/.3),0 6px 18px rgb(0 0 0/.22);
+  --glass:rgb(14 26 31/.58); --glass-line:rgb(255 255 255/.1);
   color-scheme:dark;}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -91,8 +95,11 @@ section{display:flex;flex-direction:column;gap:10px;min-width:0}
 .wx .w-spin{fill:none;stroke:var(--g-d2);stroke-width:4;stroke-linecap:round}
 .arrow{width:14px;height:14px;color:var(--accent)}
 
-/* Header */
-header{display:flex;flex-direction:column;gap:10px}
+/* Header: the app's name and the tools in one panel, then the place as the page's headline */
+header{display:flex;flex-direction:column;gap:14px}
+.hdrbar{display:flex;flex-direction:column;gap:16px;padding:16px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:var(--shadow)}
+.toolbar{display:flex;align-items:center;gap:8px}
+.toolbar .finder{flex:1 1 auto}
 /* Logo, then the app name on two lines, then the buttons; on phones the name gets its own row below */
 .topbar{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo name";align-items:center;gap:12px 14px}
 .logo{grid-area:logo;width:120px;height:120px;border-radius:24px;box-shadow:var(--shadow)}
@@ -103,30 +110,34 @@ header{display:flex;flex-direction:column;gap:10px}
   .logo{width:72px;height:72px;border-radius:16px}
   .brand{font-size:clamp(2.4rem,13.5vw,4.95rem)}
 }
-.sub{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
+.sub{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;margin-top:-8px;font-size:.95rem;color:var(--muted)}
 .sub .place{display:inline-flex;align-items:center;gap:5px}
 .sub .place .ui{color:var(--accent);width:14px;height:14px}
+.sub .eyebrow,.sub .status{font:inherit;letter-spacing:0;text-transform:none;color:inherit}
+.sub .status::before{content:"·";margin-right:6px}
+.sub .place{align-items:baseline}.sub .place .ui{align-self:center}
+@media (max-width:560px){.sub{flex-direction:column;align-items:flex-start;font-size:.9rem}.sub .place .ui{align-self:flex-start;margin-top:3px}.sub .status{padding-left:19px}.sub .status::before{content:none}}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 13px;font:600 .9rem var(--body);box-shadow:var(--shadow)}
 .btn .ui{width:16px;height:16px}
 .btn:hover{border-color:var(--accent)}
 .btn[disabled]{opacity:.6;cursor:progress}
-.hbtns{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.hbtns{display:flex;gap:8px;flex-wrap:nowrap;margin-left:auto}
 #saveBtn[aria-pressed="true"]{border-color:var(--warn);color:var(--warn)}
 #saveBtn[aria-pressed="true"] .ui{fill:currentColor}
-/* Location picker: the page title is the dropdown */
-.loctitle select{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 38px 4px 12px;max-width:100%;cursor:pointer;box-shadow:var(--shadow);
+/* Location picker: the page's headline is the dropdown, with only a chevron to say it opens */
+.loctitle{font-size:3rem;line-height:1.05;min-width:0;max-width:100%}
+.loctitle select{font:inherit;color:var(--fg);background-color:transparent;border:0;border-radius:10px;padding:0 34px 0 2px;margin-left:-2px;max-width:100%;cursor:pointer;
   appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-  background-position:right 18px center,right 12px center;background-size:6px 6px;background-repeat:no-repeat}
-.loctitle select:hover{border-color:var(--accent)}
+  background-position:right 14px top 58%,right 7px top 58%;background-size:7px 7px;background-repeat:no-repeat;text-overflow:ellipsis}
+.loctitle select:hover{background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%)}
 .loctitle select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.loctitle option,.loctitle optgroup{font:400 1rem var(--body);color:var(--fg);background:var(--surface)}
+@media (max-width:560px){.loctitle{font-size:2.3rem}}
 
-/* Place search: a box beside the location name; results drop down below it */
-.locrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px}
-.locrow .loctitle{min-width:0;max-width:100%}
+/* Place search: in the header's tool bar; results drop down below it */
 .finder{position:relative;flex:1 1 140px;min-width:0}
-.locrow .hbtns{flex:none}
 .finder form{display:flex}
 .searchbox{position:relative;flex:1;min-width:0;display:flex;border-radius:12px}
 .searchbox .sgo{position:absolute;left:3px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:9px;background:none;color:var(--muted)}
@@ -137,7 +148,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .finder .drop{position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:max(100%,300px);max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:6px}
 .finder .note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:var(--shadow)}
 .results{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);max-height:320px;overflow-y:auto;box-shadow:var(--shadow)}
-@media (max-width:700px){.locrow .loctitle{flex:1 0 100%}}
 .results li+li{border-top:1px solid var(--line)}
 .results button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:0;background:none;padding:10px 12px;font:600 .95rem var(--body)}
 .results button:hover,.results button:focus-visible{background:var(--accent-soft);outline:none}
@@ -147,54 +157,70 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 /* Right now */
 .now{--sky:var(--sky-cloud);background:linear-gradient(140deg,var(--sky) 0%,var(--surface) 78%);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px}
 .now[data-sky="sun"]{--sky:var(--sky-sun)} .now[data-sky="rain"]{--sky:var(--sky-rain)} .now[data-sky="storm"]{--sky:var(--sky-storm)} .now[data-sky="night"]{--sky:var(--sky-night)}
-.nowtop{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px 18px}
-.nowtop .wx{width:92px;height:92px}
-.now .temp{font:600 3.8rem/1 var(--display);font-variant-numeric:tabular-nums}
-.now .temp small{font-size:1.4rem;color:var(--muted);margin-left:2px;vertical-align:top}
-.now .feels{font:.85rem var(--body);color:var(--muted)}
-.now .nowdate{font:500 .72rem/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
-.now .cond{font:600 1.25rem/1.2 var(--display)}
-.now .hilo{font:.82rem/1.4 var(--mono);color:var(--muted);margin-top:4px}
-.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:0}
-.stats>div{background:color-mix(in srgb,var(--surface) 80%,transparent);border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-width:0}
-.stats dt{display:flex;align-items:center;gap:5px;font:500 .62rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.stats dt .ui{width:13px;height:13px;color:var(--accent)}
-.stats dd{margin:5px 0 0;font:500 .98rem/1.2 var(--mono);font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.stats dd small{font-size:.72rem;color:var(--muted)}
+.now{padding:22px 24px 20px;gap:18px}
+.nowtop{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px 22px}
+.nowtop .wx{width:96px;height:96px}
+.now .temp{font:600 5.4rem/.86 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.now .temp small{font-size:1.5rem;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:3px;vertical-align:top}
+.now .feels{font:.9rem var(--body);color:var(--muted);margin-top:6px}
+.now .nowdate{font:600 .8rem/1.3 var(--body);color:var(--muted);margin-bottom:2px}
+.now .cond{font:700 1.85rem/1.1 var(--display)}
+.now .story{margin:6px 0 0;font:1rem/1.45 var(--body);max-width:46ch}
+.now .story .st{color:var(--storm)} .now .story .wt{color:var(--rain)}
+/* Today's top and bottom, chance of rain, and anything worth a warning, as one quiet line */
+.now .facts{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-top:10px;font:600 .95rem var(--body);font-variant-numeric:tabular-nums}
+.now .facts span{display:inline-flex;align-items:baseline;gap:4px}
+.now .facts small{font-weight:400;color:var(--muted)}
+.now .facts .ui{width:13px;height:13px;align-self:center}
+.now .facts .warn{color:var(--bad)}
+/* Six readings in one row, divided by hairlines */
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px 0;margin:0;border-top:1px solid var(--line);padding-top:14px}
+.stats>div{padding:0 14px;border-left:1px solid var(--line);min-width:0}
+.stats>div:first-child{padding-left:0;border-left:0}
+.stats dt{display:flex;align-items:center;gap:5px;font:400 .8rem/1.2 var(--body);color:var(--muted);white-space:nowrap}
+.stats dt .ui{width:13px;height:13px;color:var(--muted)}
+.stats dd{margin:4px 0 0;font:600 1.35rem/1.15 var(--display);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:3px;flex-wrap:wrap}
+.stats dd small{font:400 .8rem var(--body);color:var(--muted)}
+.stats dd .arrow{align-self:center;color:var(--muted)}
+.stats dd.sun{font-size:1rem;line-height:1.3;flex-direction:column;align-items:flex-start;gap:0}
+/* UV on the Bureau's bands (0 to 14): low to 2, moderate to 5, high to 7, very high to 10, extreme 11 and up */
+.uvscale{flex-basis:100%;position:relative;height:3px;margin-top:7px;border-radius:2px;background:linear-gradient(90deg,#5fae6b 0 18%,#e3c34a 18% 39%,#e8893a 39% 54%,#d9534f 54% 75%,#8e5cc2 75%)}
+.uvscale i{position:absolute;top:50%;width:3px;height:11px;border-radius:2px;background:var(--fg);transform:translate(-50%,-50%)}
 
 /* Day strip */
 .days{display:grid;grid-template-columns:repeat(7,minmax(98px,1fr));gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity}
-.day{scroll-snap-align:start;text-align:center;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;box-shadow:var(--shadow)}
+/* Each day: name and date, picture, top and bottom, chance of rain, how well the sources agree, and where the day sits in the week's range */
+.day{scroll-snap-align:start;text-align:center;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;box-shadow:var(--shadow)}
 .day:hover{border-color:var(--accent)}
 .day[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),var(--shadow);background:var(--accent-soft)}
-.day .dname{font:700 1rem/1 var(--display)}
-.day .ddate{font:.68rem var(--mono);color:var(--muted)}
+.day .dname{font:700 1.05rem/1 var(--display)}
+.day .ddate{font:.74rem var(--body);color:var(--muted);margin-top:-2px}
 .day .wx{width:46px;height:46px;margin:2px 0}
-.day .dtemps{font:500 .95rem var(--mono);font-variant-numeric:tabular-nums}
-.day .dtemps b{font-weight:600}
-.day .dtemps span{color:var(--muted)}
-.tbar{width:100%;height:5px;border-radius:3px;background:var(--line);position:relative;margin:1px 0 3px}
-.tbar i{position:absolute;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,var(--cool),var(--warm))}
-.day .dtext{font:.74rem/1.25 var(--body);color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
-.day .drain{display:inline-flex;align-items:center;gap:3px;font:500 .78rem var(--mono)}
-.day .drain .ui{color:var(--rain);width:12px;height:12px}
-.day .dsays{font:.68rem var(--mono);color:var(--muted)}
-.day .dbom{font:500 .7rem var(--mono);color:var(--bom)}
-.agree{display:inline-flex;align-items:center;gap:5px;font:500 .68rem/1 var(--mono);color:var(--muted)}
+.day .dtemps{font:600 1.05rem/1 var(--display);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.day .dtemps b{font-size:1.45rem;font-weight:700;margin-right:3px}
+.tbar{width:100%;height:4px;border-radius:2px;background:color-mix(in srgb,var(--fg) 10%,transparent);position:relative;margin:2px 0 0}
+.tbar i{position:absolute;top:0;bottom:0;border-radius:2px;background:linear-gradient(90deg,var(--cool),var(--warm))}
+.day .drain{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;font:600 .8rem var(--body);font-variant-numeric:tabular-nums;color:var(--rainbar);margin-top:3px}
+.day .drain .rbar{width:28px;height:4px;border-radius:2px;background:color-mix(in srgb,var(--fg) 10%,transparent);overflow:hidden}
+.day .drain .rbar i{display:block;height:100%;background:var(--rainbar)}
+.agree{display:inline-flex;align-items:center;gap:5px;font:400 .74rem/1 var(--body);color:var(--muted)}
 .agree i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--good)}
 .agree.mid i{background:var(--warn)} .agree.low i{background:var(--bad)}
 
 /* Cards (boating and the weather sites panel) */
 .panel{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c,var(--line));border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:3px;min-width:0;box-shadow:var(--shadow)}
+/* Each card's colour (the source's colour in the chart, or the boating rating) runs along its top edge */
+.card{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 13px 12px;display:flex;flex-direction:column;gap:3px;min-width:0;box-shadow:var(--shadow)}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--c,var(--line))}
 .card .chd{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.card .chd .wx{width:38px;height:38px;margin:-4px -4px -6px 0}
+.card .chd .wx{width:36px;height:36px;margin:-4px -4px -6px 0}
 .card .chd .ui{width:20px;height:20px;color:var(--c,var(--muted));margin-top:1px}
-.card .cn{font:700 1.02rem/1.15 var(--display)}
-.card .cd{font:.68rem var(--mono);color:var(--muted);overflow-wrap:anywhere}
-.card .ct{font:500 1.2rem var(--mono);font-variant-numeric:tabular-nums;margin-top:6px}
-.card .ct span{color:var(--muted)}
-.card .cr{font:.78rem var(--mono);color:var(--muted)}
+.card .cn{font:700 1.08rem/1.15 var(--display)}
+.card .cd{font:.74rem var(--body);color:var(--muted);overflow-wrap:anywhere}
+.card .ct{font:700 1.65rem/1.1 var(--display);font-variant-numeric:tabular-nums;margin-top:4px}
+.card .ct span{font-size:.72em;font-weight:600;color:var(--muted);margin-left:2px}
+.card .cr{font:400 .82rem var(--body);font-variant-numeric:tabular-nums;color:var(--muted)}
+.card .cr.rain{font-weight:600;color:var(--rainbar);margin-top:auto;padding-top:4px}
 .card .cx{font-size:.84rem}
 .card.empty .cx{color:var(--muted)}
 .card.alert{border-color:var(--warn)}
@@ -220,7 +246,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap}
 .fold>summary::-webkit-details-marker{display:none}
 .fold>summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
-.fold-sum{font:.78rem var(--mono);color:var(--muted)}
+.fold-sum{font:.85rem var(--body);color:var(--muted)}
 .fold-act{margin-left:auto;font:600 .82rem var(--body);color:var(--accent);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;display:inline-flex;align-items:center;gap:6px}
 .fold-act::before{content:"Show"} .fold[open] .fold-act::before{content:"Hide"}
 .fold-act::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
@@ -348,15 +374,15 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 /* Site by site table */
 .detail{display:flex;flex-direction:column;gap:12px}
 .summary{display:flex;flex-wrap:wrap;gap:8px}
-.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font:500 .8rem var(--mono)}
-.pill b{font-weight:500;color:var(--accent)}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font:400 .88rem var(--body);font-variant-numeric:tabular-nums}
+.pill b{font-weight:600;color:var(--accent)}
 .tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
 table{border-collapse:collapse;width:100%}
 th,td{padding:9px 10px;text-align:right;white-space:nowrap}
 th{font:500 .66rem/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
 th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);white-space:normal}
 @media (max-width:420px){th,td{padding:8px 6px}}
-td{font:400 .92rem var(--mono);font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line)}
+td{font:500 1.02rem var(--display);font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line)}
 tbody tr:last-child td{border-bottom:none}
 td .mname{font:600 .95rem var(--body);display:flex;align-items:center;gap:8px}
 td .mname i{width:10px;height:10px;border-radius:3px;flex:none}
@@ -396,12 +422,12 @@ svg{display:block;max-width:100%}
 
 /* Weather scene: an illustrated sky behind the page for the location's weather right now (day or night). A scrim in the page colour keeps text readable and thickens as you scroll down. */
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--scrim0:.58;--fade:0}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.5}}
-:root[data-theme="dark"] .scene{--scrim0:.5}
-/* The beach photo stays brighter than the drawn scenes */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.42}}
+:root[data-theme="dark"] .scene{--scrim0:.42}
+/* The photos stay brighter than the drawn scenes; the frosted panels carry the text */
 .scene.photo{--scrim0:.3}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene.photo{--scrim0:.42}}
-:root[data-theme="dark"] .scene.photo{--scrim0:.42}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene.photo{--scrim0:.32}}
+:root[data-theme="dark"] .scene.photo{--scrim0:.32}
 .scene>div{position:absolute;inset:0;transition:opacity 1.2s ease}
 .scene svg{width:100%;height:100%;display:block}
 .scene picture{display:block;width:100%;height:100%}
@@ -508,17 +534,47 @@ html.scenic .finder .searchbox,html.scenic .jump{background-color:color-mix(in s
 .error{border:1px solid var(--bad);color:var(--bad);border-radius:12px;padding:10px 12px;font-size:.9rem;background:var(--surface)}
 footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:16px}
 
+/* Over the weather background, the panels are frosted glass: the sky and hills tint them, the blur keeps text readable */
+html.scenic :is(.hdrbar,.now,.day,.card,.hbox,.tablebox,.chartcard,.brow,.sites>div,.warns,.stick){background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border-color:var(--glass-line)}
+html.scenic .brow{border-left-color:var(--c,var(--glass-line))}
+html.scenic :is(.warns,.card.alert){border-color:var(--warn)}
+html.scenic .now{background:linear-gradient(140deg,color-mix(in srgb,var(--sky) 50%,transparent),transparent 65%),var(--glass)}
+html.scenic .day[aria-pressed="true"]{background:color-mix(in srgb,var(--accent) 20%,var(--glass));border-color:var(--accent)}
+html.scenic .toolbar :is(.btn,input){background:color-mix(in srgb,var(--fg) 6%,transparent);box-shadow:none;border-color:var(--glass-line)}
+html.scenic .tablebox :is(th,td),html.scenic .tablebox tr.sep td{background:transparent}
+html.scenic .tablebox tr.official td{background:color-mix(in srgb,var(--bom-soft) 55%,transparent)}
+html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-soft) 70%,transparent)}
+/* On phones the first column stays put while the table scrolls sideways, so it needs a solid backing */
+@media (max-width:560px){html.scenic .tablebox :is(th,td):first-child{background:var(--surface)}}
+
+/* Once the header scrolls away (wider screens), a slim bar keeps the place and its temperature in view; tap it to go back up */
+.stick{position:fixed;z-index:8;top:10px;left:50%;width:calc(min(820px,100vw) - 32px);transform:translate(-50%,calc(-100% - 16px));display:flex;align-items:center;gap:12px;
+  padding:7px 14px 7px 8px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);color:var(--fg);font:inherit;text-align:left;cursor:pointer;transition:transform .25s ease}
+.stick.on{transform:translate(-50%,0)}
+.stick img{width:30px;height:30px;border-radius:8px}
+.stick b{font:700 1.15rem var(--display)}
+.stick .sc{color:var(--muted);font-size:.92rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stick .st{margin-left:auto;font:700 1.25rem var(--display);font-variant-numeric:tabular-nums}
+.stick .wx{width:30px;height:30px}
+@media (max-width:700px){.stick{display:none}}
+
 @media (max-width:640px){
   .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stats>div:nth-child(3n+1){padding-left:0;border-left:0}
   .nowtop{grid-template-columns:auto 1fr}
   .nowtop .nowcond{grid-column:1/-1}
   .nowtop .wx{width:76px;height:76px}
+  .now{padding:18px}
 }
-@media (max-width:420px){h1{font-size:1.65rem}.now .temp{font-size:3.3rem}}
+@media (max-width:420px){.now .temp{font-size:4.4rem}}
 @media (prefers-reduced-motion:no-preference){
   .day,.btn,.card{transition:border-color .15s,background .15s}
   .btn[disabled] .ui{animation:spin 1s linear infinite}
+  /* A new place: the sections settle in from just below, one after another */
+  .wrap.enter>section{animation:settle .5s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0) * 60ms)}
 }
+@keyframes settle{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){.stick{transition:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
@@ -537,13 +593,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
 </defs></svg>
 <div class="scene" id="scene" aria-hidden="true"></div>
 <div class="wrap">
-  <header>
+  <header id="top">
+    <div class="hdrbar">
     <div class="topbar">
       <img class="logo" src="img/icon-192.png" alt="" width="120" height="120">
       <span class="brand"><span>Consolidated</span> <span>Weather</span></span>
     </div>
-    <div class="locrow">
-      <h1 class="loctitle"><select id="loc" aria-label="Choose a location"><option>Loading locations…</option></select></h1>
+    <div class="toolbar">
       <div class="finder" role="search" aria-label="Find a place">
         <form id="searchForm">
           <div class="searchbox"><button class="sgo" type="submit" aria-label="Search"><i data-ui="search"></i></button><input id="q" type="search" placeholder="Place or postcode" autocomplete="off" enterkeyhint="search" aria-label="Place or postcode"></div>
@@ -556,11 +612,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
         <button class="btn" id="refresh" type="button"><i data-ui="refresh"></i>Refresh</button>
       </div>
     </div>
+    </div>
+    <h1 class="loctitle"><select id="loc" aria-label="Choose a location"><option>Loading locations…</option></select></h1>
     <div class="sub">
       <span class="place"><i data-ui="pin"></i><span class="eyebrow" id="eyebrow">Forecast compare</span></span>
       <span class="status" id="status">Loading forecasts…</span>
     </div>
   </header>
+  <button class="stick" id="stick" type="button" tabindex="-1" aria-hidden="true"><img src="img/icon-192.png" alt="" width="30" height="30"><b id="stickName"></b><span class="sc" id="stickCond"></span><span class="st" id="stickTemp"></span></button>
 
   <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
 
@@ -636,6 +695,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   <section aria-labelledby="panelh">
     <h2 id="panelh"><i data-ui="grid"></i><span id="panelt">Your weather sites</span></h2>
     <div class="panel" id="panel"></div>
+    <details class="about"><summary>About this</summary><p>Each tile is one site's forecast for the chosen day: top and bottom temperature, the forecast in its words, then chance of rain and amount. The colour along the top matches the site's line in "How the sites line up". Hover a tile (or long-press on a phone) for the site's address and, where it uses a nearby place or a weather model, which one. ECMWF and ICON are weather models (weather data by Open-Meteo.com, CC BY 4.0); the Bureau's station tile is the latest reading, not a forecast.</p></details>
   </section>
 
   <section class="detail" aria-labelledby="dayh">
@@ -698,8 +758,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   // A date (YYYY-MM-DD) in the selected location's own time zone (Sydney and Byron Bay have daylight saving)
   function localDate(iso){const t=new Date(iso);if(isNaN(t))return null;
     return new Intl.DateTimeFormat("en-CA",{timeZone:state.loc.tz,year:"numeric",month:"2-digit",day:"2-digit"}).format(t);}
-  async function loadBom(){
-    const out={daily:{},obs:null,ok:false,hourly:[],warnings:null},api="https://api.weather.bom.gov.au/v1/locations/"+state.loc.bom;
+  async function loadBom(L=state.loc){
+    const out={daily:{},obs:null,ok:false,hourly:[],warnings:null},api="https://api.weather.bom.gov.au/v1/locations/"+L.bom;
     const get=u=>fetch(u,timed()).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
     const [f,o,h,w]=await Promise.allSettled([get(api+"/forecasts/daily"),get(api+"/observations"),get(api+"/forecasts/hourly"),get(api+"/warnings")]);
     if(f.status==="fulfilled"&&Array.isArray(f.value?.data)){
@@ -712,13 +772,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     if(h.status==="fulfilled"&&Array.isArray(h.value?.data))out.hourly=h.value.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night,temp:x.temp,chance:x.rain?.chance,mm:x.rain?.amount?.max??x.rain?.amount?.min}));
     // Hourly wind for each body of water's own forecast cell (river, bay, open ocean, lake)
     const hourlyOf=v=>v.data.map(x=>({time:x.time,wind:x.wind?.speed_kilometre,kn:x.wind?.speed_knot,gust:x.wind?.gust_speed_kilometre,dir:x.wind?.direction,icon:x.icon_descriptor||null,night:!!x.is_night,temp:x.temp,chance:x.rain?.chance,mm:x.rain?.amount?.max??x.rain?.amount?.min}));
-    const ws=await Promise.allSettled((state.loc.waters||[]).map(x=>get("https://api.weather.bom.gov.au/v1/locations/"+x.bom+"/forecasts/hourly")));
+    const ws=await Promise.allSettled((L.waters||[]).map(x=>get("https://api.weather.bom.gov.au/v1/locations/"+x.bom+"/forecasts/hourly")));
     out.waters=ws.map(r=>r.status==="fulfilled"&&Array.isArray(r.value?.data)?hourlyOf(r.value):[]);
     if(w.status==="fulfilled"&&Array.isArray(w.value?.data))out.warnings=w.value.data.map(x=>({title:x.title||x.short_title||"Warning",type:x.type||"",issued:x.issue_time||null}));
     return out;
   }
   // Scraped forecast sites: published by this repo's own scraper, each location about every 3 hours
-  const dataUrl=()=>SRC+"data/"+state.loc.id+".json";
+  const dataUrl=(L=state.loc)=>SRC+"data/"+L.id+".json";
   // Every data request gives up after 20 seconds, so one stalled site can't leave the page stuck on "Fetching"
   const timed=(o={})=>typeof AbortSignal!=="undefined"&&AbortSignal.timeout?{...o,signal:AbortSignal.timeout(20000)}:o;
   const SITES=[{id:"weatherzone",name:"Weatherzone",c:"--s1"},{id:"willyweather",name:"WillyWeather",c:"--s2"},{id:"windy",name:"Windy",c:"--s6"},
@@ -733,9 +793,9 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     {kind:"site",id:"foreca",name:"Foreca",dom:"foreca.com",c:"--s5"},
     {kind:"meteye",name:"BOM MetEye",dom:"bom.gov.au/australia/meteye",c:"--bom"},
     {kind:"obs",name:"BOM Latest Observations",dom:"bom.gov.au/qld/observations",c:"--bom"}];
-  async function loadScraped(){
-    if(state.loc.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
-    const r=await fetch(dataUrl(),timed({cache:"no-store"}));
+  async function loadScraped(L=state.loc){
+    if(L.kind!=="full")return{state:"none"};  // searched places: Bureau only, nothing scraped
+    const r=await fetch(dataUrl(L),timed({cache:"no-store"}));
     if(!r.ok)throw new Error("scraped "+r.status);
     return{state:"ok",data:await r.json()};
   }
@@ -749,6 +809,14 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
   function ago(iso){const m=Math.round((Date.now()-Date.parse(iso))/60000);if(!isFinite(m))return"time unknown";if(m<60)return m+" min ago";const h=Math.round(m/60);return h<48?h+" h ago":Math.round(h/24)+" days ago";}
   let state={data:null,sel:0,water:0,measure:"tmax",scrape:{state:"pending"},loc:null};
+  // Plug-in points for features added on top of the core page (radar, trip planner, scoreboard and so on).
+  // A feature registers here instead of editing the core render and load code:
+  //   PLUG.day.push(k=>...)       runs each time the chosen day (k, YYYY-MM-DD) is drawn, after the core sections
+  //   PLUG.render.push(()=>...)   runs each time the page is drawn for new figures
+  //   PLUG.extras.push({key,load:async L=>value})   extra data fetched after the core figures are on screen; kept in
+  //                               state.data[key] and saved with them, so it is still there with no signal
+  const PLUG={day:[],render:[],extras:[]};
+  const runPlug=(list,...a)=>list.forEach(f=>{try{f(...a);}catch(e){console.error(e);}});
 
   // Weather pictures, drawn inline on a 64-unit grid and named after the Bureau's icon descriptors
   const CLOUD='<circle cx="22" cy="39" r="10"/><circle cx="35" cy="33" r="14"/><circle cx="46" cy="40" r="9"/><rect x="12" y="38" width="44" height="11" rx="5.5"/>';
@@ -852,6 +920,12 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     SITES.forEach(s=>{const d=siteDay(s.id,k);if(!d)return;const src=siteSrc(s.id);
       out.push({name:s.name,c:s.c,tmax:d.tmax,tmin:d.tmin,rain:isNum(d.rain_max)?d.rain_max:d.rain_min,rainText:rangeText(d.rain_min,d.rain_max,d.rain_text),chance:d.chance,sub:[d.text,src.point].filter(Boolean).join(" · "),icon:classify(d.text)});});
     return out.filter(r=>isNum(r.tmax)||isNum(r.tmin)||isNum(r.rain));}
+  // A top temperature's colour: cool blue through green and gold to hot red, blended with the text colour so it reads in light and dark
+  const TINTS=[[10,[74,163,223]],[16,[95,186,205]],[21,[120,196,140]],[25,[214,178,64]],[29,[236,140,58]],[34,[226,84,70]],[40,[184,52,98]]];
+  function tint(t){if(!isNum(t))return"inherit";
+    const i=TINTS.findIndex(s=>t<=s[0]);if(i<=0)return`color-mix(in srgb,rgb(${TINTS[i<0?TINTS.length-1:0][1]}) 70%,var(--fg))`;
+    const [t0,a]=TINTS[i-1],[t1,b]=TINTS[i],f=(t-t0)/(t1-t0);
+    return`color-mix(in srgb,rgb(${a.map((v,j)=>Math.round(v+(b[j]-v)*f)).join(" ")}) 70%,var(--fg))`;}
   function agreement(rows){const v=rows.map(r=>r.tmax).filter(isNum);if(v.length<2)return{cls:"",label:"n/a",spread:null};const s=Math.max(...v)-Math.min(...v);return{spread:s,cls:s<=2?"":s<=4?"mid":"low",label:s<=2?"Agree":s<=4?"Some spread":"Disagree"};}
   // Station reading: the Bureau's live feed if the browser got it, otherwise the scraper's copy
   function obsNow(){const D=state.data,o=D.bom&&D.bom.obs,so=D.scraped&&D.scraped.observations;
@@ -923,9 +997,11 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       const scraped=scr.state==="ok"?scr.data:(scr.state==="error"?state.data?.scraped||null:null);
       const bomOk=bom&&(bom.ok||bom.obs);
       if(!bomOk&&!scraped)throw new Error("nothing reachable");
+      const prev=state.data;
       state.data={bom:bomOk?bom:null,scraped,fetched:Date.now()};
+      PLUG.extras.forEach(x=>{if(prev&&prev[x.key]!=null)state.data[x.key]=prev[x.key];});  // keep until refetched
       try{localStorage.setItem(cacheKey(),JSON.stringify(state.data));}catch(e){}
-      render();
+      render();loadExtras(forLoc);
       if(scraped&&!(Date.now()-Date.parse(scraped.generated)<AUTO_MINUTES*60e3))refreshSites(true);
     }catch(e){
       if(state.loc.id!==forLoc)return;
@@ -936,6 +1012,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       $("err").hidden=false;
     }finally{if(state.loc.id===forLoc)btn.disabled=false;}
   }
+  // The plug-ins' extra data, fetched once the core figures are on screen; each keeps its last good value
+  async function loadExtras(forLoc){const L=state.loc;
+    if(!PLUG.extras.length)return;
+    await Promise.all(PLUG.extras.map(async x=>{try{const v=await x.load(L);if(state.loc.id===forLoc&&state.data&&v!=null)state.data[x.key]=v;}catch(e){}}));
+    if(state.loc.id!==forLoc||!state.data)return;
+    try{localStorage.setItem(cacheKey(),JSON.stringify(state.data));}catch(e){}
+    render();}
 
   // The picture for a day: the Bureau's own icon, else its words, else what most forecast sites say
   function dayIcon(k,rows){const b=bomDay(k),own=b&&(b.icon||classify(b.text));if(own)return own;
@@ -1111,22 +1194,31 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
   function render(){
     const D=state.data;if(!D)return;
     $("status").textContent="Updated "+new Date(D.fetched).toLocaleString("en-AU",{weekday:"short",hour:"numeric",minute:"2-digit"});
-    // Now: big picture and reading, then six small figures
-    const ob=obsNow(),today=bomDay(dates()[0]),ni=nowIcon();
-    const stat=(icon,label,val)=>`<div><dt>${ui(icon)}${label}</dt><dd>${val}</dd></div>`;
+    // Now: big picture and reading, the day in a sentence, today's facts, then six small figures
+    const k0=dates()[0],ob=obsNow(),today=bomDay(k0),ni=nowIcon();
+    const stat=(icon,label,val,cls="")=>`<div><dt>${ui(icon)}${label}</dt><dd${cls?` class="${cls}"`:""}>${val}</dd></div>`;
     $("now").dataset.sky=sky(ni.icon,ni.night);renderScene(ni);
+    const cond=today&&today.text||(ni.icon?WX_LABEL[ni.icon]||"":"")||"Latest reading";
+    let story="";try{story=hourStory(hoursFor(k0),sunHours(k0));}catch(e){}
+    const uvcat=today?(today.uvcat||"").replace(/^./,c=>c.toUpperCase()).replace("Veryhigh","Very high"):"";
+    const facts=today?[isNum(today.tmax)?`<span><small>High</small><b style="color:${tint(today.tmax)}">${f0(today.tmax)}°</b></span>`:"",
+      isNum(today.tmin)?`<span><small>Low</small>${f0(today.tmin)}°</span>`:"",
+      isNum(today.chance)?`<span>${f0(today.chance)}%<small>chance of rain</small></span>`:"",
+      isNum(today.uv)&&today.uv>=8?`<span class="warn">UV ${f0(today.uv)}<small class="warn">${esc(uvcat.toLowerCase())}</small></span>`:"",
+      ob&&isNum(ob.gust)&&ob.gust>=40?`<span class="warn">Gusts ${f0(ob.gust)} km/h</span>`:""].join(""):"";
     const top=`<div class="nowtop">${wx(ni.icon,ni.night)||wx("partly_cloudy")}
         <div><div class="temp num">${ob?f0(ob.temp):"–"}<small>°C</small></div><div class="feels">${ob?"Feels like "+f0(ob.feels)+"°":"No station reading"}</div></div>
-        <div class="nowcond"><div class="nowdate">${new Date().toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long",timeZone:state.loc.tz})}</div><div class="cond">${esc(today&&today.text||(ni.icon?WX_LABEL[ni.icon]||"":"")||"Latest reading")}</div>
-          <div class="hilo">${today?`Today ${isNum(today.tmax)?"max "+f0(today.tmax)+"°":""}${isNum(today.tmin)?" min "+f0(today.tmin)+"°":""}${isNum(today.chance)?" · "+f0(today.chance)+"% chance of rain":""}`:""}</div></div></div>`;
+        <div class="nowcond"><div class="nowdate">${new Date().toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long",timeZone:state.loc.tz})}</div><div class="cond">${esc(cond)}</div>
+          ${story?`<p class="story">${story}</p>`:""}${facts?`<div class="facts">${facts}</div>`:""}</div></div>`;
     $("now").innerHTML=top+`<dl class="stats">
-      ${stat("drop","Humidity",ob?f0(ob.hum)+"%":"–")}
-      ${stat("wind","Wind",ob?`${f0(ob.wind)} <small>km/h</small> ${arrow(ob.dir)}<small>${esc(ob.dir||"")}</small>`:"–")}
-      ${stat("gust","Gusts",ob?`${f0(ob.gust)} <small>km/h</small>`:"–")}
-      ${stat("umbrella","Rain 9am",ob?`${f1(ob.rain)} <small>mm</small>`:"–")}
-      ${stat("uv","UV max",today&&isNum(today.uv)?`${f0(today.uv)} <small>${esc((today.uvcat||"").replace(/^./,c=>c.toUpperCase()).replace("Veryhigh","Very high"))}</small>`:"–")}
-      ${stat("sunrise","Sun",today&&today.rise?`<small>${hm(today.rise)}</small><small>${hm(today.set)}</small>`:"–")}</dl>`;
-    $("obs").textContent=ob?"Bureau of Meteorology reading from "+(ob.station?ob.station+" station":"the nearest station")+(isNum(ob.km)?", "+f0(ob.km)+" km away":"")+(ob.at?", at "+new Date(ob.at).toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit",timeZone:state.loc.tz}):"")+". Sun shows sunrise and sunset."
+      ${stat("drop","Humidity",ob?`${f0(ob.hum)}<small>%</small>`:"–")}
+      ${stat("wind","Wind",ob?`${f0(ob.wind)}<small>km/h</small>${arrow(ob.dir)}<small>${esc(ob.dir||"")}</small>`:"–")}
+      ${stat("gust","Gusts",ob?`${f0(ob.gust)}<small>km/h</small>`:"–")}
+      ${stat("umbrella","Rain today",ob?`${f1(ob.rain)}<small>mm</small>`:"–")}
+      ${stat("uv","UV max",today&&isNum(today.uv)?`${f0(today.uv)}<small>${esc(uvcat)}</small><span class="uvscale"><i style="left:${Math.min(100,today.uv/14*100).toFixed(0)}%"></i></span>`:"–")}
+      ${stat("sunrise","Sun",today&&today.rise?`<span>${hm(today.rise)} <small>rise</small></span><span>${hm(today.set)} <small>set</small></span>`:"–",today&&today.rise?"sun":"")}</dl>`;
+    $("stickName").textContent=state.loc.name;$("stickCond").textContent=cond;$("stickTemp").textContent=ob?f0(ob.temp)+"°":"";
+    $("obs").textContent=ob?"Bureau of Meteorology reading from "+(ob.station?ob.station+" station":"the nearest station")+(isNum(ob.km)?", "+f0(ob.km)+" km away":"")+(ob.at?", at "+new Date(ob.at).toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit",timeZone:state.loc.tz}):"")+". Rain today counts from 9am, as the Bureau does."
       :"No station reading right now. Tap Refresh to try again.";
     // Days, with a bar showing where each day's range sits within the week
     const info=dates().map(k=>{const rows=rowsFor(k);return{k,rows,mx:median(rows.map(r=>r.tmax)),mn:median(rows.map(r=>r.tmin))};});
@@ -1137,16 +1229,15 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       const ch=b&&isNum(b.chance)?b.chance:median(rows.map(r=>r.chance));
       const nm=i===0?"Today":i===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"short"});
       const bar=isFinite(lo)&&isFinite(hi)&&hi>lo&&isNum(mx)&&isNum(mn)?`<span class="tbar"><i style="left:${((mn-lo)/(hi-lo)*100).toFixed(0)}%;right:${((hi-mx)/(hi-lo)*100).toFixed(0)}%"></i></span>`:"";
-      return `<button type="button" class="day" data-i="${i}" aria-pressed="${i===state.sel}">
+      // The written forecast and the detail behind the figures show on hover, and in full in "Site by site" below
+      const tip=[b&&b.text||(ic?WX_LABEL[ic]:""),rows.length?wet+" of "+rows.length+" sources forecast 1 mm or more":"",b&&isNum(b.tmax)?"Bureau's top "+f0(b.tmax)+"°":""].filter(Boolean).join(" · ");
+      return `<button type="button" class="day" data-i="${i}" aria-pressed="${i===state.sel}" title="${esc(tip)}">
         <span class="dname">${nm}</span><span class="ddate">${dt.toLocaleDateString("en-AU",{day:"numeric",month:"short"})}</span>
         ${wx(ic)}
-        <span class="dtemps"><b>${f0(mx)}°</b> <span>${f0(mn)}°</span></span>${bar}
-        <span class="dtext">${esc(b&&b.text||(ic?WX_LABEL[ic]:""))}</span>
-        <span class="drain">${ui("drop")}${isNum(ch)?f0(ch)+"%":"–"}</span>
-        <span class="dsays">${rows.length?wet+"/"+rows.length+" say rain":"No data"}</span>
-        ${b&&isNum(b.tmax)?`<span class="dbom">BOM ${f0(b.tmax)}°</span>`:""}
-        <span class="agree ${ag.cls}"><i></i>${ag.label}</span></button>`;}).join("");
-    renderDay();renderChart();renderSites();
+        <span class="dtemps"><b style="color:${tint(mx)}">${f0(mx)}°</b>${f0(mn)}°</span>
+        <span class="drain">${isNum(ch)?`<span class="rbar"><i style="width:${f0(ch)}%"></i></span>${f0(ch)}%`:"–"}</span>
+        <span class="agree ${ag.cls}"><i></i>${ag.label}</span>${bar}</button>`;}).join("");
+    renderDay();renderChart();renderSites();runPlug(PLUG.render);
   }
 
   function renderDay(){
@@ -1167,7 +1258,7 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       <td>${r.rainText}</td><td>${isNum(r.chance)?f0(r.chance)+"%":dash}</td></tr>`;});
     $("tbody").innerHTML=rows.length?html+`<tr class="median"><td>Median</td><td>${f1(med.tmax)}</td><td>${f1(med.tmin)}</td><td>${f1(med.rain)}</td><td>${isNum(med.chance)?f0(med.chance)+"%":"–"}</td></tr>`
       :`<tr><td colspan="5">No forecasts for this day yet.</td></tr>`;
-    renderPanel(k,state.sel);renderHourly(k);renderTides(k);renderDrive(k);renderBoat(k);
+    renderPanel(k,state.sel);renderHourly(k);renderTides(k);renderDrive(k);renderBoat(k);runPlug(PLUG.day,k);
   }
 
   // ---- Hour by hour: for each hour of the chosen day, the median of every source with hourly figures ----
@@ -1653,11 +1744,12 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     const S=state.data?.scraped,errs=(S&&S.errors)||{};
     const dt=new Date(k+"T12:00:00");
     $("panelt").textContent="Your weather sites · "+(sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
-    const card=(p,body,cls="",pic="")=>`<div class="card ${cls}" style="--c:var(${p.c})"><div class="chd"><span class="cn">${esc(p.name)}</span>${pic}</div><span class="cd">${esc(p.dom)}</span>${body}</div>`;
+    // Every tile the same shape: name and picture, top and bottom, the forecast in words, then rain. The site's address and any note (its forecast point or model) show on hover.
+    const card=(p,body,cls="",pic="",note="")=>`<div class="card ${cls}" style="--c:var(${p.c})" title="${esc([p.dom,note].filter(Boolean).join(" · "))}"><div class="chd"><span class="cn">${esc(p.name)}</span>${pic}</div>${body}</div>`;
     const empty=(p,msg)=>card(p,`<span class="cx">${esc(msg)}</span>`,"empty");
-    const fc=(p,d,note)=>card(p,`<span class="ct">${isNum(d.tmax)?f0(d.tmax)+"°":"–"} <span>${isNum(d.tmin)?f0(d.tmin)+"°":"–"}</span></span>
-      <span class="cr">${d.rainText==="–"?"":esc(d.rainText)+" mm"}${isNum(d.chance)?(d.rainText==="–"?"":" · ")+f0(d.chance)+"% chance":""}</span>
-      ${d.text?`<span class="cx">${esc(d.text)}</span>`:""}${note?`<span class="cd">${esc(note)}</span>`:""}`,"",wx(d.icon||classify(d.text)));
+    const fc=(p,d,note)=>{const mm=d.rainText==="–"?"":d.rainText+" mm",rain=[isNum(d.chance)?f0(d.chance)+"%":"",mm].filter(Boolean).join(" · ");
+      return card(p,`<span class="ct">${isNum(d.tmax)?`<b style="font-weight:inherit;color:${tint(d.tmax)}">${f0(d.tmax)}°</b>`:"–"}<span>${isNum(d.tmin)?f0(d.tmin)+"°":"–"}</span></span>
+      ${d.text?`<span class="cx">${esc(d.text)}</span>`:""}<span class="cr rain">${esc(rain||"No rain figure")}</span>`,"",wx(d.icon||classify(d.text)),note);};
     // Searched places only have the Bureau's figures, so show just those cards plus a pointer to the full list
     const full=state.loc.kind==="full";
     const cards=full?PANEL:PANEL.filter(p=>p.kind==="meteye"||p.kind==="obs");
@@ -1669,8 +1761,8 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
       if(p.kind==="meteye"){const b=bomDay(k);if(!b)return empty(p,"No Bureau forecast for this day.");
         return fc(p,{tmax:b.tmax,tmin:b.tmin,rainText:rangeText(b.rmin,b.rmax),chance:b.chance,text:b.text,icon:b.icon},"Bureau grid forecast for "+state.loc.name+" (same as the BOM row)");}
       if(p.kind==="obs"){const o=obsNow();if(!o)return empty(p,"No station reading right now.");
-        return card(p,`<span class="ct">${f1(o.temp)}°C <span>now</span></span><span class="cr">Feels ${f0(o.feels)}° · ${f0(o.hum)}% · ${f0(o.wind)} km/h ${esc(o.dir||"")}</span>
-          <span class="cx">${esc(o.station||"Nearest station")}${isNum(o.km)?" ("+f0(o.km)+" km)":""}${o.at?", "+esc(new Date(o.at).toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit",timeZone:state.loc.tz})):""}</span><span class="cd">Latest reading, not a forecast</span>`,"",ui("eye"));}
+        return card(p,`<span class="ct">${f1(o.temp)}°<span>now</span></span>
+          <span class="cx">${esc(o.station||"Nearest station")}${isNum(o.km)?", "+f0(o.km)+" km":""}${o.at?", "+esc(new Date(o.at).toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit",timeZone:state.loc.tz})):""}</span><span class="cr">Feels ${f0(o.feels)}° · ${f0(o.hum)}% · ${f0(o.wind)} km/h ${esc(o.dir||"")}</span>`,"",ui("eye"),"Latest reading, not a forecast");}
       return "";
     }).join("");
   }
@@ -1804,10 +1896,13 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     // Keep the choice in the link too, so a shared link opens on the same place
     try{const u=new URL(location.href);u.searchParams.delete(L.kind==="full"?"place":"loc");
       u.searchParams.set(L.kind==="full"?"loc":"place",L.kind==="full"?L.id:L.g7);history.replaceState(null,"",u);}catch(e){}
-    const coords=isNum(L.lat)&&isNum(L.lon)?` · ${Math.abs(L.lat).toFixed(2)}°S ${L.lon.toFixed(2)}°E`:"";
-    $("eyebrow").textContent=`${L.kind==="full"?"Full comparison":"Bureau of Meteorology only"} · ${L.state||""} ${L.postcode||""}${coords}`;
+    const where=[L.state,L.postcode].filter(Boolean).join(" ");
+    $("eyebrow").textContent=(where?where+" · ":"")+(L.kind==="full"?`Bureau of Meteorology and ${SITES.length} forecast sites`:"Bureau of Meteorology only");
     document.title=L.name+" · Consolidated Weather";
     renderPicker();renderSave();
+    // The sections settle in for the new place
+    const w=document.querySelector(".wrap");w.classList.remove("enter");void w.offsetWidth;w.classList.add("enter");
+    clearTimeout(setLoc.t);setLoc.t=setTimeout(()=>w.classList.remove("enter"),1200);
     state.sel=0;state.water=0;state.tide=null;state.tideAll=false;state.scrape={state:"pending"};state.data=null;hideTip();
     try{state.data=JSON.parse(localStorage.getItem(cacheKey())||"null");}catch(e){}
     if(state.data)render();
@@ -1834,7 +1929,19 @@ footer{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap
     if(saved.length||extra.length)html+=`<optgroup label="My places (Bureau only)">${[...saved,...extra].map(p=>`<option value="place:${esc(p.g7)}">${esc(p.name)}${p.state?", "+esc(p.state):""}</option>`).join("")}</optgroup>`;
     $("loc").innerHTML=html;
     if(cur)$("loc").value=cur.kind==="full"?"loc:"+cur.id:"place:"+cur.g7;
+    fitPicker();
   }
+  // A dropdown is as wide as its longest option; size the headline to the chosen place so the chevron sits right after it
+  function fitPicker(){const s=$("loc"),o=s.selectedOptions[0];if(!o)return;
+    const cs=getComputedStyle(s),c=(fitPicker.c||=document.createElement("canvas").getContext("2d"));
+    c.font=`${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    s.style.width=Math.ceil(c.measureText(o.text).width+parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight)+4)+"px";}
+  document.fonts?.ready.then(fitPicker);
+  addEventListener("resize",fitPicker);
+  // The slim bar shows once the header has scrolled out of view; tapping it goes back to the top
+  new IntersectionObserver(([e])=>$("stick").classList.toggle("on",!e.isIntersecting&&!!state.data)).observe($("top"));
+  $("stick").addEventListener("click",()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
+  document.querySelectorAll(".wrap>section").forEach((s,i)=>s.style.setProperty("--i",Math.min(i,6)));
   $("loc").addEventListener("change",e=>{const [k,v]=e.target.value.split(/:(.*)/);
     if(k==="loc")setLoc(full(LOCS.find(l=>l.id===v)));
     else{const p=getSaved().find(p=>p.g7===v)||(state.loc&&state.loc.g7===v?state.loc:null);if(p)setLoc(p);}});
