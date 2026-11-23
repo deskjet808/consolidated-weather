@@ -1,6 +1,6 @@
 {
  "id": "rainbow-beach",
- "generated": "2026-11-23T10:39:10Z",
+ "generated": "2026-11-23T10:43:36Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-23T10:38:42Z"
+   "fetched": "2026-11-23T10:43:10Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:38:44Z"
+   "fetched": "2026-11-23T10:43:12Z"
   },
   {
    "source": "weatherzone",
@@ -1236,7 +1236,7 @@
      "Shower"
     ]
    },
-   "fetched": "2026-11-23T10:38:59Z"
+   "fetched": "2026-11-23T10:43:25Z"
   },
   {
    "source": "windy",
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:39:05Z"
+   "fetched": "2026-11-23T10:43:32Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-23T10:39:06Z"
+   "fetched": "2026-11-23T10:43:32Z"
   },
   {
    "source": "icon",
@@ -3566,7 +3566,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-23T10:39:06Z"
+   "fetched": "2026-11-23T10:43:33Z"
   },
   {
    "source": "foreca",
@@ -3797,7 +3797,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-23T10:39:10Z"
+   "fetched": "2026-11-23T10:43:36Z"
   }
  ],
  "observations": {
@@ -3812,7 +3812,7 @@
   "wind_kmh": 24,
   "gust_kmh": 30,
   "rain_since_9am": 0,
-  "fetched": "2026-11-23T10:38:22Z"
+  "fetched": "2026-11-23T10:42:50Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4332,7 +4332,7 @@
     "windfinder_place": "Rainbow Beach"
    }
   ],
-  "fetched": "2026-11-23T10:38:41Z"
+  "fetched": "2026-11-23T10:43:09Z"
  },
  "errors": {}
 }

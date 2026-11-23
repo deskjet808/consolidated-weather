@@ -1,6 +1,6 @@
 {
  "id": "maroochydore",
- "generated": "2026-11-23T10:41:39Z",
+ "generated": "2026-11-23T10:46:27Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-23T10:41:12Z"
+   "fetched": "2026-11-23T10:46:03Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:41:14Z"
+   "fetched": "2026-11-23T10:46:05Z"
   },
   {
    "source": "weatherzone",
@@ -1236,7 +1236,7 @@
      "Chance shower"
     ]
    },
-   "fetched": "2026-11-23T10:41:28Z"
+   "fetched": "2026-11-23T10:46:17Z"
   },
   {
    "source": "windy",
@@ -1332,10 +1332,10 @@
      24.5,
      23.7,
      23,
-     22.7,
+     22.6,
      22.3,
-     22,
-     21.4,
+     21.9,
+     21.3,
      20.8,
      20.2,
      19.6,
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:41:35Z"
+   "fetched": "2026-11-23T10:46:24Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-23T10:41:35Z"
+   "fetched": "2026-11-23T10:46:24Z"
   },
   {
    "source": "icon",
@@ -3566,7 +3566,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-23T10:41:35Z"
+   "fetched": "2026-11-23T10:46:24Z"
   },
   {
    "source": "foreca",
@@ -3797,22 +3797,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-23T10:41:39Z"
+   "fetched": "2026-11-23T10:46:27Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Sunshine Coast Airport",
   "distance_km": 6.3,
-  "time": "2026-11-23T20:30:00+10:00",
-  "temp": 22.6,
-  "feels_like": 21.2,
-  "humidity": 69,
+  "time": "2026-11-23T20:40:00+10:00",
+  "temp": 22.7,
+  "feels_like": 21.1,
+  "humidity": 68,
   "wind_dir": "NE",
-  "wind_kmh": 19,
-  "gust_kmh": 22,
+  "wind_kmh": 20,
+  "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-23T10:40:54Z"
+  "fetched": "2026-11-23T10:45:44Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4332,7 +4332,7 @@
     "windfinder_place": "Mooloolaba (Tide)"
    }
   ],
-  "fetched": "2026-11-23T10:41:12Z"
+  "fetched": "2026-11-23T10:46:02Z"
  },
  "errors": {}
 }

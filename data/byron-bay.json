@@ -1,6 +1,6 @@
 {
  "id": "byron-bay",
- "generated": "2026-11-23T10:39:45Z",
+ "generated": "2026-11-23T10:44:13Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-23T10:39:20Z"
+   "fetched": "2026-11-23T10:43:47Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:39:22Z"
+   "fetched": "2026-11-23T10:43:49Z"
   },
   {
    "source": "weatherzone",
@@ -1236,7 +1236,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-23T10:39:35Z"
+   "fetched": "2026-11-23T10:44:03Z"
   },
   {
    "source": "windy",
@@ -1801,7 +1801,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:39:42Z"
+   "fetched": "2026-11-23T10:44:10Z"
   },
   {
    "source": "ecmwf",
@@ -2692,7 +2692,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-23T10:39:42Z"
+   "fetched": "2026-11-23T10:44:10Z"
   },
   {
    "source": "icon",
@@ -3570,7 +3570,7 @@
      "Light showers"
     ]
    },
-   "fetched": "2026-11-23T10:39:42Z"
+   "fetched": "2026-11-23T10:44:10Z"
   },
   {
    "source": "foreca",
@@ -3797,7 +3797,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-23T10:39:45Z"
+   "fetched": "2026-11-23T10:44:13Z"
   }
  ],
  "observations": {
@@ -3812,7 +3812,7 @@
   "wind_kmh": 28,
   "gust_kmh": 39,
   "rain_since_9am": 0,
-  "fetched": "2026-11-23T10:39:10Z"
+  "fetched": "2026-11-23T10:43:37Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4096,7 +4096,7 @@
     "windfinder_place": "Cape Byron Light"
    }
   ],
-  "fetched": "2026-11-23T10:39:20Z"
+  "fetched": "2026-11-23T10:43:46Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "lake-tinaroo",
- "generated": "2026-11-23T10:40:19Z",
+ "generated": "2026-11-23T10:45:09Z",
  "sources": [
   {
    "source": "bom",
@@ -98,7 +98,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-23T10:39:54Z"
+   "fetched": "2026-11-23T10:44:22Z"
   },
   {
    "source": "willyweather",
@@ -859,7 +859,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:39:56Z"
+   "fetched": "2026-11-23T10:44:24Z"
   },
   {
    "source": "weatherzone",
@@ -1237,7 +1237,7 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-23T10:40:09Z"
+   "fetched": "2026-11-23T10:44:57Z"
   },
   {
    "source": "windy",
@@ -1802,7 +1802,7 @@
      null
     ]
    },
-   "fetched": "2026-11-23T10:40:15Z"
+   "fetched": "2026-11-23T10:45:04Z"
   },
   {
    "source": "ecmwf",
@@ -2693,7 +2693,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-23T10:40:15Z"
+   "fetched": "2026-11-23T10:45:04Z"
   },
   {
    "source": "icon",
@@ -3567,7 +3567,7 @@
      "Cloudy"
     ]
    },
-   "fetched": "2026-11-23T10:40:16Z"
+   "fetched": "2026-11-23T10:45:04Z"
   },
   {
    "source": "foreca",
@@ -3799,22 +3799,22 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-23T10:40:19Z"
+   "fetched": "2026-11-23T10:45:09Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Mareeba",
   "distance_km": 23.3,
-  "time": "2026-11-23T20:30:00+10:00",
+  "time": "2026-11-23T20:40:00+10:00",
   "temp": 23.1,
-  "feels_like": 25.7,
+  "feels_like": 24.9,
   "humidity": 75,
-  "wind_dir": "ENE",
-  "wind_kmh": 2,
-  "gust_kmh": 11,
+  "wind_dir": "NE",
+  "wind_kmh": 6,
+  "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-23T10:39:46Z"
+  "fetched": "2026-11-23T10:44:14Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -3870,7 +3870,7 @@
   "problems": [
    "Seabreeze: ValueError: no wind and wave graph"
   ],
-  "fetched": "2026-11-23T10:39:53Z"
+  "fetched": "2026-11-23T10:44:22Z"
  },
  "errors": {}
 }
