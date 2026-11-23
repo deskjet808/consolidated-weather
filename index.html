@@ -225,6 +225,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .card.empty .cx{color:var(--muted)}
 .card.alert{border-color:var(--warn)}
 
+/* Webcams: a row of link buttons, each with who runs the camera underneath */
+.cams{display:flex;flex-wrap:wrap;gap:8px}
+.cams .btn{flex-direction:column;align-items:flex-start;gap:0;line-height:1.25;color:var(--fg);text-decoration:none;max-width:100%;overflow-wrap:anywhere}
+.cams .by{font-weight:400;font-size:.74rem;color:var(--muted)}
+
 /* Boating */
 .rate{align-self:flex-start;margin-top:6px;padding:2px 14px;border-radius:999px;font:700 1.25rem/1.4 var(--display);background:color-mix(in srgb,currentColor 14%,transparent)}
 .rate.calm{color:var(--good)} .rate.choppy{color:var(--warn)} .rate.rough{color:var(--bad)}
@@ -690,6 +695,12 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     <p class="note">Calm under 15 km/h, choppy 15 to 25, rough above 25. The outlined hours are the best stretch of the day.</p>
     <details class="about"><summary>About this</summary><p>A rough guide for jet skis and small boats, from the strongest daytime wind (6am to 6pm). The best stretch is the longest run of daylight hours under 15 km/h, or, if there isn't one, under 26 km/h. Gusts, swell and local conditions matter too; check the Bureau of Meteorology's marine warnings before heading out.</p>
     <p>Wind and gusts: the Bureau of Meteorology's hourly forecast for a point on each water. Windy: windy.com at the same point. Seabreeze: its forecast for the town. Windfinder: its nearest spot, for today and tomorrow (its free forecast goes no further). Swell (open ocean only) and tide times: WillyWeather, for the spot named on each card.</p></details>
+  </section>
+
+  <section aria-labelledby="camh" id="camSec" hidden>
+    <h2 id="camh"><i data-ui="eye"></i><span>Webcams</span></h2>
+    <p class="note">Live cameras near here, from their own sites. Some play an advert first or limit free viewing.</p>
+    <div class="cams" id="cams"></div>
   </section>
 
   <section aria-labelledby="panelh">
@@ -1740,6 +1751,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="dd">${nm}</span><span class="dw">${wins}</span><span class="ds${isNum(sv)&&sv>=2?" big":""}">${isNum(sv)?"Swell "+sv+" m":""}</span></button>`;}).join("");
   }
   $("dweek").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;const d=document.querySelector(`.day[data-i="${b.dataset.i}"]`);if(d)d.click();});
+  // Webcams: links to live cameras near the place on screen (listed per place in locations.json), so you can
+  // see the water before driving there. Searched places have none, so the section stays hidden for them.
+  PLUG.render.push(()=>{const W=(state.loc&&state.loc.kind==="full"&&state.loc.webcams)||[];$("camSec").hidden=!W.length;
+    $("cams").innerHTML=W.map(c=>`<a class="btn" href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}<span class="by">${esc(c.by)}</span></a>`).join("");});
   function renderPanel(k,sel){
     const S=state.data?.scraped,errs=(S&&S.errors)||{};
     const dt=new Date(k+"T12:00:00");
