@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-design="web2000">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Consolidated Weather</title>
+<!-- The page's look: "web2000" (the early-2000s weather portal, the default) or "classic", as chosen with the Design
+     button in the bottom corner. Set here, before anything is drawn, so the page never flashes the other look. -->
+<script>try{if(localStorage.getItem("aus-forecast-design")==="classic")document.documentElement.dataset.design="classic";}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#eef3f4">
 <!-- The page has its own light and dark colours: tell browsers' automatic dark mode and the Dark Reader extension
@@ -699,6 +702,660 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
 @keyframes settle{from{opacity:0;transform:translateY(10px)}}
 @media (prefers-reduced-motion:reduce){.stick{transition:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* The early-2000s look's extra pieces (.w2k) and its pixel pictures: hidden here, so the classic look is as it was.
+   The window box (.win) steps aside, leaving .wrap where it always was. */
+.win{display:contents}
+:root:not([data-design="web2000"]) .w2k{display:none!important}
+.wx .wxp,.ui .uip{display:none}
+
+/* Design switcher: a small button in the bottom corner, clear of the phone's home bar, with its menu above it */
+.dsw{position:fixed;z-index:40;right:max(10px,env(safe-area-inset-right,0px));bottom:max(10px,env(safe-area-inset-bottom,0px))}
+.dsw-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px 0 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:var(--shadow);color:var(--fg);font:600 .82rem var(--body)}
+.dsw-btn .px{display:none}
+.dsw-btn .dsw-ic{width:17px;height:17px;color:var(--accent)}
+.dsw-btn:hover,.dsw-btn[aria-expanded="true"]{border-color:var(--accent)}
+.dsw-menu{position:absolute;right:0;bottom:calc(100% + 8px);display:flex;flex-direction:column;min-width:228px;max-height:calc(100vh - 90px);overflow-y:auto;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 10px 30px rgb(0 0 0/.2)}
+.dsw-menu[hidden]{display:none}
+.dsw-menu.atbar{position:fixed;right:auto;bottom:auto}
+.dsw-menu [role^="menuitem"]{position:relative;display:block;width:100%;padding:8px 12px 8px 30px;border:0;border-radius:9px;background:none;color:var(--fg);font:500 .92rem/1.3 var(--body);text-align:left;text-decoration:none;cursor:pointer}
+.dsw-menu [role^="menuitem"]:hover,.dsw-menu [role^="menuitem"]:focus{background:var(--accent-soft);outline:none}
+.dsw-menu [role^="menuitem"]:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.dsw-menu [aria-checked="true"]{font-weight:600}
+.dsw-menu [aria-checked="true"]::before{content:"";position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--accent)}
+.dsw-sep{height:1px;margin:5px 8px;background:var(--line)}
+.dsw-h{padding:7px 12px 3px 30px;font:500 .68rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:560px){.dsw-btn{width:38px;height:38px;padding:0;justify-content:center}.dsw-lab{display:none}}
+</style>
+<style>
+/* ===========================================================================================================
+   EARLY 2000s LOOK  (data-design="web2000")
+   A 2001 weather portal inside a Windows 2000 window, after the sample the look was chosen from. Every rule here
+   is scoped to the look, so the classic look above is untouched; the colours are the portal's own, light only.
+   Colours:  desktop #3A6EA5 · title bar #0A246A to #A6CAF0 · window grey #D4D0C8 with #FFFFFF, #808080 and
+             #404040 bevels · portal navy #24508F with amber #FF9900 bullets · 1px rules #94A9C9 · strips
+             #EEF3FA and #DCE6F4 · note yellow #FFFFCC · tooltip #FFFFE1 · hot #B00000, cold #0037A0, rain #1E5FD8
+   Type:     Verdana for content (10 to 12 px, a touch larger on phones), Tahoma for the window's own parts
+             (title bar, menus, buttons, tabs, status bar), Verdana bold for the big figures.
+   Pictures: 16 x 16 pixel art, shown only at 16, 32 or 64 px so every pixel stays square.
+   =========================================================================================================== */
+:root[data-design="web2000"]{
+  --bg:#FFFFFF; --surface:#FFFFFF; --fg:#000000; --muted:#555555; --line:#C3CFE2;
+  --accent:#24508F; --accent-soft:#DCE6F4; --good:#2E7D1E; --warn:#B25400; --bad:#B00000;
+  --bom:#0A246A; --bom-soft:#EAF0F9;
+  --s1:#C27C00; --s2:#0E8A7E; --s3:#A8327D; --s4:#6A4FC0; --s5:#4F7A10; --s6:#3B6FB8;
+  --sun:#f2a91c; --moon:#d9b54a; --cloud:#c2ced4; --cloud2:#94a7b0; --cloud-dark:#7a8b94;
+  --rain:#1E5FD8; --bolt:#f2a91c; --snow:#5FA0E0; --haze:#c2a878; --cool:#0037A0; --warm:#B00000;
+  --g-c2:#c6d4dc; --g-d1:#a9b6be; --g-d2:#5d6e78;
+  --sky-sun:#F4F7FB; --sky-cloud:#F4F7FB; --sky-rain:#F4F7FB; --sky-storm:#F4F7FB; --sky-night:#E6E9F0; --storm:#6B49C8;
+  --dayA:#FFFFFF; --dayB:#EEF3FA; --rainbar:#1E5FD8;
+  --shadow:none; --glass:#FFFFFF; --glass-line:#94A9C9;
+  --display:Verdana,"DejaVu Sans",Geneva,sans-serif; --body:Verdana,"DejaVu Sans",Geneva,sans-serif; --mono:Tahoma,Verdana,"DejaVu Sans",sans-serif;
+  --c-desk:#3A6EA5; --c-cap-a:#0A246A; --c-cap-b:#A6CAF0; --c-face:#D4D0C8; --c-hi:#FFFFFF; --c-sh:#808080; --c-dk:#404040;
+  --c-navy:#24508F; --c-navy-dk:#173A6E; --c-navy-hi:#4B79B9; --c-rule:#94A9C9; --c-strip:#EEF3FA; --c-strip-2:#DCE6F4; --c-row:#F3F6FB; --c-rowline:#DDE4EF;
+  --c-link:#0033A0; --c-amber:#FF9900; --c-hover:#FFFFCC; --c-pick:#FFF8E1; --c-ink2:#2B2B2B; --c-ink3:#555555;
+  --raised:inset -1px -1px var(--c-dk),inset 1px 1px var(--c-hi),inset -2px -2px var(--c-sh),inset 2px 2px var(--c-face);
+  --raised-soft:inset -1px -1px var(--c-sh),inset 1px 1px var(--c-hi);
+  --pressed:inset -1px -1px var(--c-hi),inset 1px 1px var(--c-dk),inset -2px -2px var(--c-face),inset 2px 2px var(--c-sh);
+  --sunken:inset -1px -1px var(--c-hi),inset 1px 1px var(--c-sh),inset -2px -2px var(--c-face),inset 2px 2px var(--c-dk);
+  --sunken-soft:inset -1px -1px var(--c-hi),inset 1px 1px var(--c-sh);
+  /* A pressed toggle button's chequered face, as on Windows toolbars */
+  --dither:repeating-conic-gradient(#FFFFFF 0 25%,#D4D0C8 0 50%) 0 0/2px 2px;
+  --arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Crect width='17' height='17' fill='%23D4D0C8'/%3E%3Crect x='0' y='0' width='16' height='1' fill='%23fff'/%3E%3Crect x='0' y='0' width='1' height='16' fill='%23fff'/%3E%3Crect x='16' y='0' width='1' height='17' fill='%23404040'/%3E%3Crect x='0' y='16' width='17' height='1' fill='%23404040'/%3E%3Crect x='15' y='1' width='1' height='15' fill='%23808080'/%3E%3Crect x='1' y='15' width='15' height='1' fill='%23808080'/%3E%3Crect x='5' y='7' width='7' height='1' fill='%23000'/%3E%3Crect x='6' y='8' width='5' height='1' fill='%23000'/%3E%3Crect x='7' y='9' width='3' height='1' fill='%23000'/%3E%3Crect x='8' y='10' width='1' height='1' fill='%23000'/%3E%3C/svg%3E");
+  --t2:10px; --t1:11px; --t0:12px; --tl:16px;
+  color-scheme:light; font-size:13px;
+}
+@media (max-width:640px){:root[data-design="web2000"]{--t2:11px;--t1:12px;--t0:13px}}
+
+/* ---- Page, links, focus, pictures ---------------------------------------------------------------------- */
+[data-design="web2000"],[data-design="web2000"] body{background:var(--c-desk)}
+[data-design="web2000"] body{font:var(--t1)/1.45 var(--body);color:#000;font-variant-numeric:tabular-nums;
+  padding:0 env(safe-area-inset-right,0px) calc(52px + env(safe-area-inset-bottom,0px)) env(safe-area-inset-left,0px)}
+[data-design="web2000"] ::selection{background:#0A246A;color:#fff}
+[data-design="web2000"] a{color:var(--c-link)}
+[data-design="web2000"] a:hover{color:#C33400}
+[data-design="web2000"] :focus-visible{outline:1px dotted #000;outline-offset:1px}
+[data-design="web2000"] button:focus-visible,[data-design="web2000"] a:focus-visible{outline:1px dotted #000;outline-offset:1px}
+[data-design="web2000"] .px,[data-design="web2000"] .wxp,[data-design="web2000"] .uip{shape-rendering:crispEdges;image-rendering:pixelated}
+[data-design="web2000"] .px{display:block;flex:none}
+[data-design="web2000"] .wx .wxg,[data-design="web2000"] .ui.hp .uil{display:none}
+[data-design="web2000"] .wx .wxp,[data-design="web2000"] .ui .uip{display:inline}
+[data-design="web2000"] :is(.cls,.scene,.stick,#sceneBtn,.logo,.sub){display:none!important}
+[data-design="web2000"] .wrap>section>h2>.ui,[data-design="web2000"] :is(.scorehead,.charthead,.fold) h2>.ui{display:none}
+[data-design="web2000"] .note,[data-design="web2000"] .hswipe{font-size:var(--t2);line-height:1.4;color:var(--c-ink3)}
+[data-design="web2000"] .mono,[data-design="web2000"] .num{font-family:var(--body)}
+
+/* Windows 2000 scroll bars: grey thumbs and arrow buttons on a chequered track (Firefox gets plain grey ones) */
+[data-design="web2000"] ::-webkit-scrollbar{width:16px;height:16px}
+[data-design="web2000"] ::-webkit-scrollbar-track{background:var(--dither)}
+[data-design="web2000"] ::-webkit-scrollbar-thumb{background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] ::-webkit-scrollbar-corner{background:var(--c-face)}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button{display:block;width:16px;height:16px;background:var(--c-face) no-repeat center;box-shadow:var(--raised)}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button:active{box-shadow:var(--pressed);background-position:calc(50% + 1px) calc(50% + 1px)}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button:vertical:decrement{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1h1v1h1v1h1v1H0V3h1V2h1V1h1z'/%3E%3C/svg%3E")}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button:vertical:increment{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h7v1H6v1H5v1H4v1H3V3H2V2H1V1H0z'/%3E%3C/svg%3E")}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button:horizontal:decrement{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v7H3V6H2V5H1V4H0V3h1V2h1V1h1z'/%3E%3C/svg%3E")}
+[data-design="web2000"] ::-webkit-scrollbar-button:single-button:horizontal:increment{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1h1v1h1v1h1v1H3v1H2v1H1v1H0z'/%3E%3C/svg%3E")}
+@supports not selector(::-webkit-scrollbar){:root[data-design="web2000"]{scrollbar-color:#C9C5BD #EEEDE9}}
+[data-design="web2000"] .hscroll{scrollbar-width:auto}
+
+/* ---- The window: title bar, menu bar, white client area, status bar ------------------------------------ */
+[data-design="web2000"] .win{display:block;position:relative;max-width:1000px;margin:24px auto 0;padding:4px;background:var(--c-face);box-shadow:var(--raised),2px 2px 0 rgb(0 0 0/.35)}
+[data-design="web2000"] .cap{display:flex;align-items:center;gap:4px;height:18px;padding:0 2px 0 3px;background:linear-gradient(90deg,var(--c-cap-a),var(--c-cap-b));color:#fff;font:bold 11px/1 var(--mono);user-select:none}
+[data-design="web2000"] .captxt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.1px}
+[data-design="web2000"] .wbtns{display:flex}
+[data-design="web2000"] .wbtn{width:16px;height:14px;display:grid;place-items:center;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .wbtn.close{margin-left:2px}
+[data-design="web2000"] .wbtn svg{display:block;fill:#000;shape-rendering:crispEdges}
+[data-design="web2000"] .menubar{display:flex;padding:1px 0 2px}
+[data-design="web2000"] .menubar button{padding:3px 7px 4px;border:0;background:none;color:#000;font:11px/1 var(--mono);cursor:default}
+[data-design="web2000"] .menubar button:hover{box-shadow:var(--raised-soft)}
+[data-design="web2000"] .menubar button[aria-expanded="true"]{box-shadow:var(--sunken-soft)}
+[data-design="web2000"] .menubar button:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+[data-design="web2000"] .menubar u{text-decoration:underline}
+[data-design="web2000"] .statusbar{display:flex;gap:2px;padding-top:2px;font:11px/1 var(--mono);color:#000}
+[data-design="web2000"] .statusbar>span{display:flex;align-items:center;gap:4px;padding:3px 6px 4px;box-shadow:var(--sunken-soft);white-space:nowrap}
+[data-design="web2000"] .statusbar>.sbmsg{display:block;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+[data-design="web2000"] .statusbar .sbzone{padding:1px 8px 1px 4px}
+[data-design="web2000"] #sbPlace:empty{display:none}
+[data-design="web2000"] .led{display:inline-block;width:8px;height:8px;margin-right:5px;vertical-align:-1px;background:#23A323;box-shadow:inset -1px -1px #0D5E0D,inset 1px 1px #8BE38B}
+[data-design="web2000"] .led.busy{background:#E0A800;box-shadow:inset -1px -1px #8A6400,inset 1px 1px #FFE08A}
+[data-design="web2000"] .led.bad{background:#C00000;box-shadow:inset -1px -1px #6A0000,inset 1px 1px #FF8A8A}
+
+/* The client area is one grid: the date strip, the masthead with the place box, the tabs and the "you are here"
+   line on fixed lines, then every section in its own row (the header's own boxes step aside to join it) */
+[data-design="web2000"] .wrap{display:grid;max-width:none;margin:0;padding:2px 2px 0;gap:0;background:#fff;box-shadow:var(--sunken);
+  grid-template-columns:12px minmax(0,1fr) 9px 192px 8px minmax(0,236px) 9px 12px;grid-template-rows:auto 10px 6px auto 4px auto 8px 10px auto auto;align-items:start;
+  --hbw:84px}
+[data-design="web2000"] .wrap:has(#saveBtn:not([hidden])){--hbw:180px}
+[data-design="web2000"] .wrap>*{grid-column:2/8;min-width:0}
+[data-design="web2000"] header,[data-design="web2000"] .hdrbar,[data-design="web2000"] .toolbar{display:contents}
+[data-design="web2000"] .util{grid-area:1/1/2/9;display:flex;justify-content:space-between;gap:4px 12px;padding:3px 12px;background:var(--c-strip-2);border-bottom:1px solid var(--c-rule);font-size:var(--t2);color:var(--c-ink2)}
+[data-design="web2000"] .utilnav{white-space:nowrap}
+[data-design="web2000"] .utilnav a+a::before,[data-design="web2000"] .fnav a+a::before{content:"|";display:inline-block;margin:0 5px;color:var(--c-sh)}
+[data-design="web2000"] .topbar{grid-area:2/2/9/3;align-self:center;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo name" "logo tag";align-items:center;gap:0 8px}
+[data-design="web2000"] .blogo{grid-area:logo}
+[data-design="web2000"] .brand{grid-area:name;align-self:end;font:bold 22px/1 var(--body);letter-spacing:-.8px;text-transform:none;color:var(--c-cap-a)}
+[data-design="web2000"] .brand>span{display:inline}
+[data-design="web2000"] .brand>span+span{color:#C25E00}
+[data-design="web2000"] .btag{grid-area:tag;align-self:start;margin-top:4px;font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .fbox{grid-area:3/3/8/8;align-self:stretch;background:var(--c-strip);border:1px solid var(--c-rule)}
+[data-design="web2000"] .flabel{align-self:end;font:bold 10px/1 var(--body);letter-spacing:.6px;text-transform:uppercase;color:var(--c-navy-dk)}
+[data-design="web2000"] #lblLoc{grid-area:4/4/5/5}
+[data-design="web2000"] #lblQ{grid-area:4/6/5/7}
+[data-design="web2000"] .loctitle{grid-area:6/4/7/5;margin:0;font-size:var(--t1);line-height:1}
+[data-design="web2000"] .finder{grid-area:6/6/7/7;flex:none}
+[data-design="web2000"] .jump{grid-area:9/1/10/9;position:static;z-index:5;display:flex;align-items:flex-end;gap:2px;margin:0;padding:6px 12px 5px;overflow:visible;border:0;
+  background:linear-gradient(0deg,var(--c-navy) 0 4px,var(--c-navy-dk) 4px 5px,#fff 5px);-webkit-backdrop-filter:none;backdrop-filter:none}
+[data-design="web2000"] .crumbs{grid-area:10/1/11/9;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2px 12px;min-height:25px;
+  padding:3px calc(12px + var(--hbw)) 3px 12px;background:var(--c-strip);border-bottom:1px solid var(--c-rule);font-size:var(--t2);color:var(--c-ink2)}
+[data-design="web2000"] .hbtns{grid-area:10/1/11/9;justify-self:end;align-self:center;z-index:1;gap:4px;margin:0 12px 0 0}
+
+/* Masthead controls: sunken fields and the place list's grey drop button */
+[data-design="web2000"] .loctitle select{display:block;width:100%!important;height:21px;margin:0;padding:2px 22px 3px 4px;border:0;border-radius:0;background:#fff var(--arrow) no-repeat right 2px center;box-shadow:var(--sunken);font:var(--t1)/1 var(--body);color:#000}
+[data-design="web2000"] .loctitle select:hover{background:#fff var(--arrow) no-repeat right 2px center}
+[data-design="web2000"] .loctitle select:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .loctitle option,[data-design="web2000"] .loctitle optgroup{font:var(--t1) var(--body);color:#000;background:#fff}
+[data-design="web2000"] .finder form{display:flex}
+[data-design="web2000"] .searchbox{display:flex;gap:4px;border-radius:0;background:none!important}
+[data-design="web2000"] .finder input{order:1;flex:1;min-width:0;height:21px;padding:2px 4px 3px;border:0;border-radius:0;background:#fff;box-shadow:var(--sunken);font:var(--t1)/1 var(--body);color:#000}
+[data-design="web2000"] .finder input::placeholder{color:#6B6B6B}
+[data-design="web2000"] .finder input:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .searchbox .sgo{order:2;position:static;transform:none;display:inline-flex;align-items:center;gap:3px;width:auto;height:21px;padding:0 8px 1px 5px;border-radius:0;background:var(--c-face);box-shadow:var(--raised);color:#000;font:var(--t1)/1 var(--mono)}
+[data-design="web2000"] .searchbox .sgo:hover{color:#000;background:#DEDAD2}
+[data-design="web2000"] .searchbox .sgo:active{box-shadow:var(--pressed);padding:1px 7px 0 6px}
+[data-design="web2000"] .searchbox .sgo .ui{width:16px;height:16px}
+[data-design="web2000"] .finder .drop{top:calc(100% + 1px);left:auto;right:0;gap:0}
+[data-design="web2000"] .finder .note{padding:3px 6px;border:1px solid #000;border-radius:0;background:#FFFFE1;box-shadow:none;font:var(--t1)/1.35 var(--mono);color:#000}
+[data-design="web2000"] .results{border:1px solid #000;border-radius:0;box-shadow:2px 2px 0 rgb(0 0 0/.3)}
+[data-design="web2000"] .results li+li{border-top:0}
+[data-design="web2000"] .results button{padding:3px 6px;font:var(--t1)/1.3 var(--body);color:#000}
+[data-design="web2000"] .results button span{font:var(--t2) var(--mono);color:#555}
+[data-design="web2000"] .results button:hover,[data-design="web2000"] .results button:focus-visible{background:#0A246A;color:#fff}
+[data-design="web2000"] .results button:hover span,[data-design="web2000"] .results button:focus-visible span{color:#fff}
+[data-design="web2000"] .results .full{color:inherit;font-weight:bold}
+
+/* Tabs: pale blue tabs on a navy band; the tab for the section on screen is navy with an amber top */
+[data-design="web2000"] .jump a{flex:none;display:block;padding:5px 12px 4px;border:1px solid var(--c-rule);border-bottom:0;border-radius:4px 4px 0 0;background:linear-gradient(#F7F9FC,#D7E2F1);
+  color:var(--c-navy-dk);font:bold var(--t1)/1.2 var(--mono);text-decoration:none;white-space:nowrap}
+[data-design="web2000"] .jump a:hover{background:linear-gradient(#FFFDF0,#FFE9B3);color:#7A3A00}
+[data-design="web2000"] .jump a:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .jump a[aria-current]{margin-top:-1px;padding-top:6px;background:var(--c-navy);border-color:var(--c-navy-dk);color:#fff;box-shadow:inset 0 3px 0 var(--c-amber),inset 1px 0 0 var(--c-navy-hi)}
+[data-design="web2000"] .jump a[aria-current]:focus-visible{outline-color:#fff}
+
+/* "You are here" and the last-updated stamp, with Save place and Refresh at the right */
+[data-design="web2000"] .crumbs ol{display:flex;flex-wrap:wrap;margin:0;padding:0;list-style:none;min-width:0}
+[data-design="web2000"] .crumbs li+li::before{content:"";display:inline-block;width:3px;height:5px;margin:0 6px 1px 7px;vertical-align:middle;
+  background:linear-gradient(135deg,var(--c-sh) 50%,transparent 50%) 0 0/3px 3px no-repeat,linear-gradient(45deg,transparent 50%,var(--c-sh) 50%) 0 2px/3px 3px no-repeat}
+[data-design="web2000"] .stamp{white-space:nowrap}
+[data-design="web2000"] .stamp b{color:#000}
+[data-design="web2000"] .hbtns .btn{height:19px;padding:0 6px 1px 3px;gap:2px;font-size:var(--t2)}
+[data-design="web2000"] .hbtns .btn:active:not(:disabled){padding:1px 5px 0 4px}
+[data-design="web2000"] #saveBtn[aria-pressed="true"]{color:#000;background:var(--dither);box-shadow:var(--pressed)}
+
+/* ---- Buttons: bevelled grey, pressed in when clicked; greyed, embossed text when they can't be used ------ */
+[data-design="web2000"] .btn{height:23px;min-width:0;padding:0 8px 1px;gap:4px;justify-content:center;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised);
+  color:#000;font:var(--t1)/1 var(--mono);text-decoration:none;transition:none}
+[data-design="web2000"] .btn:hover{background:#DEDAD2;border-color:transparent}
+[data-design="web2000"] .btn:active:not(:disabled){box-shadow:var(--pressed);padding:1px 7px 0 9px}
+[data-design="web2000"] .btn:focus-visible{outline:1px dotted #000;outline-offset:-5px}
+[data-design="web2000"] .btn:disabled,[data-design="web2000"] .btn[disabled]{opacity:1;color:#808080;text-shadow:1px 1px 0 #fff;cursor:default}
+[data-design="web2000"] .btn:disabled .ui{filter:grayscale(1) opacity(.55)}
+[data-design="web2000"] .btn .ui{width:16px;height:16px}
+[data-design="web2000"] .btn.icon{width:23px;padding:0}
+[data-design="web2000"] .btn.icon:active:not(:disabled){padding:1px 0 0 1px}
+[data-design="web2000"] .btn.busy{cursor:progress}
+[data-design="web2000"] .btn.busy .ui,[data-design="web2000"] .btn[disabled] .ui{animation:none}
+
+/* Toggle groups (chart or cards, Max/Min/Rain, days ahead, waters): toolbar buttons, the chosen one pressed in */
+[data-design="web2000"] :is(.ttabs,.wtabs,.seg,.scoreseg,.hview){display:inline-flex;flex-wrap:wrap;gap:2px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible}
+[data-design="web2000"] :is(.ttabs,.wtabs,.seg,.scoreseg,.hview) button{display:inline-flex;align-items:center;gap:4px;height:21px;padding:0 9px 1px;border:0;border-radius:0;
+  background:var(--c-face);box-shadow:var(--raised);color:#000;font:var(--t1)/1 var(--mono);cursor:pointer}
+[data-design="web2000"] :is(.ttabs,.wtabs,.seg,.scoreseg,.hview) button:hover{background:#DEDAD2}
+[data-design="web2000"] :is(.ttabs,.seg,.scoreseg,.hview) button[aria-pressed="true"],[data-design="web2000"] .wtabs button[aria-selected="true"]{background:var(--dither);box-shadow:var(--pressed);color:#000;font-weight:bold}
+[data-design="web2000"] :is(.ttabs,.wtabs,.seg,.scoreseg,.hview) button:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .hview button svg{width:14px;height:14px}
+
+/* ---- Sections: portal boxes with a navy header and an amber bullet, "About this" in a strip at the foot ---- */
+[data-design="web2000"] .wrap>section{margin-top:12px;gap:8px;padding:0 0 8px;border:1px solid var(--c-rule);border-radius:0;background:#fff;box-shadow:none;scroll-margin-top:8px}
+[data-design="web2000"] .wrap>section>*{margin-inline:8px}
+[data-design="web2000"] .wrap>section:has(>details.about),[data-design="web2000"] .wrap>section:has(>#obs),[data-design="web2000"] .wrap>section:has(>.fold:not([open])){padding-bottom:0}
+[data-design="web2000"] .wrap.enter>section{animation:none}
+[data-design="web2000"] .wrap>section>:is(h2,.scorehead,.charthead),[data-design="web2000"] .fold>summary{margin:0;padding:4px 8px 5px;background:var(--c-navy);border-bottom:1px solid var(--c-navy-dk);box-shadow:inset 0 1px 0 var(--c-navy-hi);color:#fff}
+[data-design="web2000"] h2{gap:7px;font:bold var(--t0)/1.25 var(--body);letter-spacing:-.1px;text-wrap:wrap;scroll-margin-top:8px}
+[data-design="web2000"] h2::before{content:"";flex:none;width:5px;height:5px;background:var(--c-amber);box-shadow:1px 1px 0 var(--c-navy-dk)}
+[data-design="web2000"] :is(.scorehead,.charthead){gap:4px 10px}
+[data-design="web2000"] .wrap>section>.fold{margin:0}
+[data-design="web2000"] .wrap>section>details.about{order:20;margin:0;padding:4px 8px 5px;border-top:1px solid var(--c-rule);background:var(--c-strip);font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .about summary{width:max-content;list-style:none;color:var(--c-link);font-weight:normal;text-decoration:underline;cursor:pointer}
+[data-design="web2000"] .about summary::-webkit-details-marker{display:none}
+[data-design="web2000"] .about summary::before{content:"";display:inline-block;width:0;height:0;margin:0 5px 1px 1px;vertical-align:middle;border-style:solid;border-width:4px 0 4px 4px;border-color:transparent transparent transparent #000}
+[data-design="web2000"] .about[open] summary::before{border-width:4px 4px 0 4px;border-color:#000 transparent transparent transparent;margin:0 4px 1px 0}
+[data-design="web2000"] .about p{margin:5px 0 3px;max-width:96ch;line-height:1.5;color:var(--c-ink2)}
+[data-design="web2000"] .about a[href*="open-meteo"]{color:var(--c-link)}
+[data-design="web2000"] .netnote{margin:12px 0 0;padding:5px 8px;border:1px solid #E2D27A;border-radius:0;background:var(--c-hover);color:var(--c-ink2);font-size:var(--t1)}
+[data-design="web2000"] .netnote b{color:#000}
+[data-design="web2000"] .error{margin-top:12px;border:1px solid var(--bad);border-radius:0;background:#FFF2F2;font-size:var(--t1)}
+[data-design="web2000"] .warns,[data-design="web2000"] .tlaunch,[data-design="web2000"] .scoreempty{border-radius:0;box-shadow:none}
+
+/* Tooltips: Windows' pale yellow with a black edge */
+[data-design="web2000"] .tip,[data-design="web2000"] .rchip{padding:2px 6px 3px;border:1px solid #000;border-radius:0;background:#FFFFE1;box-shadow:none;color:#000;font:var(--t1)/1.35 var(--mono)}
+[data-design="web2000"] .tip .td,[data-design="web2000"] .tip .tv{font:var(--t2)/1.35 var(--mono);color:var(--c-ink2)}
+[data-design="web2000"] .tip .tv b{color:#000}
+[data-design="web2000"] .tip .tc{font:bold var(--t2) var(--mono);color:var(--c-navy)}
+[data-design="web2000"] .tip .tn i{border-radius:0}
+[data-design="web2000"] #wtip small{font-size:var(--t2);color:var(--c-ink3)}
+
+/* ---- Right now: the reading on the left, the figures as a table on the right ----------------------------- */
+[data-design="web2000"] .wrap>section>#now{margin:0}
+[data-design="web2000"] .now{display:grid;grid-template-columns:236px minmax(0,1fr);gap:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+[data-design="web2000"] .nowtop{grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:center;gap:0 8px;padding:12px 8px 10px;border-right:1px solid var(--c-rule);background:linear-gradient(#F4F7FB,#fff 60%)}
+[data-design="web2000"] .nowtop .wx{width:64px;height:64px}
+[data-design="web2000"] .now .temp{font:bold 46px/1 var(--body);letter-spacing:-3px}
+[data-design="web2000"] .now .temp small{margin-left:3px;font:bold 20px/1 var(--body);letter-spacing:0;color:var(--c-ink2)}
+[data-design="web2000"] .now .feels{margin-top:4px;font:var(--t1)/1.3 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] .nowtop .nowcond{grid-column:1/-1;margin-top:8px}
+[data-design="web2000"] .now .nowdate{margin:0 0 1px;font:var(--t2)/1.3 var(--body);color:var(--c-ink3)}
+[data-design="web2000"] .now .cond{font:bold 13px/1.3 var(--body)}
+[data-design="web2000"] .now .story{margin:4px 0 0;max-width:none;font:var(--t1)/1.45 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] .now .story .st{color:var(--storm);font-weight:bold}
+[data-design="web2000"] .now .story .wt{color:var(--rain);font-weight:bold}
+[data-design="web2000"] .now .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:10px;border:1px solid var(--c-rule);background:#fff;font:bold var(--t0)/1.25 var(--body)}
+[data-design="web2000"] .now .facts span{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;padding:4px 7px 5px}
+[data-design="web2000"] .now .facts span:not(:nth-child(3n+1)){border-left:1px solid var(--c-rule)}
+[data-design="web2000"] .now .facts span:nth-child(n+4){border-top:1px solid var(--c-rule)}
+[data-design="web2000"] .now .facts small{order:-1;font:normal 9px/1.3 var(--body);letter-spacing:.5px;text-transform:uppercase;color:var(--c-ink3)}
+[data-design="web2000"] .now .facts .warn,[data-design="web2000"] .now .facts .warn small{color:var(--bad)}
+[data-design="web2000"] .stats{display:block;margin:0;padding:2px 8px 4px;border:0}
+[data-design="web2000"] .stats>div,[data-design="web2000"] .stats>div:first-child,[data-design="web2000"] .stats>div:nth-child(3n+1){display:grid;grid-template-columns:112px minmax(0,1fr);align-items:baseline;gap:8px;min-width:0;padding:5px 0;border:0}
+[data-design="web2000"] .stats>div+div{border-top:1px dotted #B9C6DA}
+[data-design="web2000"] .stats dt{align-self:center;gap:6px;font:var(--t1)/1.3 var(--body);color:var(--c-ink2);white-space:nowrap}
+[data-design="web2000"] .stats dt .ui{width:16px;height:16px;color:var(--c-ink2)}
+[data-design="web2000"] .stats dd{margin:0;gap:4px;font:bold var(--t1)/1.3 var(--body)}
+[data-design="web2000"] .stats dd small{font:normal var(--t2) var(--body);color:var(--c-ink3)}
+[data-design="web2000"] .stats dd .arrow{color:var(--c-ink2)}
+[data-design="web2000"] .stats dd.sun{flex-direction:row;flex-wrap:wrap;gap:2px 14px;font-size:var(--t1)}
+[data-design="web2000"] .uvscale{height:8px;margin:12px 0 2px;border-radius:0;box-shadow:0 0 0 1px var(--c-sh);background:linear-gradient(90deg,#2E9E20 0 18%,#F2D600 18% 39%,#F57F17 39% 54%,#D3001C 54% 75%,#6B49C8 75%)}
+[data-design="web2000"] .uvscale i{top:-9px;width:9px;height:7px;border-radius:0;transform:translateX(-50%);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h9v1H8v1H7v1H6v1H5v1H4V4H3V3H2V2H1V1H0z'/%3E%3C/svg%3E")}
+[data-design="web2000"] .wrap>section>#obs{order:19;margin:0;padding:4px 8px 5px;border-top:1px solid var(--c-rule);background:var(--c-strip)}
+
+/* ---- Next 7 days: a table, one row a day, with segmented bars for rain and for how well the sites agree -- */
+[data-design="web2000"] .wrap>section{--dcols:96px 36px 82px minmax(56px,1fr) 104px 132px 158px}
+[data-design="web2000"] .dhead,[data-design="web2000"] .day{display:grid;grid-template-columns:var(--dcols);align-items:center;column-gap:8px}
+[data-design="web2000"] .dhead{margin-bottom:-8px;padding:4px 8px;border:1px solid var(--c-rule);background:var(--c-strip-2);font:bold var(--t2)/1.2 var(--body);letter-spacing:.5px;text-transform:uppercase;color:var(--c-navy-dk);white-space:nowrap}
+[data-design="web2000"] .days{display:block;overflow:visible;padding:0;border:1px solid var(--c-rule);border-top:0;scroll-snap-type:none}
+[data-design="web2000"] .day{width:100%;grid-template-areas:"dn ic tp bar rn ag en" "dd ic tp bar rn ag en";row-gap:0;padding:5px 8px;border:0;border-bottom:1px solid var(--c-rowline);border-radius:0;
+  background:#fff;box-shadow:none;text-align:left;font:var(--t1)/1.3 var(--body);color:#000;transition:none}
+[data-design="web2000"] .day:nth-child(even){background:var(--c-row)}
+[data-design="web2000"] .day:last-child{border-bottom:0}
+[data-design="web2000"] .day:hover{background:var(--c-hover);border-color:var(--c-rowline)}
+[data-design="web2000"] .day[aria-pressed="true"]{background:var(--c-pick);box-shadow:inset 3px 0 0 var(--c-amber);border-color:var(--c-rowline)}
+[data-design="web2000"] .day:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+[data-design="web2000"] .day .dname{grid-area:dn;font:bold var(--t0)/1.2 var(--body)}
+[data-design="web2000"] .day[data-i="0"] .dname{color:#9A4A00}
+[data-design="web2000"] .day .ddate{grid-area:dd;margin:0;font:var(--t2)/1.3 var(--body);color:var(--c-ink3)}
+[data-design="web2000"] .day .wx{grid-area:ic;width:32px;height:32px;margin:0}
+[data-design="web2000"] .day .dtemps{grid-area:tp;font:bold var(--t0)/1 var(--body);color:var(--cool);white-space:nowrap}
+[data-design="web2000"] .day .dtemps b{margin:0;font-size:inherit;font-weight:bold}
+[data-design="web2000"] .day .dtemps b::after{content:"/";margin:0 3px;font-weight:normal;color:#9AA3B2}
+[data-design="web2000"] .day .tbar{grid-area:bar;height:9px;margin:0;border-radius:0;background:#fff;box-shadow:var(--sunken-soft)}
+[data-design="web2000"] .day .tbar i{top:2px;bottom:2px;border-radius:0;background:linear-gradient(90deg,var(--cool),var(--warm))}
+[data-design="web2000"] .day .drain{grid-area:rn;justify-content:flex-start;gap:6px;width:auto;margin:0;font:bold var(--t1) var(--body);color:var(--rain)}
+[data-design="web2000"] .day .drain .rbar{width:54px;height:11px;padding:2px;border-radius:0;background:#fff;box-shadow:var(--sunken-soft)}
+[data-design="web2000"] .day .drain .rbar i{background:repeating-linear-gradient(90deg,var(--rain) 0 4px,transparent 4px 6px)}
+[data-design="web2000"] .agree{grid-area:ag;--n:49px;gap:6px;font:bold var(--t2)/1.2 var(--body);color:#000;white-space:nowrap}
+[data-design="web2000"] .agree.mid{--n:29px}
+[data-design="web2000"] .agree.low{--n:9px}
+[data-design="web2000"] .agree.na{--n:0px;color:var(--c-ink3);font-weight:normal}
+[data-design="web2000"] .agree i{flex:none;width:53px;height:13px;border-radius:0;box-shadow:var(--sunken-soft);
+  background:repeating-linear-gradient(90deg,var(--c-cap-a) 0 9px,transparent 9px 10px) 2px 2px/var(--n) 9px no-repeat,#fff}
+[data-design="web2000"] .day .ens{grid-area:en;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:2px 8px;width:auto;margin:0;padding:0;border:0;
+  font:var(--t2)/1.2 var(--body);color:var(--c-ink2);white-space:nowrap}
+[data-design="web2000"] .ens .erain{gap:3px;color:var(--rain)}
+[data-design="web2000"] .ens .erain.dry{color:var(--c-ink3)}
+[data-design="web2000"] .ens .erain .ui{width:16px;height:16px}
+[data-design="web2000"] .ens .sig{gap:1px;height:13px;padding:2px;align-items:stretch;background:#fff;box-shadow:var(--sunken-soft)}
+[data-design="web2000"] .ens .sig b{width:7px;height:auto!important;border-radius:0;background:transparent}
+[data-design="web2000"] .esure.high .sig b,[data-design="web2000"] .esure.mid .sig b:nth-child(-n+2),[data-design="web2000"] .esure.low .sig b:first-child{background:var(--c-cap-a)}
+
+/* ---- Hour by hour, tides, beach driving: charts in sunken frames, day buttons as toolbar buttons -------- */
+[data-design="web2000"] .hbox{gap:8px;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+[data-design="web2000"] .hhead .hview{margin-left:auto}
+[data-design="web2000"] .hnav{gap:2px}
+[data-design="web2000"] .hnav .btn{width:22px;min-width:0;height:20px;padding:0 0 2px;font:bold 15px/1 var(--mono)}
+[data-design="web2000"] .hnav .btn:active:not(:disabled){padding:1px 0 1px 1px}
+[data-design="web2000"] .hstory{font:bold var(--t1)/1.45 var(--body)}
+[data-design="web2000"] .hstory .st{color:var(--storm)}
+[data-design="web2000"] .hstory .wt{color:var(--rain)}
+[data-design="web2000"] .hdays{gap:2px}
+[data-design="web2000"] .hdays button,[data-design="web2000"] .hdays button.dA,[data-design="web2000"] .hdays button.dB{padding:3px 2px 4px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised);color:#000;font:bold var(--t1)/1.2 var(--mono);transition:none}
+[data-design="web2000"] .hdays button small{font:var(--t2)/1.2 var(--mono);color:var(--c-ink3)}
+[data-design="web2000"] .hdays button:hover{transform:none;background:#DEDAD2;box-shadow:var(--raised);border-color:transparent}
+[data-design="web2000"] .hdays button:active{transform:none}
+[data-design="web2000"] .hdays button.on{background:var(--dither);box-shadow:var(--pressed);color:#000}
+[data-design="web2000"] .hdays button.on small{color:#000;opacity:1}
+[data-design="web2000"] .hdays button:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .hwrap{padding:3px;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .hscroll{border:1px solid;border-color:var(--c-sh) var(--c-hi) var(--c-hi) var(--c-sh);padding:1px;background:#fff;box-shadow:inset 1px 1px var(--c-dk),inset -1px -1px var(--c-face)}
+[data-design="web2000"] .hscroll:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .hyaxis{left:5px;top:5px}
+[data-design="web2000"] :is(.hchart,.hyaxis,.dstrip) .ax{font:10px var(--mono);fill:var(--c-ink2)}
+[data-design="web2000"] :is(.hchart,.dstrip) .tl{font:bold 10px var(--mono)}
+[data-design="web2000"] .hchart .dl{font:bold 11px var(--mono);fill:var(--c-navy-dk)}
+[data-design="web2000"] :is(.hchart,.dstrip,#chart) rect{rx:0}
+[data-design="web2000"] .hlegend,[data-design="web2000"] .dlegend,[data-design="web2000"] .legend{gap:3px 14px;font:var(--t2)/1.4 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] :is(.hlegend,.dlegend) i{border-radius:0}
+[data-design="web2000"] .hstrip{gap:2px;padding:2px}
+[data-design="web2000"] .hc{width:56px;gap:2px;padding:4px 2px;border:1px solid var(--c-rowline);border-radius:0;font:var(--t2)/1.25 var(--mono)}
+[data-design="web2000"] .hc.dA{background:#fff}
+[data-design="web2000"] .hc.dB{background:var(--c-row)}
+[data-design="web2000"] .hc .t{font:bold var(--t0) var(--body)}
+[data-design="web2000"] .hc .wx{width:32px;height:32px}
+[data-design="web2000"] .hc .rb{height:7px;padding:1px;border-radius:0;background:#fff;box-shadow:var(--sunken-soft)}
+[data-design="web2000"] .hc .rb i{background:repeating-linear-gradient(90deg,var(--rain) 0 3px,transparent 3px 4px)}
+[data-design="web2000"] .hc.wet{border:1px solid var(--rain);box-shadow:inset 0 0 0 1px var(--rain)}
+[data-design="web2000"] .hc.storm{border:1px solid var(--storm);box-shadow:inset 0 0 0 1px var(--storm)}
+[data-design="web2000"] .hc.now{outline:2px solid var(--c-amber);outline-offset:-2px}
+[data-design="web2000"] .hc.now .hr{color:#9A4A00;font-weight:bold}
+[data-design="web2000"] .hc .hw{border-top:1px dotted #B9C6DA}
+[data-design="web2000"] .hsep{width:22px;border-radius:0}
+[data-design="web2000"] .hsep.dA,[data-design="web2000"] .hsep.dB{background:var(--c-navy)}
+[data-design="web2000"] .hsep span{font:bold var(--t1) var(--mono);color:#fff}
+[data-design="web2000"] .tsum{font:var(--t1)/1.45 var(--body)}
+[data-design="web2000"] .tnow .tarr,[data-design="web2000"] .dnow .dicon{width:32px;height:32px;border-radius:0;background:#fff;box-shadow:var(--sunken)}
+[data-design="web2000"] .tnow .tarr .ui,[data-design="web2000"] .dnow .dicon .ui{width:16px;height:16px}
+[data-design="web2000"] .tnow .tst{font:bold var(--tl)/1.15 var(--body)}
+[data-design="web2000"] .tnow .tst small{margin-top:3px;font:var(--t2)/1.3 var(--body);color:var(--c-ink3)}
+[data-design="web2000"] .tnext{gap:4px}
+[data-design="web2000"] .tnext div{padding:3px 8px 4px;border:1px solid var(--c-rule);border-radius:0;background:#fff;font:var(--t2)/1.3 var(--body);color:var(--c-ink3)}
+[data-design="web2000"] .tnext b{font:bold var(--t0)/1.3 var(--body);color:#000}
+[data-design="web2000"] .tchartwrap,[data-design="web2000"] .dstrip,[data-design="web2000"] .chartwrap{padding:2px;background:#fff;box-shadow:var(--sunken)}
+[data-design="web2000"] .tlaunch{padding:5px 8px;border:1px solid #E2D27A;background:var(--c-hover);font:var(--t1)/1.45 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] .tlaunch b{color:#000}
+[data-design="web2000"] .tlaunch .ui{width:16px;height:16px;margin-top:0}
+[data-design="web2000"] .tlaunch.none{border-color:var(--c-rule);background:var(--c-strip)}
+[data-design="web2000"] .tweek{border:1px solid var(--c-rule)}
+[data-design="web2000"] .trow{border-top:1px solid var(--c-rowline)}
+[data-design="web2000"] .trow:first-child{border-top:0}
+[data-design="web2000"] .trow:nth-child(even){background:var(--c-row)}
+[data-design="web2000"] .trow:hover{background:var(--c-hover)}
+[data-design="web2000"] .trow.on{border-radius:0;background:var(--c-pick);box-shadow:inset 3px 0 0 var(--c-amber)}
+[data-design="web2000"] .tweek .tday{font:var(--t1)/1.35 var(--body)}
+[data-design="web2000"] .tweek .tdn{font:bold var(--t0)/1.3 var(--body)}
+[data-design="web2000"] .tweek .tday:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+[data-design="web2000"] .tweek .tboat{width:22px;height:22px;border-radius:0;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .tweek .tboat .ui{width:16px;height:16px}
+[data-design="web2000"] .tweek .tboat:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .tweek button.tmore{padding:4px;border-top:1px solid var(--c-rule);background:var(--c-strip);color:var(--c-link);font:var(--t1) var(--body);text-decoration:underline}
+[data-design="web2000"] .dwhere{font-size:var(--t1);color:var(--c-ink2)}
+[data-design="web2000"] .dnow .dverd{font:bold var(--tl)/1.2 var(--body)}
+[data-design="web2000"] .dnow .dverd small{margin-top:3px;font:var(--t1)/1.45 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] .dswell{font-size:var(--t1)}
+[data-design="web2000"] .dswell .ui{width:16px;height:16px}
+[data-design="web2000"] .dweek{border:1px solid var(--c-rule)}
+[data-design="web2000"] .dweek button{padding:5px 8px;border-top:1px solid var(--c-rowline);font:var(--t1)/1.35 var(--body)}
+[data-design="web2000"] .dweek button:first-child{border-top:0}
+[data-design="web2000"] .dweek button:nth-child(even){background:var(--c-row)}
+[data-design="web2000"] .dweek button:hover{background:var(--c-hover)}
+[data-design="web2000"] .dweek button[aria-pressed="true"]{border-radius:0;background:var(--c-pick);box-shadow:inset 3px 0 0 var(--c-amber)}
+[data-design="web2000"] .dweek button:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+[data-design="web2000"] .dweek .dd{font:bold var(--t0) var(--body)}
+[data-design="web2000"] .dweek .dw span{padding:0 6px;border:1px solid #9CCB8C;border-radius:0;background:#EAF5E6;font:bold var(--t1)/1.5 var(--body)}
+[data-design="web2000"] .dweek .dw em,[data-design="web2000"] .dweek .ds{font-size:var(--t1)}
+
+/* ---- Rain radar: a grey applet with the map sunk into it, a play button and a slider like a 2001 media player */
+[data-design="web2000"] .hbox.radar{gap:6px;padding:4px;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .rwrap{height:360px;border:0;border-radius:0;background:#fff}
+[data-design="web2000"] .rwrap::after{content:"";position:absolute;inset:0;z-index:1001;pointer-events:none;box-shadow:var(--sunken)}
+[data-design="web2000"] #rmap{inset:2px;background:#E6EAF0;font:var(--t2)/1.4 var(--mono)}
+[data-design="web2000"] .rmsg{z-index:1002;inset:2px;background:rgb(212 208 200/.94);font:var(--t1)/1.4 var(--mono);color:#000}
+[data-design="web2000"] .rchip{top:9px;left:9px}
+[data-design="web2000"] .rchip.fc{color:var(--warn)}
+[data-design="web2000"] .rbar{gap:4px}
+[data-design="web2000"] .rbar .btn.icon{width:23px;height:21px}
+[data-design="web2000"] .rbar #rmove[aria-pressed="true"]{background:var(--dither);box-shadow:var(--pressed);color:#000}
+[data-design="web2000"] .hbox.radar .note{margin:0 2px;font:var(--t2)/1.4 var(--mono);color:#000}
+[data-design="web2000"] .rlinks{gap:4px}
+[data-design="web2000"] .rlinks .btn,[data-design="web2000"] .rlinks .btn .ui:first-child{color:#000}
+[data-design="web2000"] .rlinks .btn .ui:last-child{width:16px;height:16px;color:#000}
+[data-design="web2000"] .rpin svg{width:32px;height:32px;filter:none}
+[data-design="web2000"] #rmap .leaflet-bar{border:0;border-radius:0;box-shadow:none}
+[data-design="web2000"] #rmap .leaflet-bar a{width:23px;height:22px;margin-bottom:2px;border:0!important;border-radius:0!important;background:var(--c-face);box-shadow:var(--raised);color:#000;font:bold 15px/21px var(--mono)}
+[data-design="web2000"] #rmap .leaflet-bar a:hover{background:#DEDAD2}
+[data-design="web2000"] #rmap .leaflet-bar a:active{box-shadow:var(--pressed)}
+[data-design="web2000"] #rmap .leaflet-bar a.leaflet-disabled{background:var(--c-face);color:#808080;text-shadow:1px 1px 0 #fff}
+[data-design="web2000"] #rmap .leaflet-control-attribution{background:rgb(212 208 200/.92);color:#000;font:10px/1.4 var(--mono)}
+[data-design="web2000"] #rmap .leaflet-control-attribution a{color:var(--c-link)}
+[data-design="web2000"] .rbar input[type=range]{-webkit-appearance:none;appearance:none;height:21px;margin:0;background:transparent;cursor:pointer}
+[data-design="web2000"] .rbar input[type=range]::-webkit-slider-runnable-track{height:4px;background:#fff;box-shadow:inset 1px 1px var(--c-sh),inset -1px -1px var(--c-hi),inset 2px 2px var(--c-dk)}
+[data-design="web2000"] .rbar input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:21px;margin-top:-9px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .rbar input[type=range]::-moz-range-track{height:4px;background:#fff;box-shadow:inset 1px 1px var(--c-sh),inset -1px -1px var(--c-hi),inset 2px 2px var(--c-dk)}
+[data-design="web2000"] .rbar input[type=range]::-moz-range-thumb{width:11px;height:21px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised)}
+[data-design="web2000"] .rbar input[type=range]:disabled{cursor:default;opacity:.6}
+[data-design="web2000"] .rbar input[type=range]:focus-visible{outline:1px dotted #000;outline-offset:0}
+
+/* ---- On the water, boating ------------------------------------------------------------------------------ */
+[data-design="web2000"] .brief{gap:0;border:1px solid var(--c-rule)}
+[data-design="web2000"] .brow{padding:5px 8px;border:0;border-top:1px solid var(--c-rowline);border-left:4px solid var(--c,var(--c-rule));border-radius:0;background:#fff;box-shadow:none}
+[data-design="web2000"] .brow:first-child{border-top:0}
+[data-design="web2000"] .brow:hover,[data-design="web2000"] .brow:focus-visible{background:var(--c-hover);border-color:var(--c-rowline);border-left-color:var(--c,var(--c-rule))}
+[data-design="web2000"] .brow:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+[data-design="web2000"] .brow .bn{font:bold var(--t0)/1.3 var(--body)}
+[data-design="web2000"] .brow .bt{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .rate{margin-top:3px;padding:1px 8px;border:1px solid currentColor;border-radius:0;background:color-mix(in srgb,currentColor 9%,#fff);font:bold var(--t0)/1.35 var(--body)}
+[data-design="web2000"] .rate.sm{margin:0;padding:0 6px;font-size:var(--t1)}
+[data-design="web2000"] .warns{gap:8px;padding:6px 8px;border:1px solid #C9A227;border-left-width:1px;background:var(--c-pick);font-size:var(--t1)}
+[data-design="web2000"] .warns>.ui{width:16px;height:16px;margin-top:0}
+[data-design="web2000"] .warns b{color:#7A3A00}
+[data-design="web2000"] .waters{gap:10px}
+[data-design="web2000"] .water{gap:8px;padding:0 0 8px;border:1px solid var(--c-rule);border-radius:0;background:#fff}
+[data-design="web2000"] .water>*{margin-inline:8px}
+[data-design="web2000"] .water>.whd{margin:0;padding:3px 8px 4px;background:var(--c-strip-2);border-bottom:1px solid var(--c-rule)}
+[data-design="web2000"] .whd h3{font:bold var(--t0)/1.3 var(--body);color:var(--c-navy-dk)}
+[data-design="web2000"] .whd h3 .ui{width:16px;height:16px;color:var(--c-navy-dk)}
+[data-design="web2000"] .kind{padding:2px 5px 1px;border:1px solid var(--c-rule);border-radius:0;background:#fff;font:bold 9px/1.2 var(--body);letter-spacing:.5px;color:var(--c-navy-dk)}
+[data-design="web2000"] .hourhd{margin-bottom:-4px;font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .hourhd .key i{border-radius:0;box-shadow:inset 0 0 0 1px rgb(0 0 0/.3)}
+[data-design="web2000"] .hours{gap:2px;padding:0 0 4px}
+[data-design="web2000"] .hours>div{gap:1px;padding:4px 2px;border:1px solid var(--c-rowline);border-radius:0;box-shadow:none;font:var(--t2)/1.3 var(--mono)}
+[data-design="web2000"] .hours .calm{background:#EAF5E6;border-color:#B5D8A8}
+[data-design="web2000"] .hours .choppy{background:#FFF3D6;border-color:#E8C66A}
+[data-design="web2000"] .hours .rough{background:#FBE5E5;border-color:#E2A5A5}
+[data-design="web2000"] .hours .best{box-shadow:inset 0 0 0 2px var(--c-navy)}
+[data-design="web2000"] .hours .best .t:first-child{color:var(--c-navy);font-weight:bold}
+[data-design="web2000"] .hours .wx{width:32px;height:32px}
+[data-design="web2000"] .hours b{font:bold var(--t0) var(--body)}
+[data-design="web2000"] .hours .t{color:var(--c-ink3)}
+[data-design="web2000"] .tides{font:var(--t2)/1.3 var(--mono)}
+[data-design="web2000"] .tides li .ui{width:16px;height:16px}
+
+/* ---- Tiles (weather sites and boating): grey bevelled tiles, a title bar with the site's colour key, and the
+   picture and figures sunk into a white panel ---- */
+[data-design="web2000"] .panel{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:640px){[data-design="web2000"] .panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+[data-design="web2000"] .card{position:relative;overflow:hidden;gap:0;padding:0 8px 6px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised);font-size:var(--t1)}
+[data-design="web2000"] .card::before{display:none}
+[data-design="web2000"] .card .chd,[data-design="web2000"] .card>.cn{display:flex;align-items:center;gap:5px;height:20px;margin:2px -6px 6px;padding:0 6px 1px;background:linear-gradient(90deg,#808080,#C0C0C0);color:#fff}
+[data-design="web2000"] .card .chd::before{content:"";flex:none;width:7px;height:7px;background:var(--c,#fff);box-shadow:0 0 0 1px #fff}
+[data-design="web2000"] .card:is([style*="--bom"],[style*="--accent"]) .chd,[data-design="web2000"] .card:is([style*="--bom"],[style*="--accent"])>.cn{background:linear-gradient(90deg,var(--c-cap-a),var(--c-cap-b))}
+[data-design="web2000"] .card .cn{flex:1;min-width:0;font:bold var(--t1)/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[data-design="web2000"] .card .chd .ui{width:16px;height:16px;margin:0;color:#fff}
+[data-design="web2000"] .card .chd .wx{position:absolute;left:14px;top:32px;width:32px;height:32px;margin:0}
+[data-design="web2000"] .card .ct{display:flex;align-items:center;flex-wrap:wrap;min-height:40px;margin:0;padding:4px 6px;background:#fff;box-shadow:var(--sunken-soft);font:bold var(--tl)/1.1 var(--body);letter-spacing:-.5px}
+[data-design="web2000"] .card:has(.chd .wx) .ct{padding-left:44px}
+[data-design="web2000"] .card .ct span{margin-left:4px;font:normal var(--t1)/1.2 var(--body);letter-spacing:0;color:var(--c-ink3)}
+[data-design="web2000"] #panel .ct>b::after{content:"/";margin:0 2px;font-weight:normal;color:#9AA3B2}
+[data-design="web2000"] #panel .ct>b+span{margin:0;font:bold var(--tl)/1.1 var(--body);letter-spacing:-.5px;color:var(--cool)}
+[data-design="web2000"] .card .cx{margin-top:5px;font-size:var(--t2);line-height:1.35;color:var(--c-ink2)}
+[data-design="web2000"] .card .cr{font:var(--t2)/1.35 var(--body);color:var(--c-ink2)}
+[data-design="web2000"] .card .cr.rain{margin:1px 0 0;padding:0;font-weight:bold;color:var(--rain)}
+[data-design="web2000"] .card .cd{font-size:var(--t2);line-height:1.35;color:var(--c-ink3)}
+[data-design="web2000"] .card.empty .cx{color:var(--c-ink3)}
+[data-design="web2000"] .card.alert{box-shadow:var(--raised),0 0 0 1px var(--warn)}
+[data-design="web2000"] .cams{gap:4px}
+[data-design="web2000"] .cams .btn{height:auto;align-items:flex-start;padding:4px 9px 5px;font:bold var(--t1)/1.3 var(--mono)}
+[data-design="web2000"] .cams .btn:active{padding:5px 8px 4px 10px}
+[data-design="web2000"] .cams .by{font:normal var(--t2)/1.3 var(--mono);color:var(--c-ink3)}
+
+/* ---- Tables (site by site, the scoreboard) and the summary chips -------------------------------------- */
+[data-design="web2000"] .summary{gap:4px}
+[data-design="web2000"] .pill{padding:2px 7px;border:1px solid var(--c-rule);border-radius:0;background:var(--c-strip);font:var(--t1)/1.35 var(--body)}
+[data-design="web2000"] .pill b{color:var(--c-navy-dk)}
+[data-design="web2000"] .tablebox{border:1px solid var(--c-rule);border-radius:0;background:#fff;box-shadow:none}
+[data-design="web2000"] th,[data-design="web2000"] td{padding:4px 8px}
+[data-design="web2000"] th,[data-design="web2000"] th:first-child{background:var(--c-strip-2);border-bottom:1px solid var(--c-rule);font:bold var(--t2)/1.2 var(--body);letter-spacing:.5px;color:var(--c-navy-dk)}
+[data-design="web2000"] td{border-bottom:1px solid var(--c-rowline);border-left:1px solid #E6EAF2;font:var(--t1)/1.3 var(--body);background:#fff}
+[data-design="web2000"] td:first-child{border-left:0;background:#fff}
+[data-design="web2000"] tbody tr:nth-child(even) td{background:var(--c-row)}
+[data-design="web2000"] tbody tr:hover td{background:var(--c-hover)}
+[data-design="web2000"] td .mname{gap:6px;font:bold var(--t1)/1.3 var(--body)}
+[data-design="web2000"] td .mname i,[data-design="web2000"] tr.official td .mname i,[data-design="web2000"] tr.site td .mname i{width:9px;height:9px;border-radius:0;transform:none;box-shadow:inset 0 0 0 1px rgb(0 0 0/.3)}
+[data-design="web2000"] td .mname .wx{width:16px;height:16px;margin:0}
+[data-design="web2000"] td .msrc{margin-left:15px;font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] td.out{color:var(--bad);font-weight:bold;background:#FFF1C9!important;box-shadow:inset 0 0 0 1px #E8C66A}
+[data-design="web2000"] tr.official td,[data-design="web2000"] tr.official td:first-child{background:#EAF0F9}
+[data-design="web2000"] tr.official td .mname{color:var(--c-cap-a)}
+[data-design="web2000"] tr.sep td{padding:3px 8px;background:var(--c-strip)!important;font:bold var(--t2)/1.2 var(--body);letter-spacing:.5px;color:var(--c-navy-dk)}
+[data-design="web2000"] tr.median td,[data-design="web2000"] tr.median td:first-child{background:var(--c-strip-2)!important;font:bold var(--t1)/1.3 var(--body)}
+[data-design="web2000"] table.score .sbar{width:110px;height:9px;margin:4px 0 1px 15px;padding:2px;border-radius:0;background:#fff;box-shadow:var(--sunken-soft)}
+[data-design="web2000"] table.score .sbar i{border-radius:0;background:repeating-linear-gradient(90deg,var(--c-cap-a) 0 4px,transparent 4px 6px)}
+[data-design="web2000"] table.score tr.top .sbar i{background:repeating-linear-gradient(90deg,var(--good) 0 4px,transparent 4px 6px)}
+[data-design="web2000"] table.score td.best{color:var(--good);font-weight:bold}
+[data-design="web2000"] .scoreempty{padding:6px 8px;border:1px solid #E2D27A;background:var(--c-hover);font-size:var(--t1);color:var(--c-ink2)}
+[data-design="web2000"] #chart text{font-family:var(--mono)}
+[data-design="web2000"] #chart svg{max-width:620px;margin:0 auto}
+[data-design="web2000"] .legend i{border-radius:0}
+
+/* ---- Forecast sites status: a folding box; each source with a status light as in the status bar --------- */
+[data-design="web2000"] .fold>summary{gap:4px 10px;scroll-margin-top:8px}
+[data-design="web2000"] .fold>summary:focus-visible{outline:1px dotted #fff;outline-offset:-3px;border-radius:0}
+[data-design="web2000"] .fold[open]>summary{margin-bottom:0}
+[data-design="web2000"] .fold-sum{font-size:var(--t2);color:#DCE6F4}
+[data-design="web2000"] .fold-act{height:18px;padding:0 6px 1px;gap:5px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised);color:#000;font:var(--t2)/1 var(--mono)}
+[data-design="web2000"] .fold-act::after{width:0;height:0;border-style:solid;border-width:4px 4px 0 4px;border-color:#000 transparent transparent transparent;transform:none}
+[data-design="web2000"] .fold[open] .fold-act::after{border-width:0 4px 4px 4px;border-color:transparent transparent #000 transparent;transform:none}
+[data-design="web2000"] .fold-body{gap:8px;padding:8px 8px 0}
+[data-design="web2000"] .sites{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px}
+[data-design="web2000"] .sites>div{padding:4px 7px 5px;border:1px solid var(--c-rule);border-radius:0;background:#fff;box-shadow:none;font:bold var(--t1)/1.35 var(--body)}
+[data-design="web2000"] .sites>div>span:last-child{font:var(--t2)/1.35 var(--body)}
+[data-design="web2000"] .sites .sn i,[data-design="web2000"] .sites .stale .sn i,[data-design="web2000"] .sites .failed .sn i,[data-design="web2000"] .sites .none .sn i{width:8px;height:8px;border-radius:0;background:#23A323;box-shadow:inset -1px -1px #0D5E0D,inset 1px 1px #8BE38B}
+[data-design="web2000"] .sites .stale .sn i{background:#E0A800;box-shadow:inset -1px -1px #8A6400,inset 1px 1px #FFE08A}
+[data-design="web2000"] .sites .failed .sn i{background:#C00000;box-shadow:inset -1px -1px #6A0000,inset 1px 1px #FF8A8A}
+[data-design="web2000"] .sites .none .sn i{background:#C0C0C0;box-shadow:inset -1px -1px #808080,inset 1px 1px #fff}
+
+/* ---- Trip planner: sunken fields, the stops as boxes on a dotted line ------------------------------------ */
+[data-design="web2000"] .hbox.trip{gap:10px}
+[data-design="web2000"] .tfield label{font:bold 10px/1.2 var(--body);letter-spacing:.6px;text-transform:uppercase;color:var(--c-navy-dk)}
+[data-design="web2000"] .trip :is(select,input){height:22px;min-height:0;padding:2px 4px 3px;border:0;border-radius:0;background-color:#fff;box-shadow:var(--sunken);font:var(--t1)/1 var(--body);color:#000}
+[data-design="web2000"] .trip select{-webkit-appearance:none;appearance:none;padding-right:22px;background:#fff var(--arrow) no-repeat right 2px center}
+[data-design="web2000"] .trip :is(select,input):focus-visible{outline:1px dotted #000;outline-offset:-4px}
+[data-design="web2000"] .tripbar{gap:8px}
+[data-design="web2000"] .tbtns{gap:4px}
+[data-design="web2000"] .tripsum{font:bold var(--t1)/1.45 var(--body)}
+[data-design="web2000"] .tstop::before{width:0;border-left:1px dotted var(--c-sh);background:none}
+[data-design="web2000"] .tstop::after{width:11px;height:11px;top:6px;border:1px solid #000;border-radius:0}
+[data-design="web2000"] .tstop{--tw:6.2em}
+[data-design="web2000"] .twhen b{font:bold var(--t0)/1.3 var(--body);white-space:nowrap}
+[data-design="web2000"] .twhen span{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .tcard{gap:6px;padding:0 0 8px;border:1px solid var(--c-rule);border-left:4px solid var(--c);border-radius:0;background:#fff}
+[data-design="web2000"] .tcard>*{margin-inline:8px}
+[data-design="web2000"] .tcard>.thd{margin:0;padding:3px 8px 4px;background:var(--c-strip);border-bottom:1px solid var(--c-rule)}
+[data-design="web2000"] .tcard h3{font:bold var(--t0)/1.3 var(--body);color:var(--c-navy-dk)}
+[data-design="web2000"] .thd small{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .twx .wx{width:32px;height:32px}
+[data-design="web2000"] .twx .tt{font:bold 22px/1 var(--body);letter-spacing:-1px}
+[data-design="web2000"] .twx .tcond{font-size:var(--t1);color:var(--c-ink2)}
+[data-design="web2000"] .tfig{gap:3px 14px;font-size:var(--t1)}
+[data-design="web2000"] .tfig .ui,[data-design="web2000"] .tline .ui,[data-design="web2000"] .tflags .ui{width:16px;height:16px;margin-top:0}
+[data-design="web2000"] .tfig small{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .tsrc{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .tmsg,[data-design="web2000"] .tempty,[data-design="web2000"] .tline{font-size:var(--t1)}
+[data-design="web2000"] .tline small,[data-design="web2000"] .tleg{font-size:var(--t2);color:var(--c-ink3)}
+[data-design="web2000"] .tflags li{font:bold var(--t1)/1.35 var(--body)}
+[data-design="web2000"] .tacts{gap:4px}
+[data-design="web2000"] .tacts .btn{height:21px;padding:0 7px 1px;font-size:var(--t2);box-shadow:var(--raised)}
+[data-design="web2000"] .tacts .btn.icon{width:23px;padding:0}
+[data-design="web2000"] .tacts .btn:disabled{opacity:1}
+[data-design="web2000"] .tripform{gap:8px;padding-top:10px;border-top:1px solid var(--c-rule)}
+[data-design="web2000"] .tripform h3{font:bold var(--t0)/1.3 var(--body);color:var(--c-navy-dk)}
+[data-design="web2000"] .tfields{gap:8px}
+[data-design="web2000"] #tsMsg{padding:3px 6px;border:1px solid #000;background:#FFFFE1;color:#000;font:var(--t1)/1.35 var(--mono)}
+
+/* ---- Footer: the credits, period badges ------------------------------------------------------------------ */
+[data-design="web2000"] footer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:3px 16px;margin:14px 0 12px;padding:8px 0 0;border-top:1px solid var(--c-rule);font-size:var(--t2);line-height:1.45;color:var(--c-ink3)}
+[data-design="web2000"] footer>span:first-child,[data-design="web2000"] .fnote,[data-design="web2000"] .fnav{grid-column:1}
+[data-design="web2000"] .badges{grid-column:2;grid-row:1/4;display:flex;gap:4px}
+[data-design="web2000"] .badge{display:flex;width:80px;height:15px;overflow:hidden;box-shadow:inset 0 0 0 1px #000;font:bold 9px/12px Verdana,sans-serif;letter-spacing:.2px}
+[data-design="web2000"] .badge span{margin:1px 0 1px 1px;padding:1px 3px 0 4px;border-right:1px solid #000;background:#FF6600;color:#fff;line-height:12px}
+[data-design="web2000"] .badge b{flex:1;margin:1px 1px 1px 0;padding-top:1px;background:#fff;color:#000;text-align:center;line-height:12px}
+[data-design="web2000"] .badge.b2 span{background:#0A246A}
+[data-design="web2000"] .badge.b3 span{background:#2E7D1E}
+
+/* ---- Pop-up menus (the menu bar's and Design): grey, the item under the pointer navy ---------------------- */
+[data-design="web2000"] .mbmenu,[data-design="web2000"] .dsw-menu{position:absolute;z-index:30;display:flex;flex-direction:column;min-width:190px;padding:2px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised),2px 2px 0 rgb(0 0 0/.3);font:11px/1 var(--mono)}
+[data-design="web2000"] .mbmenu[hidden],[data-design="web2000"] .dsw-menu[hidden]{display:none}
+[data-design="web2000"] .dsw-menu{right:0;bottom:calc(100% + 2px)}
+[data-design="web2000"] .dsw-menu.atbar{position:fixed;right:auto;bottom:auto}
+[data-design="web2000"] :is(.mbmenu,.dsw-menu) [role^="menuitem"]{position:relative;display:flex;align-items:center;width:100%;min-height:20px;padding:3px 22px 4px 22px;border:0;border-radius:0;background:none;
+  color:#000;font:11px/1.2 var(--mono);text-align:left;text-decoration:none;white-space:nowrap;cursor:default}
+[data-design="web2000"] :is(.mbmenu,.dsw-menu) [role^="menuitem"]:hover,[data-design="web2000"] :is(.mbmenu,.dsw-menu) [role^="menuitem"]:focus{background:#0A246A;color:#fff;outline:none;box-shadow:none}
+[data-design="web2000"] .mbmenu [role^="menuitem"]:disabled{background:none;color:#808080;text-shadow:1px 1px 0 #fff}
+[data-design="web2000"] .dsw-menu [aria-checked="true"]{font-weight:normal}
+[data-design="web2000"] .dsw-menu [aria-checked="true"]::before{left:8px;width:6px;height:6px;margin-top:-3px;border-radius:0;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h4v1h1v4H5v1H1V5H0V1h1z'/%3E%3C/svg%3E");mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h4v1h1v4H5v1H1V5H0V1h1z'/%3E%3C/svg%3E")}
+[data-design="web2000"] .dsw-sep{height:2px;margin:3px 1px;border-top:1px solid #808080;border-bottom:1px solid #fff;background:none}
+[data-design="web2000"] .dsw-h{padding:5px 8px 3px 22px;font:bold 11px/1 var(--mono);letter-spacing:0;text-transform:none;color:#808080;text-shadow:1px 1px 0 #fff}
+[data-design="web2000"] .dsw-btn{height:23px;padding:0 8px 1px 4px;gap:4px;border:0;border-radius:0;background:var(--c-face);box-shadow:var(--raised),1px 1px 0 rgb(0 0 0/.45);color:#000;font:11px/1 var(--mono)}
+[data-design="web2000"] .dsw-btn .px{display:block}
+[data-design="web2000"] .dsw-btn .dsw-ic{display:none}
+[data-design="web2000"] .dsw-btn:hover{background:#DEDAD2}
+[data-design="web2000"] .dsw-btn[aria-expanded="true"]{background:var(--dither);box-shadow:var(--pressed)}
+[data-design="web2000"] .dsw-btn:focus-visible{outline:1px dotted #000;outline-offset:-5px}
+
+/* ---- Phones: the window fills the screen, the masthead stacks, the tab strip scrolls sideways and stays at the
+   top, and the 7-day table drops its widest columns ---- */
+@media (max-width:640px){
+  [data-design="web2000"] .win{margin:0;padding:3px;box-shadow:var(--raised)}
+  [data-design="web2000"] .menubar{display:none}
+  [data-design="web2000"] .wrap{grid-template-columns:8px minmax(0,1fr) 8px;grid-template-rows:auto auto 8px auto auto 8px auto auto 9px auto auto}
+  [data-design="web2000"] .wrap>*{grid-column:2/3}
+  [data-design="web2000"] .wrap>section{margin-top:10px}
+  [data-design="web2000"] .util{grid-area:1/1/2/4;padding:3px 8px}
+  [data-design="web2000"] .utilnav{display:none}
+  [data-design="web2000"] .topbar{grid-area:2/2/3/3;padding:9px 0 8px}
+  [data-design="web2000"] .brand{font-size:19px}
+  [data-design="web2000"] .fbox{grid-area:3/2/10/3}
+  [data-design="web2000"] #lblLoc{grid-area:4/2/5/3;margin:0 8px}
+  [data-design="web2000"] .loctitle{grid-area:5/2/6/3;margin:4px 8px 0}
+  [data-design="web2000"] #lblQ{grid-area:7/2/8/3;margin:0 8px}
+  [data-design="web2000"] .finder{grid-area:8/2/9/3;margin:4px 8px 0}
+  [data-design="web2000"] .finder .drop{left:0;right:auto}
+  [data-design="web2000"] .jump{grid-area:10/1/11/4;position:sticky;top:0;margin-top:10px;padding:6px 8px 5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  [data-design="web2000"] .jump::-webkit-scrollbar{display:none}
+  [data-design="web2000"] .jump a{padding:6px 10px 5px}
+  [data-design="web2000"] .crumbs{grid-area:11/1/12/4;padding:3px calc(8px + var(--hbw)) 3px 8px}
+  [data-design="web2000"] .hbtns{grid-area:11/1/12/4;margin-right:8px}
+  [data-design="web2000"] h2,[data-design="web2000"] .fold>summary,[data-design="web2000"] .wrap>section{scroll-margin-top:44px}
+  [data-design="web2000"] .now{grid-template-columns:minmax(0,1fr)}
+  [data-design="web2000"] .nowtop{border-right:0;border-bottom:1px solid var(--c-rule)}
+  [data-design="web2000"] .stats>div,[data-design="web2000"] .stats>div:first-child,[data-design="web2000"] .stats>div:nth-child(3n+1){grid-template-columns:104px minmax(0,1fr)}
+  [data-design="web2000"] .wrap>section{--dcols:72px 34px minmax(0,1fr) 54px 55px}
+  [data-design="web2000"] .dhead{white-space:normal;letter-spacing:0;align-items:end;line-height:1.15}
+  [data-design="web2000"] .day{grid-template-areas:"dn ic tp rn ag" "dd ic tp rn ag" "en en en en en"}
+  [data-design="web2000"] .day .tbar,[data-design="web2000"] .dh-range,[data-design="web2000"] .dh-ens{display:none}
+  [data-design="web2000"] .day .drain{flex-direction:column;align-items:flex-start;gap:2px}
+  [data-design="web2000"] .day .drain .rbar{width:100%}
+  [data-design="web2000"] .agree{font-size:0;gap:0}
+  [data-design="web2000"] .day .ens{margin-top:3px}
+  [data-design="web2000"] .card .chd .wx{top:32px}
+  [data-design="web2000"] .tnext{margin-left:0}
+  [data-design="web2000"] .dweek button{grid-template-columns:78px minmax(0,1fr)}
+  [data-design="web2000"] footer{grid-template-columns:minmax(0,1fr)}
+  [data-design="web2000"] .badges{grid-column:1;grid-row:auto;margin-top:4px}
+  [data-design="web2000"] .statusbar>span:nth-child(n+2){display:none}
+}
 </style>
 </head>
 <body>
@@ -715,17 +1372,29 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   <filter id="wxSoft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".28"/></filter>
 </defs></svg>
 <div class="scene" id="scene" aria-hidden="true"></div>
+<!-- Early 2000s look: the page sits in a Windows 2000 window (title bar, menu bar, status bar). In the classic look the
+     window boxes step aside (display: contents) and the extra pieces, marked .w2k, are hidden. -->
+<div class="win">
+<div class="w2k cap"><svg class="px" width="16" height="16" aria-hidden="true"><use href="#pxw-partly_cloudy"/></svg><span class="captxt" id="capTitle">Consolidated Weather</span>
+  <span class="wbtns" aria-hidden="true"><span class="wbtn"><svg width="8" height="7"><rect x="0" y="5" width="6" height="2"/></svg></span><span class="wbtn"><svg width="9" height="9"><path d="M0 0h9v9H0zM1 2v6h7V2z" fill-rule="evenodd"/></svg></span><span class="wbtn close"><svg width="8" height="7"><path d="M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0z"/></svg></span></span></div>
+<nav class="w2k menubar" aria-label="Menu"><button type="button" data-menu="refresh" title="Fetch the latest forecasts"><u>F</u>ile</button><button type="button" data-menu="places" title="Choose another place"><u>P</u>laces</button><button type="button" data-menu="view" title="Change the look of this site"><u>V</u>iew</button><button type="button" data-menu="tools" title="Trip planner"><u>T</u>ools</button><button type="button" data-menu="help" title="Where the figures come from"><u>H</u>elp</button></nav>
 <div class="wrap">
   <header id="top">
+    <div class="w2k util"><span id="w2kWhen"></span><span class="utilnav"><a href="#triph">Trip planner</a><a href="#offh">Site status</a><a href="#foot">Sources</a></span></div>
+    <div class="w2k fbox" aria-hidden="true"></div>
+    <label class="w2k flabel" id="lblLoc" for="loc">Your place</label>
+    <label class="w2k flabel" id="lblQ" for="q">Find a place</label>
     <div class="hdrbar">
     <div class="topbar">
       <img class="logo" src="img/icon-192.png" alt="" width="120" height="120">
+      <svg class="w2k blogo px" width="32" height="32" aria-hidden="true"><use href="#pxw-partly_cloudy"/></svg>
       <span class="brand"><span>Consolidated</span> <span>Weather</span></span>
+      <span class="w2k btag">Bureau of Meteorology + 6 forecast sites, side by side</span>
     </div>
     <div class="toolbar">
       <div class="finder" role="search" aria-label="Find a place">
         <form id="searchForm">
-          <div class="searchbox"><button class="sgo" type="submit" aria-label="Search"><i data-ui="search"></i></button><input id="q" type="search" placeholder="Place or postcode" autocomplete="off" enterkeyhint="search" aria-label="Place or postcode"></div>
+          <div class="searchbox"><button class="sgo" type="submit" aria-label="Search"><i data-ui="search"></i><span class="w2k">Go</span></button><input id="q" type="search" placeholder="Place or postcode" autocomplete="off" enterkeyhint="search" aria-label="Place or postcode"></div>
         </form>
         <div class="drop"><p class="note" id="searchNote" hidden></p><ul class="results" id="results" hidden></ul></div>
       </div>
@@ -741,11 +1410,14 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       <span class="place"><i data-ui="pin"></i><span class="eyebrow" id="eyebrow">Forecast compare</span></span>
       <span class="status" id="status">Loading forecasts…</span>
     </div>
+    <div class="w2k crumbs"><ol aria-label="You are here"><li><a href="#top">Home</a></li><li id="w2kRegion">Queensland</li><li aria-current="page" id="w2kPlace">Loading…</li></ol><span class="stamp" id="w2kStamp" aria-hidden="true"></span></div>
   </header>
   <p class="netnote" id="netNote" role="status" hidden></p>
   <button class="stick" id="stick" type="button" tabindex="-1" aria-hidden="true"><img src="img/icon-192.png" alt="" width="30" height="30"><b id="stickName"></b><span class="sc" id="stickCond"></span><span class="st" id="stickTemp"></span></button>
 
-  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#radarh">Radar</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
+  <!-- On phones in the classic look, a bar of quick jumps; in the early-2000s look, the portal's tab strip (with a few
+       more tabs, marked .w2k). Tabs for sections a place doesn't have are hidden along with the section. -->
+  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#radarh">Radar</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh"><span class="cls">Sites</span><span class="w2k">Your sites</span></a><a class="w2k" href="#dayh">Site by site</a><a class="w2k" href="#scoreh">Accuracy</a><a class="w2k" href="#triph">Trip planner</a></nav>
 
   <div id="err" class="error" hidden></div>
 
@@ -774,6 +1446,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     <h2 id="weekh"><i data-ui="cal"></i>Next 7 days</h2>
     <p class="note">The middle figure of all the forecasts. Tap a day to see it below.</p>
     <details class="about"><summary>About this</summary><p>Each day shows the median of the Bureau of Meteorology and the forecast sites, with the Bureau's picture and chance of rain. The dot shows how closely they agree on the top temperature: green within 2°C, amber within 4°C, red beyond that. Below that, the ECMWF weather model is run 51 times, each from a slightly different start, to show how much the forecast could change: the umbrella counts the runs with 1 mm of rain or more, and the bars show how sure the top temperature is (high when most runs land within 2°C of each other, medium within 4°C, low beyond that). Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.</p></details>
+    <div class="w2k dhead" aria-hidden="true"><span>Day</span><span></span><span>High / low</span><span class="dh-range">Week range</span><span>Rain</span><span>Sites agree</span><span class="dh-ens">Model runs</span></div>
     <div class="days" id="days" role="group" aria-label="Choose a day"></div>
   </section>
 
@@ -926,9 +1599,30 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     <p>Tides are WillyWeather's high and low times for the spot named under the tide; the height in between follows the usual tide shape, so it's an estimate. Beach driving on K'gari uses the same rule as the Beach driving section: good within 2 hours of low tide in daylight, avoid within 2 hours of high tide, not after dark. Things to watch are flagged for any hour you're there: storms, a chance of rain of 60% or more, gusts of 40 km/h or more (or wind of 30 km/h), 35°C or hotter, high tide on a driving beach, a swell of 2 m or more there, and the Bureau's current warnings for the area (for stops today and tomorrow). Each place's figures are fetched when the trip is shown and kept for 10 minutes; with no signal, a place you've opened before shows the figures this device saved then. Trips stay in this browser on this device; nothing is sent anywhere.</p></details>
   </section>
 
-  <footer>
+  <footer id="foot">
     <span>Official forecast and station readings: Bureau of Meteorology, through the data feed its own app uses (unofficial and may change), with the scraper's copy as a fallback. Forecast site figures: collected automatically from each site. For warnings and safety decisions, follow the Bureau of Meteorology.</span>
+    <span class="w2k fnote">Best viewed at 1024 × 768 or wider, or on your phone.</span>
+    <nav class="w2k fnav" aria-label="Footer"><a href="#top">Back to top</a><a href="#triph">Trip planner</a><a href="#offh">Forecast sites</a></nav>
+    <span class="w2k badges" aria-hidden="true"><span class="badge"><span>BOM</span><b>DATA</b></span><span class="badge b2"><span>7</span><b>SOURCES</b></span><span class="badge b3"><span>QLD</span><b>AUS</b></span></span>
   </footer>
+</div>
+<div class="w2k statusbar"><span class="sbmsg"><i class="led" id="sbLed"></i><span id="sbMsg">Opening page…</span></span><span id="sbPlace"></span><span class="sbzone"><svg class="px" width="16" height="16" aria-hidden="true"><use href="#px-globe"/></svg>Internet</span></div>
+</div>
+
+<!-- Design switcher: a small button in the bottom corner on every view, opening a menu of the site's looks -->
+<div class="dsw" id="dsw">
+  <button type="button" class="dsw-btn" id="dswBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="dswMenu" title="Change the look of this site"><svg class="px" width="16" height="16" aria-hidden="true"><use href="#px-monitor"/></svg><svg class="dsw-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span class="dsw-lab">Design</span></button>
+  <div class="dsw-menu" id="dswMenu" role="menu" aria-label="Designs" hidden>
+    <button type="button" role="menuitemradio" aria-checked="false" data-look="web2000" tabindex="-1">Early 2000s (this site)</button>
+    <button type="button" role="menuitemradio" aria-checked="false" data-look="classic" tabindex="-1">Classic</button>
+    <a role="menuitem" href="./aero/" tabindex="-1">Aero edition</a>
+    <div class="dsw-sep" role="separator"></div>
+    <div role="group" aria-labelledby="dswSamples"><div class="dsw-h" id="dswSamples">Samples (mock-ups)</div>
+      <a role="menuitem" href="./designs/tv80/" tabindex="-1">1980s TV weather</a>
+      <a role="menuitem" href="./designs/chartroom/" tabindex="-1">Ship's chart room</a>
+      <a role="menuitem" href="./designs/teletext/" tabindex="-1">Teletext</a>
+      <a role="menuitem" href="./designs/print70s/" tabindex="-1">1970s print</a></div>
+  </div>
 </div>
 
 <script>
@@ -1008,6 +1702,121 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   const PLUG={day:[],render:[],extras:[]};
   const runPlug=(list,...a)=>list.forEach(f=>{try{f(...a);}catch(e){console.error(e);}});
 
+  // Pixel pictures for the Early 2000s look: 16 by 16 grids, one letter per pixel (a full stop is see-through), drawn
+  // as crisp squares and only ever shown at whole multiples (16, 32 or 64 pixels). X takes the text colour, so a
+  // boat or an arrow still turns green, amber or red where the page colours it.
+  const PXC={A:"#FF9A00",B:"#D97400",C:"#FFD21F",D:"#FFF3A6",E:"#B39A3C",F:"#FFFBE0",G:"#FFF1A8",H:"#5B6577",I:"#FFFFFF",J:"#E6EBF2",K:"#C9D1DD",
+    L:"#8DB6F5",M:"#1E5FD8",N:"#B07A00",O:"#FFE14A",P:"#0A246A",Q:"#6E6E6E",R:"#A7B1C0",S:"#7F8A9C",T:"#3F4757",U:"#C9A86A",V:"#A9B2C0",W:"#9C7A48",
+    Y:"#2E7D1E",Z:"#C00000",k:"#000000",g:"#808080",x:"#D4D0C8",b:"#3A6EA5",e:"#5FA0E0",X:"currentColor"};
+  const pxg=s=>s.trim().split(/\s+/);  // a grid written as 16 words of 16 letters
+  // Lay grids over each other (later ones on top), each moved by dx, dy; recolour swaps letters (a dark cloud)
+  const pxLay=(...parts)=>{const g=Array.from({length:16},()=>Array(16).fill("."));
+    parts.forEach(([p,dx=0,dy=0])=>p.forEach((row,y)=>[...row].forEach((c,x)=>{const X=x+dx,Y=y+dy;if(c!=="."&&X>=0&&X<16&&Y>=0&&Y<16)g[Y][X]=c;})));
+    return g.map(r=>r.join(""));};
+  const pxSwap=(p,m)=>p.map(r=>r.replace(/./g,c=>m[c]||c));
+  const PX_SUN=pxg(`
+    ................ .......AA....... ..A....AA....A.. ...A........A... ......BBBB...... .....BCCCCB..... ....BCDDCCCB.... .AA.BCDCCCCB.AA.
+    .AA.BCCCCCCB.AA. ....BCCCCCCB.... .....BCCCCB..... ......BBBB...... ...A........A... ..A....AA....A.. .......AA....... ................`);
+  const PX_MOON=pxg(`
+    ................ ............D... ......E....DFD.. ....EE......D... ..EEGE.......... ..EGGE.......... .EGGGE.......D.. .EGGGE..........
+    .EGGGE........D. .EGGGGE......DFD .EGGGGGE......D. ..EGGGGGEEEEE... ..EGGGGGGGGE.... ...EEGGGGEE..... .....EEEE....... ................`);
+  const PX_PARTLY=pxg(`
+    A....AA....A.... .A........A..... ....BBBB........ ...BCCCCB....... ..BCDDCCCB...... A.BCDCCCCB.AA... A.BCCCCCCB.AA... ..BCCCCCCB......
+    ...BCCCCB....... ....BBBB.HHH.... .A....HHHIIIH... A....HIIIIIIIHH. ....HIIIIIIIIIIH ....HIIIIIIIIIJH ....HKKKKKKKKKKH .....HHHHHHHHHH.`);
+  // The cloud of the partly cloudy picture on its own, and the full cloud (10 rows), a small cloud and a back cloud
+  const PX_CLOUDP=pxg(`.........HHH.... ......HHHIIIH... .....HIIIIIIIHH. ....HIIIIIIIIIIH ....HIIIIIIIIIJH ....HKKKKKKKKKKH .....HHHHHHHHHH.`);
+  const PX_CL=pxg(`......HHH....... .....HIIIH...... ..HHHIIIIIHH.... .HIIIIIIIIIIH... .HIIIIIIIIIIIHH. HIIIIIIIIIIIIIIH HIIIIIIIIIIIIIJH
+    HJIIIIIIIIIIIJKH .HKKKKKKKKKKKKH. ..HHHHHHHHHHHH..`);
+  const PX_SMALLC=pxg(`..HHH... .HIIIHH. HIIIIIIH HKKKKKKH .HHHHHH.`);
+  const PX_BACKC=pxg(`................ ..........TTT... ........TTRRRT.. .......TRRRRRRT. ......TRRRRRRRRT ......TRRRRRRRST ......TRRRRRRSST
+    .......TSSSSSSST ........TTTTTTT.`);
+  const PX_DARK={H:"T",I:"R",J:"R",K:"S"};
+  const pxRows=(rows)=>{const g=Array(16).fill("................");Object.entries(rows).forEach(([y,r])=>g[+y]=r);return g;};
+  const PX_PARTLY_N=pxLay([PX_MOON,-1,-3],[PX_CLOUDP,0,9]);
+  const SHOWER_DROPS=pxRows({11:"....L...L...L...",12:"...M...M...M....",14:"......L...L.....",15:".....M...M......"});
+  const LIGHT_DROPS=pxRows({14:"......L...L.....",15:".....M...M......"});
+  const PXW={
+    sunny:PX_SUN,"sunny-n":PX_MOON,
+    mostly_sunny:pxLay([PX_SUN],[PX_SMALLC,8,10]),"mostly_sunny-n":pxLay([PX_MOON],[PX_SMALLC,8,10]),
+    partly_cloudy:PX_PARTLY,"partly_cloudy-n":PX_PARTLY_N,
+    cloudy:pxLay([PX_BACKC],[PX_CL,0,5]),
+    hazy:pxLay([PX_SUN,0,-3],[pxRows({12:"..UUUUUU..UUUU..",14:"....UUUU.UUUUUU."})]),
+    "hazy-n":pxLay([PX_MOON,0,-3],[pxRows({12:"..UUUUUU..UUUU..",14:"....UUUU.UUUUUU."})]),
+    fog:pxLay([PX_CL],[pxRows({11:".VVVVVVV.VVVVV..",13:"...VVVVVVVV.VVV.",15:".VVVV.VVVVVVV..."})]),
+    dusty:pxLay([PX_SUN,0,-3],[pxRows({12:".WWWW.WWWWWWW...",14:"...WWWWWWW.WWWW."})]),
+    windy:pxLay([pxRows({2:"..........HHH...",3:".........H...H..",4:".............H..",5:".HHHHHHHHHHHH...",7:".HHHHHHHHHHHHH..",8:"..............H.",
+      9:"...........H..H.",10:"............HH..",12:".HHHHHHHH......."}),0,1]),
+    light_rain:pxLay([PX_CL],[pxRows({11:".....L.....L....",12:"....M.....M.....",14:"........L.......",15:".......M........"})]),
+    light_shower:pxLay([PX_PARTLY,0,-2],[LIGHT_DROPS]),"light_shower-n":pxLay([PX_PARTLY_N,0,-2],[LIGHT_DROPS]),
+    shower:pxLay([PX_CL],[SHOWER_DROPS]),
+    rain:pxLay([pxSwap(PX_CL,PX_DARK)],[pxRows({11:"...L..L..L..L...",12:"..M..M..M..M....",14:"....L..L..L..L..",15:"...M..M..M..M..."})]),
+    storm:pxLay([pxSwap(PX_CL,PX_DARK)],[pxRows({7:"........NNNN....",8:".......NOON.....",9:".......NON......",10:"......NOONNN....",11:"...M..NOOOON.M..",
+      12:"..M.....NON.M...",13:"........NN......",14:"....M..NN.......",15:"...M...N........"})]),
+    snow:pxLay([PX_CL],[pxRows({11:"...e....e....e..",12:"..eee..eee..eee.",13:"...e....e....e..",15:"......e....e...."})]),
+    frost:pxg(`.......M........ .....M.M.M...... ......MMM....... .M.....M.....M.. ..M....M....M... .M.M...M...M.M.. ....M..M..M..... MMMMMMMIMMMMMMM.
+      ....M..M..M..... .M.M...M...M.M.. ..M....M....M... .M.....M.....M.. ......MMM....... .....M.M.M...... .......M........ ................`),
+    cyclone:pxg(`................ ...........PP... .........PP..... ........P....... .....PPPP....... ....P....P...... ...P..MM..P..... ...P.MIIM.P.....
+      ...P.MIIM.P..... ...P..MM..P..... ....P....P...... ......PPPP...... ......P......... ....PP.......... ..PP............ ................`)};
+  PXW.heavy_shower=PXW.rain;
+  // Small pictures for buttons and labels, in place of the line icons
+  const PXI={
+    search:pxg(`................ .....QQQQ....... ....QIIIIQ...... ...QILIIIIQ..... ...QILIIIIQ..... ...QIIIIIIQ..... ...QIIIIIIQ..... ....QIIIIQ......
+      .....QQQQPP..... .........PPP.... ..........PPP... ...........PPP.. ............PP.. ................ ................ ................`),
+    star:pxg(`................ .......N........ ......NON....... ......NON....... .....NOOON...... NNNNNNOOONNNNNN. .NOOOOOOOOOOON.. ..NOOOOOOOOON...
+      ...NOOOOOOON.... ....NOOOOON..... ...NOOOOOOON.... ...NOOONOOON.... ..NOON...NOON... ..NN.......NN... ................ ................`),
+    refresh:pxg(`................ ................ ......XXXX...... ....XX....XX.X.. ...X........XX.. ...X.......XXX.. ..X............. ..X.............
+      ..X..........X.. ..X..........X.. ...X........X... ...X........X... ....XX....XX.... ......XXXX...... ................ ................`),
+    pin:pxg(`................ .....kkkkk...... ....kZZZZZk..... ...kZIIZZZZk.... ...kZIZZZZZk.... ...kZZZZZZZk.... ...kZZZZZZZk.... ....kZZZZZk.....
+      .....kZZZk...... .....kZZZk...... ......kZk....... ......kZk....... ......kZk....... .......k........ ................ ................`),
+    play:pxg(`................ ................ ................ .....X.......... .....XX......... .....XXX........ .....XXXX....... .....XXXXX......
+      .....XXXX....... .....XXX........ .....XX......... .....X.......... ................ ................ ................ ................`),
+    pause:pxg(`................ ................ ................ ................ .....XX..XX..... .....XX..XX..... .....XX..XX..... .....XX..XX.....
+      .....XX..XX..... .....XX..XX..... .....XX..XX..... .....XX..XX..... ................ ................ ................ ................`),
+    bolt:pxg(`................ ........NNNN.... .......NOOON.... ......NOOON..... .....NOOON...... ....NOOONNNN.... ...NOOOOOOON.... ...NNNNOOON.....
+      ......NOON...... .....NOON....... .....NON........ ....NON......... ....NN.......... ...N............ ................ ................`),
+    ext:pxg(`................ ................ .........XXXXX.. ...........XXX.. ..XXXXX...X.XX.. ..X......X...X.. ..X.....X....... ..X....X........
+      ..X........X.... ..X........X.... ..X........X.... ..X........X.... ..X........X.... ..XXXXXXXXXX.... ................ ................`),
+    radar:pxg(`................ .....XXXXXX..... ...XX......XX... ..X.........YX.. ..X........Y.X.. .X....XXXXY...X. .X...X...Y.X..X. .X...X..Y..X..X.
+      .X...X.Y...X..X. .X...X....X...X. .X....XXXX....X. ..X..........X.. ..X..........X.. ...XX......XX... .....XXXXXX..... ................`),
+    drop:pxg(`................ .......M........ .......M........ ......MLM....... ......MLM....... .....MLLLM...... .....MLLLM...... ....MLILLLM.....
+      ....MLILLLM..... ...MLILLLLLM.... ...MLILLLLLM.... ...MLLLLLLLM.... ....MLLLLLM..... .....MMMMM...... ................ ................`),
+    wind:pxg(`................ ................ ................ ..........XXX... .........X...X.. .............X.. .XXXXXXXXXXXX... ................
+      .XXXXXXXXXXXXX.. ..............X. ...........X..X. ............XX.. ................ .XXXXXXXX....... ................ ................`),
+    gust:pxg(`................ ................ ...........XX... ..........X..X.. .............X.. .XXXXX.XXXXXX... ................ ...XXXXXXXXXXX..
+      ..............X. ...........X..X. ............XX.. ................ .XXX.XXXXX...... ................ ................ ................`),
+    umbrella:pxg(`................ .......X........ .....XXXXX...... ...XXXXXXXXX.... ..XXXXXXXXXXX... .XXXXXXXXXXXXX.. .XXXXXXXXXXXXX.. XXX.XXXXXXX.XXX.
+      .......X........ .......X........ .......X........ .......X........ .......X........ .......X..X..... ........XX...... ................`),
+    uv:PX_SUN,
+    sunrise:pxg(`................ ................ .......P........ ......PPP....... .....PPPPP...... .......P........ ..A.........A... ...A.BBBBB.A....
+      ....BCCCCCB..... ...BCDCCCCCB.... AA.BCCCCCCCB.AA. ..BCCCCCCCCCB... QQQQQQQQQQQQQQQ. ................ ................ ................`),
+    up:pxg(`................ ................ .......X........ ......XXX....... .....XXXXX...... ....XXXXXXX..... ...XXXXXXXXX.... ......XXX.......
+      ......XXX....... ......XXX....... ......XXX....... ......XXX....... ......XXX....... ......XXX....... ................ ................`),
+    boat:pxg(`................ .......X........ .......XX....... .......XIX...... .......XIIX..... ......XXIIIX.... .....XIXIIIIX... ....XIIXIIIIIX..
+      ...XXXXXXXXXXXX. .......X........ XXXXXXXXXXXXXXXX .XXXXXXXXXXXXXX. ..XXXXXXXXXXXX.. ...XXXXXXXXXX... ................ ................`),
+    wave:pxg(`................ ................ ..XXX.....XXX... .X...X...X...X.. X.....XXX.....XX ................ ................ ..XXX.....XXX...
+      .X...X...X...X.. X.....XXX.....XX ................ ................ ..XXX.....XXX... .X...X...X...X.. X.....XXX.....XX ................`),
+    tide:pxg(`................ ....X......X.... ...XXX.....X.... ..XXXXX....X.... ....X......X.... ....X......X.... ....X....XXXXX.. ....X.....XXX...
+      ....X......X.... ................ ................ ..XXX.....XXX... .X...X...X...X.. X.....XXX.....XX ................ ................`),
+    alert:pxg(`.......kk....... ......kOOk...... ......kOOk...... .....kOOOOk..... .....kOkkOk..... ....kOOkkOOk.... ....kOOkkOOk.... ...kOOOkkOOOk...
+      ...kOOOkkOOOk... ..kOOOOkkOOOOk.. ..kOOOOOOOOOOk.. .kOOOOOkkOOOOOk. .kOOOOOkkOOOOOk. kOOOOOOOOOOOOOOk kkkkkkkkkkkkkkkk ................`),
+    car:pxg(`................ ................ ................ ....XXXXXXX..... ...XIIIXIIIX.... ..XIIIIXIIIIX... .XXXXXXXXXXXXX.. XXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXX XX...XXXXXX...XX ..XIX......XIX.. ...X........X... ................ ................ ................ ................`),
+    eye:pxg(`................ ................ ................ ................ .....XXXXXX..... ...XX......XX... ..X....XX....X.. .X....XXXX....X.
+      .X....XXXX....X. ..X....XX....X.. ...XX......XX... .....XXXXXX..... ................ ................ ................ ................`),
+    globe:pxg(`................ .....PPPPPP..... ...PPMMYYMMPP... ..PMMYYYYMMMMP.. ..PMMMYYYMMYYP.. .PMMMMYYMMYYYMP. .PMMMMMYMMYYYMP. .PMMMMMMMMMYMMP.
+      .PMMYYMMMMMMMMP. .PMYYYYMMMMMMMP. ..PMYYYMMMMYMP.. ..PMMYMMMMYYMP.. ...PPMMMMMMPP... .....PPPPPP..... ................ ................`),
+    monitor:pxg(`................ .kkkkkkkkkkkkkk. .kxxxxxxxxxxxxk. .kxPPPPPPPPPPxk. .kxbbbbbbbbbbxk. .kxbbbbbbbbbbxk. .kxbbbbbbbbbbxk. .kxbbbbbbbbbbxk.
+      .kxbbbbbbbbbbxk. .kxxxxxxxxxxxYk. .kkkkkkkkkkkkkk. ......kxxk...... ....kkxxxxkk.... ...kxxxxxxxxk... ...kkkkkkkkkk... ................`)};
+  PXI.down=[...PXI.up].reverse();
+  // One symbol per picture, each pixel run in a row as one rectangle
+  function pxSym(id,g){let s="";g.forEach((row,y)=>{let x=0;while(x<16){const c=row[x]||".";let n=1;while(x+n<16&&row[x+n]===c)n++;
+      if(c!=="."&&PXC[c])s+=`<rect x="${x}" y="${y}" width="${n}" height="1" fill="${PXC[c]}"/>`;x+=n;}});
+    return `<symbol id="${id}" viewBox="0 0 16 16" stroke="none" shape-rendering="crispEdges">${s}</symbol>`;}
+  document.body.insertAdjacentHTML("afterbegin",`<svg id="pxDefs" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">`+
+    Object.entries(PXW).map(([k,g])=>pxSym("pxw-"+k,g)).join("")+Object.entries(PXI).map(([k,g])=>pxSym("px-"+k,g)).join("")+"</svg>");
+  const PX_NIGHT=new Set(["sunny","mostly_sunny","partly_cloudy","hazy","light_shower"]);
+  const pxKey=(p,night)=>night&&PX_NIGHT.has(p)?p+"-n":p;
+
   // Weather pictures, drawn inline on a 64-unit grid and named after the Bureau's icon descriptors
   const CLOUD='<circle cx="22" cy="39" r="10"/><circle cx="35" cy="33" r="14"/><circle cx="46" cy="40" r="9"/><rect x="12" y="38" width="44" height="11" rx="5.5"/>';
   const grp=(cls,body,x=0,y=0,s=1)=>`<g class="${cls}" transform="translate(${x} ${y}) scale(${s})">${body}</g>`;
@@ -1041,7 +1850,11 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     light_rain:"Light rain",light_shower:"Light showers",shower:"Showers",rain:"Rain",heavy_shower:"Heavy showers",storm:"Storms",snow:"Snow",frost:"Frost",cyclone:"Cyclone"};
   function wx(desc,night,title){if(desc==="clear"){desc="sunny";night=true;}const f=ART[desc];if(!f)return"";
     const label=title||(night&&desc==="sunny"?"Clear":WX_LABEL[desc]);
-    return `<svg class="wx" viewBox="0 0 64 64" aria-hidden="true"><title>${esc(label)}</title>${f(!!night)}</svg>`;}
+    return `<svg class="wx" viewBox="0 0 64 64" aria-hidden="true"><title>${esc(label)}</title>${wxBody(desc,!!night)}</svg>`;}
+  // Every weather picture carries both drawings: the glossy one (classic look) and the pixel one (early-2000s look);
+  // the page's look shows one of them
+  const wxBody=(p,night)=>`<g class="wxg">${ART[p](night)}</g><use class="wxp" href="#pxw-${pxKey(p,night)}" width="64" height="64"/>`;
+  const w2k=()=>document.documentElement.dataset.design==="web2000";
   // The forecast sites only give words ("Possible shower", "PM Showers"), so match those to a picture
   function classify(t){t=(t||"").toLowerCase();if(!t)return null;
     if(/cyclone/.test(t))return"cyclone";
@@ -1088,7 +1901,9 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     alert:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/>',
     car:'<path d="M5 17h14v-4.5l-2-5.5H7l-2 5.5z"/><path d="M5 12.5h14"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/>',
     eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'};
-  const ui=(n,cls="")=>`<svg class="ui ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${UI[n]}</svg>`;
+  // As with the weather pictures, an icon with a pixel version carries both (.uil line, .uip pixel)
+  const ui=(n,cls="")=>PXI[n]?`<svg class="ui hp ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g class="uil">${UI[n]}</g><use class="uip" href="#px-${n}" width="24" height="24"/></svg>`
+    :`<svg class="ui ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${UI[n]}</svg>`;
   // Rain radar: RainViewer's free radar frames over a plain base map, centred on the place. Nothing loads until the
   // section comes near the screen. Leaflet (the map library) comes from cdnjs, pinned to one version and checked
   // against its published hash.
@@ -1236,7 +2051,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     const i=TINTS.findIndex(s=>t<=s[0]);if(i<=0)return`color-mix(in srgb,rgb(${TINTS[i<0?TINTS.length-1:0][1]}) 70%,var(--fg))`;
     const [t0,a]=TINTS[i-1],[t1,b]=TINTS[i],f=(t-t0)/(t1-t0);
     return`color-mix(in srgb,rgb(${a.map((v,j)=>Math.round(v+(b[j]-v)*f)).join(" ")}) 70%,var(--fg))`;}
-  function agreement(rows){const v=rows.map(r=>r.tmax).filter(isNum);if(v.length<2)return{cls:"",label:"n/a",spread:null};const s=Math.max(...v)-Math.min(...v);return{spread:s,cls:s<=2?"":s<=4?"mid":"low",label:s<=2?"Agree":s<=4?"Some spread":"Disagree"};}
+  function agreement(rows){const v=rows.map(r=>r.tmax).filter(isNum);if(v.length<2)return{cls:"na",label:"n/a",spread:null};const s=Math.max(...v)-Math.min(...v);return{spread:s,cls:s<=2?"":s<=4?"mid":"low",label:s<=2?"Agree":s<=4?"Some spread":"Disagree"};}
   // Station reading: the Bureau's live feed if the browser got it, otherwise the scraper's copy
   function obsNow(){const D=state.data,o=D.bom&&D.bom.obs,so=D.scraped&&D.scraped.observations;
     if(o&&isNum(o.temp))return{temp:o.temp,feels:o.temp_feels_like,hum:o.humidity,wind:o.wind?.speed_kilometre,dir:o.wind?.direction,gust:o.gust?.speed_kilometre,rain:o.rain_since_9am,station:o.station?.name,km:isNum(o.station?.distance)?o.station.distance/1000:null};
@@ -1460,10 +2275,12 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   }
   let sceneKey="",sceneN=0;
   function renderScene(ni){
-    document.documentElement.classList.toggle("scenic",sceneOn);
+    // The early-2000s look has the plain desktop colour around its window instead, so nothing is loaded for it
+    const on=sceneOn&&!w2k();
+    document.documentElement.classList.toggle("scenic",on);
     $("sceneBtn").setAttribute("aria-pressed",String(sceneOn));
     const box=$("scene");
-    if(!sceneOn){box.innerHTML="";sceneKey="";return;}
+    if(!on){box.innerHTML="";sceneKey="";return;}
     if(!state.data||!ni)return;
     const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
     // Harris's photos. Clear, mostly sunny, partly cloudy and windy days: the beach at featured locations within 5 km
@@ -1630,7 +2447,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   const hDayShort=(d,k)=>d===0?"Today":new Date(k+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short"});
   function hNow(){const w=wallMs(new Date()),k=new Date(w).toISOString().slice(0,10),d=dates().indexOf(k);
     return d<0?null:d*24+new Date(w).getUTCHours()+new Date(w).getUTCMinutes()/60;}
-  const hPic=(p,night)=>p&&ART[p]?`<svg viewBox="0 0 64 64" class="wx" aria-hidden="true">${ART[p](night)}</svg>`:"";
+  const hPic=(p,night)=>p&&ART[p]?`<svg viewBox="0 0 64 64" class="wx" aria-hidden="true">${wxBody(p,!!night)}</svg>`:"";
   function buildHourly(){
     const ks=dates(),H=ks.flatMap((k,d)=>{const sun=sunHours(k);return hoursFor(k).map(r=>({...r,d,k,i:d*24+r.h,night:r.h<sun.rise||r.h>sun.set}));});
     const X=hWindCloud();H.forEach(r=>Object.assign(r,X(r.k+"T"+String(r.h).padStart(2,"0"))));
@@ -1659,8 +2476,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     H.forEach(r=>{if(!isNum(r.chance))return;const bw=PX*.62;
       if(r.chance>0)s+=`<rect x="${(x(r.i)-bw/2).toFixed(1)}" y="${(ry0-rb*r.chance/100).toFixed(1)}" width="${bw.toFixed(1)}" height="${(rb*r.chance/100).toFixed(1)}" rx="2" style="fill:${r.pic==="storm"?"var(--storm)":"var(--rainbar)"};opacity:.9"/>`;
       if(r.chi>r.clo)s+=`<line x1="${x(r.i)}" x2="${x(r.i)}" y1="${(ry0-rb*r.chi/100).toFixed(1)}" y2="${(ry0-rb*r.clo/100).toFixed(1)}" style="stroke:var(--fg);stroke-width:1.2;opacity:.45"/>`;});
+    // The pictures: 30 px glossy, or 32 px in the early-2000s look so its pixel pictures land on whole pixels
+    const ic=w2k()?32:30;
     H.filter(r=>r.h%3===0).forEach(r=>{
-      if(r.pic&&ART[r.pic])s+=`<svg x="${x(r.i)-15}" y="16" width="30" height="30" viewBox="0 0 64 64" class="wx">${ART[r.pic](r.night)}</svg>`;
+      if(r.pic&&ART[r.pic])s+=`<svg x="${x(r.i)-ic/2}" y="${46-ic}" width="${ic}" height="${ic}" viewBox="0 0 64 64" class="wx">${wxBody(r.pic,!!r.night)}</svg>`;
       if(isNum(r.temp))s+=`<circle cx="${x(r.i)}" cy="${y(r.temp)}" r="3.5" style="fill:var(--surface);stroke:var(--warm);stroke-width:2"/><text class="tl" x="${x(r.i)}" y="${y(r.temp)-8}" text-anchor="middle">${f0(r.temp)}°</text>`;
       s+=`<text class="ax" x="${x(r.i)}" y="${Hh-8}" text-anchor="middle">${hh12(r.h)}</text>`;});
     s+=hBands(H,{x,PX,L,W,wa,wt,wy0,wy,wmax,cb,ct,cy0});
@@ -2633,6 +3452,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     s.style.width=Math.ceil(c.measureText(o.text).width+parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight)+4)+"px";}
   document.fonts?.ready.then(fitPicker);
   addEventListener("resize",fitPicker);
+  // The look changed (the Design menu): redraw what's drawn with its colours, sizes and pictures, and bring the
+  // weather background back (or put it away)
+  document.addEventListener("designchange",()=>{renderScene(state.data?nowIcon():null);rBase();fitPicker();if(rad.map)rad.map.invalidateSize();
+    if(state.data){hv.built=null;renderChart();renderDay();}});
   // The slim bar shows once the header has scrolled out of view; tapping it goes back to the top
   new IntersectionObserver(([e])=>$("stick").classList.toggle("on",!e.isIntersecting&&!!state.data)).observe($("top"));
   $("stick").addEventListener("click",()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
@@ -2746,6 +3569,102 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   }).catch(()=>{$("err").textContent="Couldn't load the list of locations. Check your internet connection, then reload the page.";$("err").hidden=false;$("status").textContent="No data yet";renderNet();});
   }
   start();
+})();
+</script>
+<script>
+// The early-2000s window around the page (title bar, menu bar, date strip, tabs, status bar) and the Design menu.
+// These only read the page (the place picker, the status line, which sections are shown); the forecasts are all
+// in the script above, which is told about a change of look by a "designchange" event.
+(function(){
+  const $=id=>document.getElementById(id),root=document.documentElement,KEY="aus-forecast-design";
+  const isW=()=>root.dataset.design==="web2000";
+  // The phone's browser bar takes the title bar's navy in the early-2000s look
+  const meta=document.querySelector('meta[name="theme-color"]'),classicTheme=meta.content;
+  const paintTheme=()=>{meta.content=isW()?"#0A246A":classicTheme;};
+
+  // ---- Title bar, date strip, "you are here" line and status bar, kept in step with the page ----
+  function follow(){
+    const o=$("loc").selectedOptions[0],name=o&&o.value?o.text:"",g=o&&o.parentElement&&o.parentElement.label;
+    const region=g?g.replace(/ \(Bureau only\)$/,""):"Queensland",st=$("status").textContent.trim(),up=/^Updated /.test(st);
+    $("capTitle").textContent="Consolidated Weather"+(name?" - "+name:"");
+    $("w2kWhen").textContent=new Date().toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" · "+region;
+    $("w2kRegion").textContent=region;$("w2kPlace").textContent=name||"Loading…";$("sbPlace").textContent=name||"";
+    const stamp=$("w2kStamp");stamp.textContent=up?"Last updated: ":st;if(up)stamp.appendChild(document.createElement("b")).textContent=st.slice(8);
+    const off=!navigator.onLine,busy=/…$/.test(st),sum=$("sitesSum").textContent.trim();
+    $("sbMsg").textContent=off?"Working offline · showing the forecast saved on this device":up?"Done"+(sum?" · "+sum:""):st;
+    $("sbLed").className="led"+(off||/No data/.test(st)?" bad":busy?" busy":"");}
+  const watch=new MutationObserver(follow);
+  ["status","sitesSum","loc"].forEach(id=>watch.observe($(id),{childList:true,characterData:true,subtree:true}));
+  $("loc").addEventListener("change",follow);addEventListener("online",follow);addEventListener("offline",follow);
+  setInterval(follow,60e3);
+
+  // ---- Tabs: each hides with its section, and the tab for the section on screen is marked ----
+  const tabs=[...document.querySelectorAll(".jump a")].map(a=>{const h=document.querySelector(a.getAttribute("href"));return{a,sec:h&&h.closest("section")};}).filter(t=>t.sec);
+  const syncTabs=()=>tabs.forEach(t=>{if(t.a.hidden!==t.sec.hidden)t.a.hidden=t.sec.hidden;});
+  const secWatch=new MutationObserver(()=>{syncTabs();spy();});
+  tabs.forEach(t=>secWatch.observe(t.sec,{attributes:true,attributeFilter:["hidden"]}));
+  let cur=null,queued=false;
+  function spy(){
+    if(!isW()){tabs.forEach(t=>t.a.removeAttribute("aria-current"));cur=null;return;}
+    const line=innerHeight*.3;let pick=tabs.find(t=>!t.sec.hidden)||null;
+    tabs.forEach(t=>{if(!t.sec.hidden&&t.sec.getBoundingClientRect().top<=line)pick=t;});
+    if(pick===cur)return;cur=pick;
+    tabs.forEach(t=>{if(t===pick)t.a.setAttribute("aria-current","location");else t.a.removeAttribute("aria-current");});
+    // On a phone the strip scrolls sideways: bring the marked tab into it
+    const nav=pick&&pick.a.parentElement;
+    if(nav&&nav.scrollWidth>nav.clientWidth){const a=pick.a,l=a.offsetLeft-nav.offsetLeft;
+      if(l<nav.scrollLeft||l+a.offsetWidth>nav.scrollLeft+nav.clientWidth)nav.scrollTo({left:Math.max(0,l-24),behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});}}
+  addEventListener("scroll",()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;spy();});},{passive:true});
+  addEventListener("resize",spy);
+
+  // ---- Pop-up menus (the Design menu and the menu bar's): the arrow keys move through them, Escape closes and
+  // returns to the button that opened it, and a click anywhere else closes them ----
+  let open=null;
+  const items=box=>[...box.querySelectorAll('[role^="menuitem"]')].filter(i=>!i.disabled&&!i.hidden&&i.offsetParent!==null);
+  function showMenu(box,btn,first){closeMenu(false);box.hidden=false;btn.setAttribute("aria-expanded","true");open={box,btn};
+    const list=items(box),to=first?list[0]:list.find(i=>i.getAttribute("aria-checked")==="true")||list[0];if(to)to.focus();}
+  function closeMenu(refocus){if(!open)return;const {box,btn}=open;open=null;box.hidden=true;btn.setAttribute("aria-expanded","false");
+    box.classList.remove("atbar");box.style.left=box.style.top="";if(refocus)btn.focus();}
+  document.addEventListener("keydown",e=>{if(!open)return;const list=items(open.box),i=list.indexOf(document.activeElement),n=list.length;
+    if(e.key==="Escape"){e.preventDefault();closeMenu(true);}
+    else if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(!n)return;const d=e.key==="ArrowDown"?1:-1;list[i<0?(d>0?0:n-1):(i+d+n)%n].focus();}
+    else if(e.key==="Home"||e.key==="End"){e.preventDefault();if(n)list[e.key==="Home"?0:n-1].focus();}
+    else if(e.key==="Tab")closeMenu(false);
+    else if(e.key===" "&&document.activeElement.tagName==="A"&&open.box.contains(document.activeElement)){e.preventDefault();document.activeElement.click();}
+    else if((e.key==="ArrowLeft"||e.key==="ArrowRight")&&open.btn.closest(".menubar")){e.preventDefault();
+      const bar=[...document.querySelectorAll(".menubar button")],j=bar.indexOf(open.btn),nb=bar[(j+(e.key==="ArrowRight"?1:-1)+bar.length)%bar.length];barMenu(nb,true);}});
+  document.addEventListener("pointerdown",e=>{if(open&&!open.box.contains(e.target)&&!open.btn.contains(e.target))closeMenu(false);});
+
+  // ---- The Design menu: the two looks of this page switch at once (and are remembered on this device); the
+  // Aero edition and the saved samples are pages of their own ----
+  const dBtn=$("dswBtn"),dMenu=$("dswMenu");
+  const paintChecks=()=>dMenu.querySelectorAll("[data-look]").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.look===root.dataset.design)));
+  function setDesign(d){if(root.dataset.design===d)return;root.dataset.design=d;try{localStorage.setItem(KEY,d);}catch(e){}
+    paintChecks();paintTheme();document.dispatchEvent(new Event("designchange"));follow();spy();}
+  dBtn.addEventListener("click",()=>{if(open&&open.box===dMenu)closeMenu(false);else showMenu(dMenu,dBtn);});
+  dMenu.addEventListener("click",e=>{const b=e.target.closest("[data-look]");if(!b)return;setDesign(b.dataset.look);closeMenu(true);});
+
+  // ---- The menu bar: each heading opens a short menu of things the page can do ----
+  const go=id=>{const h=$(id);if(h)h.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});};
+  const about=sel=>{const d=document.querySelector(sel);if(d){d.open=true;d.scrollIntoView({block:"center"});d.querySelector("summary").focus();}};
+  const MB={
+    refresh:[["Refresh forecasts",()=>$("refresh").click(),()=>$("refresh").disabled],["Save this place",()=>$("saveBtn").click(),()=>$("saveBtn").hidden]],
+    places:[["Choose a place…",()=>{$("loc").focus();try{$("loc").showPicker();}catch(e){}}],["Find a place or postcode…",()=>$("q").focus()]],
+    tools:[["Trip planner",()=>go("triph")],["Accuracy scoreboard",()=>go("scoreh"),()=>$("scoreSec").hidden],["Forecast sites status",()=>{$("sitesFold").open=true;go("offh");}]],
+    help:[["Where the figures come from",()=>go("foot")],["How the 7-day agreement works",()=>about('[aria-labelledby="weekh"] .about')],["About the rain radar",()=>about("#radarSec .about")]]};
+  const mb=document.createElement("div");mb.className="w2k mbmenu";mb.setAttribute("role","menu");mb.hidden=true;document.querySelector(".win").appendChild(mb);
+  function barMenu(b,first){const m=b.dataset.menu;
+    // View is the Design menu, dropped down under the menu bar instead of rising from its corner button
+    if(m==="view"){closeMenu(false);const r=b.getBoundingClientRect();dMenu.classList.add("atbar");dMenu.style.left=r.left+"px";dMenu.style.top=r.bottom+"px";showMenu(dMenu,b,first);return;}
+    mb.setAttribute("aria-label",b.textContent);
+    mb.innerHTML=MB[m].map(([t,,off],i)=>`<button type="button" role="menuitem" tabindex="-1" data-i="${i}"${off&&off()?" disabled":""}></button>`).join("");
+    [...mb.children].forEach((x,i)=>x.textContent=MB[m][i][0]);mb.onclick=e=>{const x=e.target.closest("button");if(!x)return;closeMenu(true);MB[m][+x.dataset.i][1]();};
+    mb.style.left=b.offsetLeft+"px";mb.style.top=(b.offsetTop+b.offsetHeight)+"px";showMenu(mb,b,first);}
+  document.querySelector(".menubar").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    if(open&&open.btn===b){closeMenu(false);return;}barMenu(b,true);});
+  document.querySelectorAll(".menubar button").forEach(b=>{b.setAttribute("aria-haspopup","menu");b.setAttribute("aria-expanded","false");});
+
+  paintChecks();paintTheme();follow();syncTabs();spy();
 })();
 </script>
 </body>
