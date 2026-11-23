@@ -424,6 +424,20 @@ tr.median td{font-weight:500;background:var(--accent-soft)}
 tr.median td:first-child{background:var(--accent-soft);font:700 .95rem var(--display)}
 .dash{color:var(--muted)}
 
+/* Accuracy scoreboard: a ranked table of how far out each source's forecasts were */
+.scorehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.scoreseg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.scoreseg button{border:0;background:transparent;padding:6px 11px;font:600 .82rem var(--body);color:var(--muted);cursor:pointer}
+.scoreseg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.scoreempty{margin:0;padding:14px;border:1px dashed var(--line);border-radius:14px;background:var(--surface);color:var(--muted);font-size:.92rem}
+.scoreempty b{color:var(--fg);font-weight:600}
+table.score td.best{color:var(--good);font-weight:700}
+table.score tr.unranked td{color:var(--muted)}
+table.score .sbar{display:block;width:110px;max-width:calc(100% - 18px);height:4px;border-radius:2px;background:var(--line);margin:6px 0 2px 18px}
+table.score .sbar i{display:block;height:100%;border-radius:2px;background:var(--accent)}
+table.score tr.top .sbar i{background:var(--good)}
+@media (max-width:420px){table.score th{letter-spacing:.04em}}
+
 /* Chart */
 .chartcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
 .charthead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
@@ -786,6 +800,23 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     </div>
     <p class="note">The Bureau of Meteorology first, then each forecast site. Red figures are 3°C or more from the median.</p>
     <details class="about"><summary>About this</summary><p>The top row is the Bureau of Meteorology's official forecast for this location, written by its forecasters. The diamond rows are what the other forecast sites show for it. Where a site has no page for the exact place, it uses a nearby one, named under the site (for example, Weatherzone uses Archerfield for Oxley). Red figures sit 3°C or more away from the median of all rows. Windy and Foreca don't publish a chance of rain, and Windy has no written forecast, so it has no picture.</p></details>
+  </section>
+
+  <section aria-labelledby="scoreh" id="scoreSec" hidden>
+    <div class="scorehead">
+      <h2 id="scoreh"><i data-ui="star"></i>Which forecast is most accurate here</h2>
+      <!-- Not .seg: the chart's Max/Min/Rain buttons are found by that class -->
+      <div class="scoreseg" id="scoreLead" role="group" aria-label="How far ahead the forecast was made">
+        <button type="button" data-lead="1" aria-pressed="true">1 day ahead</button>
+        <button type="button" data-lead="2" aria-pressed="false">2 days</button>
+        <button type="button" data-lead="3" aria-pressed="false">3 days</button>
+      </div>
+    </div>
+    <div id="score"></div>
+    <p class="note" id="scoreNote"></p>
+    <details class="about"><summary>About this</summary><p>Every hour, the app keeps each source's forecast for the next three days. For each day it holds on to the last forecast each source made the day before (1 day ahead), two days before and three days before, going by this location's own calendar. Once the day is over, the forecasts are checked against what the Bureau of Meteorology's nearest station recorded (named under the table; it can be some kilometres away). As in the Bureau's own records, the top temperature is the station's highest reading from 9am that day to 9am the next, and the bottom temperature its lowest from 9am the day before to 9am that day. Rain is measured midnight to midnight, the day the sites forecast rain for.</p>
+    <p>Top and Bottom are how far out each source was on average, in °C, whether too high or too low: smaller is better. Rain right is how often the source called correctly whether at least 1 mm would fall. Where a site gives a range, such as 1 to 5 mm, it counts as forecasting rain when the lower figure is 1 mm or more. Days is how many days each source has been checked on, as a source that couldn't be reached on a day isn't scored for it. Sources are ranked by their average top and bottom temperature error once they have 7 days checked, and the best figure in each column is green. The bar under each name shows that average error against the least accurate source.</p>
+    <p>The station's readings come from the Bureau's observations page (every half hour) and its app's feed (which also gives the day's max and min), so a short peak between readings can occasionally be missed by a few tenths of a degree. The Bureau's own forecast is the scraper's copy, taken every 3 hours. Results are kept for 120 days.</p></details>
   </section>
 
   <section class="chartcard" aria-labelledby="charth">
@@ -2185,6 +2216,66 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   let hResize=0;addEventListener("resize",()=>{clearTimeout(hResize);hResize=setTimeout(()=>{if(!state.data)return;const px=($("hchartView").clientWidth||$("hbox").clientWidth)<560?26:34;if(px!==hv.PX){hv.built=null;renderHourly(dates()[state.sel]);}renderTides(dates()[state.sel]);},150);});
   $("days").addEventListener("click",e=>{const b=e.target.closest(".day");if(!b)return;state.sel=+b.dataset.i;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(+d.dataset.i===state.sel)));renderDay();renderChart();});
   document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{state.measure=b.dataset.m;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));if(state.data)renderChart();}));
+  // ---- Accuracy scoreboard: how close each source's forecasts came to what the Bureau station recorded ----
+  // data/history/<id>.json is kept by scraper/history.py, hourly: each source's last forecast for a day made 1, 2
+  // and 3 days before it ([top, bottom, rain low, rain high, chance]), and the station's top and bottom temperature
+  // and rain for the day once it is over
+  const SCORE_MIN=7;  // days checked before a source is ranked
+  let scoreLead="1";
+  const SCORE_SRC={bom:{name:"Bureau of Meteorology",c:"--bom"}};SITES.forEach(s=>SCORE_SRC[s.id]=s);
+  PLUG.extras.push({key:"history",load:async L=>{
+    if(L.kind!=="full")return null;
+    const r=await fetch(SRC+"data/history/"+L.id+".json",timed({cache:"no-store"}));
+    if(r.status===404)return{days:{}};  // nothing collected for this place yet
+    if(!r.ok)throw new Error("history "+r.status);
+    const h=await r.json();
+    return{station:h.station||null,days:h.days||{}};}});  // the raw station readings aren't needed here, so aren't saved
+  // Each source's average error for one lead (days ahead), best first; sources with too few days go last, unranked
+  function scoreRows(H,lead){
+    const by={},dates=new Set(),avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+    Object.keys(H.days||{}).sort().forEach(k=>{const d=H.days[k]||{},a=d.actual;if(!a)return;
+      Object.entries(d.fc||{}).forEach(([src,f])=>{const p=f&&f[lead];if(!Array.isArray(p))return;
+        const s=by[src]||(by[src]={src,hi:[],lo:[],rain:[],days:0});let n=0;
+        if(isNum(p[0])&&isNum(a.tmax)){s.hi.push(Math.abs(p[0]-a.tmax));n++;}
+        if(isNum(p[1])&&isNum(a.tmin)){s.lo.push(Math.abs(p[1]-a.tmin));n++;}
+        // A range such as 1 to 5 mm counts as calling rain when its lower figure is 1 mm or more
+        if(isNum(p[2])&&isNum(a.rain)){s.rain.push((p[2]>=1)===(a.rain>=1));n++;}
+        if(n){s.days++;dates.add(k);}});});
+    const rows=Object.values(by).map(s=>{const hi=avg(s.hi),lo=avg(s.lo),t=[hi,lo].filter(isNum);
+      return{src:s.src,hi,lo,days:s.days,rain:s.rain.length?s.rain.filter(Boolean).length/s.rain.length*100:null,
+        temp:t.length?avg(t):null,ranked:s.days>=SCORE_MIN&&t.length>0};})
+      .sort((a,b)=>(b.ranked-a.ranked)||((a.temp??99)-(b.temp??99))||b.days-a.days);
+    return{rows,dates:[...dates].sort()};}
+  function renderScore(){
+    const L=state.loc,sec=$("scoreSec");sec.hidden=!(L&&L.kind==="full");if(sec.hidden)return;
+    document.querySelectorAll("#scoreLead button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lead===scoreLead)));
+    const H=state.data&&state.data.history,box=$("score"),note=$("scoreNote");
+    if(!H){box.innerHTML='<p class="scoreempty">Loading the scoreboard…</p>';note.textContent="";return;}
+    const {rows,dates:ds}=scoreRows(H,scoreLead),most=Math.max(0,...rows.map(r=>r.days)),st=H.station;
+    const where=st&&st.name?`the Bureau's ${st.name} station`+(isNum(st.distance_km)?` (${f1(st.distance_km)} km away)`:""):"the nearest Bureau station";
+    const ahead=scoreLead==="1"?"1 day ahead":scoreLead+" days ahead";
+    if(most<SCORE_MIN){
+      box.innerHTML=`<p class="scoreempty"><b>Collecting – ${most} day${most===1?"":"s"} so far</b> for forecasts made ${ahead}; rankings start after ${SCORE_MIN} days.</p>`;
+      note.textContent=`Each day's forecasts are checked against ${where} once the day is over.`;return;}
+    const ranked=rows.filter(r=>r.ranked),worst=Math.max(0.1,...ranked.map(r=>r.temp).filter(isNum));
+    // The best in each column, compared as shown (to 0.1°C, or the whole percent) so ties all go green
+    const shown=(k,v)=>k==="rain"?Math.round(v):Math.round(v*10);
+    const best=k=>{const v=ranked.map(r=>r[k]).filter(isNum).map(x=>shown(k,x));return v.length?(k==="rain"?Math.max(...v):Math.min(...v)):null;};
+    const B={hi:best("hi"),lo:best("lo"),rain:best("rain")};
+    const cell=(r,k,txt)=>`<td${r.ranked&&isNum(r[k])&&shown(k,r[k])===B[k]?' class="best"':""}>${isNum(r[k])?txt(r[k]):dash}</td>`;
+    const deg=v=>f1(v)+"°",pct=v=>Math.round(v)+"%",dm=k=>new Date(k+"T12:00:00").toLocaleDateString("en-AU",{day:"numeric",month:"short"});
+    let rank=0;
+    const body=rows.map(r=>{const s=SCORE_SRC[r.src]||{name:r.src,c:"--muted"},top=r.ranked&&rank===0;if(r.ranked)rank++;
+      const w=r.ranked?Math.max(4,Math.round(r.temp/worst*100)):0;
+      return `<tr class="${r.ranked?(top?"top":""):"unranked"}"><td><span class="mname"><i style="background:var(${s.c})"></i>${r.ranked?rank+". ":""}${esc(s.name)}</span>`+
+        (r.ranked?`<span class="sbar" title="Average temperature error ${f1(r.temp)}°C"><i style="width:${w}%"></i></span>`:`<span class="msrc">Not ranked yet (under ${SCORE_MIN} days)</span>`)+
+        `</td>${cell(r,"hi",deg)}${cell(r,"lo",deg)}${cell(r,"rain",pct)}<td>${r.days}</td></tr>`;}).join("");
+    const w1=ranked[0],n1=w1&&(SCORE_SRC[w1.src]||{name:w1.src}).name;
+    box.innerHTML=(w1?`<div class="summary"><span class="pill">Most accurate here, ${ahead}: <b>${esc(n1)}</b>, on average ${f1(w1.temp)}°C out</span></div>`:"")+
+      `<div class="tablebox"><table class="score"><thead><tr><th>Source</th><th>Top<br>°C off</th><th>Bottom<br>°C off</th><th>Rain<br>right</th><th>Days</th></tr></thead><tbody>${body}</tbody></table></div>`;
+    note.textContent=`Forecasts made ${ahead}, checked against ${where}: ${ds.length} days, ${dm(ds[0])} to ${dm(ds[ds.length-1])}.`;}
+  document.querySelectorAll("#scoreLead button").forEach(b=>b.addEventListener("click",()=>{scoreLead=b.dataset.lead;renderScore();}));
+  PLUG.render.push(renderScore);
   $("refresh").addEventListener("click",()=>{if(state.loc)load();});
   // Coming back to the page (a phone tab left open overnight): fetch again if the figures are over 15 minutes old
   document.addEventListener("visibilitychange",()=>{
