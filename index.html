@@ -420,6 +420,34 @@ svg{display:block;max-width:100%}
 .tip .tv{font:.78rem var(--mono);color:var(--muted)}
 .tip .tv b{color:var(--fg);font-weight:600}
 
+/* Rain radar: the map with its frame time, the play bar, and the links to the lightning and Bureau radar maps.
+   The map's own layers sit in their own stack, so they can't cover the sticky bars when the page scrolls. */
+.radar{gap:12px}
+.rwrap{position:relative;isolation:isolate;z-index:0;height:380px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}
+#rmap{position:absolute;inset:0;background:var(--bg);font:.78rem/1.4 var(--body)}
+.rmsg{position:absolute;inset:0;z-index:1001;display:grid;place-items:center;margin:0;padding:16px;text-align:center;font-size:.9rem;color:var(--muted);background:color-mix(in srgb,var(--surface) 82%,transparent)}
+.rmsg:empty{display:none}
+.rchip{position:absolute;top:10px;left:10px;z-index:1000;pointer-events:none;max-width:calc(100% - 64px);font:500 .8rem/1.3 var(--mono);font-variant-numeric:tabular-nums;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 11px;box-shadow:var(--shadow)}
+.rchip:empty{display:none}
+.rchip.fc{color:var(--warn);border-color:var(--warn)}
+.rbar{display:flex;align-items:center;gap:10px}
+.rbar input{flex:1 1 auto;min-width:0;margin:0;accent-color:var(--accent)}
+.rbar .btn.icon{padding:8px 10px}
+.rbar #rmove[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.rlinks{display:flex;flex-wrap:wrap;gap:8px}
+.rlinks .btn{color:var(--fg);text-decoration:none;min-width:0}
+.rlinks .btn .ui:first-child{color:var(--accent)}
+.rlinks .btn .ui:last-child{width:13px;height:13px;color:var(--muted)}
+.rpin{color:var(--accent)}
+.rpin svg{width:30px;height:30px;fill:var(--surface);stroke-width:2.4;filter:drop-shadow(0 1px 2px rgb(0 0 0/.35))}
+#rmap .leaflet-bar{border-color:var(--line);box-shadow:var(--shadow)}
+#rmap .leaflet-bar a{background:var(--surface);color:var(--fg);border-color:var(--line)}
+#rmap .leaflet-bar a:hover{background:var(--accent-soft)}
+#rmap .leaflet-bar a.leaflet-disabled{color:var(--muted);background:var(--surface)}
+#rmap .leaflet-control-attribution{background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--muted);font-size:.68rem}
+#rmap .leaflet-control-attribution a{color:var(--accent)}
+@media (max-width:560px){.rwrap{height:300px}}
+
 /* Weather scene: an illustrated sky behind the page for the location's weather right now (day or night). A scrim in the page colour keeps text readable and thickens as you scroll down. */
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--scrim0:.58;--fade:0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .scene{--scrim0:.42}}
@@ -621,7 +649,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   </header>
   <button class="stick" id="stick" type="button" tabindex="-1" aria-hidden="true"><img src="img/icon-192.png" alt="" width="30" height="30"><b id="stickName"></b><span class="sc" id="stickCond"></span><span class="st" id="stickTemp"></span></button>
 
-  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
+  <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#radarh">Radar</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh">Sites</a></nav>
 
   <div id="err" class="error" hidden></div>
 
@@ -629,6 +657,21 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     <h2 id="nowh"><i data-ui="thermo"></i>Right now</h2>
     <div class="now" id="now"></div>
     <p class="note" id="obs">A real reading from the nearest Bureau of Meteorology station.</p>
+  </section>
+
+  <section aria-labelledby="radarh" id="radarSec">
+    <h2 id="radarh"><i data-ui="radar"></i>Rain radar</h2>
+    <div class="hbox radar">
+      <!-- The map library and radar load only once this section is near the screen, so the page itself stays quick -->
+      <div class="rwrap"><div id="rmap" aria-label="Rain radar map"></div><span class="rchip" id="rchip"></span><p class="rmsg" id="rmsg">The radar map loads as you scroll to it.</p></div>
+      <div class="rbar"><button class="btn icon" id="rplay" type="button" aria-pressed="false" aria-label="Play the radar loop" disabled><i data-ui="play"></i></button><input type="range" id="rslide" min="0" max="0" value="0" step="1" aria-label="Radar time" disabled><button class="btn" id="rmove" type="button" aria-pressed="false" hidden>Move map</button></div>
+      <p class="note" id="rnote"></p>
+      <div class="rlinks"><a class="btn" id="rbolt" href="https://map.blitzortung.org/" target="_blank" rel="noopener" title="Opens Blitzortung.org's map in a new tab"><i data-ui="bolt"></i>Live lightning map<i data-ui="ext"></i></a><a class="btn" id="rbom" href="https://www.bom.gov.au/weather-and-climate/rain-radar-and-weather-maps" target="_blank" rel="noopener" title="Opens the Bureau of Meteorology's radar in a new tab"><i data-ui="radar"></i><span id="rbomt">Bureau radar</span><i data-ui="ext"></i></a></div>
+    </div>
+    <details class="about"><summary>About this</summary><p>The map shows rain picked up by weather radar over the last two hours or so, from RainViewer, which gathers radar from weather services around the world, including the Bureau of Meteorology's. Frames are about 10 minutes apart, and the newest is usually 10 to 20 minutes old by the time it appears, because the radar pictures take a while to collect and process. The time on the map is the time of the frame, in this place's local time. Blue is light to moderate rain, and yellow through red is heavy rain and storms; the pale shading is very light rain or drizzle, some of which may not reach the ground.</p>
+    <p>When RainViewer offers forecast frames, they play after the newest radar frame and are labelled "Forecast" with the minutes ahead. They are estimates, made by moving the latest rain along its recent track, so they can't show showers that haven't formed yet. RainViewer's free feed doesn't always include them; the note under the map says whether it does right now.</p>
+    <p>On a phone the page scrolls past the map; tap Move map to drag and pinch it, and Done to go back to scrolling. Live lightning map opens Blitzortung.org's own map, from its community network of lightning detectors, at this place; its live data isn't shown here because Blitzortung doesn't allow it on other websites. The Bureau radar button opens the Bureau of Meteorology's page for its nearest radar, or its radar maps when no radar is close.</p>
+    <p>Credits: radar by RainViewer (rainviewer.com); base map by Esri, with data from HERE, Garmin and © OpenStreetMap contributors; map drawn with Leaflet.</p></details>
   </section>
 
   <section aria-labelledby="weekh">
@@ -899,6 +942,126 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     car:'<path d="M5 17h14v-4.5l-2-5.5H7l-2 5.5z"/><path d="M5 12.5h14"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/>',
     eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'};
   const ui=(n,cls="")=>`<svg class="ui ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${UI[n]}</svg>`;
+  // Rain radar: RainViewer's free radar frames over a plain base map, centred on the place. Nothing loads until the
+  // section comes near the screen. Leaflet (the map library) comes from cdnjs, pinned to one version and checked
+  // against its published hash.
+  UI.radar='<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6.4-6.4"/>';
+  UI.bolt='<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/>';
+  UI.ext='<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>';
+  UI.play='<path d="M7 4.5v15l12-7.5z"/>';UI.pause='<path d="M8 5v14M16 5v14"/>';
+  const RV="https://api.rainviewer.com/public/weather-maps.json";
+  const LEAF="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.";
+  const LEAF_SRI={js:"sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==",css:"sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="};
+  // The Bureau's radars (number, the name its radar page uses, rough position): the ones around Queensland and the
+  // main cities. A place more than 250 km from all of them links to the Bureau's radar maps instead.
+  const BOM_RADARS=[[66,"brisbane-(mt-stapylton)",-27.72,153.24],[50,"brisbane-(marburg)",-27.61,152.54],[8,"gympie-(mount-kanigan)",-25.96,152.58],
+    [23,"gladstone",-23.86,151.26],[72,"emerald",-23.55,148.24],[98,"taroom",-25.70,149.90],[22,"mackay",-21.12,149.22],[24,"bowen",-19.89,148.08],
+    [106,"townsville",-19.42,146.55],[19,"cairns",-16.82,145.66],[78,"weipa",-12.67,141.92],[107,"richmond",-20.73,143.14],[75,"mount-isa",-20.71,139.56],
+    [56,"longreach",-23.43,144.29],[67,"warrego",-26.44,147.35],[28,"grafton",-29.62,152.95],[53,"moree",-29.50,149.85],[69,"namoi-(blackjack-mountain)",-31.02,150.19],
+    [4,"newcastle",-32.73,152.03],[71,"sydney-(terrey-hills)",-33.70,151.21],[3,"wollongong-(appin)",-34.26,150.87],[40,"canberra-(captains-flat)",-35.66,149.51],
+    [94,"hillston",-33.55,145.53],[49,"yarrawonga",-36.03,146.02],[2,"melbourne-(laverton)",-37.86,144.76],[76,"hobart-(mt-koonya)",-43.11,147.81],
+    [64,"adelaide-(buckland-park)",-34.62,138.47],[70,"perth-(serpentine)",-32.39,115.87],[63,"darwin-(berrimah)",-12.46,130.93]];
+  const BOM_MAPS="https://www.bom.gov.au/weather-and-climate/rain-radar-and-weather-maps";
+  const km=(a,b,c,d)=>{const r=Math.PI/180,x=(d-b)*r*Math.cos((a+c)/2*r),y=(c-a)*r;return 6371*Math.hypot(x,y);};
+  const rad={map:null,base:null,dark:null,pin:null,frames:[],layers:[],i:0,last:0,got:0,sig:"",locId:null,seen:false,busy:false,playing:false,resume:false,auto:true};
+  const rmsg=t=>{$("rmsg").textContent=t;};
+  const isDark=()=>getComputedStyle(document.documentElement).colorScheme==="dark";
+  const hasPos=L=>!!L&&isNum(L.lat)&&isNum(L.lon);
+  // Phones and tablets: one finger scrolls the page, not the map, until Move map is tapped
+  const coarse=()=>!!window.matchMedia&&matchMedia("(pointer:coarse)").matches;
+  const rZoom=()=>($("rmap").clientWidth||400)<560?7:8;
+  function loadLeaflet(){return loadLeaflet.p||(loadLeaflet.p=new Promise((ok,bad)=>{
+    const css=Object.assign(document.createElement("link"),{rel:"stylesheet",href:LEAF+"css",integrity:LEAF_SRI.css,crossOrigin:"anonymous"});
+    const js=Object.assign(document.createElement("script"),{src:LEAF+"js",integrity:LEAF_SRI.js,crossOrigin:"anonymous"});
+    let n=0;const done=()=>{if(++n===2)ok(window.L);};
+    // A failed load is forgotten, so coming back online can try again
+    css.onload=js.onload=done;css.onerror=js.onerror=()=>{loadLeaflet.p=null;css.remove();js.remove();bad(new Error("leaflet"));};
+    document.head.append(css,js);}));}
+  // Light or dark base map to match the page: Esri's grey canvas maps, which need no key (CARTO's now ask for one).
+  // The place names go on top of the rain, so they stay readable under a storm.
+  function rBase(){if(!rad.map)return;const d=isDark();if(d===rad.dark&&rad.base)return;rad.dark=d;(rad.base||[]).forEach(l=>l.remove());
+    const esri=n=>`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${d?"Dark":"Light"}_Gray_${n}/MapServer/tile/{z}/{y}/{x}`;
+    rad.base=[window.L.tileLayer(esri("Base"),{maxZoom:16,zIndex:1,
+      attribution:'Map © <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>, HERE, Garmin, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}),
+      window.L.tileLayer(esri("Reference"),{maxZoom:16,zIndex:3})];
+    rad.base.forEach(l=>l.addTo(rad.map));}
+  function rMake(Lf){const c=state.loc,touch=coarse();
+    rad.map=Lf.map("rmap",{center:[c.lat,c.lon],zoom:rZoom(),minZoom:3,maxZoom:11,zoomControl:false,scrollWheelZoom:false,dragging:!touch,touchZoom:!touch});
+    Lf.control.zoom({position:"topright"}).addTo(rad.map);
+    rad.map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+    rBase();
+    rad.pin=Lf.marker([c.lat,c.lon],{icon:Lf.divIcon({className:"rpin",html:ui("pin"),iconSize:[30,30],iconAnchor:[15,28]}),interactive:false,keyboard:false,zIndexOffset:1000}).addTo(rad.map);
+    rad.locId=c.id;$("rmove").hidden=!touch;}
+  // The list of frames: past radar every 10 minutes, then RainViewer's forecast ("nowcast") frames when it has any
+  async function rFrames(force){
+    if(!force&&Date.now()-rad.got<5*60e3)return;
+    const j=await fetch(RV,timed({cache:"no-store"})).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+    const past=(j.radar?.past||[]).map(f=>({...f,fc:false})),fut=(j.radar?.nowcast||[]).map(f=>({...f,fc:true}));
+    if(!past.length||!j.host)throw new Error("no radar frames");
+    rad.got=Date.now();
+    const all=[...past,...fut],sig=all.map(f=>f.path).join();
+    if(sig!==rad.sig){rad.sig=sig;rad.layers.forEach(l=>l.remove());rad.frames=all;rad.last=past.length-1;
+      // Every frame is on the map (see-through until its turn), so its tiles are already there when the loop reaches it.
+      // RainViewer's free radar goes to zoom level 7; closer in, its tiles are enlarged.
+      rad.layers=all.map(f=>window.L.tileLayer(j.host+f.path+"/256/{z}/{x}/{y}/2/1_1.png",{opacity:0,zIndex:2,maxNativeZoom:7,maxZoom:11,
+        attribution:'Radar <a href="https://www.rainviewer.com/" target="_blank" rel="noopener">RainViewer</a>'}).addTo(rad.map));
+      const s=$("rslide");s.max=all.length-1;s.disabled=false;$("rplay").disabled=false;
+      rShow(Math.min(rad.playing?rad.i:rad.last,all.length-1));}
+    rNote();
+    if(rad.auto){rad.auto=false;if(!matchMedia("(prefers-reduced-motion: reduce)").matches)rPlay(true);}
+  }
+  function rLabel(i){const f=rad.frames[i];if(!f)return"";const t=hm(new Date(f.time*1000).toISOString());
+    if(f.fc)return`Forecast +${Math.round((f.time-rad.frames[rad.last].time)/60)} min · ${t}`;
+    const m=Math.round((Date.now()/1000-f.time)/60);return`${t} · ${m<1?"just now":m<60?m+" min ago":ago(new Date(f.time*1000).toISOString())}`;}
+  function rShow(i){const prev=rad.layers[rad.i];if(prev&&rad.i!==i)prev.setOpacity(0);rad.i=i;rad.layers[i]?.setOpacity(.72);
+    const s=$("rslide"),lab=rLabel(i),c=$("rchip");s.value=i;s.setAttribute("aria-valuetext",lab);c.textContent=lab;c.classList.toggle("fc",!!rad.frames[i]?.fc);}
+  function rNote(){const F=rad.frames,P=F.slice(0,rad.last+1),fut=F.length-P.length;if(!P.length)return;
+    const span=Math.round((P[P.length-1].time-P[0].time)/60),step=P.length>1?Math.round((P[1].time-P[0].time)/60):10;
+    const sp=span>=90?Math.round(span/60)+" hours":span+" minutes",t=P[P.length-1].time,age=Math.round((Date.now()/1000-t)/60);
+    $("rnote").textContent=`Radar every ${step} minutes for the past ${sp}; the newest frame is from ${hm(new Date(t*1000).toISOString())}, ${age<1?"just now":age<120?age+" minutes ago":"over 2 hours ago"}. `+(fut
+      ?`Then ${fut} forecast frame${fut>1?"s":""} to +${Math.round((F[F.length-1].time-P[P.length-1].time)/60)} min, marked "Forecast": an estimate of where the rain is heading.`
+      :"RainViewer isn't offering forecast frames at the moment, so this shows past rain only.");}
+  // The loop: each frame in turn, holding a little longer on the newest radar frame and on the last forecast frame
+  function rPlay(on){clearTimeout(rad.timer);rad.playing=on&&rad.frames.length>1;const b=$("rplay");
+    b.setAttribute("aria-pressed",String(rad.playing));b.setAttribute("aria-label",rad.playing?"Pause the radar loop":"Play the radar loop");b.innerHTML=ui(rad.playing?"pause":"play");
+    if(rad.playing)rad.timer=setTimeout(rStep,rad.i===rad.last?300:550);}
+  function rStep(){if(!rad.playing)return;const n=rad.frames.length,i=(rad.i+1)%n;rShow(i);rad.timer=setTimeout(rStep,i===rad.last||i===n-1?1600:550);}
+  async function radarStart(){
+    if(rad.busy)return;rad.busy=true;
+    try{const Lf=await loadLeaflet();
+      if(!hasPos(state.loc)){rmsg(state.loc?"No map position for this place.":"Loading the radar…");return;}
+      if(!rad.map){rmsg("Loading the radar…");rMake(Lf);}
+      await rFrames(!rad.frames.length);rmsg("");}
+    catch(e){rmsg("Radar needs a connection. It will load when you're back online.");}
+    finally{rad.busy=false;}}
+  // Links for this place: Blitzortung's own live lightning map (its data mustn't be shown inside other websites),
+  // and the Bureau's page for its nearest radar
+  function radarLinks(){const L=state.loc;if(!hasPos(L))return;
+    $("rbolt").href=`https://map.blitzortung.org/#8/${L.lat.toFixed(3)}/${L.lon.toFixed(3)}`;
+    const near=BOM_RADARS.map(r=>({r,d:km(L.lat,L.lon,r[2],r[3])})).sort((a,b)=>a.d-b.d)[0];
+    const ok=near&&near.d<=250,name=ok?near.r[1].split("-").map(w=>w.replace(/[a-z]/,c=>c.toUpperCase())).join(" "):"";
+    $("rbom").href=ok?BOM_MAPS+"?radar="+near.r[0]+"-"+encodeURIComponent(near.r[1]):BOM_MAPS;
+    $("rbomt").textContent=ok?"Bureau radar: "+name:"Bureau radar maps";}
+  // Each time the page is drawn: links for the place, the map back on the place when it has changed, and fresh frames
+  PLUG.render.push(()=>{radarLinks();
+    if(!rad.map){if(rad.seen)radarStart();return;}
+    const L=state.loc;if(hasPos(L)&&rad.locId!==L.id){rad.locId=L.id;rad.map.setView([L.lat,L.lon],rZoom(),{animate:false});rad.pin.setLatLng([L.lat,L.lon]);}
+    rShow(rad.i);rNote();rFrames(false).then(()=>rmsg("")).catch(()=>{if(!rad.frames.length)rmsg("Radar needs a connection. It will load when you're back online.");});});
+  $("rplay").addEventListener("click",()=>rPlay(!rad.playing));
+  $("rslide").addEventListener("input",e=>{rPlay(false);rShow(+e.target.value);});
+  $("rmove").addEventListener("click",e=>{if(!rad.map)return;const on=e.currentTarget.getAttribute("aria-pressed")!=="true";
+    ["dragging","touchZoom"].forEach(h=>rad.map[h][on?"enable":"disable"]());e.currentTarget.setAttribute("aria-pressed",String(on));e.currentTarget.textContent=on?"Done":"Move map";});
+  // Start when the section is within a screen's reach; pause the loop while it's out of sight
+  if("IntersectionObserver" in window)new IntersectionObserver(([e])=>{
+    if(e.isIntersecting&&!rad.seen){rad.seen=true;radarStart();}
+    if(!e.isIntersecting&&rad.playing){rPlay(false);rad.resume=true;}else if(e.isIntersecting&&rad.resume){rad.resume=false;rPlay(true);}
+  },{rootMargin:"300px 0px"}).observe($("radarSec"));
+  else{rad.seen=true;radarStart();}
+  addEventListener("online",()=>{if(rad.seen)radarStart();});
+  // Follow the page's light or dark look
+  if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",rBase);
+  new MutationObserver(rBase).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
   // Wind arrow pointing the way the wind blows (a northerly blows towards the south)
   const DIRS=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
   function arrow(dir){const i=DIRS.indexOf(String(dir||"").toUpperCase());if(i<0)return"";
