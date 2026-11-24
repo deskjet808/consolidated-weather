@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Consolidated Weather</title>
-<!-- The page's look: "web2000" (the early-2000s weather portal, the default), "classic" or "aero" (Frutiger Aero), as
-     chosen with the Design button in the bottom corner. Set here, before anything is drawn, so the page never flashes
-     another look. A link can ask for a look with ?design=aero (for this visit only; the saved choice stays). -->
-<script>try{var d=new URLSearchParams(location.search).get("design")||localStorage.getItem("aus-forecast-design");if(d==="classic"||d==="aero")document.documentElement.dataset.design=d;}catch(e){}</script>
+<!-- The page's look: "web2000" (the early-2000s weather portal, the default), "classic", "aero" (Frutiger Aero) or
+     "minimal" (Minimalist: just the essentials), as chosen with the Design button in the bottom corner. Set here, before
+     anything is drawn, so the page never flashes another look. A link can ask for a look with ?design=aero (for this
+     visit only; the saved choice stays). -->
+<script>try{var d=new URLSearchParams(location.search).get("design")||localStorage.getItem("aus-forecast-design");if(d==="classic"||d==="aero"||d==="minimal")document.documentElement.dataset.design=d;}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#eef3f4">
 <!-- The page has its own light and dark colours: tell browsers' automatic dark mode and the Dark Reader extension
@@ -1801,6 +1802,154 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
 @keyframes ae-breathe{from{opacity:.72}to{opacity:1}}
 @keyframes ae-ring{from{transform:scale(.15);opacity:.9}to{transform:scale(1);opacity:0}}
 </style>
+<style>
+/* ===========================================================================================================
+   MINIMALIST LOOK  (data-design="minimal")
+   Just the facts, set like a well-made page of type: the place, right now, the day in a sentence, the week as a
+   plain list, and a line each for the water and the driving beach where a place has them. Everything else is in
+   the full page, one tap away ("More detail"). Every rule here is scoped to the look, so the other three looks
+   are untouched; the essentials are drawn into .mini by renderMini in the script.
+   Colours:  one text colour and one grey on a near-white (or near-black) page, hairlines between rows. One accent,
+             a quiet brick red, used only where something needs care: Bureau warnings, rough water, a beach to
+             avoid, and storms. Light and dark follow the phone or computer.
+   Type:     the system's own sans (San Francisco on iPhone and Mac, Segoe UI on Windows, Roboto on Android), four
+             sizes only (13, 16, 24 and the big temperature), tabular figures throughout. No icons except the
+             warning sign, no shadows, no gradients, no boxes.
+   =========================================================================================================== */
+:root:not([data-design="minimal"]) .mini{display:none!important}
+:root[data-design="minimal"]{
+  --bg:#fcfcfb; --surface:#fcfcfb; --fg:#171717; --muted:#6c6c69; --line:#e3e3df;
+  --accent:#a8361f; --accent-soft:#f0f0ed; --shadow:none; --glass:#fcfcfb; --glass-line:#e3e3df;
+  --display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; --body:var(--display); --mono:var(--display);
+  --m-s:.8125rem; --m-b:1rem; --m-l:1.5rem; --m-xl:6rem;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root[data-design="minimal"]:not([data-theme="light"]){
+  --bg:#121212; --surface:#121212; --fg:#ececea; --muted:#9a9a96; --line:#2a2a29;
+  --accent:#ee8a72; --accent-soft:#1e1e1d; --glass:#121212; --glass-line:#2a2a29;
+  color-scheme:dark;}}
+:root[data-design="minimal"][data-theme="dark"]{
+  --bg:#121212; --surface:#121212; --fg:#ececea; --muted:#9a9a96; --line:#2a2a29;
+  --accent:#ee8a72; --accent-soft:#1e1e1d; --glass:#121212; --glass-line:#2a2a29;
+  color-scheme:dark;}
+:root[data-design="minimal"] body{background:var(--bg);color:var(--fg);font:400 var(--m-b)/1.5 var(--body);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+:root[data-design="minimal"] ::selection{background:var(--fg);color:var(--bg)}
+:root[data-design="minimal"] :is(a,button,input,select):focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+
+/* ---- One centred column; everything but the header, the notices and the essentials is put away ---- */
+:root[data-design="minimal"] .wrap{display:block;max-width:640px;padding:56px max(24px,env(safe-area-inset-right,0px)) 120px max(24px,env(safe-area-inset-left,0px))}
+:root[data-design="minimal"] .wrap>:not(header,.netnote,.error,.mini){display:none!important}
+
+/* ---- Header: the place as the headline (it's the place picker), a search glass beside it; under it the time of the
+   figures and Refresh ---- */
+:root[data-design="minimal"] header{position:relative;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:0 12px;margin-bottom:48px}
+:root[data-design="minimal"] :is(.hdrbar,.toolbar){display:contents}
+:root[data-design="minimal"] :is(.topbar,#sceneBtn,.sub .place){display:none}
+:root[data-design="minimal"] .loctitle{order:1;flex:1 0 calc(100% - 56px);min-width:0;font:600 var(--m-l)/1.2 var(--body);letter-spacing:-.012em}
+:root[data-design="minimal"] .loctitle select{display:block;height:44px;margin:0 0 0 -4px;padding:0 28px 0 4px;border-radius:6px;font:inherit;letter-spacing:inherit;color:var(--fg);
+  background-position:right 13px top 54%,right 8px top 54%;background-size:5px 5px}
+:root[data-design="minimal"] .loctitle select:hover{background-image:linear-gradient(45deg,transparent 50%,var(--fg) 50%),linear-gradient(135deg,var(--fg) 50%,transparent 50%)}
+:root[data-design="minimal"] .loctitle :is(option,optgroup){font:400 var(--m-b) var(--body);background:var(--bg);color:var(--fg)}
+:root[data-design="minimal"] .sub{order:3;display:block;margin:0;font:400 var(--m-s)/1.4 var(--body);color:var(--muted)}
+:root[data-design="minimal"] .sub .status{padding:0}
+:root[data-design="minimal"] .sub .status::before{content:none}
+:root[data-design="minimal"] .hbtns{order:4;display:flex;gap:0;margin:0 0 0 -4px}
+:root[data-design="minimal"] .hbtns .btn{height:44px;margin:-12px 0;padding:0 4px;border:0;border-radius:0;background:none;box-shadow:none;color:var(--muted);
+  font:400 var(--m-s)/1 var(--body);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+:root[data-design="minimal"] .hbtns .btn:hover{color:var(--fg);text-decoration-color:currentColor}
+:root[data-design="minimal"] .hbtns .btn .ui{display:none}
+:root[data-design="minimal"] .hbtns .btn+.btn{margin-left:8px}
+:root[data-design="minimal"] #saveBtn[aria-pressed="true"]{color:var(--fg)}
+/* Search: just a glass, which opens into a plain underlined field across the headline while it's in use */
+:root[data-design="minimal"] .finder{order:2;flex:0 0 44px;position:relative}
+:root[data-design="minimal"] .searchbox{height:44px;border-radius:0}
+:root[data-design="minimal"] .finder input{width:100%;height:44px;padding:0;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;box-shadow:none;
+  color:transparent;cursor:pointer;font:400 var(--m-b) var(--body);-webkit-appearance:none;appearance:none}
+:root[data-design="minimal"] .finder input::placeholder{color:transparent}
+:root[data-design="minimal"] .finder input:focus-visible{outline:none}
+:root[data-design="minimal"] .searchbox .sgo{left:5px;width:34px;height:34px;border-radius:0;color:var(--muted);pointer-events:none}
+:root[data-design="minimal"] .searchbox .sgo .ui{width:18px;height:18px}
+:root[data-design="minimal"] .finder:hover .sgo{color:var(--fg)}
+:root[data-design="minimal"] .finder:is(:focus-within,:has(input:not(:placeholder-shown)),:has(.drop>:not([hidden]))){position:absolute;z-index:6;top:0;left:0;right:0;background:var(--bg)}
+:root[data-design="minimal"] .finder:is(:focus-within,:has(input:not(:placeholder-shown)),:has(.drop>:not([hidden]))) input{padding:0 4px 0 36px;border-bottom-color:var(--fg);color:var(--fg);cursor:text}
+:root[data-design="minimal"] .finder:is(:focus-within,:has(input:not(:placeholder-shown)),:has(.drop>:not([hidden]))) input::placeholder{color:var(--muted)}
+:root[data-design="minimal"] .finder:is(:focus-within,:has(input:not(:placeholder-shown)),:has(.drop>:not([hidden]))) .sgo{pointer-events:auto;color:var(--fg)}
+:root[data-design="minimal"] .finder .drop{top:100%;width:100%;max-width:none;gap:0;padding:4px 0 12px;background:var(--bg)}
+:root[data-design="minimal"] .finder .drop:not(:has(>:not([hidden]))){display:none}
+:root[data-design="minimal"] .finder .note{padding:12px 0;border:0;border-radius:0;background:var(--bg);font-size:var(--m-s);color:var(--muted)}
+:root[data-design="minimal"] .results{max-height:min(60vh,396px);border:0;border-block:1px solid var(--line);border-radius:0;background:var(--bg)}
+:root[data-design="minimal"] .results button{align-items:baseline;min-height:44px;padding:11px 0;font:400 var(--m-b)/1.4 var(--body)}
+:root[data-design="minimal"] .results button:is(:hover,:focus-visible){background:var(--accent-soft);outline:none}
+:root[data-design="minimal"] .results button span{font:400 var(--m-s) var(--body);color:var(--muted)}
+:root[data-design="minimal"] .results .full{font-weight:400;color:var(--muted)}
+
+/* ---- Notices: no signal, and couldn't reach the sites: one quiet line each ---- */
+:root[data-design="minimal"] .netnote{margin:-24px 0 32px;padding:0;border:0;border-radius:0;background:none;font-size:var(--m-s);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:root[data-design="minimal"] .netnote b{font-weight:500}
+:root[data-design="minimal"] .error{margin:-24px 0 32px;padding:0;border:0;border-radius:0;background:none;font-size:var(--m-s);color:var(--accent)}
+
+/* ---- The essentials ---- */
+:root[data-design="minimal"] .mini p{margin:0}
+:root[data-design="minimal"] .mini section{display:block}
+:root[data-design="minimal"] .mini .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:root[data-design="minimal"] .m-week .m-sky{color:var(--muted)}
+:root[data-design="minimal"] .mini .m-care{color:var(--accent)}
+/* Bureau warnings, above everything else */
+:root[data-design="minimal"] .m-warn{list-style:none;margin:0 0 40px;padding:0;display:flex;flex-direction:column;gap:8px;color:var(--accent);font-weight:500}
+:root[data-design="minimal"] .m-warn li{display:flex;gap:10px;align-items:flex-start}
+:root[data-design="minimal"] .m-warn .ui{width:18px;height:18px;margin-top:3px}
+/* Right now */
+:root[data-design="minimal"] .mini .m-temp{font-size:var(--m-xl);font-weight:300;line-height:.9;letter-spacing:-.045em;margin-left:-.05em}
+:root[data-design="minimal"] .mini .m-cond{margin-top:16px;font-size:var(--m-l);line-height:1.25;letter-spacing:-.01em}
+:root[data-design="minimal"] .mini .m-facts{display:flex;flex-wrap:wrap;gap:2px 16px;margin-top:6px;color:var(--muted)}
+:root[data-design="minimal"] .mini .m-story{max-width:34em;margin-top:24px;text-wrap:pretty}
+:root[data-design="minimal"] .m-story .st{color:var(--accent)}
+/* Headed lists: the week, the water, the beach */
+:root[data-design="minimal"] .m-sec{margin-top:56px}
+:root[data-design="minimal"] .m-sec h2{display:block;margin:0 0 8px;font:500 var(--m-s)/1.4 var(--body);letter-spacing:0;color:var(--muted)}
+:root[data-design="minimal"] :is(.m-week,.m-rows){list-style:none;margin:0;padding:0;border-bottom:1px solid var(--line)}
+:root[data-design="minimal"] :is(.m-week,.m-rows) li{padding:12px 0;border-top:1px solid var(--line)}
+:root[data-design="minimal"] .m-week li{display:grid;grid-template-columns:6.5em minmax(0,1fr) auto 2.75em 2.75em;column-gap:8px;align-items:baseline}
+:root[data-design="minimal"] .m-week .m-sky{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:root[data-design="minimal"] .m-week :is(.m-rain,.m-hi,.m-lo){text-align:right;white-space:nowrap}
+:root[data-design="minimal"] .m-week .m-hi{color:var(--fg)}
+:root[data-design="minimal"] .m-week .m-lo{color:var(--muted)}
+:root[data-design="minimal"] .m-rows li{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr);column-gap:16px;align-items:baseline}
+:root[data-design="minimal"] .m-rows .m-v{color:var(--muted)}
+:root[data-design="minimal"] .m-rows .m-v b{font-weight:500;color:var(--fg)}
+:root[data-design="minimal"] .m-rows .m-v b.m-care{color:var(--accent)}
+:root[data-design="minimal"] .m-rows .m-then{display:block}
+/* The way to everything else */
+:root[data-design="minimal"] .mini .m-more{margin-top:40px}
+:root[data-design="minimal"] .m-more button{height:44px;padding:0;border:0;background:none;color:var(--muted);font:400 var(--m-s) var(--body);
+  text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+:root[data-design="minimal"] .m-more button:hover{color:var(--fg);text-decoration-color:currentColor}
+
+/* ---- Design switcher: a quiet word in the corner, and a plain list ---- */
+:root[data-design="minimal"] .dsw{right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px))}
+:root[data-design="minimal"] .dsw-btn{width:auto;height:44px;padding:0 18px;gap:0;border:1px solid var(--line);border-radius:22px;background:var(--bg);box-shadow:none;color:var(--muted);font:400 var(--m-s)/1 var(--body)}
+:root[data-design="minimal"] .dsw-btn .dsw-ic{display:none}
+:root[data-design="minimal"] .dsw-lab{display:inline}
+:root[data-design="minimal"] .dsw-btn:is(:hover,[aria-expanded="true"]){border-color:var(--muted);color:var(--fg)}
+:root[data-design="minimal"] .dsw-menu{bottom:calc(100% + 8px);min-width:232px;padding:6px 0;border:1px solid var(--line);border-radius:10px;background:var(--bg);box-shadow:none}
+:root[data-design="minimal"] .dsw-menu [role^="menuitem"]{display:flex;align-items:center;min-height:44px;padding:0 20px 0 36px;border-radius:0;color:var(--fg);font:400 var(--m-b)/1.3 var(--body)}
+:root[data-design="minimal"] .dsw-menu [role^="menuitem"]:is(:hover,:focus){background:var(--accent-soft);outline:none}
+:root[data-design="minimal"] .dsw-menu [role^="menuitem"]:focus-visible{outline:2px solid var(--fg);outline-offset:-2px;box-shadow:none}
+:root[data-design="minimal"] .dsw-menu [aria-checked="true"]{font-weight:500}
+:root[data-design="minimal"] .dsw-menu [aria-checked="true"]::before{left:18px;width:6px;height:6px;margin-top:-3px;background:var(--fg)}
+:root[data-design="minimal"] .dsw-sep{margin:6px 0;background:var(--line)}
+:root[data-design="minimal"] .dsw-h{padding:12px 20px 4px 36px;font:400 var(--m-s)/1.3 var(--body);letter-spacing:0;text-transform:none;color:var(--muted)}
+
+/* ---- Phones: a slightly smaller temperature, and each water or beach as its name over its verdict ---- */
+@media (max-width:560px){
+  :root[data-design="minimal"]{--m-xl:5rem}
+  :root[data-design="minimal"] .wrap{padding:24px max(20px,env(safe-area-inset-right,0px)) 112px max(20px,env(safe-area-inset-left,0px))}
+  :root[data-design="minimal"] header{margin-bottom:40px}
+  :root[data-design="minimal"] .m-sec{margin-top:48px}
+  :root[data-design="minimal"] .m-week li{grid-template-columns:5.75em minmax(0,1fr) auto 2.5em 2.5em}
+  :root[data-design="minimal"] .m-rows li{grid-template-columns:minmax(0,1fr);row-gap:2px}
+}
+</style>
 </head>
 <body>
 <!-- Shading for the weather pictures, shared by every .wx icon on the page -->
@@ -1868,6 +2017,31 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   <nav class="jump" aria-label="Jump to a section"><a href="#nowh">Now</a><a href="#radarh">Radar</a><a href="#weekh">7 days</a><a href="#hourh">Hourly</a><a href="#tideh">Tides</a><a href="#driveh" hidden>Beach</a><a href="#boath">Boating</a><a href="#panelh"><span class="cls">Sites</span><span class="w2k">Your sites</span></a><a class="w2k" href="#dayh">Site by site</a><a class="w2k" href="#scoreh">Accuracy</a><a class="w2k" href="#triph">Trip planner</a></nav>
 
   <div id="err" class="error" hidden></div>
+
+  <!-- Minimalist look only: the essentials, drawn by renderMini in the script. Every other section is put away in
+       that look, and this block is hidden in the other three. -->
+  <div class="mini" id="mini">
+    <ul class="m-warn" id="mWarn" aria-label="Bureau of Meteorology warnings" hidden></ul>
+    <section class="m-now" aria-label="Right now">
+      <p class="m-temp" id="mTemp"></p>
+      <p class="m-cond" id="mCond">Loading…</p>
+      <p class="m-facts" id="mFacts"></p>
+    </section>
+    <p class="m-story" id="mStory" hidden></p>
+    <section class="m-sec" id="mWeekSec" aria-labelledby="mWeekH" hidden>
+      <h2 id="mWeekH">Next 7 days</h2>
+      <ol class="m-week" id="mWeek"></ol>
+    </section>
+    <section class="m-sec" id="mWaterSec" aria-labelledby="mWaterH" hidden>
+      <h2 id="mWaterH">On the water today</h2>
+      <ul class="m-rows" id="mWater"></ul>
+    </section>
+    <section class="m-sec" id="mDriveSec" aria-labelledby="mDriveH" hidden>
+      <h2 id="mDriveH">Beach driving</h2>
+      <ul class="m-rows" id="mDrive"></ul>
+    </section>
+    <p class="m-more"><button type="button" id="miniMore">More detail</button></p>
+  </div>
 
   <section aria-labelledby="nowh">
     <h2 id="nowh"><i data-ui="thermo"></i>Right now</h2>
@@ -2064,6 +2238,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     <button type="button" role="menuitemradio" aria-checked="false" data-look="web2000" tabindex="-1">Early 2000s (this site)</button>
     <button type="button" role="menuitemradio" aria-checked="false" data-look="classic" tabindex="-1">Classic</button>
     <button type="button" role="menuitemradio" aria-checked="false" data-look="aero" tabindex="-1">Aero edition</button>
+    <button type="button" role="menuitemradio" aria-checked="false" data-look="minimal" tabindex="-1">Minimalist</button>
     <div class="dsw-sep" role="separator"></div>
     <div role="group" aria-labelledby="dswSamples"><div class="dsw-h" id="dswSamples">Samples (mock-ups)</div>
       <a role="menuitem" href="./designs/aero-2026/" tabindex="-1">Original Aero (2026)</a>
@@ -2306,6 +2481,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   // the page's look shows one of them
   const wxBody=(p,night)=>`<g class="wxg">${ART[p](night)}</g><use class="wxp" href="#pxw-${pxKey(p,night)}" width="64" height="64"/>`;
   const w2k=()=>document.documentElement.dataset.design==="web2000";
+  const isMin=()=>document.documentElement.dataset.design==="minimal";
   // The forecast sites only give words ("Possible shower", "PM Showers"), so match those to a picture
   function classify(t){t=(t||"").toLowerCase();if(!t)return null;
     if(/cyclone/.test(t))return"cyclone";
@@ -2831,8 +3007,9 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   }
   let sceneKey="",sceneN=0;
   function renderScene(ni){
-    // The early-2000s look has the plain desktop colour around its window instead, so nothing is loaded for it
-    const on=sceneOn&&!w2k();
+    // The early-2000s look has the plain desktop colour around its window instead, and the Minimalist look a plain
+    // page, so nothing is loaded for them
+    const on=sceneOn&&!w2k()&&!isMin();
     document.documentElement.classList.toggle("scenic",on);
     $("sceneBtn").setAttribute("aria-pressed",String(sceneOn));
     const box=$("scene");
@@ -3313,6 +3490,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   // and the open ocean at Maroochydore). Each uses the Bureau's hourly wind for a forecast cell on that water,
   // Windy's wind at the same spot, and WillyWeather's tide times (and swell, open ocean only) for that water.
   // Places with no waters (Oxley, Maleny, searched places) get one report for the town itself.
+  const mini={water:[],drive:null};  // the Minimalist look's one-line verdicts, kept by renderBoat and renderDrive
   const KIND={river:"River",ocean:"Open ocean",bay:"Bay",passage:"Passage",inlet:"Inlet",harbour:"Harbour",lake:"Lake"};
   const hourTxt=x=>x===0||x===24?"12am":x===12?"12pm":x>12?(x-12)+"pm":x+"am";
   // The best stretch of daylight: the longest run of hours under 15 km/h, else under 26 km/h
@@ -3341,7 +3519,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     $("boath").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"});});
   function renderBoat(k){
     // Locations marked "boating": false in locations.json (inland suburbs like Oxley) show no boating at all
-    const noBoat=state.loc.boating===false;
+    const noBoat=state.loc.boating===false;mini.water=[];
     [$("briefh"),$("boath")].forEach(h=>h.closest("section").hidden=noBoat);
     document.querySelector('.jump a[href="#boath"]').hidden=noBoat;
     if(noBoat)return;
@@ -3405,7 +3583,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       const html=`<div class="whd"><h3>${ui(kind==="ocean"?"wave":"boat")}${esc(title)}</h3>${kind?`<span class="kind">${KIND[kind]||kind}</span>`:""}</div>
         <div class="panel">${out.join("")}</div>${strip?`<div class="hourhd"><span>Wind each 2 hours (km/h) · gusts below</span><span class="key"><i class="calm"></i>Calm <i class="choppy"></i>Choppy <i class="rough"></i>Rough</span></div><div class="hours">${strip}</div>`:""}`;
       const line=[rate?`<b>${esc(bt)}</b>`:"No wind forecast for this day yet",highs.length?"High tide "+highs.map(esc).join(", "):""].filter(Boolean).join(" · ");
-      return{html,rate,line};
+      return{html,rate,line,bt};
     }
     const waters=L.waters||[];
     const scraped=M&&Array.isArray(M.waters)?M.waters:[];  // older files (before per-water reports) have none
@@ -3418,6 +3596,8 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     $("boat").innerHTML=(reps.length>1?`<div class="wtabs" role="tablist" aria-label="Choose a water">${reps.map((r,i)=>`<button type="button" role="tab" data-w="${i}" aria-selected="${i===cur}">${esc(r.title)}</button>`).join("")}</div>`:"")+
       reps.map((r,i)=>`<div class="water${i===cur?" on":""}">${r.html}</div>`).join("");
     $("brief").innerHTML=reps.map((r,i)=>`<button type="button" class="brow ${r.rate?r.rate[0]:""}" data-w="${i}"><span class="bn">${esc(r.title)}</span>${r.rate?`<span class="rate sm ${r.rate[0]}">${r.rate[1]}</span>`:""}<span class="bt">${r.line}</span></button>`).join("");
+    // The Minimalist look's one line per water (only real waters, not the town's own wind)
+    mini.water=waters.length?reps.map(r=>({title:r.title,rate:r.rate,bt:r.bt})):[];
   }
 
   // Beach driving on K'gari: good within 2 hours of low tide in daylight, to be avoided within 2 hours of high tide.
@@ -3438,33 +3618,36 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   function renderDrive(k){
     const D=state.loc.kind==="full"&&state.loc.drive,sec=$("driveSec");sec.hidden=!D;
     const jl=document.querySelector('.jump a[href="#driveh"]');if(jl)jl.hidden=!D;
+    mini.drive=null;
     if(!D)return;
     let src=state.data&&state.data.scraped;
     if(D.tides){src=driveData[D.tides];
       if(src===undefined){driveData[D.tides]=null;
         fetch(SRC+"data/"+D.tides+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():false).catch(()=>false)
-          .then(j=>{driveData[D.tides]=j;if(state.loc.drive===D&&state.data)renderDrive(dates()[state.sel]);});}}
+          .then(j=>{driveData[D.tides]=j;if(state.loc.drive===D&&state.data){renderDrive(dates()[state.sel]);renderMini();}});}}
     const mw=driveWater(src),sel=state.sel,ks=dates(),dt=new Date(k+"T12:00:00");
     $("drivet").textContent="Beach driving · "+(sel===0?"Today":sel===1?"Tomorrow":dt.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"short"}));
     const spot=mw&&(mw.tides_place||mw.spot);
     $("dwhere").innerHTML=`<b>${esc(D.beach)}</b>${spot?" · tides at "+esc(spot):""}${D.note?". "+esc(D.note)+".":""}`;
-    if(!mw){$("dnow").className="dnow";$("dnow").innerHTML=`<div class="dicon">${ui("car")}</div><div class="dverd">${src===null?"Loading tide times…":"No tide times right now"}<small>Tap Refresh to try again.</small></div>`;
+    if(!mw){mini.drive={beach:D.beach,cls:"",head:src===null?"Loading tide times…":"No tide times right now",next:""};
+      $("dnow").className="dnow";$("dnow").innerHTML=`<div class="dicon">${ui("car")}</div><div class="dverd">${src===null?"Loading tide times…":"No tide times right now"}<small>Tap Refresh to try again.</small></div>`;
       $("dswell").hidden=true;$("dstrip").innerHTML="";$("dweek").innerHTML="";return;}
     const E=tideTurns(mw.tides),runs=driveRuns(E,k),d0=dayMs(k),sun=sunMs(k),now=wallMs(new Date());
     const good=runs.filter(usable),range=r=>clock(r.a)+" to "+clock(r.b);
     const turns=E.filter(e=>e.ms>=d0&&e.ms<d0+864e5),list=h=>turns.filter(e=>e.high===h).map(e=>`${clock(e.ms)} (${e.m} m)`).join(" and ")||"none";
     const tideLine=`Low tide <b>${list(false)}</b> · high <b>${list(true)}</b>`;
     // The headline: what to do right now (today), or the day's good times
-    let cls,head,sub;
+    let cls,head,sub,later="";
     if(sel===0&&now>=d0&&now<d0+864e5){const c=driveKind(E,now,sun),cur=runs.find(r=>now>=r.a&&now<r.b),next=good.find(r=>r.a>now);
       let after=next?`Next good time ${range(next)}.`:"";
       if(!next){const t=ks[1]&&driveRuns(E,ks[1]).find(usable);after=t?`Next good time tomorrow ${range(t)}.`:"No more good times today.";}
       cls=c==="dark"?"":c;
       head=c==="good"?`Good to drive now, until ${clock(cur.b)}`:c==="bad"?"Avoid the beach now":c==="mid"?"Mid tide now: take care":"Dark now: beach driving not advised";
-      sub=(c==="good"?"":after+" ")+tideLine+".";}
+      sub=(c==="good"?"":after+" ")+tideLine+".";later=c==="good"?"":after;}
     else{cls=good.length?"good":"bad";
       head=good.length?"Good to drive "+good.map(range).join(" and "):"No good time in daylight";
       sub=tideLine+".";}
+    mini.drive={beach:D.beach,cls,head,next:later};
     $("dnow").className="dnow "+cls;
     $("dnow").innerHTML=`<div class="dicon">${ui("car")}</div><div class="dverd">${esc(head)}<small>${sub}</small></div>`;
     const sw=mw.swell&&mw.swell[k]?parseFloat(mw.swell[k].max_m):null;
@@ -3491,6 +3674,49 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       return `<button type="button" data-i="${j}" aria-pressed="${j===sel}"><span class="dd">${nm}</span><span class="dw">${wins}</span><span class="ds${isNum(sv)&&sv>=2?" big":""}">${isNum(sv)?"Swell "+sv+" m":""}</span></button>`;}).join("");
   }
   $("dweek").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;const d=document.querySelector(`.day[data-i="${b.dataset.i}"]`);if(d)d.click();});
+
+  // ---- Minimalist look: only the essentials. Right now, the day in a sentence, the week as a plain list, and one
+  // line for each water and for the driving beach (renderBoat and renderDrive leave those in mini). It is always
+  // today, as the look has no day picker. Drawn in every look (it's cheap) and shown only in the Minimalist one. ----
+  function renderMini(){
+    const D=state.data;
+    if(!D){$("mTemp").textContent="";$("mCond").textContent="Loading…";["mFacts","mStory","mWeek","mWarn","mWater","mDrive"].forEach(x=>$(x).innerHTML="");
+      ["mWarn","mStory","mWeekSec","mWaterSec","mDriveSec"].forEach(x=>$(x).hidden=true);return;}
+    $("mWeekSec").hidden=false;
+    const ks=dates(),ob=obsNow(),ni=nowIcon(),deg=v=>isNum(v)?f0(v)+"°":"–";
+    // Each day's top, bottom and chance of rain as the 7-day strip has them, so today's line and the list agree
+    const week=ks.map(k=>{const rows=rowsFor(k),b=bomDay(k);
+      return{k,hi:median(rows.map(r=>r.tmax)),lo:median(rows.map(r=>r.tmin)),ch:b&&isNum(b.chance)?b.chance:median(rows.map(r=>r.chance)),pic:dayIcon(k,rows)};});
+    const t=week[0],care=' class="m-care"';
+    // The Bureau's warnings come first, one line each: they are never folded away
+    const W=(D.bom&&D.bom.warnings)||[];
+    $("mWarn").innerHTML=W.map(w=>`<li>${ui("alert")}<span>${esc(w.title)}</span></li>`).join("");$("mWarn").hidden=!W.length;
+    // Right now: the station's reading, the sky this hour in words ("clear" by night), then today in one quiet line
+    const ic=ni.icon==="clear"?"sunny":ni.icon,cond=!ic?"":ni.night&&ic==="sunny"?"Clear":ni.night&&ic==="mostly_sunny"?"Mostly clear":WX_LABEL[ic]||"";
+    $("mTemp").textContent=ob&&isNum(ob.temp)?f0(ob.temp)+"°":"";  // no reading: the line below says so
+    $("mCond").textContent=cond||(bomDay(ks[0])||{}).text||"";
+    const feels=ob&&isNum(ob.feels)&&isNum(ob.temp)&&Math.abs(ob.feels-ob.temp)>=3;
+    $("mFacts").innerHTML=[ob?"":"No station reading right now",feels?"Feels like "+deg(ob.feels):"",isNum(t.hi)?"High "+deg(t.hi):"",isNum(t.lo)?"Low "+deg(t.lo):"",
+      isNum(t.ch)?f0(t.ch)+"% chance of rain":""].filter(Boolean).map(s=>`<span>${s}</span>`).join("");
+    let story="";try{story=hourStory(hoursFor(ks[0]),sunHours(ks[0]));}catch(e){}
+    $("mStory").innerHTML=story;$("mStory").hidden=!story;
+    // The week: day, the sky in a word or two, the chance of rain only when it's 20% or more, then top and bottom
+    const nm=(k,i)=>i===0?"Today":i===1?"Tomorrow":new Date(k+"T12:00:00").toLocaleDateString("en-AU",{weekday:"long"});
+    $("mWeek").innerHTML=week.map((d,i)=>{const p=d.pic==="clear"?"sunny":d.pic;
+      return `<li><span class="m-day">${nm(d.k,i)}</span><span class="m-sky${p==="storm"?" m-care":""}">${p&&WX_LABEL[p]||""}</span>`+
+        `<span class="m-rain">${isNum(d.ch)&&d.ch>=20?f0(d.ch)+'%<span class="vh"> chance of rain</span>':""}</span>`+
+        `<span class="m-hi"><span class="vh">High </span>${deg(d.hi)}</span><span class="m-lo"><span class="vh">low </span>${deg(d.lo)}</span></li>`;}).join("");
+    // Each water: calm, choppy or rough, and the best time (the wind figures stay in the full page)
+    $("mWater").innerHTML=mini.water.map(w=>{const bt=(w.bt||"").replace(/, (under|up to) \d+ km\/h$/,""),rough=w.rate&&w.rate[0]==="rough";
+      const v=!w.rate?`<span class="m-then">No wind forecast for today yet</span>`:/all day$/.test(bt)?`<b${rough?care:""}>${esc(bt)}</b>`:
+        `<b${rough?care:""}>${w.rate[1]}</b>${/^No /.test(bt)?"":", "+esc(bt.charAt(0).toLowerCase()+bt.slice(1))}`;
+      return `<li><span class="m-k">${esc(w.title)}</span><span class="m-v">${v}</span></li>`;}).join("");
+    $("mWaterSec").hidden=!mini.water.length;
+    // The driving beach: what to do now, and the next good time when now isn't one
+    const dv=mini.drive;$("mDriveSec").hidden=!dv;
+    $("mDrive").innerHTML=dv?`<li><span class="m-k">${esc(dv.beach)}</span><span class="m-v"><b${dv.cls==="bad"?care:""}>${esc(dv.head)}</b>${dv.next?`<span class="m-then">${esc(dv.next.replace(/\.$/,""))}</span>`:""}</span></li>`:"";
+  }
+  PLUG.day.push(renderMini);
   // Webcams: links to live cameras near the place on screen (listed per place in locations.json), so you can
   // see the water before driving there. Searched places have none, so the section stays hidden for them.
   PLUG.render.push(()=>{const W=(state.loc&&state.loc.kind==="full"&&state.loc.webcams)||[];$("camSec").hidden=!W.length;
@@ -3762,7 +3988,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     if(state.data)render();
     else{$("now").dataset.sky="";$("now").innerHTML=`<div class="nowtop">${wx("partly_cloudy")}<div><div class="temp num">–</div><div class="feels">Loading…</div></div></div>`;
       $("obs").textContent="A real reading from the nearest Bureau of Meteorology station.";
-      ["days","panel","summary","tbody","chart","legend","boat"].forEach(x=>$(x).innerHTML="");$("warns").hidden=true;renderSites();}
+      ["days","panel","summary","tbody","chart","legend","boat"].forEach(x=>$(x).innerHTML="");$("warns").hidden=true;renderSites();renderMini();}
     load();
   }
   const full=l=>({...l,kind:"full"});
@@ -4013,8 +4239,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   addEventListener("resize",fitPicker);
   // The look changed (the Design menu): redraw what's drawn with its colours, sizes and pictures, and bring the
   // weather background back (or put it away)
+  // The Minimalist look is always about today, so it goes back to today if another day was chosen
   document.addEventListener("designchange",()=>{renderScene(state.data?nowIcon():null);rBase();fitPicker();if(rad.map)rad.map.invalidateSize();
-    if(state.data){hv.built=null;renderChart();renderDay();}});
+    if(state.data){if(isMin()&&state.sel){state.sel=0;document.querySelectorAll(".day").forEach(d=>d.setAttribute("aria-pressed",String(d.dataset.i==="0")));}
+      hv.built=null;renderChart();renderDay();}});
   // The slim bar shows once the header has scrolled out of view; tapping it goes back to the top
   new IntersectionObserver(([e])=>$("stick").classList.toggle("on",!e.isIntersecting&&!!state.data)).observe($("top"));
   $("stick").addEventListener("click",()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
@@ -4137,9 +4365,11 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
 (function(){
   const $=id=>document.getElementById(id),root=document.documentElement,KEY="aus-forecast-design";
   const isW=()=>root.dataset.design==="web2000";
-  // The phone's browser bar takes the title bar's navy in the early-2000s look, and the sky's blue in the Aero look
-  const meta=document.querySelector('meta[name="theme-color"]'),classicTheme=meta.content;
-  const paintTheme=()=>{meta.content=isW()?"#0A246A":root.dataset.design==="aero"?"#1a7fd6":classicTheme;};
+  // The phone's browser bar takes the title bar's navy in the early-2000s look, and the sky's blue in the Aero look;
+  // in the Minimalist look it melts into the page, light or dark as the phone is set
+  const meta=document.querySelector('meta[name="theme-color"]'),classicTheme=meta.content,darkQ=matchMedia("(prefers-color-scheme: dark)");
+  const paintTheme=()=>{const d=root.dataset.design;meta.content=isW()?"#0A246A":d==="aero"?"#1a7fd6":d==="minimal"?(darkQ.matches?"#121212":"#fcfcfb"):classicTheme;};
+  darkQ.addEventListener?.("change",paintTheme);
 
   // ---- Title bar, date strip, "you are here" line and status bar, kept in step with the page ----
   function follow(){
@@ -4194,7 +4424,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       const bar=[...document.querySelectorAll(".menubar button")],j=bar.indexOf(open.btn),nb=bar[(j+(e.key==="ArrowRight"?1:-1)+bar.length)%bar.length];barMenu(nb,true);}});
   document.addEventListener("pointerdown",e=>{if(open&&!open.box.contains(e.target)&&!open.btn.contains(e.target))closeMenu(false);});
 
-  // ---- The Design menu: the three looks of this page switch at once (and are remembered on this device); the
+  // ---- The Design menu: the four looks of this page switch at once (and are remembered on this device); the
   // saved samples are pages of their own ----
   const dBtn=$("dswBtn"),dMenu=$("dswMenu");
   const paintChecks=()=>dMenu.querySelectorAll("[data-look]").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.look===root.dataset.design)));
@@ -4202,6 +4432,8 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     paintChecks();paintTheme();document.dispatchEvent(new Event("designchange"));follow();spy();}
   dBtn.addEventListener("click",()=>{if(open&&open.box===dMenu)closeMenu(false);else showMenu(dMenu,dBtn);});
   dMenu.addEventListener("click",e=>{const b=e.target.closest("[data-look]");if(!b)return;setDesign(b.dataset.look);closeMenu(true);});
+  // The Minimalist look's "More detail" opens the full page in the Early 2000s look, from the top
+  $("miniMore").addEventListener("click",()=>{setDesign("web2000");scrollTo(0,0);});
 
   // ---- The menu bar: each heading opens a short menu of things the page can do ----
   const go=id=>{const h=$(id);if(h)h.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});};
