@@ -2096,7 +2096,9 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     const get=u=>fetch(u,timed()).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
     const [f,o,h,w]=await Promise.allSettled([get(api+"/forecasts/daily"),get(api+"/observations"),get(api+"/forecasts/hourly"),get(api+"/warnings")]);
     if(f.status==="fulfilled"&&Array.isArray(f.value?.data)){
-      f.value.data.forEach(d=>{const k=localDate(d.date);if(!k)return;const a=d.rain?.amount||{};
+      // A Bureau day starts at midnight where its forecast point is, which near the border can be NSW summer time (an hour
+      // ahead), so its midday is used to tell which of this place's days it is
+      f.value.data.forEach(d=>{const k=localDate(new Date(Date.parse(d.date)+12*36e5).toISOString());if(!k)return;const a=d.rain?.amount||{};
         out.daily[k]={tmax:d.temp_max,tmin:d.temp_min,rmin:a.min,rmax:a.max,chance:d.rain?.chance,text:(d.short_text||"").replace(/\.$/,""),
           icon:d.icon_descriptor||null,uv:d.uv?.max_index,uvcat:d.uv?.category,rise:d.astronomical?.sunrise_time,set:d.astronomical?.sunset_time};});
       out.ok=true;}

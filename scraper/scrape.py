@@ -145,8 +145,9 @@ def scrape_bom(loc):
     tz = ZoneInfo(loc["tz"])
     days = []
     for d in get(url).json()["data"]:
-        # Dates are local midnight expressed in UTC (e.g. 2026-10-26T14:00:00Z is 27 Oct in Brisbane)
-        local = datetime.fromisoformat(d["date"].replace("Z", "+00:00")).astimezone(tz).date()
+        # Dates are midnight where the forecast point is, in UTC (e.g. 2026-10-26T14:00:00Z is 27 Oct in Brisbane). Near the
+        # border that point can be on NSW summer time, an hour ahead, so the day's midday decides which local day it is
+        local = (datetime.fromisoformat(d["date"].replace("Z", "+00:00")) + timedelta(hours=12)).astimezone(tz).date()
         amt = (d.get("rain") or {}).get("amount") or {}
         lo, hi = amt.get("min"), amt.get("max")
         txt = None
