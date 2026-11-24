@@ -1,6 +1,6 @@
 {
  "id": "moreton-island",
- "generated": "2026-11-24T18:09:17Z",
+ "generated": "2026-11-24T18:13:59Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:08:49Z"
+   "fetched": "2026-11-24T18:13:32Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:08:51Z"
+   "fetched": "2026-11-24T18:13:35Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-24T18:09:05Z"
+   "fetched": "2026-11-24T18:13:48Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:09:12Z"
+   "fetched": "2026-11-24T18:13:55Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:09:12Z"
+   "fetched": "2026-11-24T18:13:55Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:09:12Z"
+   "fetched": "2026-11-24T18:13:55Z"
   },
   {
    "source": "foreca",
@@ -3519,7 +3519,7 @@
     {
      "date": "2026-11-25",
      "tmax": 25,
-     "tmin": 23,
+     "tmin": 22,
      "rain_min": 3.8,
      "rain_max": 3.8,
      "rain_text": "3.8 mm",
@@ -3620,7 +3620,7 @@
    "hourly": {
     "start": "2026-11-25T04",
     "temp": [
-     23,
+     22,
      23,
      24,
      23,
@@ -3804,7 +3804,7 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-24T18:09:17Z"
+   "fetched": "2026-11-24T18:13:59Z"
   }
  ],
  "observations": {
@@ -3819,7 +3819,7 @@
   "wind_kmh": 9,
   "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-24T18:08:29Z"
+  "fetched": "2026-11-24T18:13:12Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4339,7 +4339,7 @@
     "windfinder_place": "Tangalooma Point"
    }
   ],
-  "fetched": "2026-11-24T18:08:48Z"
+  "fetched": "2026-11-24T18:13:32Z"
  },
  "errors": {}
 }

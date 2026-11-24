@@ -1,6 +1,6 @@
 {
  "id": "agnes-water",
- "generated": "2026-11-24T18:11:46Z",
+ "generated": "2026-11-24T18:16:33Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:11:21Z"
+   "fetched": "2026-11-24T18:16:06Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:11:23Z"
+   "fetched": "2026-11-24T18:16:09Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Chance shower or storm"
     ]
    },
-   "fetched": "2026-11-24T18:11:35Z"
+   "fetched": "2026-11-24T18:16:23Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:11:42Z"
+   "fetched": "2026-11-24T18:16:29Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:11:42Z"
+   "fetched": "2026-11-24T18:16:29Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:11:43Z"
+   "fetched": "2026-11-24T18:16:30Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Overcast and showers"
     ]
    },
-   "fetched": "2026-11-24T18:11:46Z"
+   "fetched": "2026-11-24T18:16:33Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone",
   "distance_km": 76.1,
-  "time": "2026-11-25T04:00:00+10:00",
-  "temp": 21.7,
-  "feels_like": 22.6,
-  "humidity": 86,
+  "time": "2026-11-25T04:10:00+10:00",
+  "temp": 21.5,
+  "feels_like": 22.8,
+  "humidity": 88,
   "wind_dir": "SW",
-  "wind_kmh": 13,
-  "gust_kmh": 20,
+  "wind_kmh": 11,
+  "gust_kmh": 17,
   "rain_since_9am": 0,
-  "fetched": "2026-11-24T18:11:02Z"
+  "fetched": "2026-11-24T18:15:47Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4339,7 +4339,7 @@
     "windfinder_place": "Town of 1770 / Agnes Water"
    }
   ],
-  "fetched": "2026-11-24T18:11:20Z"
+  "fetched": "2026-11-24T18:16:06Z"
  },
  "errors": {}
 }

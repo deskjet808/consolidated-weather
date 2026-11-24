@@ -1,6 +1,6 @@
 {
  "id": "west-end",
- "generated": "2026-11-24T18:12:12Z",
+ "generated": "2026-11-24T18:17:00Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:11:47Z"
+   "fetched": "2026-11-24T18:16:34Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:11:49Z"
+   "fetched": "2026-11-24T18:16:37Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Chance shower"
     ]
    },
-   "fetched": "2026-11-24T18:12:00Z"
+   "fetched": "2026-11-24T18:16:50Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:12:07Z"
+   "fetched": "2026-11-24T18:16:56Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-24T18:12:07Z"
+   "fetched": "2026-11-24T18:16:57Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:12:07Z"
+   "fetched": "2026-11-24T18:16:57Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-24T18:12:12Z"
+   "fetched": "2026-11-24T18:17:00Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane",
   "distance_km": 2.7,
-  "time": "2026-11-25T04:00:00+10:00",
-  "temp": 21.8,
-  "feels_like": 24.7,
-  "humidity": 93,
-  "wind_dir": "SE",
-  "wind_kmh": 6,
-  "gust_kmh": 9,
+  "time": "2026-11-25T04:10:00+10:00",
+  "temp": 20.9,
+  "feels_like": 22.7,
+  "humidity": 92,
+  "wind_dir": "ESE",
+  "wind_kmh": 9,
+  "gust_kmh": 22,
   "rain_since_9am": 0,
-  "fetched": "2026-11-24T18:11:46Z"
+  "fetched": "2026-11-24T18:16:34Z"
  },
  "errors": {}
 }

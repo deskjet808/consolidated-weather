@@ -1,6 +1,6 @@
 {
  "id": "redcliffe",
- "generated": "2026-11-24T18:10:17Z",
+ "generated": "2026-11-24T18:15:02Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:09:52Z"
+   "fetched": "2026-11-24T18:14:36Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:09:54Z"
+   "fetched": "2026-11-24T18:14:38Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Shower"
     ]
    },
-   "fetched": "2026-11-24T18:10:06Z"
+   "fetched": "2026-11-24T18:14:52Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:10:13Z"
+   "fetched": "2026-11-24T18:14:58Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:10:13Z"
+   "fetched": "2026-11-24T18:14:58Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:10:13Z"
+   "fetched": "2026-11-24T18:14:59Z"
   },
   {
    "source": "foreca",
@@ -3803,22 +3803,22 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-24T18:10:17Z"
+   "fetched": "2026-11-24T18:15:02Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 19.9,
-  "time": "2026-11-25T04:00:00+10:00",
-  "temp": 21.4,
-  "feels_like": 22.6,
-  "humidity": 92,
+  "time": "2026-11-25T04:10:00+10:00",
+  "temp": 20.8,
+  "feels_like": 21,
+  "humidity": 96,
   "wind_dir": "SSE",
-  "wind_kmh": 13,
-  "gust_kmh": 30,
-  "rain_since_9am": 2.6,
-  "fetched": "2026-11-24T18:09:42Z"
+  "wind_kmh": 19,
+  "gust_kmh": 35,
+  "rain_since_9am": 3.6,
+  "fetched": "2026-11-24T18:14:26Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4060,7 +4060,7 @@
     "windfinder_place": "Sutton Beach"
    }
   ],
-  "fetched": "2026-11-24T18:09:51Z"
+  "fetched": "2026-11-24T18:14:36Z"
  },
  "errors": {}
 }

@@ -1,6 +1,6 @@
 {
  "id": "gladstone",
- "generated": "2026-11-24T18:12:45Z",
+ "generated": "2026-11-24T18:17:36Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:12:21Z"
+   "fetched": "2026-11-24T18:17:10Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:12:24Z"
+   "fetched": "2026-11-24T18:17:13Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Chance shower or storm"
     ]
    },
-   "fetched": "2026-11-24T18:12:35Z"
+   "fetched": "2026-11-24T18:17:25Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:12:41Z"
+   "fetched": "2026-11-24T18:17:32Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-24T18:12:42Z"
+   "fetched": "2026-11-24T18:17:32Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:12:42Z"
+   "fetched": "2026-11-24T18:17:32Z"
   },
   {
    "source": "foreca",
@@ -3803,14 +3803,14 @@
      "Overcast"
     ]
    },
-   "fetched": "2026-11-24T18:12:45Z"
+   "fetched": "2026-11-24T18:17:36Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Gladstone Airport",
   "distance_km": 0.1,
-  "time": "2026-11-25T04:00:00+10:00",
+  "time": "2026-11-25T04:10:00+10:00",
   "temp": 22,
   "feels_like": 23.9,
   "humidity": 83,
@@ -3818,7 +3818,7 @@
   "wind_kmh": 7,
   "gust_kmh": 9,
   "rain_since_9am": 0,
-  "fetched": "2026-11-24T18:12:12Z"
+  "fetched": "2026-11-24T18:17:00Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4060,7 +4060,7 @@
     "windfinder_place": "Gladstone (Tide)"
    }
   ],
-  "fetched": "2026-11-24T18:12:21Z"
+  "fetched": "2026-11-24T18:17:09Z"
  },
  "errors": {}
 }

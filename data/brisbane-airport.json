@@ -1,6 +1,6 @@
 {
  "id": "brisbane-airport",
- "generated": "2026-11-24T18:09:42Z",
+ "generated": "2026-11-24T18:14:26Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-24T18:09:18Z"
+   "fetched": "2026-11-24T18:13:59Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:09:20Z"
+   "fetched": "2026-11-24T18:14:02Z"
   },
   {
    "source": "weatherzone",
@@ -931,14 +931,14 @@
    "hourly": {
     "start": "2026-11-25T05",
     "temp": [
-     21.7,
-     22.3,
-     23.2,
-     23.6,
-     23.7,
+     21.3,
+     22,
+     23,
+     23.4,
+     23.5,
      24.1,
      24.4,
-     24.6,
+     24.5,
      24.9,
      24.5,
      24.6,
@@ -1227,7 +1227,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-24T18:09:31Z"
+   "fetched": "2026-11-24T18:14:16Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-24T18:09:37Z"
+   "fetched": "2026-11-24T18:14:22Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-24T18:09:38Z"
+   "fetched": "2026-11-24T18:14:23Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-24T18:09:38Z"
+   "fetched": "2026-11-24T18:14:23Z"
   },
   {
    "source": "foreca",
@@ -3804,22 +3804,22 @@
      "Mostly clear"
     ]
    },
-   "fetched": "2026-11-24T18:09:42Z"
+   "fetched": "2026-11-24T18:14:26Z"
   }
  ],
  "observations": {
   "source": "bom_obs",
   "station": "Brisbane Airport",
   "distance_km": 0.4,
-  "time": "2026-11-25T04:00:00+10:00",
-  "temp": 21.4,
-  "feels_like": 22.6,
-  "humidity": 92,
+  "time": "2026-11-25T04:10:00+10:00",
+  "temp": 20.8,
+  "feels_like": 21,
+  "humidity": 96,
   "wind_dir": "SSE",
-  "wind_kmh": 13,
-  "gust_kmh": 30,
-  "rain_since_9am": 2.6,
-  "fetched": "2026-11-24T18:09:17Z"
+  "wind_kmh": 19,
+  "gust_kmh": 35,
+  "rain_since_9am": 3.6,
+  "fetched": "2026-11-24T18:13:59Z"
  },
  "errors": {}
 }
