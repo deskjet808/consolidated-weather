@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Consolidated Weather</title>
-<!-- The page's look: "web2000" (the early-2000s weather portal, the default) or "classic", as chosen with the Design
-     button in the bottom corner. Set here, before anything is drawn, so the page never flashes the other look. -->
-<script>try{if(localStorage.getItem("aus-forecast-design")==="classic")document.documentElement.dataset.design="classic";}catch(e){}</script>
+<!-- The page's look: "web2000" (the early-2000s weather portal, the default), "classic" or "aero" (Frutiger Aero), as
+     chosen with the Design button in the bottom corner. Set here, before anything is drawn, so the page never flashes
+     another look. A link can ask for a look with ?design=aero (for this visit only; the saved choice stays). -->
+<script>try{var d=new URLSearchParams(location.search).get("design")||localStorage.getItem("aus-forecast-design");if(d==="classic"||d==="aero")document.documentElement.dataset.design=d;}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#eef3f4">
 <!-- The page has its own light and dark colours: tell browsers' automatic dark mode and the Dark Reader extension
@@ -1357,6 +1358,449 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   [data-design="web2000"] .statusbar>span:nth-child(n+2){display:none}
 }
 </style>
+<style>
+/* ===========================================================================================================
+   AERO LOOK  (data-design="aero")
+   Frutiger Aero, the bright, glassy optimism of Windows Vista and 7 (2004 to 2012): a sunny world of sky, meadow
+   and clear water behind frosted glass windows, gel buttons and glossy orbs. Every rule here is scoped to the look,
+   so the other two looks are untouched. One deliberate bright look: it doesn't follow the phone's dark mode; its
+   night is the weather scene's (see aeroScene in the script), where the sky turns to the Milky Way.
+   Colours:  sky #0757C2 to #E3F8FF · aqua gel #B5ECFF / #56C6F3 / #129CE0 · lime gel #EFFFC4 / #B4E85A / #84CC22 ·
+             glass white at 72 to 90%, edged in white with a #10548C hairline · ink #0E2C44, secondary #4B6A80 ·
+             headings #0B3A62 · lines #C5DBE9 · selection #F3FAFF to #DCF0FC edged #8CCAF0 (Windows 7's own)
+   Type:     Segoe UI (Windows), else the system's own sans (San Francisco on iPhone and Mac, Roboto on Android);
+             Light for the big figures, Semibold for headings, tabular figures throughout.
+   Shapes:   windows 16px round with a gel title band; tiles 12px with a top-half gloss; buttons 9px gel; orbs round.
+   =========================================================================================================== */
+:root[data-design="aero"]{
+  --bg:#9fdaf5; --surface:#ffffff; --fg:#0e2c44; --muted:#4b6a80; --line:#c5dbe9;
+  --accent:#0a7cc4; --accent-soft:#ddf1fc;
+  --good:#2f8a1c; --warn:#b06400; --bad:#c92e26;
+  --bom:#0b3a62; --bom-soft:#e4f2fb;
+  --s1:#c27c00; --s2:#0e9a8c; --s3:#c0368a; --s4:#6a4fd0; --s5:#4f9a10; --s6:#2f6fc0;
+  --sun:#ffb000; --moon:#e8c65a; --cloud:#cfe3ef; --cloud2:#9fbccd; --cloud-dark:#7e98a8;
+  --rain:#0d79d0; --bolt:#ffb000; --snow:#5fb4ea; --haze:#c9a86a; --cool:#1a9be0; --warm:#f07a1a;
+  --g-sun1:#fff8b8; --g-sun2:#ff9a00; --g-moon1:#fffbe2; --g-moon2:#e6bc40; --g-c1:#ffffff; --g-c2:#bcd9ec;
+  --g-d1:#a9bfce; --g-d2:#56708a; --g-drop1:#c8f3ff; --g-drop2:#0a84da;
+  --sky-sun:#cdeeff; --sky-cloud:#e3eff6; --sky-rain:#d6e8f4; --sky-storm:#e2e0f2; --sky-night:#dbe4f6;
+  --storm:#6a40c8; --dayA:#e8f7fe; --dayB:#cfebf9; --rainbar:#0b6fc6;
+  --shadow:0 1px 2px rgb(0 50 100/.12),0 3px 8px -2px rgb(0 50 100/.14);
+  --glass:rgb(255 255 255/.8); --glass-line:rgb(255 255 255/.9);
+  --body:"Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,"Noto Sans",Arial,sans-serif;
+  --display:var(--body); --mono:var(--body);
+  /* The glass, the gels and the selection, used all through the look */
+  --ae-panel:linear-gradient(180deg,rgb(255 255 255/.9),rgb(247 252 255/.84) 55%,rgb(238 248 255/.86));
+  --ae-panel-sh:0 0 0 1px rgb(16 84 140/.22),0 14px 34px -12px rgb(0 45 100/.5),inset 0 1px 0 #fff,inset 0 0 24px rgb(255 255 255/.55);
+  --ae-band:linear-gradient(180deg,rgb(236 249 255/.97) 0%,rgb(210 238 252/.92) 47%,rgb(184 227 249/.9) 50%,rgb(214 240 253/.82) 100%);
+  --ae-tile:linear-gradient(180deg,#ffffff 0%,#f6fbfe 47%,#e9f5fc 52%,#f5fbfe 100%);
+  --ae-tile-sh:inset 0 1px 0 #fff,0 1px 2px rgb(0 60 110/.12),0 3px 8px -3px rgb(0 60 110/.16);
+  --ae-btn:linear-gradient(180deg,#ffffff 0%,#f1f8fc 46%,#dcecf7 52%,#e9f4fb 100%);
+  --ae-btn-h:linear-gradient(180deg,#f6fcff 0%,#e1f4fe 46%,#bde3f9 52%,#d4eefc 100%);
+  --ae-aqua:linear-gradient(180deg,#b5ecff 0%,#56c6f3 46%,#129ce0 52%,#2db4ee 100%);
+  --ae-aqua-sh:inset 0 1px 0 rgb(255 255 255/.75),inset 0 -1px 2px rgb(0 60 120/.25),0 1px 3px rgb(0 70 140/.35);
+  --ae-lime:linear-gradient(180deg,#efffc4 0%,#b4e85a 46%,#84cc22 52%,#a2dc3e 100%);
+  --ae-lime-sh:inset 0 1px 0 rgb(255 255 255/.8),inset 0 -1px 2px rgb(40 90 0/.25),0 1px 3px rgb(50 100 0/.35);
+  --ae-orb:radial-gradient(ellipse 72% 46% at 50% 22%,rgb(255 255 255/.9),rgb(255 255 255/0) 72%),radial-gradient(circle at 50% 62%,#3fc0f4 0,#0b78c8 58%,#06508f 100%);
+  --ae-sel:linear-gradient(180deg,#f3faff,#dcf0fc);
+  color-scheme:light;
+}
+:root[data-design="aero"] body{font:16px/1.5 var(--body);color:var(--fg);font-variant-numeric:tabular-nums}
+:root[data-design="aero"] ::selection{background:#bfe6fb;color:#0a2a44}
+:root[data-design="aero"] :focus-visible{outline:2px solid #2f9be0;outline-offset:2px}
+/* With the weather background off: the plain Aero sky, as on a fresh Windows 7 desktop */
+:root[data-design="aero"]:not(.scenic) body{background:linear-gradient(180deg,#0b6fd0 0%,#3fa6ea 34%,#a9e2fb 68%,#e9fbff 100%) fixed}
+:root[data-design="aero"] .wrap{gap:22px;padding-block:18px 76px}
+:root[data-design="aero"] h1,:root[data-design="aero"] h2{font-family:var(--body)}
+:root[data-design="aero"] .eyebrow{font:600 .72rem/1.3 var(--body);letter-spacing:.04em;text-transform:none}
+:root[data-design="aero"] .note,:root[data-design="aero"] .hswipe{color:var(--muted)}
+
+/* ---- Windows: the header and every section are frosted glass with a gel title band ---- */
+/* Glass on glass blurs twice, so the inner pieces lose the frosting the classic look gives them */
+:root[data-design="aero"] :is(.hdrbar,.now,.day,.card,.hbox,.tablebox,.chartcard,.brow,.sites>div,.warns){-webkit-backdrop-filter:none;backdrop-filter:none}
+:root[data-design="aero"] header#top,:root[data-design="aero"] .wrap>section,:root[data-design="aero"] footer{position:relative;border:1px solid rgb(255 255 255/.92);border-radius:16px;background:var(--ae-panel);box-shadow:var(--ae-panel-sh)}
+:root[data-design="aero"] .wrap>section{padding:0 18px 18px;gap:12px}
+/* Wider screens: the glass really is frosted. Phones get slightly firmer glass instead, which scrolls more smoothly */
+@media (min-width:701px){
+  :root[data-design="aero"].scenic :is(header#top,.wrap>section,footer){--ae-panel:linear-gradient(180deg,rgb(255 255 255/.86),rgb(247 252 255/.78) 55%,rgb(238 248 255/.8));
+    -webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5)}
+}
+/* The gel highlight across the top of each window, under the title band */
+:root[data-design="aero"] .wrap>section>h2,:root[data-design="aero"] .scorehead,:root[data-design="aero"] .charthead,:root[data-design="aero"] .fold>summary{margin:0 -18px;padding:10px 18px 9px;min-height:50px;border-radius:15px 15px 0 0;background:var(--ae-band);
+  border-bottom:1px solid rgb(110 172 214/.5);box-shadow:inset 0 1px 0 #fff,0 1px 0 rgb(255 255 255/.75)}
+:root[data-design="aero"] .scorehead h2,:root[data-design="aero"] .charthead h2,:root[data-design="aero"] .fold>summary h2{margin:0;padding:0;background:none;border:0;box-shadow:none;min-height:0}
+:root[data-design="aero"] h2{font:600 1.1rem/1.3 var(--body);color:#0b3a62;letter-spacing:0;text-shadow:0 1px 0 rgb(255 255 255/.85);gap:10px}
+/* Each heading's picture sits in a small glossy aqua orb */
+:root[data-design="aero"] h2 .ui{width:28px;height:28px;padding:6px;border-radius:50%;color:#fff;background:var(--ae-orb);
+  box-shadow:inset 0 0 0 1px rgb(255 255 255/.35),0 0 0 1px rgb(6 80 143/.55),0 2px 4px -1px rgb(0 50 100/.45)}
+:root[data-design="aero"] .fold:not([open])>summary{border-radius:15px;border-bottom:0}
+:root[data-design="aero"] .wrap>section:has(>.fold:not([open])){padding-bottom:0}
+:root[data-design="aero"] .fold[open]>summary{margin-bottom:12px}
+:root[data-design="aero"] .fold-sum{color:var(--muted)}
+:root[data-design="aero"] .fold-act,:root[data-design="aero"] .about summary{color:#0a6fb5}
+:root[data-design="aero"] .fold-act{border:1px solid #9cbdd5;background:var(--ae-btn);box-shadow:inset 0 1px 0 #fff,0 1px 2px rgb(0 50 100/.12)}
+:root[data-design="aero"] summary:hover .fold-act{border-color:#3c9fd6;background:var(--ae-btn-h);box-shadow:inset 0 1px 0 #fff,0 0 8px rgb(60 175 235/.4)}
+:root[data-design="aero"] .about{color:var(--muted)}
+:root[data-design="aero"] .about summary{display:inline-flex;align-items:center;gap:7px}
+:root[data-design="aero"] .about summary::marker{content:""}
+:root[data-design="aero"] .about summary::-webkit-details-marker{display:none}
+:root[data-design="aero"] .about summary::before{content:"";width:17px;height:17px;flex:none;transition:transform .15s;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><defs><radialGradient id='o' cx='.5' cy='.62' r='.6'><stop offset='0' stop-color='%233fc0f4'/><stop offset='.6' stop-color='%230b78c8'/><stop offset='1' stop-color='%2306508f'/></radialGradient><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.9'/><stop offset='1' stop-color='%23fff' stop-opacity='0'/></linearGradient></defs><circle cx='9' cy='9' r='8.3' fill='url(%23o)' stroke='%2306508f' stroke-width='.8'/><ellipse cx='9' cy='5.6' rx='5.6' ry='3.4' fill='url(%23g)'/><path d='M7.4 5.6l3.4 3.4-3.4 3.4' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/17px no-repeat}
+:root[data-design="aero"] .about[open] summary::before{transform:rotate(90deg)}
+:root[data-design="aero"] .about summary:hover{text-decoration:underline}
+
+/* ---- Header: the main window, with the app's name on a tinted glass band ---- */
+:root[data-design="aero"] header#top{gap:10px;padding:0 20px 16px;margin-top:4px}
+:root[data-design="aero"] .hdrbar{position:relative;overflow:hidden;margin:0 -20px;padding:20px 20px 16px;gap:16px;border:0;border-bottom:1px solid rgb(90 160 210/.5);border-radius:15px 15px 0 0;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 160' preserveAspectRatio='none'><defs><linearGradient id='a' x1='0' x2='1'><stop offset='0' stop-color='%23fff' stop-opacity='0'/><stop offset='.6' stop-color='%23fff' stop-opacity='.9'/><stop offset='1' stop-color='%23fff' stop-opacity='.15'/></linearGradient><linearGradient id='b' x1='0' x2='1'><stop offset='.15' stop-color='%23b8ff6a' stop-opacity='0'/><stop offset='.75' stop-color='%23b8ff6a' stop-opacity='.42'/><stop offset='1' stop-color='%2350e6ff' stop-opacity='.35'/></linearGradient></defs><path d='M170 170C420 150 600 88 820 16V64C620 122 440 162 250 182Z' fill='url(%23b)'/><g fill='none' stroke='url(%23a)'><path d='M110 176C380 150 600 78 820 4' stroke-width='1.6'/><path d='M200 178C440 152 620 94 820 28' stroke-width='.8'/><path d='M260 184C480 160 650 108 820 50' stroke-width='1.2' stroke-opacity='.6'/></g></svg>") right bottom/78% 100% no-repeat,
+    linear-gradient(180deg,rgb(198 237 255/.95) 0%,rgb(156 218 249/.88) 47%,rgb(118 199 241/.84) 50%,rgb(170 225 250/.8) 100%);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.95),inset 0 -1px 0 rgb(255 255 255/.4)}
+:root[data-design="aero"] .topbar,:root[data-design="aero"] .topbar{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo name";gap:0 18px;padding-bottom:18px}
+/* The app's picture behind a glass bezel, with the gloss laid over its top half */
+:root[data-design="aero"] .logo{grid-area:logo;width:88px;height:88px;border-radius:22px;box-shadow:0 0 0 3px rgb(255 255 255/.92),0 0 0 4px rgb(10 90 150/.32),0 10px 20px -6px rgb(0 40 90/.55)}
+:root[data-design="aero"] .topbar::before{content:"";grid-area:logo;align-self:start;z-index:1;width:88px;height:46px;border-radius:22px 22px 50% 50%/22px 22px 16px 16px;pointer-events:none;
+  background:linear-gradient(180deg,rgb(255 255 255/.7),rgb(255 255 255/.08))}
+/* The name: light and semibold Segoe in navy with the white glow behind Vista's window titles, and a reflection */
+:root[data-design="aero"] .brand{align-self:center;font:300 2.9rem/1.05 var(--body);letter-spacing:-.015em;text-transform:none;color:#08345a;
+  text-shadow:0 0 14px rgb(255 255 255/.95),0 0 4px rgb(255 255 255/.9);-webkit-box-reflect:below 1px linear-gradient(transparent 64%,rgb(255 255 255/.26))}
+:root[data-design="aero"] .brand>span{display:inline}
+:root[data-design="aero"] .brand>span+span{font-weight:600;color:#0a6cb4}
+:root[data-design="aero"] .toolbar{gap:10px}
+:root[data-design="aero"] .finder .searchbox,:root[data-design="aero"].scenic .finder .searchbox{background:none}
+:root[data-design="aero"] .loctitle{font-size:2.6rem;margin-top:6px}
+:root[data-design="aero"] .loctitle select{font:300 1em/1.2 var(--body);color:#0a3558;padding:0 46px 2px 2px;border-radius:12px;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><defs><radialGradient id='o' cx='.5' cy='.36' r='.68'><stop offset='0' stop-color='%23d8f7ff'/><stop offset='.45' stop-color='%2346bff0'/><stop offset='1' stop-color='%230a64b0'/></radialGradient><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.9'/><stop offset='1' stop-color='%23fff' stop-opacity='0'/></linearGradient></defs><circle cx='15' cy='15' r='13.5' fill='url(%23o)' stroke='%23085a9e'/><ellipse cx='15' cy='9.2' rx='9' ry='5.4' fill='url(%23g)'/><path d='M10 13.2l5 5 5-5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 4px center/32px 32px}
+:root[data-design="aero"] .loctitle select:hover{background-color:rgb(255 255 255/.55);box-shadow:0 0 0 1px rgb(110 190 240/.5),0 0 14px rgb(80 190 245/.35)}
+:root[data-design="aero"] .loctitle option,:root[data-design="aero"] .loctitle optgroup{font:400 1rem var(--body)}
+:root[data-design="aero"] .sub{margin-top:-4px;color:var(--muted)}
+:root[data-design="aero"] .sub .place .ui{color:var(--accent)}
+@media (max-width:700px){
+  :root[data-design="aero"] header#top{padding:0 14px 14px}
+  :root[data-design="aero"] .hdrbar{margin:0 -14px;padding:14px 14px 14px;gap:12px}
+  :root[data-design="aero"] .topbar{gap:0 14px;padding-bottom:8px}
+  :root[data-design="aero"] .logo{width:60px;height:60px;border-radius:16px}
+  :root[data-design="aero"] .topbar::before{width:60px;height:32px;border-radius:16px 16px 50% 50%/16px 16px 12px 12px}
+  :root[data-design="aero"] .brand{font-size:clamp(1.55rem,7.6vw,2.4rem);line-height:1.02}
+  :root[data-design="aero"] .brand>span{display:block}
+  :root[data-design="aero"] .loctitle{font-size:2.05rem}
+}
+
+/* ---- Buttons: Windows 7 gel; the main action in each place is an aqua gel, adding a stop a lime one ---- */
+:root[data-design="aero"] .btn,:root[data-design="aero"] .toolbar .btn{border:1px solid #98b9d1;border-radius:9px;background:var(--ae-btn);color:#123a58;font:600 .9rem var(--body);
+  text-shadow:0 1px 0 rgb(255 255 255/.75);box-shadow:inset 0 1px 0 #fff,0 1px 2px rgb(0 50 100/.15)}
+:root[data-design="aero"] .btn .ui{color:#0a78c0}
+:root[data-design="aero"] :is(.btn,.toolbar .btn):hover{border-color:#3c9fd6;background:var(--ae-btn-h);box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgb(255 255 255/.6),0 0 10px rgb(60 175 235/.45)}
+:root[data-design="aero"] :is(.btn,.toolbar .btn):active{background:linear-gradient(180deg,#c6e2f4,#e0f0fa);box-shadow:inset 0 2px 3px rgb(0 50 100/.25)}
+:root[data-design="aero"] :is(.btn,.toolbar .btn):disabled{opacity:.55;box-shadow:none}
+:root[data-design="aero"] :is(#refresh,#scrapeBtn,#tripNew){border-color:#0b72b5;background:var(--ae-aqua);color:#fff;text-shadow:0 -1px 0 rgb(0 50 100/.45);box-shadow:var(--ae-aqua-sh)}
+:root[data-design="aero"] :is(#refresh,#scrapeBtn,#tripNew) .ui{color:#fff}
+:root[data-design="aero"] :is(#refresh,#scrapeBtn,#tripNew):hover{border-color:#0a64a6;background:linear-gradient(180deg,#c9f2ff 0%,#6fd2f8 46%,#21aaea 52%,#47c4f4 100%);box-shadow:var(--ae-aqua-sh),0 0 12px rgb(40 190 255/.65)}
+:root[data-design="aero"] #tsSave{border-color:#5f9c14;background:var(--ae-lime);color:#1d3d00;text-shadow:0 1px 0 rgb(255 255 255/.55);box-shadow:var(--ae-lime-sh)}
+:root[data-design="aero"] #tsSave:hover{border-color:#4f8a0c;background:linear-gradient(180deg,#f6ffd8 0%,#c4f070 46%,#93d82e 52%,#b0e450 100%);box-shadow:var(--ae-lime-sh),0 0 12px rgb(150 230 40/.6)}
+:root[data-design="aero"] #saveBtn[aria-pressed="true"]{border-color:#d29a1c;color:#6e4600}
+:root[data-design="aero"] #saveBtn[aria-pressed="true"] .ui{color:#f0a400}
+/* Back and forward: round aqua orbs, as in Vista's Explorer */
+:root[data-design="aero"] .hnav .btn,:root[data-design="aero"] #rplay{width:34px;height:34px;min-width:0;padding:0;justify-content:center;border-radius:50%;border:1px solid #06508f;background:var(--ae-orb);color:#fff;
+  font:700 1.35rem/1 var(--body);text-shadow:0 1px 2px rgb(0 40 90/.6);box-shadow:inset 0 0 0 1px rgb(255 255 255/.3),0 2px 4px -1px rgb(0 50 100/.45)}
+:root[data-design="aero"] #rplay{width:40px;height:40px}
+:root[data-design="aero"] #rplay .ui{color:#fff;width:17px;height:17px}
+:root[data-design="aero"] :is(.hnav .btn,#rplay):hover:not(:disabled){border-color:#06508f;background:var(--ae-orb);box-shadow:inset 0 0 0 1px rgb(255 255 255/.4),0 0 0 3px rgb(120 215 255/.35),0 0 14px rgb(40 190 255/.75)}
+:root[data-design="aero"] :is(.hnav .btn,#rplay):disabled{filter:grayscale(1);opacity:.45}
+:root[data-design="aero"] .hnav{gap:8px}
+/* Phones: Refresh shrinks to an orb, so the search box keeps its room */
+@media (max-width:560px){
+  :root[data-design="aero"] #refresh{width:42px;height:42px;padding:0;justify-content:center;gap:0;font-size:0;border-radius:50%;border-color:#06508f;background:var(--ae-orb);box-shadow:inset 0 0 0 1px rgb(255 255 255/.3),0 2px 5px -1px rgb(0 50 100/.45)}
+  :root[data-design="aero"] #refresh .ui{width:19px;height:19px}
+  :root[data-design="aero"] .toolbar #sceneBtn{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}
+}
+
+/* ---- Segmented choices: a sunken glass track with the chosen one as an aqua gel ---- */
+:root[data-design="aero"] :is(.seg,.scoreseg,.hview){padding:2px;gap:2px;border:1px solid #a7c4d9;border-radius:999px;overflow:visible;background:linear-gradient(180deg,#e2edf5,#f8fbfd);box-shadow:inset 0 1px 2px rgb(0 50 90/.2),0 1px 0 rgb(255 255 255/.9)}
+:root[data-design="aero"] :is(.seg,.scoreseg,.hview) button{border:1px solid transparent;border-radius:999px;background:none;color:#2b4f6a;font:600 .84rem var(--body);padding:5px 13px}
+:root[data-design="aero"] :is(.seg,.scoreseg,.hview) button:hover{background:rgb(255 255 255/.75);border-color:rgb(140 200 240/.7)}
+:root[data-design="aero"] :is(.seg,.scoreseg,.hview) button[aria-pressed="true"]{color:#fff;border-color:#0b72b5;background:var(--ae-aqua);box-shadow:var(--ae-aqua-sh);text-shadow:0 -1px 0 rgb(0 50 100/.45)}
+/* Separate choice pills: the waters' tide and boating tabs, the phone's quick jumps */
+:root[data-design="aero"] :is(.ttabs button,.wtabs button,.jump a,.pill){border:1px solid #a9c6da;background:var(--ae-btn);color:#173f5e;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgb(0 50 100/.12)}
+:root[data-design="aero"] :is(.ttabs button,.wtabs button,.jump a):hover{border-color:#3c9fd6;background:var(--ae-btn-h)}
+:root[data-design="aero"] :is(.ttabs button[aria-pressed="true"],.wtabs button[aria-selected="true"]){color:#fff;border-color:#0b72b5;background:var(--ae-aqua);box-shadow:var(--ae-aqua-sh);text-shadow:0 -1px 0 rgb(0 50 100/.45)}
+:root[data-design="aero"] .pill b{color:#0a6cb4}
+
+/* ---- Fields: the white, softly sunken boxes of Windows 7, glowing aqua when in use ---- */
+:root[data-design="aero"] :is(.finder input,.trip select,.trip input){border:1px solid #a3bfd4;border-top-color:#86a6be;background:linear-gradient(180deg,#f3f8fb,#fff 45%);color:var(--fg);
+  box-shadow:inset 0 1px 2px rgb(0 40 80/.12),0 1px 0 rgb(255 255 255/.8)}
+:root[data-design="aero"] .toolbar input{border-radius:999px;background:linear-gradient(180deg,#f3f8fb,#fff 45%);border-color:#a3bfd4;box-shadow:inset 0 1px 2px rgb(0 40 80/.14),0 1px 0 rgb(255 255 255/.8)}
+:root[data-design="aero"] :is(.finder input,.trip select,.trip input,.toolbar input):focus-visible{outline:none;border-color:#2f9be0;box-shadow:inset 0 1px 2px rgb(0 40 80/.1),0 0 0 3px rgb(60 170 235/.22),0 0 12px rgb(60 170 235/.4)}
+:root[data-design="aero"] .trip select{appearance:none;-webkit-appearance:none;padding-right:30px;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%230a6fb5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 11px center/12px 8px,linear-gradient(180deg,#f3f8fb,#fff 45%)}
+:root[data-design="aero"] .tfield label{color:#2b4f6a}
+:root[data-design="aero"] .searchbox .sgo{color:#0a78c0}
+:root[data-design="aero"] .finder .note,:root[data-design="aero"] .results{border:1px solid #9fc0d8;border-radius:10px;background:linear-gradient(180deg,#fff,#f4fafd);box-shadow:0 10px 26px -6px rgb(0 40 90/.4),inset 0 1px 0 #fff}
+:root[data-design="aero"] .results li+li{border-top-color:#e1edf5}
+:root[data-design="aero"] .results button{border-radius:6px}
+:root[data-design="aero"] .results button:hover,:root[data-design="aero"] .results button:focus-visible{background:var(--ae-sel);box-shadow:inset 0 0 0 1px #8ccaf0}
+:root[data-design="aero"] .results button span{font-family:var(--body)}
+
+/* ---- Tiles: days, the weather sites, the waters, the sites' status: white gel with a soft gloss ---- */
+:root[data-design="aero"] :is(.day,.card,.brow,.sites>div,.hours>div,.hc,.tnext div,.water,.tcard,.scoreempty){border:1px solid #bcd6e8;background:var(--ae-tile);box-shadow:var(--ae-tile-sh)}
+:root[data-design="aero"] .water{background:linear-gradient(180deg,rgb(255 255 255/.55),rgb(240 249 255/.45));box-shadow:inset 0 1px 0 #fff}
+:root[data-design="aero"] :is(.day,.brow):hover{border-color:#6fbfea;box-shadow:var(--ae-tile-sh),0 0 0 3px rgb(90 190 240/.18)}
+:root[data-design="aero"] .day[aria-pressed="true"],:root[data-design="aero"].scenic .day[aria-pressed="true"]{border-color:#3aa3e0;background:linear-gradient(180deg,#f0faff 0%,#d9f1fd 47%,#c2e7fb 52%,#def3fe 100%);
+  box-shadow:inset 0 1px 0 #fff,0 0 0 2px rgb(58 163 224/.35),0 0 14px rgb(60 200 255/.45)}
+:root[data-design="aero"] .day .dname{font:600 1.02rem/1 var(--body);color:#0b3a62}
+:root[data-design="aero"] .day .dtemps{font:400 1rem/1 var(--body)}
+:root[data-design="aero"] .day .dtemps b{font-weight:600;font-size:1.4rem}
+:root[data-design="aero"] .day .ens{border-top-color:#cfe1ee}
+:root[data-design="aero"] .card::before{height:4px;background:linear-gradient(180deg,rgb(255 255 255/.55),rgb(255 255 255/0)),var(--c,#9fc3db)}
+:root[data-design="aero"] .card .cn{font:600 1.02rem/1.15 var(--body);color:#0b3a62}
+:root[data-design="aero"] .card .ct{font:300 1.75rem/1.1 var(--body)}
+:root[data-design="aero"] .card .ct span{font-weight:400}
+:root[data-design="aero"] .card.alert,:root[data-design="aero"].scenic .card.alert{border-color:#e0a43a}
+:root[data-design="aero"] .brow{border-left:5px solid var(--c,#bcd6e8)}
+:root[data-design="aero"] .brow .bn{font:600 1.02rem/1.3 var(--body);color:#0b3a62}
+:root[data-design="aero"] .tbar{background:#dbe8f1;box-shadow:inset 0 1px 1px rgb(0 40 80/.12)}
+:root[data-design="aero"] .tbar i{background:linear-gradient(180deg,rgb(255 255 255/.45),rgb(255 255 255/0) 60%),linear-gradient(90deg,var(--cool),var(--warm))}
+/* Calm, choppy and rough: tinted gel lozenges */
+:root[data-design="aero"] .rate{border:1px solid;border-radius:999px;font:600 1.1rem/1.4 var(--body);box-shadow:inset 0 1px 0 rgb(255 255 255/.85),0 1px 2px rgb(0 50 100/.15)}
+:root[data-design="aero"] .rate.sm{font-size:.86rem}
+:root[data-design="aero"] .rate.calm{color:#245f0c;border-color:#8fcf5a;background:linear-gradient(180deg,#f6ffe9 0%,#ddf6bb 47%,#c8ed92 52%,#e1f8c6 100%)}
+:root[data-design="aero"] .rate.choppy{color:#7a4600;border-color:#e2b45a;background:linear-gradient(180deg,#fffaf0 0%,#ffeabc 47%,#ffda8c 52%,#ffedc6 100%)}
+:root[data-design="aero"] .rate.rough{color:#8e1a12;border-color:#ec9a8e;background:linear-gradient(180deg,#fff5f3 0%,#ffdad4 47%,#ffc3b9 52%,#ffdcd6 100%)}
+:root[data-design="aero"] .kind{font:600 .66rem/1 var(--body);letter-spacing:.06em;color:#0a5f9c;background:linear-gradient(180deg,#f2fbff,#d4eefc);border:1px solid #a9d3ee}
+:root[data-design="aero"] :is(.warns,.netnote,.error){border:1px solid #e3b257;border-left-width:5px;border-radius:12px;background:linear-gradient(180deg,#fffdf6,#fff5df);box-shadow:var(--ae-tile-sh)}
+:root[data-design="aero"] .error{border-color:#e39a90;background:linear-gradient(180deg,#fff8f7,#ffe9e6)}
+:root[data-design="aero"] .netnote{margin:0}
+
+/* ---- Right now: a glossy weather gadget, as on the Vista sidebar; its colour follows the sky ---- */
+:root[data-design="aero"] .now{--fg:#fff;--muted:rgb(226 242 255/.88);--line:rgb(255 255 255/.26);--bad:#ffc4ba;--warn:#ffe08a;--storm:#e4d6ff;--rain:#cdeeff;--rainbar:#cdeeff;--good:#c9f59a;
+  --ae-now:linear-gradient(165deg,#3c97d6 0%,#1d6fb0 55%,#155c98 100%);
+  position:relative;overflow:hidden;color:#fff;border:1px solid rgb(0 50 110/.55);border-radius:14px;background:var(--ae-now);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.6),inset 0 0 0 1px rgb(255 255 255/.16),0 8px 18px -6px rgb(0 40 90/.55)}
+:root[data-design="aero"] .now[data-sky="sun"]{--ae-now:linear-gradient(165deg,#2aa2ee 0%,#127ed4 50%,#0b62b4 100%)}
+:root[data-design="aero"] .now[data-sky="rain"]{--ae-now:linear-gradient(165deg,#5b8eae 0%,#3a6b8d 55%,#2a5574 100%)}
+:root[data-design="aero"] .now[data-sky="storm"]{--ae-now:linear-gradient(165deg,#5a5f98 0%,#393d74 55%,#262a57 100%)}
+:root[data-design="aero"] .now[data-sky="night"]{--ae-now:linear-gradient(165deg,#1f4f92 0%,#13336c 55%,#0a1d47 100%)}
+:root[data-design="aero"].scenic .now{background:var(--ae-now)}
+/* The gloss over its top half, and an aurora swoosh in the corner */
+:root[data-design="aero"] .now::before{content:"";position:absolute;left:1px;right:1px;top:1px;height:44%;border-radius:13px 13px 60% 60%/13px 13px 34px 34px;pointer-events:none;
+  background:linear-gradient(180deg,rgb(255 255 255/.34),rgb(255 255 255/.06))}
+:root[data-design="aero"] .now::after{content:"";position:absolute;right:0;bottom:0;width:70%;height:100%;pointer-events:none;opacity:.9;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300' preserveAspectRatio='none'><defs><linearGradient id='a' x1='0' x2='1'><stop offset='0' stop-color='%23fff' stop-opacity='0'/><stop offset='.7' stop-color='%23fff' stop-opacity='.55'/><stop offset='1' stop-color='%23fff' stop-opacity='.1'/></linearGradient><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%2380f2ff' stop-opacity='0'/><stop offset='.7' stop-color='%2380f2ff' stop-opacity='.28'/><stop offset='1' stop-color='%23c6ff80' stop-opacity='.25'/></linearGradient></defs><path d='M0 300C200 280 420 200 600 90V170C440 250 260 300 120 320Z' fill='url(%23b)'/><g fill='none' stroke='url(%23a)'><path d='M40 304C240 282 440 196 600 100' stroke-width='1.4'/><path d='M100 308C290 286 470 214 600 136' stroke-width='.8'/></g></svg>") right bottom/100% 100% no-repeat}
+:root[data-design="aero"] .now>*{position:relative;z-index:1}
+:root[data-design="aero"] .now .temp{font:300 5.7rem/.86 var(--body);letter-spacing:-.03em;text-shadow:0 2px 8px rgb(0 30 70/.35)}
+:root[data-design="aero"] .now .temp small{font-weight:300}
+:root[data-design="aero"] .now .cond{font:600 1.75rem/1.1 var(--body);text-shadow:0 1px 3px rgb(0 30 70/.35)}
+:root[data-design="aero"] .now .nowdate{font:600 .8rem/1.3 var(--body)}
+:root[data-design="aero"] .now .story{text-shadow:0 1px 2px rgb(0 30 70/.3)}
+:root[data-design="aero"] .stats dd{font:400 1.3rem/1.15 var(--body)}
+:root[data-design="aero"] .now .wx{filter:drop-shadow(0 4px 6px rgb(0 30 70/.35))}
+:root[data-design="aero"] .uvscale{box-shadow:0 0 0 1px rgb(255 255 255/.25)}
+
+/* ---- Weather pictures: lit from the top left, so they look glossy and round ---- */
+:root[data-design="aero"] .wx .wxg{filter:url(#aeGloss)}
+
+/* ---- Wells inside the windows: charts, the radar, tides, the trip ---- */
+:root[data-design="aero"] .hbox{border:1px solid rgb(150 195 225/.65);border-radius:12px;background:rgb(255 255 255/.66);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgb(255 255 255/.35)}
+:root[data-design="aero"] .chartcard{gap:14px}
+:root[data-design="aero"] #chart text{font-family:var(--body)}
+:root[data-design="aero"] .hdays button{border:1px solid #a9c8dc;box-shadow:inset 0 1px 0 rgb(255 255 255/.9),0 1px 2px rgb(0 50 100/.12);background-image:linear-gradient(180deg,rgb(255 255 255/.7),rgb(255 255 255/.15) 50%,rgb(255 255 255/0) 52%)}
+:root[data-design="aero"] .hdays button:hover{border-color:#3c9fd6;box-shadow:inset 0 1px 0 #fff,0 0 8px rgb(60 175 235/.45)}
+:root[data-design="aero"] .hdays button.on{color:#fff;border-color:#0b72b5;background:var(--ae-aqua);box-shadow:var(--ae-aqua-sh);text-shadow:0 -1px 0 rgb(0 50 100/.4)}
+:root[data-design="aero"] .hc{background-image:linear-gradient(180deg,rgb(255 255 255/.75),rgb(255 255 255/.1) 48%,rgb(255 255 255/0) 50%)}
+:root[data-design="aero"] .hc .t{font:600 1.05rem var(--body)}
+:root[data-design="aero"] .hc.now{outline-color:#1aa0e6}
+:root[data-design="aero"] .hsep{box-shadow:inset 0 1px 0 rgb(255 255 255/.8)}
+:root[data-design="aero"] .hsep span{font:600 .85rem var(--body);color:#0b3a62}
+:root[data-design="aero"] .hchart .dl{font:600 13px var(--body)}
+:root[data-design="aero"] .tnow .tarr,:root[data-design="aero"] .dnow .dicon{background:radial-gradient(ellipse 70% 45% at 50% 22%,rgb(255 255 255/.85),rgb(255 255 255/0) 72%),color-mix(in srgb,var(--c,var(--rain)) 22%,#fff);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c,var(--rain)) 45%,transparent),0 2px 5px -1px rgb(0 50 100/.3)}
+:root[data-design="aero"] .tnow .tst,:root[data-design="aero"] .twx .tt{font-family:var(--body);font-weight:300}
+:root[data-design="aero"] .dnow .dverd{font-family:var(--body);font-weight:600}
+:root[data-design="aero"] .tnow .tst{font-size:1.8rem}
+:root[data-design="aero"] .tnext b{font:600 1.02rem var(--body)}
+:root[data-design="aero"] .tlaunch{border-color:#9fd36b;background:linear-gradient(180deg,#f7ffee,#e6f8d0);box-shadow:inset 0 1px 0 #fff}
+:root[data-design="aero"] .tlaunch.none{border-color:#cfe0ec;background:rgb(255 255 255/.5)}
+:root[data-design="aero"] :is(.trow.on,.dweek button[aria-pressed="true"]){background:var(--ae-sel);box-shadow:inset 0 0 0 1px #8ccaf0;border-radius:8px}
+:root[data-design="aero"] .tweek .tdn,:root[data-design="aero"] .dweek .dd{font:600 1rem var(--body);color:#0b3a62}
+:root[data-design="aero"] .dweek .dw span{border:1px solid #a7d97a;background:linear-gradient(180deg,#f6ffe9,#dcf5bd)}
+:root[data-design="aero"] .tip{border:1px solid #8fb8d6;border-radius:8px;background:linear-gradient(180deg,#ffffff,#eef7fc);box-shadow:0 6px 18px -4px rgb(0 40 90/.35),inset 0 1px 0 #fff}
+:root[data-design="aero"] .tip .tc{color:#0a6cb4}
+:root[data-design="aero"] .legend,:root[data-design="aero"] .hlegend,:root[data-design="aero"] .dlegend{color:var(--muted)}
+
+/* ---- Tables: a white list with Windows 7's glossy column headings ---- */
+:root[data-design="aero"] .tablebox{border:1px solid #b2cfe4;border-radius:12px;background:rgb(255 255 255/.92);box-shadow:inset 0 1px 0 #fff,0 2px 8px -3px rgb(0 60 110/.25)}
+:root[data-design="aero"] .tablebox th,:root[data-design="aero"].scenic .tablebox th{background:linear-gradient(180deg,#fdfeff 0%,#eef6fb 47%,#e0edf6 52%,#ebf4fa 100%);color:#24506f;font:600 .74rem/1.2 var(--body);letter-spacing:.01em;text-transform:none;border-bottom:1px solid #b9d3e5}
+:root[data-design="aero"] .tablebox th+th{box-shadow:inset 1px 0 0 rgb(255 255 255/.9),inset 2px 0 0 #dbe8f2}
+:root[data-design="aero"] .tablebox td{border-bottom-color:#e2edf5}
+:root[data-design="aero"] .tablebox td:first-child,:root[data-design="aero"].scenic .tablebox td:first-child{background:#fbfdff}
+:root[data-design="aero"].scenic .tablebox :is(th,td):first-child{background-clip:padding-box}
+:root[data-design="aero"] .tablebox tr.official td,:root[data-design="aero"].scenic .tablebox tr.official td{background:#e9f4fb}
+:root[data-design="aero"] .tablebox tr.median td,:root[data-design="aero"].scenic .tablebox tr.median td{background:linear-gradient(180deg,#eefaff,#d9f0fc)}
+:root[data-design="aero"] .tablebox tr.median td:first-child{font:700 .95rem var(--body);color:#0b3a62}
+:root[data-design="aero"] .tablebox tr.sep td,:root[data-design="aero"].scenic .tablebox tr.sep td{background:#f2f8fc;color:#4b6a80;font:600 .7rem/1.2 var(--body);letter-spacing:.04em}
+:root[data-design="aero"] .tablebox tbody tr:not(.sep):hover td{background:var(--ae-sel)}
+:root[data-design="aero"] td{font:400 1.02rem var(--body)}
+:root[data-design="aero"] td .msrc{font-family:var(--body)}
+:root[data-design="aero"] table.score .sbar{background:#dbe8f1;box-shadow:inset 0 1px 1px rgb(0 40 80/.12)}
+:root[data-design="aero"] table.score .sbar i{background:linear-gradient(180deg,#8fdcff,#129ce0)}
+:root[data-design="aero"] table.score tr.top .sbar i{background:linear-gradient(180deg,#d4ff8a,#6cbf1e)}
+
+/* ---- Rain radar: the map behind a glass bezel, with a glossy slider ---- */
+:root[data-design="aero"] .rwrap{border:1px solid #86aecb;border-radius:12px;box-shadow:0 0 0 3px rgb(255 255 255/.8),0 0 0 4px rgb(16 84 140/.18),0 6px 16px -6px rgb(0 40 90/.4)}
+:root[data-design="aero"] .rchip{font:600 .8rem/1.3 var(--body);color:#0b3a62;border:1px solid rgb(255 255 255/.9);background:linear-gradient(180deg,rgb(255 255 255/.94),rgb(226 243 253/.9));box-shadow:0 0 0 1px rgb(16 84 140/.25),0 3px 8px -2px rgb(0 40 90/.35)}
+:root[data-design="aero"] .rchip.fc{color:#8a4f00}
+:root[data-design="aero"] #rmap .leaflet-bar{border:1px solid #86aecb;border-radius:9px;overflow:hidden;box-shadow:0 2px 6px -1px rgb(0 40 90/.35)}
+:root[data-design="aero"] #rmap .leaflet-bar a{background:var(--ae-btn);color:#0b3a62;border-bottom-color:#c5dbe9}
+:root[data-design="aero"] #rmap .leaflet-bar a:hover{background:var(--ae-btn-h)}
+:root[data-design="aero"] .rbar{gap:12px}
+:root[data-design="aero"] .rbar input[type="range"]{-webkit-appearance:none;appearance:none;height:24px;background:none}
+:root[data-design="aero"] .rbar input[type="range"]::-webkit-slider-runnable-track{height:8px;border-radius:999px;border:1px solid #9bbad0;background:linear-gradient(180deg,#cfe0ec,#f2f8fb);box-shadow:inset 0 1px 2px rgb(0 40 80/.25)}
+:root[data-design="aero"] .rbar input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-8px;border-radius:50%;border:1px solid #06508f;background:var(--ae-orb);box-shadow:0 1px 3px rgb(0 50 100/.45)}
+:root[data-design="aero"] .rbar input[type="range"]::-moz-range-track{height:8px;border-radius:999px;border:1px solid #9bbad0;background:linear-gradient(180deg,#cfe0ec,#f2f8fb)}
+:root[data-design="aero"] .rbar input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;border:1px solid #06508f;background:var(--ae-orb)}
+:root[data-design="aero"] .rbar input[type="range"]:disabled{opacity:.5}
+:root[data-design="aero"] .rlinks .btn .ui:last-child{color:#5d7f97}
+
+/* ---- Trip planner: the timeline's stops are glossy beads on an aqua thread ---- */
+:root[data-design="aero"] .tstop::before{background:linear-gradient(180deg,#7fd4f7,#bfe6f8)}
+:root[data-design="aero"] .tstop::after{background:radial-gradient(circle at 50% 30%,rgb(255 255 255/.9) 0 14%,rgb(255 255 255/0) 46%),var(--c);box-shadow:0 0 0 2px #fff,0 0 0 3px rgb(16 84 140/.25),0 2px 4px rgb(0 40 90/.35)}
+:root[data-design="aero"] .tcard{border-left:5px solid var(--c)}
+:root[data-design="aero"] .tcard h3,:root[data-design="aero"] .tripform h3,:root[data-design="aero"] .whd h3{font:600 1.1rem/1.2 var(--body);color:#0b3a62}
+:root[data-design="aero"] .twhen b{font:600 1.05rem var(--body)}
+:root[data-design="aero"] .tripform{border-top:1px solid #cfe1ee}
+:root[data-design="aero"] .tacts .btn{box-shadow:inset 0 1px 0 #fff}
+
+/* ---- Sites status, footer ---- */
+:root[data-design="aero"] .sites .sn i{box-shadow:inset 0 1px 1px rgb(255 255 255/.8),0 0 0 1px rgb(0 0 0/.12)}
+:root[data-design="aero"] footer{padding:16px 20px;border-top:1px solid rgb(255 255 255/.92);color:var(--muted)}
+
+/* ---- The slim bar once the header has scrolled away, and the phone's quick jumps: glass ---- */
+:root[data-design="aero"] .stick,:root[data-design="aero"].scenic .stick{border:1px solid rgb(255 255 255/.92);border-radius:14px;background:linear-gradient(180deg,rgb(255 255 255/.94),rgb(226 244 254/.9));
+  box-shadow:0 0 0 1px rgb(16 84 140/.25),0 10px 26px -8px rgb(0 45 100/.5),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6)}
+:root[data-design="aero"] .stick b{font:600 1.1rem var(--body);color:#0b3a62}
+:root[data-design="aero"] .stick .st{font:300 1.4rem var(--body)}
+:root[data-design="aero"] .stick img{box-shadow:0 0 0 2px #fff,0 0 0 3px rgb(16 84 140/.25)}
+@media (max-width:700px){
+  :root[data-design="aero"] .jump,:root[data-design="aero"].scenic .jump{margin:-8px -16px -6px;border:0;border-bottom:1px solid rgb(110 172 214/.5);
+    background:linear-gradient(180deg,rgb(238 249 255/.9),rgb(214 238 252/.84));box-shadow:0 6px 14px -8px rgb(0 50 100/.45),inset 0 1px 0 rgb(255 255 255/.9);
+    -webkit-backdrop-filter:blur(12px) saturate(1.5);backdrop-filter:blur(12px) saturate(1.5)}
+  :root[data-design="aero"] .jump a{padding:5px 13px}
+  :root[data-design="aero"] h2{scroll-margin-top:60px}
+}
+
+/* ---- Design switcher: a glass pill with an aqua orb (just the orb on phones, like Vista's Start button) ---- */
+:root[data-design="aero"] .dsw-btn{height:42px;padding:0 16px 0 4px;gap:9px;border:1px solid rgb(255 255 255/.92);border-radius:999px;color:#0b3a62;font:600 .86rem var(--body);
+  background:linear-gradient(180deg,rgb(255 255 255/.92),rgb(225 243 253/.86));box-shadow:0 0 0 1px rgb(16 84 140/.3),0 8px 20px -6px rgb(0 40 90/.5),inset 0 1px 0 #fff;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+:root[data-design="aero"] .dsw-btn .dsw-ic{width:32px;height:32px;padding:7px;border-radius:50%;color:#fff;background:var(--ae-orb);box-shadow:inset 0 0 0 1px rgb(255 255 255/.3),0 0 0 1px rgb(6 70 130/.6),0 2px 4px -1px rgb(0 40 90/.45)}
+:root[data-design="aero"] .dsw-btn:hover,:root[data-design="aero"] .dsw-btn[aria-expanded="true"]{border-color:rgb(255 255 255/.92);box-shadow:0 0 0 1px rgb(16 84 140/.35),0 0 18px rgb(70 200 255/.6),0 8px 20px -6px rgb(0 40 90/.5),inset 0 1px 0 #fff}
+:root[data-design="aero"] .dsw-btn:hover .dsw-ic,:root[data-design="aero"] .dsw-btn[aria-expanded="true"] .dsw-ic{box-shadow:inset 0 0 0 1px rgb(255 255 255/.4),0 0 0 1px rgb(6 70 130/.6),0 0 12px rgb(60 210 255/.95)}
+:root[data-design="aero"] .dsw-menu{min-width:244px;padding:6px;border:1px solid rgb(255 255 255/.92);border-radius:12px;background:linear-gradient(180deg,rgb(255 255 255/.93),rgb(238 248 255/.9));
+  box-shadow:0 0 0 1px rgb(16 84 140/.3),0 16px 40px -10px rgb(0 40 90/.55),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6)}
+:root[data-design="aero"] .dsw-menu [role^="menuitem"]{border-radius:6px;padding:8px 12px 8px 32px;color:#0e2c44;font:400 .92rem/1.3 var(--body)}
+:root[data-design="aero"] .dsw-menu [role^="menuitem"]:hover,:root[data-design="aero"] .dsw-menu [role^="menuitem"]:focus{background:var(--ae-sel);box-shadow:inset 0 0 0 1px #8ccaf0,inset 0 1px 0 #fff}
+:root[data-design="aero"] .dsw-menu [role^="menuitem"]:focus-visible{box-shadow:inset 0 0 0 2px #2f9be0}
+:root[data-design="aero"] .dsw-menu [aria-checked="true"]{font-weight:600;color:#0b3a62}
+:root[data-design="aero"] .dsw-menu [aria-checked="true"]::before{left:11px;width:11px;height:11px;margin-top:-5.5px;background:var(--ae-orb);box-shadow:0 0 0 1px rgb(6 70 130/.5),0 0 6px rgb(60 200 255/.6)}
+:root[data-design="aero"] .dsw-sep{background:linear-gradient(90deg,transparent,#b9d6ea 20%,#b9d6ea 80%,transparent);box-shadow:0 1px 0 #fff}
+:root[data-design="aero"] .dsw-h{font:600 .7rem/1.3 var(--body);letter-spacing:.05em;color:#5d7f97}
+@media (max-width:560px){
+  :root[data-design="aero"] .dsw-btn{width:48px;height:48px;padding:0;border:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  :root[data-design="aero"] .dsw-btn .dsw-ic{width:46px;height:46px;padding:12px;box-shadow:inset 0 0 0 1px rgb(255 255 255/.35),0 0 0 1px rgb(6 70 130/.6),0 0 0 3px rgb(255 255 255/.55),0 6px 14px -3px rgb(0 40 90/.55)}
+  :root[data-design="aero"] .dsw-btn:hover,:root[data-design="aero"] .dsw-btn[aria-expanded="true"]{box-shadow:none}
+}
+
+/* ===========================================================================================================
+   The Aero world behind the page (built by aeroScene in the script): sky, sun and lens flare, clouds, an aurora
+   swoosh, the far shore's glass towers, meadows, the waterline and the water below it, and bubbles. Only transforms
+   and opacity move, each on its own layer, so the glass over it doesn't have to be redrawn as it scrolls.
+   =========================================================================================================== */
+:root[data-design="aero"] .scene::after{opacity:0}
+:root[data-design="aero"] .ae{position:absolute;inset:0;overflow:hidden;--sx:79%;--sy:13%;--k:1}
+@media (max-aspect-ratio:4/5){:root[data-design="aero"] .ae{--sx:80%;--sy:7%;--k:.62}}
+:root[data-design="aero"] .ae>*,:root[data-design="aero"] .ae-sea>*{position:absolute}
+:root[data-design="aero"] .ae-sky{inset:0;background:linear-gradient(180deg,#0757c2 0%,#1a83e0 24%,#4fb2f1 44%,#a6e0fb 58%,#e1f7ff 70%)}
+:root[data-design="aero"] .ae[data-mood="wet"] .ae-sky{background:linear-gradient(180deg,#48677e 0%,#6e8ea3 28%,#a2bdcc 52%,#d0e0e8 70%)}
+:root[data-design="aero"] .ae[data-mood="storm"] .ae-sky{background:linear-gradient(180deg,#1c2733 0%,#33475a 34%,#5c7585 58%,#8aa1ad 72%)}
+:root[data-design="aero"] .ae[data-mood="night"] .ae-sky{background:#040a18}
+:root[data-design="aero"] .ae[data-mood="nightwet"] .ae-sky{background:linear-gradient(180deg,#060b14 0%,#0d1a28 38%,#1a2f42 68%)}
+:root[data-design="aero"] .ae .ae-mw{inset:0}
+:root[data-design="aero"] .ae .ae-mw img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+:root[data-design="aero"] .ae-glow{inset:0;background:linear-gradient(180deg,rgb(4 10 24/.35) 0%,transparent 30%,rgb(18 110 140/.3) 56%,rgb(40 180 190/.32) 68%)}
+/* The sun: a white core, a soft halo, slowly turning rays, a lens streak, and flare ghosts on the way to the middle */
+:root[data-design="aero"] .ae-sun{left:var(--sx);top:var(--sy);width:0;height:0}
+:root[data-design="aero"] .ae-sun i{position:absolute;left:0;top:0;border-radius:50%;transform:translate(-50%,-50%)}
+:root[data-design="aero"] .ae-core{width:120px;height:120px;background:radial-gradient(circle,#fff 0 20%,rgb(255 254 238/.96) 28%,rgb(255 246 200/.55) 46%,rgb(255 240 180/0) 70%)}
+:root[data-design="aero"] .ae-halo{width:560px;height:560px;background:radial-gradient(circle,rgb(255 255 240/.6) 0,rgb(210 242 255/.28) 28%,rgb(160 225 255/0) 62%)}
+:root[data-design="aero"] .ae-rays{width:1000px;height:1000px;background:repeating-conic-gradient(from 0deg,rgb(255 255 255/.24) 0deg 1.1deg,rgb(255 255 255/0) 3.2deg 13.4deg);
+  -webkit-mask:radial-gradient(circle,#000 3%,rgb(0 0 0/.45) 16%,transparent 50%);mask:radial-gradient(circle,#000 3%,rgb(0 0 0/.45) 16%,transparent 50%)}
+:root[data-design="aero"] .ae-sun .ae-streak{width:1100px;height:5px;border-radius:50%;background:radial-gradient(ellipse,rgb(255 255 255/.85),rgb(200 240 255/.3) 30%,transparent 70%)}
+:root[data-design="aero"] .ae-ghost{left:calc(var(--sx) + (50% - var(--sx)) * var(--g));top:calc(var(--sy) + (62% - var(--sy)) * var(--g));width:calc(var(--s) * var(--k));height:calc(var(--s) * var(--k));
+  transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,var(--c) 0,rgb(255 255 255/0) 70%);opacity:.55}
+:root[data-design="aero"] .ae-ghost.hex{border-radius:0;clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);background:radial-gradient(circle,rgb(255 255 255/0) 30%,var(--c) 100%);opacity:.35}
+:root[data-design="aero"] .ae .sc-clouds{inset:0}
+:root[data-design="aero"] .ae .ae-aur{inset:0;width:100%;height:100%}
+:root[data-design="aero"] .ae[data-mood="wet"] .ae-aur{opacity:.35}
+:root[data-design="aero"] .ae[data-mood="storm"] .ae-aur{opacity:.18}
+:root[data-design="aero"] .ae:is([data-mood="night"],[data-mood="nightwet"]) .ae-aur{mix-blend-mode:screen}
+:root[data-design="aero"] .ae[data-mood="nightwet"] .ae-aur{opacity:.4}
+/* The far shore and the meadows: a 4:1 strip resting on the waterline; phones see its middle, larger */
+:root[data-design="aero"] .ae .ae-land{left:0;bottom:26%;width:100%;height:auto;aspect-ratio:4/1;overflow:visible}
+@media (max-aspect-ratio:4/5){:root[data-design="aero"] .ae .ae-land{left:-14%;width:224%}}
+:root[data-design="aero"] .ae .ae-surf{left:0;bottom:calc(26% - 18px);width:100%;height:36px}
+/* Below the waterline */
+:root[data-design="aero"] .ae-sea{left:0;right:0;bottom:0;height:26%;overflow:hidden;background:linear-gradient(180deg,rgb(160 232 255/.95) 0%,#3ab5e8 16%,#1290d2 46%,#0a60a6 100%)}
+:root[data-design="aero"] .ae[data-mood="wet"] .ae-sea{background:linear-gradient(180deg,#b3d2de 0%,#679fb8 18%,#33708f 58%,#183f5a 100%)}
+:root[data-design="aero"] .ae[data-mood="storm"] .ae-sea{background:linear-gradient(180deg,#8aa5b3 0%,#4f7286 22%,#284a5f 60%,#0f2636 100%)}
+:root[data-design="aero"] .ae[data-mood="night"] .ae-sea{background:linear-gradient(180deg,#2a7298 0%,#0f4166 22%,#07264a 62%,#021026 100%)}
+:root[data-design="aero"] .ae[data-mood="nightwet"] .ae-sea{background:linear-gradient(180deg,#22506c 0%,#123651 24%,#0a2238 62%,#030f1d 100%)}
+:root[data-design="aero"] .ae-caus{top:0;bottom:0;left:0;width:calc(100% + var(--tw));background-repeat:repeat;background-size:var(--tw) auto;opacity:.42;
+  -webkit-mask:linear-gradient(180deg,#000,rgb(0 0 0/.55) 60%,rgb(0 0 0/.15));mask:linear-gradient(180deg,#000,rgb(0 0 0/.55) 60%,rgb(0 0 0/.15))}
+:root[data-design="aero"] .ae-caus.b{opacity:.26}
+:root[data-design="aero"] .ae:is([data-mood="night"],[data-mood="nightwet"]) .ae-caus{opacity:.16}
+:root[data-design="aero"] .ae:is([data-mood="wet"],[data-mood="storm"]) .ae-caus{opacity:.22}
+:root[data-design="aero"] .ae-beams{inset:0;background:repeating-linear-gradient(104deg,rgb(255 255 255/0) 0 70px,rgb(255 255 255/.11) 70px 100px,rgb(255 255 255/0) 100px 190px,rgb(255 255 255/.07) 190px 250px,rgb(255 255 255/0) 250px 340px);
+  -webkit-mask:linear-gradient(180deg,#000,transparent 88%);mask:linear-gradient(180deg,#000,transparent 88%)}
+:root[data-design="aero"] .ae .ae-weed{bottom:-4px;width:min(30vw,280px);height:auto;transform-origin:50% 100%}
+:root[data-design="aero"] .ae .ae-weed.l{left:-10px}
+:root[data-design="aero"] .ae .ae-weed.r{right:-10px;transform:scaleX(-1)}
+:root[data-design="aero"] .ae:is([data-mood="night"],[data-mood="nightwet"]) .ae-weed{filter:brightness(.42) saturate(.8)}
+:root[data-design="aero"] .ae:is([data-mood="wet"],[data-mood="storm"]) .ae-weed{filter:saturate(.7) brightness(.8)}
+/* Bubbles: rising through the water, and soap bubbles with rainbow rims floating in the air */
+:root[data-design="aero"] .ae-rise{left:var(--x);bottom:var(--b);width:var(--s);height:var(--s);border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,rgb(255 255 255/.95) 0 11%,rgb(255 255 255/0) 26%),radial-gradient(circle,rgb(255 255 255/0) 54%,rgb(220 250 255/.5) 78%,rgb(255 255 255/.85) 95%,rgb(255 255 255/0) 100%)}
+:root[data-design="aero"] .ae:is([data-mood="night"],[data-mood="nightwet"]) .ae-rise{opacity:.5}
+:root[data-design="aero"] .ae-bub{left:var(--x);top:var(--y);width:calc(var(--s) * var(--k));height:calc(var(--s) * var(--k));border-radius:50%;
+  background:radial-gradient(ellipse 30% 20% at 33% 25%,rgb(255 255 255/.95),rgb(255 255 255/0) 72%),radial-gradient(circle at 68% 74%,rgb(255 255 255/.6) 0 4%,rgb(255 255 255/0) 11%),
+    radial-gradient(circle,rgb(255 255 255/0) 58%,rgb(210 245 255/.24) 78%,rgb(255 255 255/.72) 96%,rgb(255 255 255/0) 100%);
+  box-shadow:inset 0 0 calc(var(--s) * var(--k) * .14) rgb(255 255 255/.3)}
+:root[data-design="aero"] .ae-bub::before{content:"";position:absolute;inset:0;border-radius:50%;opacity:.8;
+  background:conic-gradient(from 210deg,rgb(255 110 200/.6),rgb(255 230 120/.55),rgb(130 255 170/.55),rgb(100 200 255/.6),rgb(190 130 255/.55),rgb(255 110 200/.6));
+  -webkit-mask:radial-gradient(circle,transparent 63%,#000 82%,transparent 99%);mask:radial-gradient(circle,transparent 63%,#000 82%,transparent 99%)}
+:root[data-design="aero"] .ae[data-mood="night"] .ae-bub{opacity:.45}
+:root[data-design="aero"] .ae .ae-rain{inset:0;width:100%;height:100%}
+@media (max-width:700px){:root[data-design="aero"] .ae-x{display:none}}
+:root[data-design="aero"] .ae-flash{inset:0;background:#e6ecff;opacity:0}
+:root[data-design="aero"] .ae-fog{inset:0;background:linear-gradient(180deg,transparent 28%,rgb(236 243 247/.5) 52%,rgb(236 243 247/.68) 68%,rgb(236 243 247/.28) 86%)}
+:root[data-design="aero"] .ae[data-mood="nightwet"] .ae-fog{background:linear-gradient(180deg,transparent 30%,rgb(60 74 88/.45) 56%,rgb(60 74 88/.5) 72%,transparent)}
+:root[data-design="aero"] .ae-haze{inset:0;background:linear-gradient(180deg,rgb(230 200 140/.1),rgb(230 200 140/.28) 60%,rgb(230 200 140/.1))}
+@media (prefers-reduced-motion:no-preference){
+  :root[data-design="aero"] .ae-rays{animation:ae-turn 260s linear infinite}
+  :root[data-design="aero"] .ae-caus{animation:ae-pan 70s linear infinite}
+  :root[data-design="aero"] .ae-caus.b{animation-duration:115s;animation-direction:reverse}
+  :root[data-design="aero"] .ae-rise{animation:ae-rise var(--d) linear infinite;animation-delay:var(--dl)}
+  :root[data-design="aero"] .ae-bub{animation:ae-bob var(--d) ease-in-out infinite alternate;animation-delay:var(--dl)}
+  :root[data-design="aero"] .ae .ae-weed.l{animation:ae-sway 7s ease-in-out infinite alternate}
+  :root[data-design="aero"] .ae .ae-weed.r{animation:ae-sway-r 8s ease-in-out infinite alternate}
+  :root[data-design="aero"] .ae:is([data-mood="day"],[data-mood="night"]) .ae-aur{animation:ae-breathe 16s ease-in-out infinite alternate}
+  :root[data-design="aero"] .ae-ring{transform-box:fill-box;transform-origin:center;animation:ae-ring 2.6s ease-out infinite}
+}
+@keyframes ae-turn{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes ae-pan{to{transform:translateX(calc(-1 * var(--tw)))}}
+@keyframes ae-rise{0%{transform:translate(0,0);opacity:0}10%{opacity:1}35%{transform:translate(7px,-9vh)}65%{transform:translate(-6px,-18vh)}90%{opacity:.9}100%{transform:translate(4px,-27vh);opacity:0}}
+@keyframes ae-bob{to{transform:translate(5px,-16px)}}
+@keyframes ae-sway{from{transform:skewX(-3deg)}to{transform:skewX(3deg)}}
+@keyframes ae-sway-r{from{transform:scaleX(-1) skewX(-3deg)}to{transform:scaleX(-1) skewX(3deg)}}
+@keyframes ae-breathe{from{opacity:.72}to{opacity:1}}
+@keyframes ae-ring{from{transform:scale(.15);opacity:.9}to{transform:scale(1);opacity:0}}
+</style>
 </head>
 <body>
 <!-- Shading for the weather pictures, shared by every .wx icon on the page -->
@@ -1370,6 +1814,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   <linearGradient id="wxDrop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-drop1)"/><stop offset="1" style="stop-color:var(--g-drop2)"/></linearGradient>
   <linearGradient id="wxBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--g-sun1)"/><stop offset="1" style="stop-color:var(--g-sun2)"/></linearGradient>
   <filter id="wxSoft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".28"/></filter>
+  <!-- Aero look only: light from the top left picks out a glossy highlight on each shape, so the pictures look round -->
+  <filter id="aeGloss" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="b"/>
+    <feSpecularLighting in="b" surfaceScale="3.2" specularConstant=".95" specularExponent="18" lighting-color="#fff" result="s"><feDistantLight azimuth="235" elevation="52"/></feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="h"/><feComposite in="SourceGraphic" in2="h" operator="arithmetic" k2="1" k3=".7"/></filter>
 </defs></svg>
 <div class="scene" id="scene" aria-hidden="true"></div>
 <!-- Early 2000s look: the page sits in a Windows 2000 window (title bar, menu bar, status bar). In the classic look the
@@ -1615,9 +2063,10 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
   <div class="dsw-menu" id="dswMenu" role="menu" aria-label="Designs" hidden>
     <button type="button" role="menuitemradio" aria-checked="false" data-look="web2000" tabindex="-1">Early 2000s (this site)</button>
     <button type="button" role="menuitemradio" aria-checked="false" data-look="classic" tabindex="-1">Classic</button>
-    <a role="menuitem" href="./aero/" tabindex="-1">Aero edition</a>
+    <button type="button" role="menuitemradio" aria-checked="false" data-look="aero" tabindex="-1">Aero edition</button>
     <div class="dsw-sep" role="separator"></div>
     <div role="group" aria-labelledby="dswSamples"><div class="dsw-h" id="dswSamples">Samples (mock-ups)</div>
+      <a role="menuitem" href="./designs/aero-2026/" tabindex="-1">Original Aero (2026)</a>
       <a role="menuitem" href="./designs/tv80/" tabindex="-1">1980s TV weather</a>
       <a role="menuitem" href="./designs/chartroom/" tabindex="-1">Ship's chart room</a>
       <a role="menuitem" href="./designs/teletext/" tabindex="-1">Teletext</a>
@@ -2273,6 +2722,111 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     v.src=`img/${f.n}.mp4`;el.appendChild(v);
     v.play().catch(()=>{});
   }
+  // The Aero look's world, after the Frutiger Aero wallpapers of 2004 to 2012: a deep blue sky with a lens-flared sun
+  // and cumulus, a Vista-style aurora sweeping across, glass towers on the far shore with meadows either side of the
+  // water, and the view split at the waterline, with light rippling over the water below, rising bubbles and water
+  // plants. Soap bubbles with rainbow rims float in the air. Wet weather turns it grey-green with rain on the water,
+  // storms darker with lightning, and night brings the Milky Way photo, an aqua aurora and lit windows. Everything
+  // is drawn once; only transforms and opacity move (see the AERO LOOK styles), so it stays smooth on phones.
+  const aeroCaus={};  // the rippled light under the water, drawn once per size and kept
+  function aeroScene(cond,phase){
+    const night=phase==="night",storm=cond==="storm",wet=storm||/^(cloudy|rain|showers|fog)$/.test(cond),rain=/^(rain|showers|storm)$/.test(cond);
+    const mood=night?(wet?"nightwet":"night"):storm?"storm":wet?"wet":"day",dark=night||storm,u="-"+(++sceneN);
+    let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647,f=n=>n.toFixed(1);
+    // Towers (light edge, middle, shaded edge), far water (horizon to near), meadow (top to foot), far trees, tree tops, trunks, haze
+    const C={
+      day:     {tw:["#effaff","#84cdf2","#2386c8"],fw:["#e8faff","#6ccaef","#168acb"],mw:["#cbf46e","#62bf2b","#2b8a16"],tr:"#3e9636",tc:["#dcff8e","#62c22c","#22781a"],tk:"#7a5a36",hz:"#ffffff"},
+      wet:     {tw:["#e6eff4","#a9c2d0","#6c8ca0"],fw:["#d6e5ec","#88abbe","#4b7b95"],mw:["#acd46c","#5f9a35","#2f6b1f"],tr:"#4a7845",tc:["#bfe38a","#5f9a35","#2c6a1f"],tk:"#5e4a34",hz:"#e9f0f3"},
+      storm:   {tw:["#bccad3","#7f97a6","#4b6474"],fw:["#a2b5c0","#5f7d8f","#33546a"],mw:["#86ae50","#4a7d2a","#264f17"],tr:"#35563a",tc:["#9fc472","#4a7d2a","#22481a"],tk:"#4a3a2a",hz:"#b9c7cf"},
+      night:   {tw:["#3d6590","#1b3b60","#0b1f38"],fw:["#1f557e","#0f3155","#061b33"],mw:["#2f6e4c","#164a33","#08281c"],tr:"#0b2a23",tc:["#3a7a52","#17503a","#0a2c20"],tk:"#2a2218",hz:"#4fc3d8"},
+      nightwet:{tw:["#34526e","#1b3249","#0c1b2b"],fw:["#26445e","#132a40","#081626"],mw:["#2c5644","#173a2d","#0a2119"],tr:"#0c221d",tc:["#2f5a46","#173a2d","#0a2119"],tk:"#221c15",hz:"#7b93a6"}}[mood];
+    const H=122;  // the horizon, in the shore's 1600 by 400 drawing
+    // Glass towers: [left, width, height, top: 0 flat, 1 rounded, 2 sloped, 3 mast]. They stand to the left, where wide
+    // screens show them beside the page and phones (which see the left half) above it
+    const T=[[40,22,80,0],[66,32,150,2],[102,22,110,0],[128,40,214,1],[172,28,176,3],[204,46,262,2],[254,26,148,0],[284,36,200,1],[324,24,118,0],[352,32,144,2],[388,20,86,0]];
+    const towers=T.map(([x,w,h,cap])=>{const y=H-h;
+      return cap===2?`<polygon points="${x},${f(y+w*.45)} ${x+w},${y} ${x+w},${H} ${x},${H}"/>`:
+        `<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`+(cap===1?`<ellipse cx="${f(x+w/2)}" cy="${y}" rx="${f(w/2)}" ry="${f(w*.28)}"/>`:cap===3?`<rect x="${f(x+w/2-1)}" y="${y-30}" width="2" height="30"/>`:"");}).join("");
+    // Their windows: floor lines and mullions by day; by night, a scatter of lit rooms
+    let win="";
+    if(night){for(let r=0;r<4;r++)for(let c=0;c<5;c++)if(rnd()<.34)win+=`<rect x="${c*8+2}" y="${r*7+2}" width="3.4" height="2.6" fill="${["#ffe6a0","#bff4ff","#fff4d6"][Math.floor(rnd()*3)]}" opacity="${f(.55+rnd()*.45)}"/>`;}
+    else win=`<path d="M0 6.5h40M0 13.5h40M0 20.5h40M0 27.5h40" stroke="#fff" stroke-opacity="${dark?.12:.38}" stroke-width=".8"/><path d="M7.5 0v28M15.5 0v28M23.5 0v28M31.5 0v28M39.5 0v28" stroke="#fff" stroke-opacity=".14" stroke-width=".6"/>`;
+    // The tree line along the far shore
+    let tl=`M-400 ${H+2}`;for(let x=-400;x<2000;x+=16)tl+=` Q${x+8} ${f(H-3-rnd()*7)} ${x+16} ${H+1}`;tl+=` L2000 ${H+7} L-400 ${H+7}Z`;
+    const tree=(x,y,r)=>`<rect x="${f(x-1.6)}" y="${f(y-r*.5)}" width="3.2" height="${f(r*1.2)}" fill="${C.tk}"/><circle cx="${f(x-r*.42)}" cy="${f(y-r*.85)}" r="${f(r*.72)}" fill="url(#tc${u})"/><circle cx="${f(x+r*.18)}" cy="${f(y-r*1.2)}" r="${r}" fill="url(#tc${u})"/>`;
+    // A palm on the right bank: a curved trunk and drooping fronds
+    const palm=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0C-2-40-10-74-26-100" fill="none" stroke="url(#pt${u})" stroke-width="7" stroke-linecap="round"/>`+
+      [160,-172,-142,-108,-74,-40,-8,24].map(a=>`<path transform="translate(-26 -100) rotate(${a})${Math.abs(a)>90?" scale(1 -1)":""}" d="M0 0C18-13 44-13 68 7C44-3 22-1 0 0Z" fill="url(#pf${u})"/>`).join("")+
+      `<circle cx="-26" cy="-99" r="4.5" fill="${C.tk}"/></g>`;
+    const LB="M-400 214 C -60 208 60 222 150 254 C 240 288 300 350 330 404",RB="M2000 140 C 1500 142 1400 160 1300 200 C 1220 234 1150 300 1110 404";
+    const rings=rain?`<g fill="none" stroke="#fff" stroke-opacity="${dark?.3:.55}" stroke-width="1.2">${Array.from({length:9},(_,i)=>`<ellipse class="ae-ring" cx="${f(380+rnd()*700)}" cy="${f(H+40+rnd()*220)}" rx="${f(16+rnd()*18)}" ry="${f(3+rnd()*3)}" style="animation-delay:-${f(rnd()*2.6)}s"/>`).join("")}</g>`:"";
+    const land=`<svg class="ae-land" viewBox="0 0 1600 400" aria-hidden="true"><defs>
+      <linearGradient id="ag${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.tw[0]}"/><stop offset=".42" stop-color="${C.tw[1]}"/><stop offset="1" stop-color="${C.tw[2]}"/></linearGradient>
+      <linearGradient id="tg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${dark?.14:.62}"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <pattern id="fl${u}" width="40" height="28" patternUnits="userSpaceOnUse">${win}</pattern>
+      <linearGradient id="fw${u}" x1="0" y1="${H}" x2="0" y2="400" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.fw[0]}"/><stop offset=".3" stop-color="${C.fw[1]}"/><stop offset="1" stop-color="${C.fw[2]}"/></linearGradient>
+      <linearGradient id="mw${u}" x1="0" y1="${H}" x2="0" y2="400" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.mw[0]}"/><stop offset=".42" stop-color="${C.mw[1]}"/><stop offset="1" stop-color="${C.mw[2]}"/></linearGradient>
+      <radialGradient id="ms${u}" cx=".3" cy=".05" r=".75"><stop offset="0" stop-color="#fff" stop-opacity="${dark?.08:.5}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="tc${u}" cx=".36" cy=".28" r=".78"><stop offset="0" stop-color="${C.tc[0]}"/><stop offset=".55" stop-color="${C.tc[1]}"/><stop offset="1" stop-color="${C.tc[2]}"/></radialGradient>
+      <linearGradient id="pf${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.tc[2]}"/><stop offset=".5" stop-color="${C.tc[1]}"/><stop offset="1" stop-color="${C.tc[0]}"/></linearGradient>
+      <linearGradient id="pt${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.tk}"/><stop offset="1" stop-color="${dark?"#3a3024":"#b8976a"}"/></linearGradient>
+      <linearGradient id="hz${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.hz}" stop-opacity="0"/><stop offset=".72" stop-color="${C.hz}" stop-opacity="${dark?.22:.62}"/><stop offset="1" stop-color="${C.hz}" stop-opacity="0"/></linearGradient>
+      <linearGradient id="rf${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <mask id="rm${u}" maskUnits="userSpaceOnUse" x="-400" y="${H}" width="2400" height="200"><rect x="-400" y="${H}" width="2400" height="180" fill="url(#rf${u})"/></mask>
+      <filter id="rp${u}" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".004 .11" numOctaves="1" seed="3"/><feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/></filter>
+      <filter id="bl${u}" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>
+      <rect x="-400" y="${H}" width="2400" height="${400-H+4}" fill="url(#fw${u})"/>
+      <g mask="url(#rm${u})"><g filter="url(#rp${u})" opacity="${dark?.5:.42}" transform="translate(0 ${2*H}) scale(1 -1)"><g fill="url(#ag${u})">${towers}</g>${night?`<g fill="url(#fl${u})">${towers}</g>`:""}</g></g>
+      <g fill="#fff" opacity="${dark?.25:.7}" filter="url(#bl${u})">${Array.from({length:7},()=>`<ellipse cx="${f(rnd()*1600)}" cy="${f(H+6+rnd()*50)}" rx="${f(30+rnd()*110)}" ry="1.4"/>`).join("")}</g>
+      <g fill="url(#ag${u})">${towers}</g><g fill="url(#fl${u})">${towers}</g><g fill="url(#tg${u})">${towers}</g>
+      <rect x="-400" y="${H-70}" width="2400" height="80" fill="url(#hz${u})"/>
+      <path d="${tl}" fill="${C.tr}"/>${rings}
+      <path d="${LB} L-400 404Z" fill="url(#mw${u})"/><path d="${LB} L-400 404Z" fill="url(#ms${u})"/>
+      <path d="${RB} L2000 404Z" fill="url(#mw${u})"/><path d="${RB} L2000 404Z" fill="url(#ms${u})"/>
+      <g fill="none" stroke="#fff" stroke-opacity="${dark?.15:.6}" stroke-width="2.4" filter="url(#bl${u})"><path d="${LB}"/><path d="${RB}"/></g>
+      ${tree(-30,214,18)}${tree(40,220,13)}${tree(110,236,22)}${tree(1566,148,13)}${tree(1250,214,16)}${palm(1470,152,.95)}${palm(1395,168,.7)}</svg>`;
+    // The waterline: a bright, wavering edge with the water's surface glowing just under it
+    const wave=y=>{let p=`M0 ${y}`;for(let x=0;x<1600;x+=200)p+=` Q${x+100} ${y+((x/200)%2?4:-4)} ${x+200} ${y}`;return p;},wv=wave(18);
+    const surf=`<svg class="ae-surf" viewBox="0 0 1600 36" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="sf${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="${dark?.22:.7}"/><stop offset=".62" stop-color="#e9fbff" stop-opacity="${dark?.12:.4}"/><stop offset="1" stop-color="#bff0ff" stop-opacity="0"/></linearGradient></defs>
+      <path d="${wv} L1600 36 L0 36Z" fill="url(#sf${u})"/><path d="${wv}" fill="none" stroke="#fff" stroke-opacity="${dark?.5:.95}" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
+      <path d="${wave(22)}" fill="none" stroke="${dark?"#6fd8ff":"#0b6fb0"}" stroke-opacity=".3" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>`;
+    // Light rippling under the water: noise traced into thin bright veins, two layers drifting opposite ways
+    const caus=(sd,w)=>aeroCaus[w]||(aeroCaus[w]="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${w/2}"><filter id="c" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${(10/w).toFixed(5)} ${(12/w).toFixed(5)}" numOctaves="2" seed="${sd}" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.2 0 0 0 -.6"/><feComponentTransfer><feFuncA type="table" tableValues="0 0 0 .2 .95 .2 0 0 0 0"/></feComponentTransfer><feGaussianBlur stdDeviation=".7"/></filter><rect width="${w}" height="${w/2}" filter="url(#c)"/></svg>`));
+    // Water plants in the corners
+    const weed=side=>{let s=side==="l"?9:5;const r=()=>(s=(s*16807)%2147483647)/2147483647;let b="";
+      for(let i=0;i<10;i++){const x=6+i*24+r()*12,h=60+r()*130,dx=(r()-.35)*56;
+        b+=`<path d="M${f(x)} 202C${f(x-6)} ${f(200-h*.45)} ${f(x+dx*.5+10)} ${f(200-h*.75)} ${f(x+dx)} ${f(200-h)}C${f(x+dx*.5+20)} ${f(200-h*.7)} ${f(x+14)} ${f(200-h*.4)} ${f(x+16)} 202Z"/>`;}
+      return `<svg class="ae-weed ${side}" viewBox="0 0 260 200" aria-hidden="true"><defs><linearGradient id="wd${side}${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8ff80"/><stop offset=".5" stop-color="#5cc02a"/><stop offset="1" stop-color="#1b6a12"/></linearGradient></defs><g fill="url(#wd${side}${u})" stroke="#fff" stroke-opacity=".28" stroke-width="1.2" opacity=".8">${b}</g></svg>`;};
+    let rise="";for(let i=0;i<13;i++)rise+=`<i class="ae-rise${i>6?" ae-x":""}" style="--x:${f(2+rnd()*96)}%;--b:${f(rnd()*45)}%;--s:${f(5+rnd()*rnd()*20)}px;--d:${f(9+rnd()*11)}s;--dl:-${f(rnd()*20)}s"></i>`;
+    const sea=`<div class="ae-sea"><i class="ae-caus" style="--tw:800px;background-image:url('${caus(4,800)}')"></i><i class="ae-caus b" style="--tw:1100px;background-image:url('${caus(9,1100)}')"></i><i class="ae-beams"></i>${weed("l")}${weed("r")}${rise}</div>`;
+    // (The bubbles marked ae-x are left out on phones, to keep the moving layers few)
+    // Soap bubbles in the air, kept to the edges where the page doesn't cover them (clear weather only)
+    const air=wet?"":[[5,20,120,13,2],[11,50,46,9,5],[91,33,92,12,7],[82,64,34,8,1],[96,12,30,10,4],[27,9,24,11,6],[67,7,40,14,3]]
+      .map(([x,y,s,d,dl],i)=>`<i class="ae-bub${i>3?" ae-x":""}" style="--x:${x}%;--y:${y}%;--s:${s}px;--d:${d}s;--dl:-${dl}s"></i>`).join("");
+    // The sun and its flare (fine days only)
+    const sun=mood!=="day"?"":`<div class="ae-sun"><i class="ae-halo"></i><i class="ae-rays"></i><i class="ae-streak"></i><i class="ae-core"></i></div>`+
+      [[.42,54,"rgb(120 230 255/.5)",""],[.7,26,"rgb(190 255 140/.6)",""],[1.12,90,"rgb(120 210 255/.35)"," hex"],[1.45,40,"rgb(255 170 230/.4)",""],[1.75,70,"rgb(150 255 200/.3)"," hex"]]
+      .map(([g,s,c,h])=>`<i class="ae-ghost${h}" style="--g:${g};--s:${s}px;--c:${c}"></i>`).join("");
+    // The aurora: a swoosh of light low across the day sky; at night, curtains of aqua and green over the stars
+    const lines=(n,y0,dy)=>Array.from({length:n},(_,i)=>`<path d="M-120 ${y0[0]+i*dy[0]} C 260 ${y0[1]+i*dy[1]} 640 ${y0[2]+i*dy[2]} 1000 ${y0[3]+i*dy[3]} S 1500 ${y0[4]+i*dy[4]} 1760 ${y0[5]+i*dy[5]}" stroke-width="${i%3?.8:1.7}" stroke-opacity="${f(.22+((i*37)%10)/22)}"/>`).join("");
+    const aur=`<svg class="ae-aur" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+      <linearGradient id="au${u}" ${night?`x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2dffc4" stop-opacity="0"/><stop offset=".62" stop-color="#2dffc4" stop-opacity=".55"/><stop offset="1" stop-color="#16b8ff" stop-opacity="0"/>`:
+        `x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7ff6ff" stop-opacity="0"/><stop offset=".32" stop-color="#8ff8ff" stop-opacity=".6"/><stop offset=".66" stop-color="#c8ff8a" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>`}</linearGradient>
+      <linearGradient id="av${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a7bff" stop-opacity="0"/><stop offset=".6" stop-color="#5ad8ff" stop-opacity=".4"/><stop offset="1" stop-color="#5ad8ff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="al${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${night?"#8dfff0":"#fff"}" stop-opacity="0"/><stop offset=".45" stop-color="${night?"#8dfff0":"#fff"}"/><stop offset="1" stop-color="${night?"#8dfff0":"#fff"}" stop-opacity="0"/></linearGradient>
+      <filter id="ab${u}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="${night?22:16}"/></filter></defs>`+
+      (night?`<path d="M-120 300C300 200 700 260 1000 200S1500 120 1760 150L1760 260C1400 220 1100 300 800 300S300 360-120 380Z" fill="url(#av${u})" filter="url(#ab${u})" opacity=".7"/>
+        <path d="M-120 420C200 300 520 380 820 300S1340 170 1760 240L1760 470C1400 380 1100 470 800 480S260 560-120 600Z" fill="url(#au${u})" filter="url(#ab${u})"/>
+        <g fill="none" stroke="url(#al${u})" stroke-linecap="round" opacity=".6">${lines(6,[430,312,392,312,182,252],[7,6,6,5,4,4])}</g>`:
+        `<path d="M-120 760C260 700 640 520 1000 450S1500 330 1760 250L1760 330C1480 420 1240 470 980 520S300 800-120 860Z" fill="url(#au${u})" filter="url(#ab${u})"/>
+        <g fill="none" stroke="url(#al${u})" stroke-linecap="round">${lines(10,[770,712,535,468,345,262],[8,7,5,4,3,3])}</g>`)+`</svg>`;
+    const rainSvg=rain?`<svg class="ae-rain" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="rn${u}" width="80" height="240" patternUnits="userSpaceOnUse" patternTransform="skewX(-12)"><g stroke="${night?"#8fb6cf":"#eef8ff"}" stroke-width="2" stroke-linecap="round">${[[8,10],[30,90],[52,40],[70,170],[20,200],[44,140],[62,110]].map(([x,y])=>`<line x1="${x}" y1="${y}" x2="${x}" y2="${y+34}"/>`).join("")}</g></pattern></defs><g opacity="${cond==="showers"?.38:.55}"><rect class="sc-fall${cond==="showers"?" slow":""}" x="-200" y="0" width="2000" height="1240" fill="url(#rn${u})"/></g></svg>`:"";
+    const clouds=wet?"many":night?(cond==="partly"?"few":""):"few";
+    return `<div class="ae" data-mood="${mood}"><div class="ae-sky"></div>`+
+      (mood==="night"?`<picture class="ae-mw"><source media="(max-aspect-ratio: 4/5)" srcset="img/night-milkyway-phone.jpg"><img src="img/night-milkyway-desktop.jpg" alt="" decoding="async"></picture><div class="ae-glow"></div>`:"")+
+      sun+aur+(clouds?cloudLayer(clouds,night):"")+land+sea+surf+air+rainSvg+
+      (storm?`<div class="ae-flash sc-flash"></div>`:"")+(cond==="fog"?`<div class="ae-fog"></div>`:"")+(cond==="hazy"?`<div class="ae-haze"></div>`:"")+`</div>`;
+  }
   let sceneKey="",sceneN=0;
   function renderScene(ni){
     // The early-2000s look has the plain desktop colour around its window instead, so nothing is loaded for it
@@ -2282,7 +2836,9 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     const box=$("scene");
     if(!on){box.innerHTML="";sceneKey="";return;}
     if(!state.data||!ni)return;
-    const cond=sceneCond(ni.icon),phase=scenePhase(ni.night);
+    // ?scene=rain-night (any of the ten scenes, then day or night) shows that scene whatever the weather, for checking a look
+    const F=(new URLSearchParams(location.search).get("scene")||"").split("-"),aero=document.documentElement.dataset.design==="aero";
+    const cond=/^(clear|mostly|partly|cloudy|showers|rain|storm|fog|hazy|windy)$/.test(F[0])?F[0]:sceneCond(ni.icon),phase=/^(day|night)$/.test(F[1])?F[1]:scenePhase(ni.night);
     // Harris's photos. Clear, mostly sunny, partly cloudy and windy days: the beach at featured locations within 5 km
     // of an ocean or bay beach ("beach" in locations.json), the hills everywhere else, searched places included;
     // locations marked "photo": false keep the drawings. Clear, mostly clear, partly cloudy and cloudy nights everywhere
@@ -2296,15 +2852,16 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       sunnyDay?(state.loc.kind==="full"&&state.loc.beach?"beach":"hills")+"-sunny":"";
     const ext=photo.startsWith("night-")?"jpg":"webp";
     const clouds=photo&&cond==="partly"?"few":photo&&cond==="cloudy"?"many":"";
-    const key=cond+"/"+phase+(photo?"/"+photo:"");
-    box.dataset.scene=key;box.classList.toggle("photo",!!photo);
+    // The Aero look draws its own world for every scene (aeroScene), so it has no photos of its own
+    const key=aero?"aero/"+cond+"/"+phase:cond+"/"+phase+(photo?"/"+photo:"");
+    box.dataset.scene=key;box.classList.toggle("photo",!!photo&&!aero);
     if(key===sceneKey)return;sceneKey=key;
     // Fade the new scene in over the old one
     // The first scene shows straight away; later ones fade in over the old one
     const first=!box.firstElementChild,el=document.createElement("div");el.style.opacity=first?"1":"0";
     // Upright phones get a tall crop centred on the sun; wider screens get the full photo
-    const storm=photo.startsWith("storm-")?STORMS[photo.slice(6)]:null;
-    el.innerHTML=storm?"":photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${clouds?cloudLayer(clouds,phase==="night"):""}`:sceneSvg(cond,phase);box.appendChild(el);
+    const storm=!aero&&photo.startsWith("storm-")?STORMS[photo.slice(6)]:null;
+    el.innerHTML=aero?aeroScene(cond,phase):storm?"":photo?`<picture><source media="(max-aspect-ratio: 4/5)" srcset="img/${photo}-phone.${ext}"><img src="img/${photo}-desktop.${ext}" alt="" decoding="async"></picture>${clouds?cloudLayer(clouds,phase==="night"):""}`:sceneSvg(cond,phase);box.appendChild(el);
     if(storm)stormAnim(el,storm);
     const show=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity="1";}));
     const img=el.querySelector("img");if(first){}else if(img)img.decode().then(show,show);else show();
@@ -3578,9 +4135,9 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
 (function(){
   const $=id=>document.getElementById(id),root=document.documentElement,KEY="aus-forecast-design";
   const isW=()=>root.dataset.design==="web2000";
-  // The phone's browser bar takes the title bar's navy in the early-2000s look
+  // The phone's browser bar takes the title bar's navy in the early-2000s look, and the sky's blue in the Aero look
   const meta=document.querySelector('meta[name="theme-color"]'),classicTheme=meta.content;
-  const paintTheme=()=>{meta.content=isW()?"#0A246A":classicTheme;};
+  const paintTheme=()=>{meta.content=isW()?"#0A246A":root.dataset.design==="aero"?"#1a7fd6":classicTheme;};
 
   // ---- Title bar, date strip, "you are here" line and status bar, kept in step with the page ----
   function follow(){
@@ -3635,8 +4192,8 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
       const bar=[...document.querySelectorAll(".menubar button")],j=bar.indexOf(open.btn),nb=bar[(j+(e.key==="ArrowRight"?1:-1)+bar.length)%bar.length];barMenu(nb,true);}});
   document.addEventListener("pointerdown",e=>{if(open&&!open.box.contains(e.target)&&!open.btn.contains(e.target))closeMenu(false);});
 
-  // ---- The Design menu: the two looks of this page switch at once (and are remembered on this device); the
-  // Aero edition and the saved samples are pages of their own ----
+  // ---- The Design menu: the three looks of this page switch at once (and are remembered on this device); the
+  // saved samples are pages of their own ----
   const dBtn=$("dswBtn"),dMenu=$("dswMenu");
   const paintChecks=()=>dMenu.querySelectorAll("[data-look]").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.look===root.dataset.design)));
   function setDesign(d){if(root.dataset.design===d)return;root.dataset.design=d;try{localStorage.setItem(KEY,d);}catch(e){}
