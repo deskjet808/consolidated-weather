@@ -1902,6 +1902,7 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
 :root[data-design="minimal"] .mini .m-temp{font-size:var(--m-xl);font-weight:300;line-height:.9;letter-spacing:-.045em;margin-left:-.05em}
 :root[data-design="minimal"] .mini .m-cond{margin-top:16px;font-size:var(--m-l);line-height:1.25;letter-spacing:-.01em}
 :root[data-design="minimal"] .mini .m-facts{display:flex;flex-wrap:wrap;gap:2px 16px;margin-top:6px;color:var(--muted)}
+:root[data-design="minimal"] .mini .m-bom{margin-left:auto;font-size:.82em;opacity:.75;font-variant-numeric:tabular-nums}
 :root[data-design="minimal"] .mini .m-story{max-width:34em;margin-top:24px;text-wrap:pretty}
 :root[data-design="minimal"] .m-story .st{color:var(--accent)}
 /* Headed lists: the week, the water, the beach */
@@ -3696,8 +3697,12 @@ html.scenic .tablebox tr.median td{background:color-mix(in srgb,var(--accent-sof
     $("mTemp").textContent=ob&&isNum(ob.temp)?f0(ob.temp)+"°":"";  // no reading: the line below says so
     $("mCond").textContent=cond||(bomDay(ks[0])||{}).text||"";
     const feels=ob&&isNum(ob.feels)&&isNum(ob.temp)&&Math.abs(ob.feels-ob.temp)>=3;
+    // The high and low are the middle of every forecast; the Bureau's own pair sits quietly beside them when it differs
+    const bt=bomDay(ks[0])||{},bHi=isNum(bt.tmax)?bt.tmax:null,bLo=isNum(bt.tmin)?bt.tmin:null,
+      bDiff=(bHi!=null&&deg(bHi)!==deg(t.hi))||(bLo!=null&&deg(bLo)!==deg(t.lo));
     $("mFacts").innerHTML=[ob?"":"No station reading right now",feels?"Feels like "+deg(ob.feels):"",isNum(t.hi)?"High "+deg(t.hi):"",isNum(t.lo)?"Low "+deg(t.lo):"",
-      isNum(t.ch)?f0(t.ch)+"% chance of rain":""].filter(Boolean).map(s=>`<span>${s}</span>`).join("");
+      isNum(t.ch)?f0(t.ch)+"% chance of rain":""].filter(Boolean).map(s=>`<span>${s}</span>`).join("")+
+      (bDiff?`<span class="m-bom" title="The Bureau of Meteorology's own high and low for today">Bureau ${deg(bHi)} / ${deg(bLo)}</span>`:"");
     let story="";try{story=hourStory(hoursFor(ks[0]),sunHours(ks[0]));}catch(e){}
     $("mStory").innerHTML=story;$("mStory").hidden=!story;
     // The week: day, the sky in a word or two, the chance of rain only when it's 20% or more, then top and bottom
