@@ -1,6 +1,6 @@
 {
  "id": "maleny",
- "generated": "2026-11-25T02:46:01Z",
+ "generated": "2026-11-25T02:49:45Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-25T02:45:36Z"
+   "fetched": "2026-11-25T02:49:15Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:45:37Z"
+   "fetched": "2026-11-25T02:49:17Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Shower"
     ]
    },
-   "fetched": "2026-11-25T02:45:50Z"
+   "fetched": "2026-11-25T02:49:33Z"
   },
   {
    "source": "windy",
@@ -1235,7 +1235,7 @@
    "days": [
     {
      "date": "2026-11-25",
-     "tmax": 19.7,
+     "tmax": 19.8,
      "tmin": 18,
      "rain_min": 3.5,
      "rain_max": 3.5,
@@ -1313,11 +1313,11 @@
      19.1,
      19.2,
      19.3,
-     19.4,
+     19.5,
      19.6,
+     19.8,
      19.7,
      19.7,
-     19.6,
      19.6,
      19.1,
      18.5,
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:45:56Z"
+   "fetched": "2026-11-25T02:49:40Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-25T02:45:56Z"
+   "fetched": "2026-11-25T02:49:41Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-25T02:45:57Z"
+   "fetched": "2026-11-25T02:49:42Z"
   },
   {
    "source": "foreca",
@@ -3771,7 +3771,7 @@
      "Cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-25T02:46:01Z"
+   "fetched": "2026-11-25T02:49:45Z"
   }
  ],
  "observations": {
@@ -3786,7 +3786,7 @@
   "wind_kmh": 7,
   "gust_kmh": 13,
   "rain_since_9am": 0,
-  "fetched": "2026-11-25T02:45:35Z"
+  "fetched": "2026-11-25T02:49:14Z"
  },
  "errors": {}
 }

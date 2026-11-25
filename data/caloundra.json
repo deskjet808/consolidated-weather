@@ -1,6 +1,6 @@
 {
  "id": "caloundra",
- "generated": "2026-11-25T02:45:35Z",
+ "generated": "2026-11-25T02:49:14Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-25T02:45:10Z"
+   "fetched": "2026-11-25T02:48:50Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:45:12Z"
+   "fetched": "2026-11-25T02:48:52Z"
   },
   {
    "source": "weatherzone",
@@ -1226,7 +1226,7 @@
      "Chance shower"
     ]
    },
-   "fetched": "2026-11-25T02:45:24Z"
+   "fetched": "2026-11-25T02:49:03Z"
   },
   {
    "source": "windy",
@@ -1791,7 +1791,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:45:31Z"
+   "fetched": "2026-11-25T02:49:10Z"
   },
   {
    "source": "ecmwf",
@@ -2682,7 +2682,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-25T02:45:31Z"
+   "fetched": "2026-11-25T02:49:10Z"
   },
   {
    "source": "icon",
@@ -3508,7 +3508,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-25T02:45:31Z"
+   "fetched": "2026-11-25T02:49:10Z"
   },
   {
    "source": "foreca",
@@ -3771,7 +3771,7 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-25T02:45:35Z"
+   "fetched": "2026-11-25T02:49:14Z"
   }
  ],
  "observations": {
@@ -3786,7 +3786,7 @@
   "wind_kmh": 17,
   "gust_kmh": 20,
   "rain_since_9am": 0,
-  "fetched": "2026-11-25T02:44:52Z"
+  "fetched": "2026-11-25T02:48:32Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4306,7 +4306,7 @@
     "windfinder_place": "Caloundra Head"
    }
   ],
-  "fetched": "2026-11-25T02:45:10Z"
+  "fetched": "2026-11-25T02:48:50Z"
  },
  "errors": {}
 }

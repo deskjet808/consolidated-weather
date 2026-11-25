@@ -1,6 +1,6 @@
 {
  "id": "kgari-hook-point",
- "generated": "2026-11-25T02:44:52Z",
+ "generated": "2026-11-25T02:48:32Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-25T02:44:27Z"
+   "fetched": "2026-11-25T02:48:08Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:44:29Z"
+   "fetched": "2026-11-25T02:48:10Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Slight chance storm"
     ]
    },
-   "fetched": "2026-11-25T02:44:41Z"
+   "fetched": "2026-11-25T02:48:21Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:44:47Z"
+   "fetched": "2026-11-25T02:48:27Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Light drizzle"
     ]
    },
-   "fetched": "2026-11-25T02:44:48Z"
+   "fetched": "2026-11-25T02:48:28Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Mostly sunny"
     ]
    },
-   "fetched": "2026-11-25T02:44:48Z"
+   "fetched": "2026-11-25T02:48:28Z"
   },
   {
    "source": "foreca",
@@ -3772,7 +3772,7 @@
      "Partly cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-25T02:44:52Z"
+   "fetched": "2026-11-25T02:48:32Z"
   }
  ],
  "observations": {
@@ -3787,7 +3787,7 @@
   "wind_kmh": 13,
   "gust_kmh": 24,
   "rain_since_9am": 0,
-  "fetched": "2026-11-25T02:44:16Z"
+  "fetched": "2026-11-25T02:47:58Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4071,7 +4071,7 @@
     "windfinder_place": "Rainbow Beach"
    }
   ],
-  "fetched": "2026-11-25T02:44:26Z"
+  "fetched": "2026-11-25T02:48:07Z"
  },
  "errors": {}
 }

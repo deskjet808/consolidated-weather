@@ -1,6 +1,6 @@
 {
  "id": "manly",
- "generated": "2026-11-25T02:46:36Z",
+ "generated": "2026-11-25T02:50:17Z",
  "sources": [
   {
    "source": "bom",
@@ -88,7 +88,7 @@
      "text": null
     }
    ],
-   "fetched": "2026-11-25T02:46:11Z"
+   "fetched": "2026-11-25T02:49:54Z"
   },
   {
    "source": "willyweather",
@@ -849,7 +849,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:46:13Z"
+   "fetched": "2026-11-25T02:49:56Z"
   },
   {
    "source": "weatherzone",
@@ -1227,7 +1227,7 @@
      "Slight chance shower"
     ]
    },
-   "fetched": "2026-11-25T02:46:25Z"
+   "fetched": "2026-11-25T02:50:07Z"
   },
   {
    "source": "windy",
@@ -1792,7 +1792,7 @@
      null
     ]
    },
-   "fetched": "2026-11-25T02:46:32Z"
+   "fetched": "2026-11-25T02:50:13Z"
   },
   {
    "source": "ecmwf",
@@ -2683,7 +2683,7 @@
      "Clear"
     ]
    },
-   "fetched": "2026-11-25T02:46:32Z"
+   "fetched": "2026-11-25T02:50:14Z"
   },
   {
    "source": "icon",
@@ -3509,7 +3509,7 @@
      "Partly cloudy"
     ]
    },
-   "fetched": "2026-11-25T02:46:32Z"
+   "fetched": "2026-11-25T02:50:14Z"
   },
   {
    "source": "foreca",
@@ -3772,7 +3772,7 @@
      "Cloudy and light rain"
     ]
    },
-   "fetched": "2026-11-25T02:46:36Z"
+   "fetched": "2026-11-25T02:50:17Z"
   }
  ],
  "observations": {
@@ -3787,7 +3787,7 @@
   "wind_kmh": 13,
   "gust_kmh": 20,
   "rain_since_9am": 0.8,
-  "fetched": "2026-11-25T02:46:02Z"
+  "fetched": "2026-11-25T02:49:45Z"
  },
  "marine": {
   "source": "willyweather, windy, seabreeze, windfinder",
@@ -4029,7 +4029,7 @@
     "windfinder_place": "Manly Harbour"
    }
   ],
-  "fetched": "2026-11-25T02:46:10Z"
+  "fetched": "2026-11-25T02:49:53Z"
  },
  "errors": {}
 }
