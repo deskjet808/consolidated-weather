@@ -1,0 +1,16 @@
+{
+ "about": "Places in the private Reality Check, and the Bureau of Meteorology station each is checked against. dwo is the station's Daily Weather Observations file (www.bom.gov.au/climate/dwo/), which gives the official max, min, rain to 9am and 3pm wind. km is the straight-line distance from the place to the station. Chosen 27 Nov 2026: the nearest open station with daily records (Rainbow Beach, nearer Hook Point, stopped recording in Dec 2025).",
+ "backfill_from": "2026-10-13",
+ "places": [
+  {"id": "oxley", "station": "040211", "station_name": "Archerfield Airport", "dwo": "IDCJDW4003", "km": 3.6, "setting": "inland", "note": "Suburban airfield, same river flats as Oxley"},
+  {"id": "west-end", "station": "040913", "station_name": "Brisbane (city)", "dwo": "IDCJDW4019", "km": 3.2, "setting": "inland", "note": "City station across the river; the Bureau fills the odd gap with Brisbane Airport readings"},
+  {"id": "brisbane-airport", "station": "040842", "station_name": "Brisbane Airport", "dwo": "IDCJDW4020", "km": 0.1, "setting": "coastal", "note": "On site, beside Moreton Bay"},
+  {"id": "manly", "station": "040842", "station_name": "Brisbane Airport", "dwo": "IDCJDW4020", "km": 9.1, "setting": "coastal", "note": "Both on the shore of Moreton Bay"},
+  {"id": "coolangatta", "station": "040717", "station_name": "Coolangatta (Gold Coast Airport)", "dwo": "IDCJDW4036", "km": 3.1, "setting": "coastal", "note": "Airport just behind the beach"},
+  {"id": "maroochydore", "station": "040861", "station_name": "Sunshine Coast Airport", "dwo": "IDCJDW4081", "km": 6.3, "setting": "coastal", "note": "Airport just behind the beach"},
+  {"id": "noosa-heads", "station": "040908", "station_name": "Tewantin", "dwo": "IDCJDW4118", "km": 5.0, "setting": "inland", "note": "Up the Noosa River, about 5 km back from the beach"},
+  {"id": "kgari-kingfisher-bay", "station": "040405", "station_name": "Hervey Bay Airport", "dwo": "IDCJDW4056", "km": 17.1, "setting": "coastal", "note": "On the mainland across the Great Sandy Strait; no station on the island itself"},
+  {"id": "kgari", "station": "040405", "station_name": "Hervey Bay Airport", "dwo": "IDCJDW4056", "km": 32.2, "setting": "coastal", "note": "On the mainland's sheltered side, not the ocean beach; no nearer station, so trust this one less", "far": true},
+  {"id": "kgari-hook-point", "station": "140010", "station_name": "Tin Can Bay (Defence)", "dwo": "IDCJDW4157", "km": 18.2, "setting": "coastal", "note": "On a sheltered inlet, not the open beach"}
+ ]
+}
