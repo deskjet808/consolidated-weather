@@ -1,0 +1,52 @@
+name: Reality check
+# Scores the app's forecasts, the Bureau's and four computer models against the Bureau's daily station records
+# (scraper/reality.py), for the private Reality Check page. The forecasts themselves are saved hourly by the
+# "Forecast history" workflow; this only reads them, so a failure here never loses a forecast.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 7:45am and 7:45pm Brisbane time: the morning run picks up the Bureau's record of the day before (with rain
+    # to 9am that morning); the evening run catches anything the morning run missed
+    - cron: "45 21 * * *"
+    - cron: "45 9 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reality
+  cancel-in-progress: false
+
+jobs:
+  reality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/workflows/reality.yml
+      - name: Install
+        run: pip install requests==2.32.3 tzdata
+      - name: Score
+        run: python scraper/reality.py
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A data/reality
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Update reality check $(date -u +%Y-%m-%dT%H:%MZ)"
+          # Only this workflow writes data/reality, so keep this run's files if another commit landed meanwhile
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          exit 1

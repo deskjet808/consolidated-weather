@@ -2,10 +2,11 @@
 
 Reads the data/<id>.json files scrape.py writes and keeps data/history/<id>.json:
 {id, updated, station: {bom_id, name, distance_km, state, wmo}, samples: [[local time, temp, rain since 9am]],
- days: {"2026-11-23": {"fc": {source: {"1": [tmax, tmin, rain_min, rain_max, chance], "2": [...], "3": [...]}},
+ days: {"2026-11-23": {"fc": {source: {"0": [...], "1": [tmax, tmin, rain_min, rain_max, chance], "2": [...], "3": [...]}},
+                       "w15": {"bom": {"0": [km/h, direction], ...}}  (Reality Check places only),
                        "actual": {tmax, tmin, rain, via}}}}
 
-Forecasts: each source's figures for a day from its last fetch 1, 2 and 3 days before, by the location's own
+Forecasts: each source's figures for a day from its last fetch before 6am that day, and 1, 2 and 3 days before, by the location's own
 calendar (a fetch at 11pm on the 22nd is 1 day ahead for the 23rd). A later fetch on the same day replaces an
 earlier one, so each lead keeps the last forecast made before that day began. Nothing is ever estimated.
 
@@ -33,7 +34,12 @@ LOCATIONS = os.path.join(ROOT, "locations.json")
 DATA = os.path.join(ROOT, "data")
 HISTORY = os.path.join(DATA, "history")
 KEEP_DAYS = 120  # days of forecasts and results kept per location (under 1 KB a day)
-LEADS = (1, 2, 3)  # how many days ahead a forecast was made
+LEADS = (0, 1, 2, 3)  # how many days ahead a forecast was made (0: the same day, made before SAME_DAY_BY)
+SAME_DAY_BY = 6  # a same-day forecast counts only if made before 6am, what you'd see on waking
+# The places in the Reality Check also keep the Bureau's hourly forecast wind for 3pm (the hour its daily
+# records report), which is the wind the app shows for the next 3 days
+REALITY = os.path.join(ROOT, "scraper", "reality.json")
+BOM_HOURLY = "https://api.weather.bom.gov.au/v1/locations/{}/forecasts/hourly"
 # A result is worked out only while its window began within the last 71 hours, when the observations page's
 # 72 hours still hold all of it; after that it is left as it is, so a later run with less to go on can't spoil it
 RECENT = timedelta(hours=71)
@@ -104,14 +110,15 @@ def snapshot(hist, scraped, tz):
         if not src or not fetched:
             continue
         # A source that failed keeps its last good entry, with the time it was really fetched
-        made = fetched.astimezone(tz).date()
+        made_at = fetched.astimezone(tz)
+        made = made_at.date()
         for d in s.get("days") or []:
             try:
                 target = date.fromisoformat(d.get("date"))
             except (AttributeError, TypeError, ValueError):
                 continue
             lead = (target - made).days
-            if lead not in LEADS:
+            if lead not in LEADS or (lead == 0 and made_at.hour >= SAME_DAY_BY):
                 continue
             row = [temp(d.get("tmax")), temp(d.get("tmin")), num(d.get("rain_min")), num(d.get("rain_max")),
                    num(d.get("chance"))]
@@ -300,6 +307,30 @@ def write_history(path, hist):
     os.replace(tmp, path)
 
 
+def bureau_wind(hist, loc, tz, now):
+    """Keep the Bureau's hourly forecast wind for 3pm on the next few days, as days[d]["w15"]["bom"][lead] =
+    [km/h, direction]. Like the daily forecasts, a later run the same day replaces an earlier one. Returns how many."""
+    made_at = now.astimezone(tz)
+    rows = get(BOM_HOURLY.format(loc["bom"])).json().get("data") or []
+    n = 0
+    for h in rows:
+        t = utc(h.get("time"))
+        w = h.get("wind") or {}
+        if not t or t.astimezone(tz).hour != 15:
+            continue
+        target = t.astimezone(tz).date()
+        lead = (target - made_at.date()).days
+        if lead not in LEADS or (lead == 0 and made_at.hour >= SAME_DAY_BY):
+            continue
+        spd = num(w.get("speed_kilometre"))
+        if spd is None:
+            continue
+        day = hist["days"].setdefault(target.isoformat(), {})
+        day.setdefault("w15", {}).setdefault("bom", {})[str(lead)] = [spd, w.get("direction") or None]
+        n += 1
+    return n
+
+
 def update_location(loc, now, feeds):
     """Add the latest forecasts and results to one location's history. feeds holds this run's shared state:
     observations pages already fetched (several locations share a station) and failure counts."""
@@ -315,6 +346,11 @@ def update_location(loc, now, feeds):
         notes.append(f"{n} forecasts")
     except Exception as e:  # results can still be kept without today's forecasts
         notes.append(f"no forecasts ({masked(e)})")
+    if loc["id"] in feeds["reality"] and loc.get("bom"):
+        try:
+            notes.append(f"{bureau_wind(hist, loc, tz, now)} Bureau 3pm winds")
+        except Exception as e:
+            notes.append(f"Bureau hourly FAILED ({masked(e)})")
 
     # The app feed names the station and gives this run's reading
     new = []
@@ -389,7 +425,11 @@ def main():
     locs = json.load(open(LOCATIONS, encoding="utf-8"))
     if len(sys.argv) > 1:
         locs = [l for l in locs if l["id"] in sys.argv[1:]]  # for trying one or two by hand
-    feeds = {"fwo": {}, "fwo_fail": 0, "app_fail": 0}
+    try:
+        reality = {p["id"] for p in json.load(open(REALITY, encoding="utf-8"))["places"]}
+    except (OSError, ValueError, KeyError):
+        reality = set()
+    feeds = {"fwo": {}, "fwo_fail": 0, "app_fail": 0, "reality": reality}
     ok, start = 0, time.monotonic()
     for i, loc in enumerate(locs):
         if time.monotonic() - start > TIME_BUDGET_MINUTES * 60:
